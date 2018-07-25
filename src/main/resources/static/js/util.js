@@ -59,6 +59,41 @@ $(document).ready(function() {
         modal.find('.modal-body #idRekan').val(idRekan);
         modal.find('.modal-body #kodeProyek').val(kodeProyek);
 
+    });
+
+    $(".btn-isi-evaluasi-karyawan").on("click", function(){
+        event.preventDefault();
+
+        // get data from item penilaian mandiri
+        var periode = $(this).data('periode');
+        var isiRekap = $(this).data('rekap');
+        var id = $(this).data('id');
+        var proyek = $(this).data('proyek');
+        var action = "/karyawan/penilaian-mandiri/tambah/" + proyek + "/" + id;
+
+        // generate date object with periode
+        dateStr = periode.split("-");
+        periode = new Date(dateStr[0], dateStr[1] - 1, dateStr[2]);
+
+        // generate deadline with periode + 1 month
+        var deadline = new Date(periode.getTime());
+        deadline.setMonth(periode.getMonth()+1);
+        const monthNames = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
+            "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"
+            ];
+        
+        
+        var periodeString = (monthNames[periode.getMonth()]+" "+periode.getFullYear());
+        var deadlineString = (monthNames[deadline.getMonth()]+" "+deadline.getFullYear());
+        
+        // fill form value and action
+        $("#periode-penugasan").attr('value', periodeString);
+        $("#deadline-pengisian").attr('value', deadlineString);
+        $("#isi-evaluasi").val(isiRekap);
+        $("#form-isi-evaluasi-karyawan").attr('action', action);
+        
+        // pop-up modal
+        $("#modal-isi-ubah-evaluasi-karyawan").modal();
     })
 
 } );
