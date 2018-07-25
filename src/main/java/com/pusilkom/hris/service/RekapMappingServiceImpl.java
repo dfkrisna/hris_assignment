@@ -11,10 +11,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -201,5 +198,20 @@ public class RekapMappingServiceImpl implements RekapMappingService {
         karyawanMapping.setRekapList(rekap);
 
         return karyawanMapping;
+    }
+
+    @Override
+    public Map mapRoleToRekap(List<KaryawanRekapModel> mapping) {
+        Map rekapRoleMap = new HashMap();
+        for(KaryawanRekapModel map : mapping) {
+            for(RekapModel rekap : map.getRekapList()) {
+                if(rekap.getId() > 0) {
+                    KaryawanProyekModel karpro = karyawanProyekService.getKaryawanProyekById(rekap.getIdKaryawanProyek());
+
+                    rekapRoleMap.put(rekap.getId(), karpro.getIdRole());
+                }
+            }
+        }
+        return  rekapRoleMap;
     }
 }
