@@ -31,13 +31,11 @@
                 </thead>
                 <tbody class="montserrat-small">
                 <tr th:each="penugasan, iterationStatus:${penugasanPeriodeIni}" >
-                    <div th:if="${penugasan.statusProyek.equals('Aktif')}">
-                        <td><a class="montserrat-small" th:text="${penugasan.namaProyek}" th:href="'/karyawan/penugasan/detail/' + ${penugasan.idProyek}"></a></td>
-                        <td th:text="${penugasan.role}"></td>
-                        <td th:text="${penugasan.persentase} + '%'"></td>
-                        <td th:text="${penugasan.statusProyek}"></td>
-                        <td th:text="${penugasan.getPeriode()}"></td>
-                    </div>
+                    <td><a class="montserrat-small" th:text="${penugasan.namaProyek}" th:href="'/karyawan/penugasan/detail/' + ${penugasan.idProyek}"></a></td>
+                    <td th:text="${penugasan.role}"></td>
+                    <td th:text="${penugasan.persentase} + '%'"></td>
+                    <td th:text="${penugasan.statusProyek}"></td>
+                    <td th:text="${penugasan.getPeriode()}"></td>
                 </tr>
                 </tbody>
             </table>

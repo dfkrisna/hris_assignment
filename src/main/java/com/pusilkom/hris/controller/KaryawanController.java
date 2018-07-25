@@ -68,7 +68,7 @@ public class KaryawanController {
 
         //get periode saat ini dan mengecek penugasan pada periode tersebut
         LocalDate periode = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1);
-        List<PenugasanModel> penugasanPeriodeIni = penugasanService.getPenugasanPeriodeIni(karyawan.getId(), periode);
+        List<PenugasanModel> penugasanPeriodeIni = penugasanService.getPenugasanAktifPeriodeIni(karyawan.getId(), periode);
 
         String dateToday = rekapMappingService.getCurrentDate();
         model.addAttribute("date_today", dateToday);

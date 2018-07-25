@@ -20,6 +20,8 @@ public interface PenugasanService {
 
 	List<PenugasanModel> getPenugasanPeriodeIni(int idKaryawan, LocalDate periode);
 
+	List<PenugasanModel> getPenugasanAktifPeriodeIni(int idKaryawan, LocalDate periode);
+
 	List<KaryawanAnggotaModel> getAnggotaProyek(int idProyek);
 
 	String getLatestStatus(int idProyek);
