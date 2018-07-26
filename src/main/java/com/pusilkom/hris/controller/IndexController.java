@@ -121,6 +121,7 @@ public class IndexController
             List<RekapModel> rekapList = rekapService.getRekapByPeriode(periodeDate);
             List<KaryawanRekapModel> mapping = rekapMappingService.mapRekap(karyawanList, proyekList, karyawanProyekList, rekapList);
             int totalPerc = rekapMappingService.totalPercentage(mapping);
+            int avgNilai = ratingFeedbackService.getAllAverageRating(mapping, periodeDate);
             int[] chartValue = rekapMappingService.chartValue(mapping);
             int chartSize = karyawanList.size();
 
@@ -136,7 +137,7 @@ public class IndexController
 
             model.addAttribute("rekapRoleMap", rekapRoleMap);
             model.addAttribute("roles", roleMap);
-
+            model.addAttribute("allAvgRating", avgNilai);
             model.addAttribute("proyekList", proyekList);
             model.addAttribute("mapping", mapping);
             model.addAttribute("chartValue", chartValue);
