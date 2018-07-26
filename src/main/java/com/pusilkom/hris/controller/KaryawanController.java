@@ -68,7 +68,7 @@ public class KaryawanController {
 
         //get periode saat ini dan mengecek penugasan pada periode tersebut
         LocalDate periode = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1);
-        List<PenugasanModel> penugasanPeriodeIni = penugasanService.getPenugasanPeriodeIni(karyawan.getId(), periode);
+        List<PenugasanModel> penugasanPeriodeIni = penugasanService.getPenugasanAktifPeriodeIni(karyawan.getId(), periode);
 
         String dateToday = rekapMappingService.getCurrentDate();
         model.addAttribute("date_today", dateToday);
@@ -125,7 +125,8 @@ public class KaryawanController {
      * @return
      */
     @GetMapping(value ="/karyawan/penugasan/detail/{idProyek}")
-    public String detailpenugasanKaryawan(Model model, @PathVariable Integer idProyek, Principal principal) {
+    public String detailpenugasanKaryawan(Model model, HttpSession session, @PathVariable Integer idProyek,
+                                          Principal principal, @RequestParam(value = "periode", required = false) String periode) {
         //select karyawan, lalu cek detail penugasan dan rekap evaluasi diri
         KaryawanModel karyawan = karyawanService.selectKaryawanByEmail(principal.getName());
         PenugasanModel detailPenugasan = penugasanService.getDetailPenugasanById(idProyek, karyawan.getId());
@@ -137,6 +138,69 @@ public class KaryawanController {
         model.addAttribute("page_title","Detail Penugasan");
         model.addAttribute("detailPenugasan", detailPenugasan);
         model.addAttribute("rekapPenilaianMandiri", rekapPenilaianMandiri);
+        System.out.println(detailPenugasan.getIdProyek());
+        LocalDate periodeNow = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1);
+
+        //Melakukan handling periode yang akan ditampilkan pada halaman rekan seproyek
+        if(periode != null) {
+            String[] split = periode.split(" ");
+            int year = Integer.parseInt(split[1]);
+            String monthString = split[0].toUpperCase();
+            LocalDate periodeCompare = LocalDate.of(year, Month.valueOf(split[0].toUpperCase()),1);
+            if(periodeCompare.equals(periodeNow)) {
+                model.addAttribute("offPeriode", "offPeriode");
+                session.setAttribute("periodeSelected", periodeNow);
+            }else{
+                if(periodeCompare.equals(periodeNow.plusMonths(1))) {
+                    session.setAttribute("periodeSelected", periodeNow);
+                    model.addAttribute("periodeOut", "Pengisian Feedback dan Penilaian Belum Dimulai atau Sudah Ditutup");
+                }else {
+                    periodeNow = periodeCompare;
+                    session.setAttribute("periodeSelected", periodeNow);
+                    model.addAttribute("periodeOut", "Pengisian Feedback dan Penilaian Belum Dimulai atau Sudah Ditutup");
+                }
+            }
+        }else {
+            model.addAttribute("offPeriode", "offPeriode");
+            session.setAttribute("periodeSelected", periodeNow);
+        }
+
+        int userId = karyawan.getId();
+
+        String penugasan = karyawanService.cekPenugasanKaryawanById(userId);
+
+        //kondisional jika karyawan yang sedang login punya penugasan atau tidak punya penugasan
+        if(penugasan.equalsIgnoreCase("yes")){
+
+            List<Integer> proyekSekarang = karyawanService.getUserProyek(userId);
+
+            List<FeedbackRatingModel> rekanWithFeedback =
+                    karyawanService.getRekanSeproyekFeedback(proyekSekarang, userId, periodeNow);
+
+            List<FeedbackRatingModel> rekanNoFeedback =
+                    karyawanService.getRekanSeproyek(proyekSekarang, userId, periodeNow);
+
+            if(rekanWithFeedback.isEmpty() && rekanNoFeedback.isEmpty()) {
+                model.addAttribute("notification","Tidak ada rekan seproyek di periode ini");
+            }else if(rekanWithFeedback.isEmpty()) {
+                model.addAttribute("rekans",rekanNoFeedback);
+                model.addAttribute("noFeedback","noFeedback");
+            }else if(rekanNoFeedback.isEmpty()){
+                model.addAttribute("rekans",rekanWithFeedback);
+            }else {
+                model.addAttribute("rekans", rekanWithFeedback);
+                model.addAttribute("rekansNoFeedback", rekanNoFeedback);
+            }
+
+            model.addAttribute("prevPeriode", periodeNow.minusMonths(1));
+            model.addAttribute("periodeNow", periodeNow);
+            model.addAttribute("nextPeriode", periodeNow.plusMonths(1));
+            model.addAttribute("date_today", dateToday);
+
+        }else {
+            model.addAttribute("noPenugasan", "noPenugasan");
+            model.addAttribute("date_today", dateToday);
+        }
 
         return "detail-proyek";
     }
@@ -206,9 +270,8 @@ public class KaryawanController {
     public String lihatRekanSekproyek(Model model, HttpSession session, Principal principal,
                                       @RequestParam(value = "periode", required = false) String periode)
     {
-
         LocalDate periodeNow = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1);
-
+        KaryawanModel karyawan = karyawanService.selectKaryawanByEmail(principal.getName());
         //Melakukan handling periode yang akan ditampilkan pada halaman rekan seproyek
         if(periode != null) {
             String[] split = periode.split(" ");
@@ -233,7 +296,6 @@ public class KaryawanController {
             session.setAttribute("periodeSelected", periodeNow);
         }
 
-        KaryawanModel karyawan = karyawanService.selectKaryawanByEmail(principal.getName());
         int userId = karyawan.getId();
 
         String penugasan = karyawanService.cekPenugasanKaryawanById(userId);
@@ -268,10 +330,12 @@ public class KaryawanController {
             model.addAttribute("date_today", dateToday);
 
         }else {
-            model.addAttribute("noPenugasan", "noPenugasan");
             String dateToday = rekapMappingService.getCurrentDate();
+            model.addAttribute("noPenugasan", "noPenugasan");
             model.addAttribute("date_today", dateToday);
         }
+
+
 
         return "karyawan-rekanseproyek";
     }
