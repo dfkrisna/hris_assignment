@@ -111,7 +111,8 @@ public class RekapServiceImpl implements RekapService {
 		return rekapMapper.selectRekapByIdKaryawanProyek(idKaryawanProyek);
 	}
 
-	public void updatePenilaianMandiri(RekapModel rekap){
+	public void updatePenilaianMandiri(RekapModel rekap, String penilaianMandiri){
+		rekap.setPenilaianMandiri(penilaianMandiri);
 		rekapMapper.updatePenilaianMandiri(rekap);
 	}
 

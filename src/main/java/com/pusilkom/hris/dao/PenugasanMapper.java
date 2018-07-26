@@ -50,7 +50,7 @@ public interface PenugasanMapper {
     })
     List<PenugasanModel> getRiwayatPenugasanKaryawan(@Param("idKaryawan") int idKaryawan);
 
-    @Select("SELECT DISTINCT K.id AS id_karyawan, KP.id AS id_karyawan_proyek, P.id as id_proyek, P.nama_proyek, C.name as nama_klien, RP.nama as nama_role, SP.nama as status_proyek, RB.persentase_kontribusi, \n" +
+    @Select("SELECT DISTINCT K.id AS id_karyawan, P.kode AS kode_proyek, KP.id AS id_karyawan_proyek, P.id as id_proyek, P.nama_proyek, C.name as nama_klien, RP.nama as nama_role, SP.nama as status_proyek, RB.persentase_kontribusi, \n" +
             "      PENGGUNA.nama as team_lead, KP.start_periode, KP.end_periode, SPR.id_status\n" +
             "FROM mpp.\"PROYEK\" as P, mpp.\"KARYAWAN_PROYEK\" as KP, mpp.\"ROLE_PROYEK\" as RP, mpp.\"STATUS_PENGERJAAN_PROYEK\" as SPR, \n" +
             "      mpp.\"STATUS_PROYEK\" as SP, mpp.\"REKAPITULASI_BULANAN\" as RB, mpp.\"KARYAWAN\" as K, mpp.\"PENGGUNA\" as PENGGUNA, a07_client as C\n" +
@@ -70,6 +70,7 @@ public interface PenugasanMapper {
             @Result(property="teamLead", column="team_lead"),
             @Result(property="startPeriode", column="start_periode"),
             @Result(property="endPeriode", column="end_periode"),
+            @Result(property="kodeProyek",column="kode_proyek")
     })
     PenugasanModel getDetailPenugasanById(@Param("idProyek") int idProyek, @Param("idKaryawan") int idKaryawan);
 

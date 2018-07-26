@@ -187,7 +187,9 @@ public class IndexController
         if(periode != null) {
             String[] split = periode.split(" ");
             periodeDate = LocalDate.of(Integer.parseInt(split[1]), Month.valueOf(split[0].toUpperCase()), 1);
-
+            if(periodeDate.isAfter(periodeNow)){
+                periodeDate = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1);
+            }
             LocalDate prevPeriode = periodeDate.minusMonths(1);
             rekapService.populatePrevRekap(prevPeriode, periodeDate);
         } else { periodeDate = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1); }
