@@ -143,6 +143,7 @@ public class KaryawanController {
 
         //Melakukan handling periode yang akan ditampilkan pada halaman rekan seproyek
         if(periode != null) {
+            model.addAttribute("true",true);
             String[] split = periode.split(" ");
             int year = Integer.parseInt(split[1]);
             String monthString = split[0].toUpperCase();
@@ -161,6 +162,7 @@ public class KaryawanController {
                 }
             }
         }else {
+            model.addAttribute("true", false);
             model.addAttribute("offPeriode", "offPeriode");
             session.setAttribute("periodeSelected", periodeNow);
         }
