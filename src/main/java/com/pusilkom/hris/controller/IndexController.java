@@ -121,7 +121,8 @@ public class IndexController
             List<RekapModel> rekapList = rekapService.getRekapByPeriode(periodeDate);
             List<KaryawanRekapModel> mapping = rekapMappingService.mapRekap(karyawanList, proyekList, karyawanProyekList, rekapList);
             int totalPerc = rekapMappingService.totalPercentage(mapping);
-            int avgNilai = ratingFeedbackService.getAllAverageRating(mapping, periodeDate);
+
+            int avgNilai = ratingFeedbackService.getAllAverageRating(periodeDate);
             int[] chartValue = rekapMappingService.chartValue(mapping);
             int chartSize = karyawanList.size();
 

@@ -75,23 +75,8 @@ public class RatingFeedbackServiceImpl implements RatingFeedbackService {
     }
 
     @Override
-    public int getAllAverageRating(List<KaryawanRekapModel> mapping, LocalDate periodeDate) {
-        int allAvgRating = 0;
-        int size = 0;
-        if(mapping != null && !mapping.isEmpty()) {
-            for(KaryawanRekapModel rekapKaryawan:mapping) {
-                int avgRatingKar = getAvgRating(rekapKaryawan.getKaryawan().getId(), periodeDate);
-                if(avgRatingKar > 0) {
-                    allAvgRating += avgRatingKar;
-                    size++;
-                }
-            }
-            if(size == 0) {
-                return allAvgRating;
-            } else {
-                return allAvgRating / size;
-            }
-        }
+    public int getAllAverageRating(LocalDate periodeDate) {
+        int allAvgRating = ratingFeedbackMapper.selectMonthlyAvgRating(periodeDate);
         return allAvgRating;
     }
 
