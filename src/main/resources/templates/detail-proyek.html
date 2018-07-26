@@ -76,7 +76,7 @@
                 <a class="nav-item nav-link montserrat-small-bold" id="nav-feedback-tab" data-toggle="tab" href="#feedback-rekan" role="tab" aria-controls="nav-feedback" aria-selected="false">Feedback Karyawan</a>
             </div>
         </nav>
-
+        <br/>
         <div class="tab-content">
             <div class="tab-pane fade show active" id="evaluasi-diri" role="tabpanel" aria-labelledby="nav-penilaian-mandiri-tab">
                 <table id="tabel-penilaian-mandiri" class="table table-hover montserrat-small">
@@ -113,7 +113,7 @@
                 <div class="d-flex flex-row mb-5">
                     <div class="col text-left">
                         <a class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded"
-                           th:href="@{'/karyawan/rekanseproyek'(periode=${prevPeriode.month + ' ' + prevPeriode.year})}"
+                           th:href="@{${detailPenugasan.idProyek}(periode=${prevPeriode.month + ' ' + prevPeriode.year})}"
                            th:text="${prevPeriode.month + ' ' + prevPeriode.year}" href="">
                         </a>
                     </div>
@@ -128,13 +128,13 @@
                     <div class="col text-right">
                         <div th:if="${offPeriode != null}">
                             <a class="montserrat-small btn btn-secondary text-white btn-rounded disabled"
-                               th:href="@{'/karyawan/rekanseproyek'(periode=${nextPeriode.month + ' ' + nextPeriode.year})}"
+                               th:href="@{${detailPenugasan.idProyek}(periode=${nextPeriode.month + ' ' + nextPeriode.year})}"
                                th:text="${nextPeriode.month + ' ' + nextPeriode.year}" href="">
                             </a>
                         </div>
                         <div th:if="${offPeriode == null}">
                             <a class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded"
-                               th:href="@{'/karyawan/rekanseproyek'(periode=${nextPeriode.month + ' ' + nextPeriode.year})}"
+                               th:href="@{${detailPenugasan.idProyek}(periode=${nextPeriode.month + ' ' + nextPeriode.year})}"
                                th:text="${nextPeriode.month + ' ' + nextPeriode.year}" href="">
                             </a>
                         </div>
