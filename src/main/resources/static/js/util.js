@@ -96,4 +96,6 @@ $(document).ready(function() {
         $("#modal-isi-ubah-evaluasi-karyawan").modal();
     })
 
+    $('[data-toggle="tooltip"]').tooltip();
+
 } );

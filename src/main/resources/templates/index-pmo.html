@@ -53,22 +53,24 @@
     <table id="matrix-pmo" class="table table-matrix table-hover">
         <thead class="tabel-header">
         <tr>
-            <th></th>
+            <th class="text-center montserrat-small-bold">Karyawan</th>
             <th class="text-center montserrat-small-bold">Total</th>
             <th class="text-center montserrat-small-bold" th:each="proyek,iterationStatus: ${proyekList}"><a th:text="${proyek.kode}" th:href="${'/proyek/detail/' + proyek.id}"></a></th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="map,iterationStatus: ${mapping}">
-            <th><a class="montserrat-small-bold" th:text="${map.karyawan.nama}" th:href="${'/pmo/detail-karyawan/' + map.karyawan.id}">Nama Karyawan</a></th>
+            <th class="table-header"><a class="montserrat-small-bold" th:text="${map.karyawan.nama}" th:href="${'/pmo/detail-karyawan/' + map.karyawan.id}">Nama Karyawan</a></th>
             <td class="text-center montserrat-small" th:text="${map.total + '%'}" th:style="|color: rgb(${map.red}, ${map.green}, 0);|"></td>
             <div th:if="${current.compareTo(periodeNow) < 0}">
-                <td class="text-center montserrat-small" th:each="rekap,iterationStatus: ${map.rekapList}" th:text="${rekap.persentase + '%'}"></td>
+                <td class="text-center montserrat-small" th:each="rekap,iterationStatus: ${map.rekapList}" >
+                    <p class="red-tooltip" th:text="${rekap.persentase + '%'}" data-toggle="tooltip" th:title="${roles.get(rekapRoleMap.get(rekap.id))}" data-placement="bottom"></p>
+                </td>
             </div>
             <div th:unless="${current.compareTo(periodeNow) < 0}">
                 <div th:each="rekap,iterationStatus: ${map.rekapList}">
                     <td class="text-center montserrat-small" th:if="${rekap.getPersentase() > 0}">
-                        <a th:text="${rekap.persentase + '%'}" th:href="'/pmo/update_assignment/' + ${rekap.idKaryawanProyek} + '/' + ${current.year} + '/' + ${current.getMonthValue()}"></a>
+                        <a data-toggle="tooltip" th:title="${roles.get(rekapRoleMap.get(rekap.id))}" data-placement="bottom" th:text="${rekap.persentase + '%'}" th:href="'/pmo/update_assignment/' + ${rekap.idKaryawanProyek} + '/' + ${current.year} + '/' + ${current.getMonthValue()}"></a>
                     </td>
                     <td class="text-center montserrat-small" th:unless="${rekap.getPersentase() > 0}" th:if="${current!=null}">
                         <a th:href="'/pmo/assign/' + ${map.karyawan.id} + '/' + ${rekap.idProyek} + '/' + ${current.year} + '/' + ${current.getMonthValue()}">Tugaskan</a>
@@ -101,17 +103,5 @@
 </style>
 
 <div th:replace="fragments/fragment :: footer"></div>
-
-<!--<script-->
-        <!--src="https://code.jquery.com/jquery-3.3.1.js"-->
-        <!--integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="-->
-        <!--crossorigin="anonymous"></script>-->
-<!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">-->
-<!--<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>-->
-<!--<script>-->
-    <!--$(document).ready( function () {-->
-        <!--$('#rekap-eksekutif').DataTable();-->
-    <!--} );-->
-<!--</script>-->
 </body>
 </html>
