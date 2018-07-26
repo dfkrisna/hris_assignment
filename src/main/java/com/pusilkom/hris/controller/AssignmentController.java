@@ -2,6 +2,7 @@ package com.pusilkom.hris.controller;
 
 import com.pusilkom.hris.model.*;
 import com.pusilkom.hris.service.*;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+@Slf4j
 @Controller
 public class AssignmentController {
     @Autowired
@@ -254,6 +256,24 @@ public class AssignmentController {
 
         return "redirect:/pmo";
     }
+
+    @RequestMapping(value = "/pmo/update_persentase/{idRekap}",method = RequestMethod.POST)
+    public String updateRekap(Model model, @PathVariable(value = "idRekap") int idRekap,
+                              @RequestParam(value = "persenKontribusi") double persenKontribusi
+                                         ) {
+
+        RekapModel retrievedRekap = rekapService.selectRekapById(idRekap);
+
+        retrievedRekap.setPersentaseKontribusi(persenKontribusi);
+
+        rekapService.updateRekap(retrievedRekap);
+
+        return "redirect:/pmo";
+
+    }
+
+
+
 
     /**
      * method ini digunakan untuk menampilkan daftar rekomendasi karyawan setelah membuat proyek

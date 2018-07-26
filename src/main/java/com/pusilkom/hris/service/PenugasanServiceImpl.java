@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.ArrayList;
 
 @Slf4j
 @Service
@@ -67,6 +68,17 @@ public class PenugasanServiceImpl implements PenugasanService {
 	public List<PenugasanModel> getPenugasanPeriodeIni(int idKaryawan, LocalDate periode){
 		return penugasanMapper.getPenugasanPeriodeIni(idKaryawan, periode);
 	}
+
+	public List<PenugasanModel> getPenugasanAktifPeriodeIni(int idKaryawan, LocalDate periode){
+		List<PenugasanModel> listTugas =  penugasanMapper.getPenugasanPeriodeIni(idKaryawan, periode);
+		List<PenugasanModel> listTugasAktif = new ArrayList<PenugasanModel>();
+			for(PenugasanModel tugas:listTugas){
+					if(tugas.getStatusProyek().equalsIgnoreCase("aktif")){
+							listTugasAktif.add(tugas);
+						}
+				}
+			return listTugasAktif;
+		}
 
 	public List<KaryawanAnggotaModel> getAnggotaProyek(int idProyek) {
 		List<KaryawanAnggotaModel> anggotaList = penugasanMapper.selectAnggotaProyek(idProyek);

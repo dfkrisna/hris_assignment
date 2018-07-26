@@ -6,6 +6,7 @@ import com.pusilkom.hris.model.KaryawanModel;
 import com.pusilkom.hris.model.PenugasanModel;
 import com.pusilkom.hris.model.RekapModel;
 import com.pusilkom.hris.service.*;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,7 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+@Slf4j
 @Controller
 public class KaryawanController {
     @Autowired
@@ -56,6 +57,9 @@ public class KaryawanController {
     @Autowired
     DivisiService divisiService;
 
+    @Autowired
+    RatingFeedbackService ratingFeedbackService;
+
     /**
      * method ini berfungsi untuk menampilkan beranda karyawan yang berisi penugasan pada periode ini
      * @param model
@@ -65,12 +69,22 @@ public class KaryawanController {
     @GetMapping("/karyawan")
     public String indexKaryawan(Model model, Principal principal) {
         KaryawanModel karyawan = karyawanService.selectKaryawanByEmail(principal.getName());
-
+        KaryawanModel karyawanLogin = karyawanService.getKaryawanById(karyawan.getId());
         //get periode saat ini dan mengecek penugasan pada periode tersebut
         LocalDate periode = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1);
-        List<PenugasanModel> penugasanPeriodeIni = penugasanService.getPenugasanPeriodeIni(karyawan.getId(), periode);
+        List<PenugasanModel> penugasanPeriodeIni = penugasanService.getPenugasanAktifPeriodeIni(karyawan.getId(), periode);
+        List<PenugasanModel> penugasanList = penugasanService.getPenugasanList(karyawan.getId());
+
+        int ratingKaryawan = ratingFeedbackService.getAvgRatingKaryawan(karyawan.getId());
+        int persentaseKontribusi = (int) (rekapService.getKaryawanKontribusi(karyawan.getId(), LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1)) * 100);
+
+
+        model.addAttribute("ratingKaryawan", ratingKaryawan);
+        model.addAttribute("persentaseKontribusi", persentaseKontribusi);
+        model.addAttribute("penugasanList", penugasanList);
 
         String dateToday = rekapMappingService.getCurrentDate();
+
         model.addAttribute("date_today", dateToday);
 
         if(penugasanPeriodeIni != null){
@@ -83,6 +97,10 @@ public class KaryawanController {
             model.addAttribute("notification", notification);
         }
 
+        log.info(" " + karyawanLogin.getNama());
+        log.info(" " + karyawan.getId());
+        log.info(" " + karyawanLogin.getId());
+        model.addAttribute("karyawanLogin", karyawanLogin);
         return "index-karyawan";
     }
 
