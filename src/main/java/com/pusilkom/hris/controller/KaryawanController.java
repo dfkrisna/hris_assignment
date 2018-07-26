@@ -174,15 +174,19 @@ public class KaryawanController {
      * @return
      */
     @PostMapping(value="/karyawan/penilaian-mandiri/tambah/{idProyek}/{id}")
-    public String tambahPenilaianMandiriSubmit (Model model, HttpSession session, @ModelAttribute RekapModel rekap,
+    public String tambahPenilaianMandiriSubmit (Model model, HttpSession session, @RequestParam(value = "isi-evaluasi") String isiEvaluasi,
                                                 @PathVariable Integer idProyek, @PathVariable Integer id, RedirectAttributes redirectAttributes){
+
+        
+        //Cari rekap by id
+        RekapModel rekap = rekapService.selectRekapById(id);
 
         //set tanggal penilaian
         LocalDate tanggalPenilaian = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), LocalDate.now().getDayOfMonth());
         rekap.setTanggalPenilaian(tanggalPenilaian);
 
         //update object rekap bulanan
-        rekapService.updatePenilaianMandiri(rekap);
+        rekapService.updatePenilaianMandiri(rekap, isiEvaluasi);
 
         //add flash attribute
         String notification = "Evaluasi diri berhasil disimpan";
