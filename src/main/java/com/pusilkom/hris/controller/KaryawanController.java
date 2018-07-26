@@ -368,7 +368,7 @@ public class KaryawanController {
      * @return
      */
     @GetMapping(value="/karyawan/rekanseproyek/feedback")
-    public String manageFeedbackRekan(Model model, HttpSession session, Principal principal,
+    public String manageFeedbackRekan(Model model, RedirectAttributes redirectAttributes, HttpSession session, Principal principal,
                                       @RequestParam(value = "namaRekan", required = false) String namaRekan,
                                       @RequestParam(value = "idRekan", required = false) int idRekan,
                                       @RequestParam(value = "kodeProyek", required = false) String kodeProyek,
@@ -430,6 +430,7 @@ public class KaryawanController {
         model.addAttribute("periodeNow", periodeSelected);
         model.addAttribute("nextPeriode", periodeSelected.plusMonths(1));
         model.addAttribute("date_today", dateToday);
+        redirectAttributes.addFlashAttribute("notification","Evaluasi rekan berhasil disimpian");
         return "redirect:/karyawan/penugasan/detail/" + idProyek;
     }
 }
