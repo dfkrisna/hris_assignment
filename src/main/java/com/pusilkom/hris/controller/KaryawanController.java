@@ -192,6 +192,22 @@ public class KaryawanController {
                 model.addAttribute("rekansNoFeedback", rekanNoFeedback);
             }
 
+            for(FeedbackRatingModel rekan:rekanNoFeedback){
+                System.out.println("nama rekan: " + rekan.getNamaRekan());
+                System.out.println("nama project: " + rekan.getKodeProyek());
+                System.out.println("feed back: " + rekan.getFeedback() );
+                System.out.println("=================================");
+            }
+
+            System.out.println("<==========================================================>");
+
+            for(FeedbackRatingModel rekan:rekanWithFeedback){
+                System.out.println("nama rekan: " + rekan.getNamaRekan());
+                System.out.println("nama project: " + rekan.getKodeProyek());
+                System.out.println("feed back: " + rekan.getFeedback() );
+                System.out.println("=================================");
+            }
+
             model.addAttribute("prevPeriode", periodeNow.minusMonths(1));
             model.addAttribute("periodeNow", periodeNow);
             model.addAttribute("nextPeriode", periodeNow.plusMonths(1));
@@ -352,7 +368,7 @@ public class KaryawanController {
      * @return
      */
     @GetMapping(value="/karyawan/rekanseproyek/feedback")
-    public String manageFeedbackRekan(Model model, HttpSession session, Principal principal,
+    public String manageFeedbackRekan(Model model, RedirectAttributes redirectAttributes, HttpSession session, Principal principal,
                                       @RequestParam(value = "namaRekan", required = false) String namaRekan,
                                       @RequestParam(value = "idRekan", required = false) int idRekan,
                                       @RequestParam(value = "kodeProyek", required = false) String kodeProyek,
@@ -414,7 +430,8 @@ public class KaryawanController {
         model.addAttribute("periodeNow", periodeSelected);
         model.addAttribute("nextPeriode", periodeSelected.plusMonths(1));
         model.addAttribute("date_today", dateToday);
-        return "karyawan-rekanseproyek";
+        redirectAttributes.addFlashAttribute("notification","Evaluasi rekan berhasil disimpian");
+        return "redirect:/karyawan/penugasan/detail/" + idProyek;
     }
 }
 
