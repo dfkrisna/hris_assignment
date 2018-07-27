@@ -85,8 +85,8 @@ public interface RatingFeedbackMapper {
     List<RatingFeedbackModel> selectRatingFeedbackPer(@Param("idKaryawanProyek") Integer idKaryawanProyek,
                                                      @Param("periode") LocalDate periode);
 
-    @Select("SELECT ROUND(AVG(rating)) FROM mpp.\"RATING_FEEDBACK\" WHERE periode = '${periode}' AND rating>0")
-    int selectMonthlyAvgRating(@Param("periode") LocalDate periodeDate);
+    @Select("SELECT ROUND(AVG(COALESCE(rating, 0))) FROM mpp.\"RATING_FEEDBACK\" WHERE periode = '${periode}' AND rating>0")
+    Integer selectMonthlyAvgRating(@Param("periode") LocalDate periodeDate);
 
 
 //    @Select(" SELECT RF.id, PG.nama AS namaPenilai, P.nama_proyek AS namaProyek, RF.feedback, RF.rating, " +
