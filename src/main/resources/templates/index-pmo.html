@@ -42,6 +42,9 @@
             <div th:if="${next != null}">
                 <a class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" th:href="@{'/pmo'(periode=${next.month + ' ' + next.year})}" th:text="${next.month + ' ' + next.year}"></a>
             </div>
+            <div th:if="${next == null}">
+                <a disabled class="montserrat-small btn btn-dark text-white btn-rounded" th:text="${invalidMonth.month + ' ' + invalidMonth.year}"></a>
+            </div>
         </div>
     </div>
 

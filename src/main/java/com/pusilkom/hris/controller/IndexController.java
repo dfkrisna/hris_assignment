@@ -220,6 +220,12 @@ public class IndexController
             roleMap.put(role.getId(), role.getNamaRole());
         }
 
+        LocalDate next = periodeDate.plusMonths(1);
+
+        if(periodeNow.plusMonths(1).isAfter(next)){
+            model.addAttribute("next", periodeDate.plusMonths(1));
+        }
+
         model.addAttribute("rekapRoleMap", rekapRoleMap);
         model.addAttribute("roles", roleMap);
         model.addAttribute("date_today", dateToday);
@@ -230,10 +236,10 @@ public class IndexController
         model.addAttribute("totalPercentage", totalPerc);
         model.addAttribute("totalGreen", (int) (255 - (2.55*totalPerc)));
         model.addAttribute("totalRed", (int) (2.55*totalPerc));
-        model.addAttribute("next", periodeDate.plusMonths(1));
         model.addAttribute("current", periodeDate);
         model.addAttribute("previous", periodeDate.minusMonths(1));
         model.addAttribute("periodeNow", periodeNow);
+        model.addAttribute("invalidMonth", next);
         return "index-pmo";
     }
 
