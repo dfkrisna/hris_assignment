@@ -37,7 +37,7 @@ public interface PenugasanMapper {
             "FROM mpp.\"PROYEK\" as P, mpp.\"REKAPITULASI_BULANAN\" as RB, mpp.\"ROLE_PROYEK\" as RP, mpp.\"KARYAWAN_PROYEK\" as KP, mpp.\"KARYAWAN\" as K\n" +
             "WHERE KP.id_karyawan = ${idKaryawan} AND KP.id_karyawan = K.id AND KP.id_proyek = P.id AND KP.id_role = RP.id\n" +
             "      AND KP.id = RB.id_karyawan_proyek\n" +
-            "ORDER BY KP.start_periode DESC")
+            "ORDER BY KP.id DESC")
     @Results(value = {
             @Result(property="idProyek", column="id_proyek"),
             @Result(property="idKaryawan", column="id_karyawan"),
@@ -75,14 +75,15 @@ public interface PenugasanMapper {
     PenugasanModel getDetailPenugasanById(@Param("idProyek") int idProyek, @Param("idKaryawan") int idKaryawan);
 
     @Select("SELECT K.id AS id_karyawan, KP.id AS id_karyawan_proyek, P.id as id_proyek, P.nama_proyek, RP.nama as nama_role, \n" +
-            "RB.persentase_kontribusi, KP.start_periode, KP.end_periode, (SELECT SP.nama\n" +
+            "RB.persentase_kontribusi, KP.start_periode, KP.end_periode,(SELECT SP.nama\n" +
             "FROM mpp.\"STATUS_PENGERJAAN_PROYEK\" AS SPP, mpp.\"STATUS_PROYEK\" AS SP\n" +
             "WHERE SPP.id_proyek = P.id\n" +
             "\tAND SPP.id_status = SP.id\n" +
-            "ORDER BY SPP.periode DESC LIMIT 1) AS status_proyek\n" +
+            "ORDER BY SPP.id DESC LIMIT 1) AS status_proyek\n" +
             "FROM mpp.\"PROYEK\" as P, mpp.\"REKAPITULASI_BULANAN\" as RB, mpp.\"ROLE_PROYEK\" as RP, mpp.\"KARYAWAN_PROYEK\" as KP, mpp.\"KARYAWAN\" as K, public.\"a07_client\" AS C \n" +
             "WHERE K.id = ${idKaryawan} \n" +
             "AND KP.id_karyawan = K.id\n" +
+            "AND KP.is_active = TRUE\n" +
             "\tAND KP.id_proyek = P.id \n" +
             "\tAND \n" +
             "\tKP.id_role = RP.id\n" +
@@ -173,7 +174,7 @@ public interface PenugasanMapper {
             "            FROM mpp.\"STATUS_PROYEK\" AS S, mpp.\"STATUS_PENGERJAAN_PROYEK\" AS SP\n" +
             "            WHERE SP.id_proyek = ${idProyek}\n" +
             "            AND SP.id_status = S.id\n" +
-            "            ORDER BY SP.timestamp DESC) AS stats\n" +
+            "            ORDER BY SP.id DESC) AS stats\n" +
             "            LIMIT 1;"
     )
     String selectLatestStatus(@Param("idProyek") int idProyek);
