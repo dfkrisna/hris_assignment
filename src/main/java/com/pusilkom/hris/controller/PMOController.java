@@ -655,7 +655,6 @@ public class PMOController {
         String notification ="";
         //null handling
         if(newstatus==null) {
-
             return "redirect:/proyek/detail/" + proyeklama.getId();
         }
 
@@ -673,6 +672,7 @@ public class PMOController {
                 for (KaryawanProyekModel karyawanProyekItr : listKarPro) {
                     if (karyawanProyekItr.getEndPeriode() == null || karyawanProyekItr.getEndPeriode().compareTo(periodeNow) > 0) {
                         karyawanProyekItr.setEndPeriode(periodeNow);
+                        karyawanProyekItr.setActive(false);
                         karyawanProyekDAO.updateKaryawanProyek(karyawanProyekItr);
                     }
                 }
@@ -692,6 +692,7 @@ public class PMOController {
                 for (KaryawanProyekModel karyawanProyekItr : listKarPro) {
                     if (karyawanProyekItr.getEndPeriode().equals(proyeklama.getEndPeriode())) {
                         karyawanProyekItr.setEndPeriode(null);
+                        karyawanProyekItr.setActive(true);
                         karyawanProyekDAO.updateKaryawanProyek(karyawanProyekItr);
                     }
                 }
