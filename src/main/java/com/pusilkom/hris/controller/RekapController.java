@@ -45,6 +45,8 @@ public class RekapController {
 
         KaryawanModel karyawan = karyawanService.getKaryawanById(idKaryawan);
 
+        System.out.println(karyawan.getNama());
+
 
         if(karyawan != null) {
             List<PenugasanModel> penugasanList = penugasanService.getPenugasanList(idKaryawan);
@@ -52,6 +54,7 @@ public class RekapController {
             int persentaseKontribusi = (int) (rekapService.getKaryawanKontribusi(karyawan.getId(), LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1)) * 100);
 
 
+            model.addAttribute("karyawan", karyawan);
             model.addAttribute("ratingKaryawan", ratingKaryawan);
             model.addAttribute("persentaseKontribusi", persentaseKontribusi);
             model.addAttribute("penugasanList", penugasanList);
