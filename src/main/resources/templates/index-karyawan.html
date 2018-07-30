@@ -15,7 +15,45 @@
             </nav>
             <h2 class="ml-auto roboto" th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy')}"></h2>
         </div>
+        <h3 th:text="${karyawanLogin.nama}">Nama Karyawan</h3>
+        <br/>
+        <div>
+            <div class="row karyawan-rekap-div" style="margin-top:0;">
 
+                    <div class="col-sm-3 text-right">
+                        <div class="row">
+                            <div class="col text-center"><h5 class="text-sub">Beban kerja saat ini</h5></div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-center"><h3 th:text="${persentaseKontribusi + '%'}">Beban kerja saat ini</h3></div>
+                        </div>
+                    </div>
+                <div class="col-sm-3 text-right">
+                    <div class="row">
+                        <div class="col text-center"><h5 class="text-sub">Jumlah proyek aktif</h5></div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-center"><h3 th:text="${#lists.size(penugasanPeriodeIni)}">Proyek</h3></div>
+                    </div>
+                </div>
+                <div class="col-sm-3 text-right">
+                <div class="row">
+                    <div class="col text-center"><h5 class="text-sub">Jumlah proyek total</h5></div>
+                </div>
+                <div class="row">
+                    <div class="col text-center"><h3 th:text="${#lists.size(penugasanList)}">Proyek</h3></div>
+                </div>
+                </div>
+                <div class="col-sm-3 text-right">
+                    <div class="row">
+                        <div class="col text-center"><h5 class="text-sub">Nilai karyawan</h5></div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-center"><h3 th:text="${ratingKaryawan}">Nilai karyawan</h3></div>
+                    </div>
+                </div>
+            </div>
+            <br/><br/><br/>
         <h2 class="montserrat-bold-big">Penugasan Periode Ini</h2><br/>
 
         <div th:if="${!penugasanPeriodeIni.isEmpty()}">

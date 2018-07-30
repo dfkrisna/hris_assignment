@@ -44,7 +44,7 @@ public class RekapController {
         LocalDate  periodeDate = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1);
 
         KaryawanModel karyawan = karyawanService.getKaryawanById(idKaryawan);
-        model.addAttribute("karyawan", karyawan);
+
 
         if(karyawan != null) {
             List<PenugasanModel> penugasanList = penugasanService.getPenugasanList(idKaryawan);

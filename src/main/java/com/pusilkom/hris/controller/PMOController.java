@@ -111,7 +111,9 @@ public class PMOController {
         }
 
         // menyocokkan format untuk masukkan dari form
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
+
+        DateTimeFormatter formatter = new DateTimeFormatterBuilder().parseCaseInsensitive() .appendPattern("d MMMM yyyy").toFormatter(Locale.ENGLISH);
+
 
         //memasukkan value startperiode
         if (!startPeriode.equals("")) {

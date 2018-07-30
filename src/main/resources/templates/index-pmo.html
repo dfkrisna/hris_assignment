@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 <head th:replace="fragments/fragment :: header-title">
 </head>
 <body>
@@ -72,11 +73,52 @@
             </div>
             <div th:unless="${current.compareTo(periodeNow) < 0}">
                 <div th:each="rekap,iterationStatus: ${map.rekapList}">
-                    <td class="text-center montserrat-small" th:if="${rekap.getPersentase() > 0}">
-                        <a data-toggle="tooltip" th:title="${roles.get(rekapRoleMap.get(rekap.id))}" data-placement="bottom" th:text="${rekap.persentase + '%'}" th:href="'/pmo/update_assignment/' + ${rekap.idKaryawanProyek} + '/' + ${current.year} + '/' + ${current.getMonthValue()}"></a>
+
+
+                    <td data-toggle="tooltip" th:title="${roles.get(rekapRoleMap.get(rekap.id))}" data-placement="bottom" lass="text-center montserrat-small" th:if="${rekap.getPersentase() > 0}">
+
+                        <a th:text="${rekap.persentase + '%'}" data-toggle="modal" th:attr="data-target='#PmoModal-' + ${rekap.idKaryawanProyek} + '-' + ${current.year} + '-' + ${current.getMonthValue()}" role="dialog" class="text-center montserrat-small"
+                        ></a>
+              
+                        
+
+                        <div  th:id="'PmoModal-' + ${rekap.idKaryawanProyek} + '-' + ${current.year} + '-' + ${current.getMonthValue()}"   class="modal fade"  tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title montserrat-med-bold">Ubah Persentase kontribusi</h5>
+                                    </div>
+                                    <form th:action="'/pmo/update_persentase/' + ${rekap.id}" th:method="POST">
+                                    <div class="modal-body">
+                                            <div class="form-group col mr-3">
+                                                <label class="montserrat-small-bold" for="persenKontribusi">Persentase Kontribusi (0-1)</label>
+                                                <input class="form-control form-rounded montserrat-small"
+                                                       type="number"
+                                                       step="0.01"
+                                                       min="0"
+                                                       name="persenKontribusi"
+                                                       th:value="${rekap.persentaseKontribusi}"
+                                                       required style="width: 80%; margin:auto; "/>
+                                            </div>
+
+
+                                        <div class="form-group col mt-2 ">
+                                            <label></label>
+                                            <div class="row">
+                                                <div class="col-sm-3"></div>
+                                                <a th:href="'/pmo/update_assignment/' + ${rekap.idKaryawanProyek} + '/' + ${current.year} + '/' + ${current.getMonthValue()}" class="monsterrat-small pusil-btn-danger btn btn-danger btn-rounded" style="margin-right: 15px; margin-left: -40px; font-size: 15px;">lihat detail</a>
+                                                <button type="sumbit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Ubah persentase</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </td>
+
                     <td class="text-center montserrat-small" th:unless="${rekap.getPersentase() > 0}" th:if="${current!=null}">
-                        <a th:href="'/pmo/assign/' + ${map.karyawan.id} + '/' + ${rekap.idProyek} + '/' + ${current.year} + '/' + ${current.getMonthValue()}">Tugaskan</a>
+                        <a th:href="'/pmo/assign/' + ${map.karyawan.id} + '/' + ${rekap.idProyek} + '/' + ${current.year} + '/' + ${current.getMonthValue()}"  type="button" class="btn btn-primary btn-md" style="color: white;border-radius: 100px;">Tugaskan</a>
                     </td>
                 </div>
             </div>
@@ -105,6 +147,9 @@
     }
 </style>
 
+
+
 <div th:replace="fragments/fragment :: footer"></div>
+
 </body>
 </html>
