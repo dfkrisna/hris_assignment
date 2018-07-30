@@ -125,16 +125,17 @@ public class AssignmentController {
 
         System.out.println("ini hasil nyari db " + karyawanProyekService.getKaryawanProyekByKaryawanandProyek(idKaryawan, idProyek));
 
-        if(karyawanProyekService.getKaryawanProyekByKaryawanandProyek(idKaryawan, idProyek) == null) {
-            karyawanProyekService.addKaryawanProyekMatrix(karyawanProyek, idKaryawan, idProyek, idRole);
-            System.out.println("knp masuk gaa");
-        } else {
-            karyawanProyek.setEndPeriode(null);
-            karyawanProyek.setStartPeriode(karyawanProyekService.getKaryawanProyekByKaryawanandProyek(idKaryawan, idProyek).getStartPeriode());
-            System.out.println("alhamdulillah gaa");
-
-            karyawanProyekService.updateKaryawanProyek(karyawanProyek);
-        }
+//        if(karyawanProyekService.getKaryawanProyekByKaryawanandProyek(idKaryawan, idProyek) == null) {
+        System.out.println("sampe sini");
+        karyawanProyekService.addKaryawanProyekMatrix(karyawanProyek, idKaryawan, idProyek, idRole);
+        System.out.println("knp masuk gaa");
+//        } else {
+//            karyawanProyek.setEndPeriode(null);
+//            karyawanProyek.setStartPeriode(karyawanProyekService.getKaryawanProyekByKaryawanandProyek(idKaryawan, idProyek).getStartPeriode());
+//            System.out.println("alhamdulillah gaa");
+//
+//            karyawanProyekService.updateKaryawanProyek(karyawanProyek);
+//        }
 
         KaryawanProyekModel karyawanAdded = karyawanProyekService.getKaryawanProyekByKaryawanandProyek(idKaryawan, idProyek);
 
