@@ -44,19 +44,69 @@
 
         <br/><br/><br/>
 
-        <div class="row">
-            <div class="col-sm-2"></div>
-            <div class="col-sm-4">
-                <canvas id="myChart" width="100" height="100"></canvas>
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active montserrat-small-bold" id="nav-rekap-persen-tab" data-toggle="tab" href="#nav-rekap-persen" role="tab" aria-controls="nav-rekap-persen" aria-selected="true">Rekap Beban Kerja</a>
+                <a class="nav-item nav-link montserrat-small-bold" id="nav-rekap-nilai-tab" data-toggle="tab" href="#nav-rekap-nilai" role="tab" aria-controls="nav-rekap-nilai" aria-selected="false">Rekap Nilai</a>
             </div>
-            <div class="col-sm-4">
-                <div style="margin-top: 33%; padding-left: 5%;">
-                    <h6>Rata-rata beban kerja</h6>
-                    <h1 th:text="${totalPercentage + '%'}" style="font-size: 80px;">0%</h1>
-                    <div th:style="|height: 10px;width: 400px; background-color: rgb(${totalRed}, ${totalGreen}, 0);|"></div>
+        </nav>
+
+        <br><br>
+
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-rekap-persen" role="tabpanel" aria-labelledby="nav-rekap-persen">
+                <div class="row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-4">
+                        <canvas id="myChart" width="100" height="100"></canvas>
+                    </div>
+                    <div class="col-sm-4">
+                        <div style="margin-top: 33%; padding-left: 5%;">
+                            <h6>Rata-rata beban kerja</h6>
+                            <h1 th:text="${totalPercentage + '%'}" style="font-size: 80px;">0%</h1>
+                            <div th:style="|height: 10px;width: 400px; background-color: rgb(${totalRed}, ${totalGreen}, 0);|"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2"></div>
                 </div>
             </div>
-            <div class="col-sm-2"></div>
+            <div class="tab-pane fade show" id="nav-rekap-nilai" role="tabpanel" aria-labelledby="nav-rekap-nilai">
+                <div class="row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-4">
+                        <!--<canvas id="nilaiChart" width="100" height="100"></canvas>-->
+                    </div>
+                    <div class="col-sm-4">
+                        <div style="margin-top: 33%; padding-left: 5%;">
+                            <h6>Rata-rata nilai</h6>
+                            <img th:if="${allAvgRating==0}" class="d-inline icon-eksekutif" src="/img/black-star.png">
+                            <img th:if="${allAvgRating>0 && allAvgRating<=60}" class="d-inline icon-eksekutif" src="/img/bronze-star.png">
+                            <img th:if="${allAvgRating>60 && allAvgRating<=80}" class="d-inline icon-eksekutif" src="/img/silver-star.png">
+                            <img th:if="${allAvgRating>80 && allAvgRating<=100}" class="d-inline icon-eksekutif" src="/img/gold-star.png">
+                            <h1 class="d-inline" th:text="${allAvgRating}" style="font-size: 80px;">0%</h1>
+                            <br/>
+                            <!--<div th:if="${allAvgRating==0}">-->
+                                <!--<img class="d-inline icon-eksekutif" src="/img/black-star.png">-->
+                                <!--<h1 class="d-inline" th:text="${allAvgRating}" style="font-size: 80px;">0%</h1>-->
+                            <!--</div>-->
+                            <!--<div th:if="${allAvgRating>0 && allAvgRating<=60}">-->
+                                <!--<img class="d-inline icon-eksekutif" src="/img/bronze-star.png">-->
+                                <!--<h1 class="d-inline" th:text="${allAvgRating}" style="font-size: 80px;">0%</h1>-->
+                            <!--</div>-->
+                            <!--<div th:if="${allAvgRating>60 && allAvgRating<=80}" class="montserrat-small text-center text-value">-->
+                                <!--<h1 class="d-inline" th:text="${allAvgRating}" style="font-size: 80px;">0%</h1>-->
+                                <!--<img class="d-inline icon-eksekutif" src="/img/silver-star.png">-->
+                            <!--</div>-->
+                            <!--<div th:if="${allAvgRating>80 && allAvgRating<=100}" class="montserrat-small text-center text-value">-->
+                                <!--<img class="d-inline icon-eksekutif" src="/img/gold-star.png">-->
+                                <!--<h1 class="d-inline" th:text="${allAvgRating}" style="font-size: 80px;">0%</h1>-->
+                            <!--</div>-->
+                            <div th:style="|height: 10px;width: 400px; background-color: rgb(${totalGreen}, ${totalRed}, 0);|"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2"></div>
+                </div>
+            </div>
         </div>
 
         <br/><br/><hr/><br/><br/>
@@ -74,7 +124,9 @@
             <tr th:each="map,iterationStatus: ${mapping}">
                 <th style="background-color: #FFCF26;"><a th:text="${map.karyawan.nama}" th:href="${'/rekap/karyawan/riwayat/' + map.karyawan.id}">Nama Karyawan</a></th>
                 <td class="text-center" th:text="${map.total + '%'}" th:style="|color: rgb(${map.red}, ${map.green}, 0);|"></td>
-                <td class="text-center" th:each="rekap,iterationStatus: ${map.rekapList}" th:text="${rekap.persentase + '%'}"></td>
+                <td class="text-center" th:each="rekap,iterationStatus: ${map.rekapList}">
+                    <p th:text="${rekap.persentase + '%'}" data-toggle="tooltip" th:title="${roles.get(rekapRoleMap.get(rekap.id))}" data-placement="bottom"></p>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -110,7 +162,10 @@
                 options: {
                 }
             });
-            /*]]>*/        </script>
+            /*]]>*/
+
+
+        </script>
     </main >
 
     <script type="text/javascript">
@@ -126,6 +181,7 @@
             });
         });
     </script>
+
     <style>
         .ui-datepicker-calendar {
             display: none;

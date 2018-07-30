@@ -26,6 +26,8 @@ public class KaryawanProyekModel {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endPeriode;
 
+    private boolean isActive;
+
     public String getPeriode() {
         if (startPeriode == null && endPeriode == null) {
             return "-";

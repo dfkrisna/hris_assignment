@@ -53,6 +53,9 @@ public class IndexController
     @Autowired
     RatingFeedbackService ratingFeedbackService;
 
+    @Autowired
+    RoleProyekService roleProyekService;
+
     /**
      * method untuk mengakses beranda utama
      * @param model
@@ -118,9 +121,24 @@ public class IndexController
             List<RekapModel> rekapList = rekapService.getRekapByPeriode(periodeDate);
             List<KaryawanRekapModel> mapping = rekapMappingService.mapRekap(karyawanList, proyekList, karyawanProyekList, rekapList);
             int totalPerc = rekapMappingService.totalPercentage(mapping);
+
+            int avgNilai = ratingFeedbackService.getAllAverageRating(periodeDate);
             int[] chartValue = rekapMappingService.chartValue(mapping);
             int chartSize = karyawanList.size();
 
+            Map rekapRoleMap = rekapMappingService.mapRoleToRekap(mapping);
+
+            List<RoleProyekModel> roles = roleProyekService.getAllRoleProyek();
+
+            Map roleMap = new HashMap();
+
+            for (RoleProyekModel role:roles) {
+                roleMap.put(role.getId(), role.getNamaRole());
+            }
+
+            model.addAttribute("rekapRoleMap", rekapRoleMap);
+            model.addAttribute("roles", roleMap);
+            model.addAttribute("allAvgRating", avgNilai);
             model.addAttribute("proyekList", proyekList);
             model.addAttribute("mapping", mapping);
             model.addAttribute("chartValue", chartValue);
@@ -170,7 +188,9 @@ public class IndexController
         if(periode != null) {
             String[] split = periode.split(" ");
             periodeDate = LocalDate.of(Integer.parseInt(split[1]), Month.valueOf(split[0].toUpperCase()), 1);
-
+            if(periodeDate.isAfter(periodeNow)){
+                periodeDate = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1);
+            }
             LocalDate prevPeriode = periodeDate.minusMonths(1);
             rekapService.populatePrevRekap(prevPeriode, periodeDate);
         } else { periodeDate = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1); }
@@ -184,12 +204,30 @@ public class IndexController
         int[] chartValue = rekapMappingService.chartValue(mapping);
         int chartSize = karyawanList.size();
 
+        Map rekapRoleMap = rekapMappingService.mapRoleToRekap(mapping);
+
         String dateToday = rekapMappingService.getCurrentDate();
 
         if(notification != null) {
             model.addAttribute("notification", notification);
         }
 
+        List<RoleProyekModel> roles = roleProyekService.getAllRoleProyek();
+
+        Map roleMap = new HashMap();
+
+        for (RoleProyekModel role:roles) {
+            roleMap.put(role.getId(), role.getNamaRole());
+        }
+
+        LocalDate next = periodeDate.plusMonths(1);
+
+        if(periodeNow.plusMonths(1).isAfter(next)){
+            model.addAttribute("next", periodeDate.plusMonths(1));
+        }
+
+        model.addAttribute("rekapRoleMap", rekapRoleMap);
+        model.addAttribute("roles", roleMap);
         model.addAttribute("date_today", dateToday);
         model.addAttribute("proyekList", proyekList);
         model.addAttribute("mapping", mapping);
@@ -198,10 +236,10 @@ public class IndexController
         model.addAttribute("totalPercentage", totalPerc);
         model.addAttribute("totalGreen", (int) (255 - (2.55*totalPerc)));
         model.addAttribute("totalRed", (int) (2.55*totalPerc));
-        model.addAttribute("next", periodeDate.plusMonths(1));
         model.addAttribute("current", periodeDate);
         model.addAttribute("previous", periodeDate.minusMonths(1));
         model.addAttribute("periodeNow", periodeNow);
+        model.addAttribute("invalidMonth", next);
         return "index-pmo";
     }
 

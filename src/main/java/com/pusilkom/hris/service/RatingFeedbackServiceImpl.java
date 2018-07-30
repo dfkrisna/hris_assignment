@@ -74,4 +74,13 @@ public class RatingFeedbackServiceImpl implements RatingFeedbackService {
         return ratingFeedbackMapper.selectRatingFeedbackPer(idKaryawanProyek,periode);
     }
 
+    @Override
+    public int getAllAverageRating(LocalDate periodeDate) {
+        int allAvgRating = 0;
+        if(ratingFeedbackMapper.selectMonthlyAvgRating(periodeDate) != null) {
+            allAvgRating = ratingFeedbackMapper.selectMonthlyAvgRating(periodeDate);
+        }
+        return allAvgRating;
+    }
+
 }

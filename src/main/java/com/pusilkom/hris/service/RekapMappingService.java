@@ -4,6 +4,7 @@ import com.pusilkom.hris.model.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 public interface RekapMappingService {
 
@@ -20,4 +21,6 @@ public interface RekapMappingService {
     KaryawanRekapModel getRekapBulananKaryawan(LocalDate periodeDate, int idKaryawan);
 
     KaryawanRekapModel getRekapBulananKaryawanProyek(int idKaryawan, int idProyek);
+
+    Map mapRoleToRekap(List<KaryawanRekapModel> mapping);
 }

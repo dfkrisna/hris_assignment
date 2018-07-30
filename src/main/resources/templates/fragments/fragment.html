@@ -3,14 +3,28 @@
 <head th:fragment="header-title">
     <meta charset="UTF-8">
     <title>SI SDM Penugasan dan Penilaian</title>
-    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <!--<script type="text/javascript" src="/js/bootstrap.min.js"></script>-->
+
     <script type="text/javascript">
         $.noConflict(true);
     </script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script>
+        $.widget.bridge('uibutton', $.ui.button);
+        $.widget.bridge('uitooltip', $.ui.tooltip);
+    </script>
+    <link rel="stylesheet" type="text/css" media="screen" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
@@ -18,8 +32,6 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/fixedcolumns/3.2.4/js/dataTables.fixedColumns.min.js"></script>
     <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.datatables.net/fixedcolumns/3.2.4/css/fixedColumns.bootstrap4.min.css">
 
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <link rel="stylesheet" type="text/css" media="screen" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
@@ -77,11 +89,11 @@
                                 <img class="icon-sidebar mr-2 mb-1" src="/img/yellow-home.png">Beranda Karyawan
                             </a>
                         </li>
-                        <li th:if="${#lists.contains(currentUser.strRoles,'ROLE_KARYAWAN')}" class="nav-item">
-                            <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/karyawan/rekanseproyek">
-                                <img class="icon-sidebar mr-2 mb-1" src="/img/yellow-people.png">Rekan Seproyek
-                            </a>
-                        </li>
+                        <!--<li th:if="${#lists.contains(currentUser.strRoles,'ROLE_KARYAWAN')}" class="nav-item">-->
+                            <!--<a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/karyawan/rekanseproyek">-->
+                                <!--<img class="icon-sidebar mr-2 mb-1" src="/img/yellow-people.png">Rekan Seproyek-->
+                            <!--</a>-->
+                        <!--</li>-->
                         <li th:if="${#lists.contains(currentUser.strRoles,'ROLE_KARYAWAN')}" class="nav-item">
                             <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/karyawan/penugasan">
                                 <img class="icon-sidebar mr-2 mb-1" src="/img/yellow-clock.png">Riwayat Penugasan
