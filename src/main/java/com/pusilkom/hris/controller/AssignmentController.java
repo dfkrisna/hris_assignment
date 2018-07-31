@@ -5,6 +5,7 @@ import com.pusilkom.hris.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -52,6 +53,7 @@ public class AssignmentController {
      * @return
      */
     @GetMapping("/pmo/assign/{idKaryawan}/{idProyek}/{tahun}/{bulan}")
+    @PreAuthorize("hasAuthority('GET_PMO')")
     public String assignKaryawanMatrix(Model model,
                                        @PathVariable(value = "tahun", required = true) Integer tahun,
                                        @PathVariable(value = "bulan", required = true) Integer bulan,
@@ -97,6 +99,7 @@ public class AssignmentController {
      * @return
      */
     @PostMapping(value = "/pmo/assign/{idKaryawan}/{idProyek}")
+    @PreAuthorize("hasAuthority('POST_PMO_ASSIGN_IDKARYAWAN_IDPROYEK')")
     public String saveNewAssignmentMatrix(Model model,
                                           RedirectAttributes ra,
                                           @PathVariable("idKaryawan") Integer idKaryawan,
@@ -165,7 +168,8 @@ public class AssignmentController {
      * @param idKaryawanProyek
      * @return
      */
-    @RequestMapping(value = "/pmo/update_assignment/{idKaryawanProyek}/{tahun}/{bulan}")
+    @GetMapping(value = "/pmo/update_assignment/{idKaryawanProyek}/{tahun}/{bulan}")
+    @PreAuthorize("hasAuthority('GET_PMO')")
     public String updateAssignmentMatrix(Model model,
                                          @PathVariable(value = "tahun", required = true) Integer tahun,
                                          @PathVariable(value = "bulan", required = true) Integer bulan,
@@ -214,7 +218,8 @@ public class AssignmentController {
      * @param endPeriode
      * @return
      */
-    @RequestMapping(value = "/pmo/update_assignment/{idKaryawanProyek}",method = RequestMethod.POST)
+    @PostMapping(value = "/pmo/update_assignment/{idKaryawanProyek}")
+    @PreAuthorize("hasAuthority('POST_PMO_UPDATE_ASSIGNMENT_IDKARYAWANPROYEK')")
     public String updateAssignmentMatrix(Model model,
                                          RedirectAttributes ra,
                                          @PathVariable("idKaryawanProyek") Integer idKaryawanProyek,
@@ -258,7 +263,8 @@ public class AssignmentController {
         return "redirect:/pmo";
     }
 
-    @RequestMapping(value = "/pmo/update_persentase/{idRekap}",method = RequestMethod.POST)
+    @PostMapping(value = "/pmo/update_persentase/{idRekap}")
+    @PreAuthorize("hasAuthority('POST_PMO_UPDATE_PERSENTASE_IDREKAP')")
     public String updateRekap(Model model, @PathVariable(value = "idRekap") int idRekap,
                               @RequestParam(value = "persenKontribusi") double persenKontribusi
                                          ) {
@@ -283,6 +289,7 @@ public class AssignmentController {
      * @return
      */
     @GetMapping("/pmo/proyek/tambah/assign/{idProyek}")
+    @PreAuthorize("hasAuthority('GET_PMO')")
     public String assignKaryawan(Model model, @PathVariable(value = "idProyek") int idProyek) {
         ProyekModel proyek = proyekService.getProyekById(idProyek);
 
@@ -309,6 +316,7 @@ public class AssignmentController {
      * @return
      */
     @PostMapping(value = "pmo/proyek/tambah/assign/{idProyek}")
+    @PreAuthorize("hasAuthority('POST_PMO_PROYEK_TAMBAH_ASSIGN_IDPROYEK')")
     public String assignKaryawan(Model model, @PathVariable(value = "idProyek") int idProyek,
                                  @RequestParam(value = "selectedKaryawan") List<Integer> karyawanIDList) {
         List<KaryawanModel> karyawanList = new ArrayList<KaryawanModel>();
@@ -348,6 +356,7 @@ public class AssignmentController {
      * @return
      */
     @PostMapping(value = "pmo/proyek/tambah/assign/{idKaryawan}/{idProyek}")
+    @PreAuthorize("hasAuthority('POST_PMO_PROYEK_TAMBAH_ASSIGN_IDKARYAWAN_IDPROYEK')")
     public String assignKaryawan(Model model, @PathVariable(value = "idKaryawan") int idKaryawan,
                                  @PathVariable(value = "idProyek") int idProyek,
                                  @RequestParam(value = "listKaryawanID", required = false) String listKaryawanID,
