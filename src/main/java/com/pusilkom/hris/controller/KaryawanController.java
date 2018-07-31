@@ -68,7 +68,7 @@ public class KaryawanController {
      * @return
      */
     @GetMapping("/karyawan")
-    @PreAuthorize("hasAuthority('GET_')")
+    @PreAuthorize("hasAuthority('GET_KARYAWAN')")
     public String indexKaryawan(Model model, Principal principal) {
         KaryawanModel karyawan = karyawanService.selectKaryawanByEmail(principal.getName());
         KaryawanModel karyawanLogin = karyawanService.getKaryawanById(karyawan.getId());
@@ -114,7 +114,7 @@ public class KaryawanController {
      * @return
      */
     @GetMapping("/karyawan/penugasan")
-    @PreAuthorize("hasAuthority('GET_')")
+    @PreAuthorize("hasAuthority('GET_KARYAWAN')")
     public String penugasanKaryawan(Model model, Principal principal) {
         KaryawanModel karyawan = karyawanService.selectKaryawanByEmail(principal.getName());
 
@@ -147,7 +147,7 @@ public class KaryawanController {
      * @return
      */
     @GetMapping(value ="/karyawan/penugasan/detail/{idProyek}")
-    @PreAuthorize("hasAuthority('GET_')")
+    @PreAuthorize("hasAuthority('GET_KARYAWAN')")
     public String detailpenugasanKaryawan(Model model, HttpSession session, @PathVariable Integer idProyek,
                                           Principal principal, @RequestParam(value = "periode", required = false) String periode) {
         //select karyawan, lalu cek detail penugasan dan rekap evaluasi diri
@@ -253,7 +253,7 @@ public class KaryawanController {
      * @return
      */
     @GetMapping(value="/karyawan/penilaian-mandiri/tambah/{idProyek}/{id}")
-    @PreAuthorize("hasAuthority('GET_')")
+    @PreAuthorize("hasAuthority('GET_KARYAWAN')")
     public String tambahPenilaianMandiri (Model model, HttpSession session,@PathVariable Integer idProyek, @PathVariable Integer id){
         //select rekap bulanan milik karyawan
         RekapModel rekap = rekapService.selectRekapById(id);
@@ -278,7 +278,7 @@ public class KaryawanController {
      * @return
      */
     @PostMapping(value="/karyawan/penilaian-mandiri/tambah/{idProyek}/{id}")
-    @PreAuthorize("hasAuthority('POST_')")
+    @PreAuthorize("hasAuthority('POST_KARYAWAN_PENILAIAN_MANDIRI_TAMBAH_IDPROYEK_ID')")
     public String tambahPenilaianMandiriSubmit (Model model, HttpSession session, @RequestParam(value = "isi-evaluasi") String isiEvaluasi,
                                                 @PathVariable Integer idProyek, @PathVariable Integer id, RedirectAttributes redirectAttributes){
 
@@ -308,7 +308,7 @@ public class KaryawanController {
      * @return
      */
     @GetMapping(value="/karyawan/rekanseproyek")
-    @PreAuthorize("hasAuthority('GET_')")
+    @PreAuthorize("hasAuthority('GET_KARYAWAN')")
     public String lihatRekanSekproyek(Model model, HttpSession session, Principal principal,
                                       @RequestParam(value = "periode", required = false) String periode)
     {
@@ -394,7 +394,7 @@ public class KaryawanController {
      * @return
      */
     @GetMapping(value="/karyawan/rekanseproyek/feedback")
-    @PreAuthorize("hasAuthority('GET_')")
+    @PreAuthorize("hasAuthority('GET_KARYAWAN')")
     public String manageFeedbackRekan(Model model, RedirectAttributes redirectAttributes, HttpSession session, Principal principal,
                                       @RequestParam(value = "namaRekan", required = false) String namaRekan,
                                       @RequestParam(value = "idRekan", required = false) int idRekan,
