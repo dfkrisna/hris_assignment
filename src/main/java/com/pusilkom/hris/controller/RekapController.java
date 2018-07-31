@@ -41,7 +41,7 @@ public class RekapController {
      * @return
      */
     @GetMapping(value = "/rekap/karyawan/riwayat/{idKaryawan}")
-    @PreAuthorize("hasAuthority('GET_')")
+    @PreAuthorize("hasAuthority('GET_REKAP_KARYAWAN_RIWAYAT_IDKARYAWAN')")
     public String rekapKaryawanRiwayat(Model model, @PathVariable Integer idKaryawan) {
         LocalDate  periodeDate = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1);
 
@@ -76,7 +76,7 @@ public class RekapController {
      * @return
      */
     @GetMapping(value = "/rekap/karyawan/feedback/{idKaryawan}")
-    @PreAuthorize("hasAuthority('GET_')")
+    @PreAuthorize("hasAuthority('GET_REKAP_KARYAWAN_FEEDBACK_IDKARYAWAN')")
     public String rekapKaryawanFeedback(Model model, @PathVariable Integer idKaryawan,
                                         @RequestParam(value = "periode", required = false) String periode) {
         LocalDate periodeDate;
@@ -118,7 +118,7 @@ public class RekapController {
      * @return
      */
     @GetMapping(value = "/rekap/proyek/{idProyek}")
-    @PreAuthorize("hasAuthority('GET_')")
+    @PreAuthorize("hasAuthority('GET_REKAP_PROYEK_IDPROYEK')")
     public String rekapProyek(Model model, @PathVariable Integer idProyek) {
         ProyekModel proyek = proyekService.getProyekById(idProyek);
 
