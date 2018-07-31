@@ -33,7 +33,7 @@ public class AdminController
      * @return
      */
     @GetMapping("/admin/addpengguna")
-    @PreAuthorize("hasAuthority('GET_')")
+    @PreAuthorize("hasAuthority('GET_ADMIN')")
     public String addPenggunaForm(Model model)
     {
         PenggunaModel pengguna = new PenggunaModel();
@@ -54,7 +54,7 @@ public class AdminController
      * @return
      */
     @PostMapping(value = "/admin/addpengguna/submit")
-    @PreAuthorize("hasAuthority('POST_')")
+    @PreAuthorize("hasAuthority('POST_ADMIN_ADDPENGGUNA_SUBMIT')")
     public String addPenggunaSubmit(Model model, PenggunaModel newPengguna)
     {
 
@@ -76,7 +76,7 @@ public class AdminController
      *
      */
     @GetMapping("/admin/updatepengguna/{id}")
-    @PreAuthorize("hasAuthority('GET_')")
+    @PreAuthorize("hasAuthority('GET_ADMIN')")
     public String updatePengguna (Model model, @PathVariable(value = "id") int id)
     {
         PenggunaModel pengguna = penggunaDAO.getPengguna(id);
@@ -107,7 +107,7 @@ public class AdminController
      * termasuk nama dan role pengguna
      */
     @PostMapping(value = "/admin/updatepengguna/submit")
-    @PreAuthorize("hasAuthority('POST_')")
+    @PreAuthorize("hasAuthority('POST_ADMIN_UPDATEPENGGUNA_SUBTMIT')")
     public String updatePenggunaSubmit(Model model, PenggunaModel pengguna,
                                        @RequestParam(value="roleChecked") List<String> roleBaru)
     {
@@ -266,7 +266,7 @@ public class AdminController
      * method yang berfungsi untuk menghapus pengguna dari sistem
      */
     @GetMapping("/admin/deletepengguna/{id}")
-    @PreAuthorize("hasAuthority('GET_')")
+    @PreAuthorize("hasAuthority('GET_ADMIN')")
     public String deletePengguna (Model model, @PathVariable(value = "id") int id)
     {
         PenggunaModel pengguna = penggunaDAO.getPengguna(id);
