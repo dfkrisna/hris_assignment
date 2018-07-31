@@ -103,6 +103,7 @@ public class IndexController
      * @return
      */
     @GetMapping(value = "/eksekutif")
+    @PreAuthorize("hasAuthority('GET_')")
     public String indexEksekutif (Model model, @RequestParam(value = "periode", required = false) String periode)
     {
         LocalDate periodeDate;
@@ -159,6 +160,7 @@ public class IndexController
      * @return
      */
     @GetMapping("/admin")
+    @PreAuthorize("hasAuthority('GET_')")
     public String indexAdmin (Model model)
     {
         String dateToday = rekapMappingService.getCurrentDate();
@@ -178,6 +180,7 @@ public class IndexController
      * @return
      */
     @GetMapping("/pmo")
+    @PreAuthorize("hasAuthority('GET_')")
     public String indexPMO (Model model,
                             @RequestParam(value = "periode", required = false) String periode,
                             @ModelAttribute("notification") String notification)
@@ -250,6 +253,7 @@ public class IndexController
      * @return
      */
     @GetMapping("/mngdivisi")
+    @PreAuthorize("hasAuthority('GET_')")
     public String indexManajerDivisi(Model model, Principal principal) {
         PenggunaModel pengguna = penggunaDAO.getPenggunaLama(principal.getName());
 
