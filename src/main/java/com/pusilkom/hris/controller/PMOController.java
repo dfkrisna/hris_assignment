@@ -60,7 +60,7 @@ public class PMOController {
      * @return halaman form tambah proyek
      */
     @GetMapping("/proyek/tambah")
-    @PreAuthorize("hasAuthority('GET_')")
+    @PreAuthorize("hasAuthority('GET_PROYEK_TAMBAH')")
     public String addProyek(Model model, Principal principal) {
         //mengambil data pengguna yang sedang login
         PenggunaModel pengguna = penggunaDAO.getPenggunaLama(principal.getName());
@@ -102,7 +102,7 @@ public class PMOController {
      * @return halaman mengelola penugasan
      */
     @PostMapping(value = "/proyek/tambah")
-    @PreAuthorize("hasAuthority('POST_')")
+    @PreAuthorize("hasAuthority('POST_PROYEK_TAMBAH')")
     public String addProyekSubmit(Model model, @ModelAttribute ProyekModel proyek, @RequestParam(value = "startdate", required = false) String startPeriode,
                                   @RequestParam(value = "enddate", required = false) String endPeriode) {
        //null handling
@@ -145,7 +145,7 @@ public class PMOController {
      * @return
      */
     @GetMapping("/proyek/ubah/{id}")
-    @PreAuthorize("hasAuthority('GET_')")
+    @PreAuthorize("hasAuthority('GET_PROYEK_UBAH_ID')")
     public String ubahProyek(Model model, @PathVariable(value = "id") Integer id) {
 
         //mengambil date today
@@ -220,7 +220,7 @@ public class PMOController {
      * @return
      */
     @PostMapping(value = "/proyek/ubah/{id}")
-    @PreAuthorize("hasAuthority('POST_')")
+    @PreAuthorize("hasAuthority('POST_PROYEK_UBAH_ID')")
     public String ubahProyek(Model model, @ModelAttribute ProyekModel proyek,
                              @RequestParam(value = "startdate", required = false) String startPeriode,
                              @RequestParam(value = "enddate", required = false) String endPeriode) {
@@ -328,7 +328,7 @@ public class PMOController {
      * @return halaman detail proyek
      */
     @GetMapping("/proyek/detail/{id}")
-    @PreAuthorize("hasAuthority('GET_')")
+    @PreAuthorize("hasAuthority('GET_PROYEK_DETAIL_ID')")
     public String detailProyek(Model model, @PathVariable(value = "id") Integer id,
                                @ModelAttribute("notification") String notification) {
 
@@ -396,7 +396,7 @@ public class PMOController {
      * @return
      */
     @GetMapping("/karyawan/projectlead")
-    @PreAuthorize("hasAuthority('GET_')")
+    @PreAuthorize("hasAuthority('GET_KARYAWAN')")
     public String listProyekDipimin(Model model, Principal principal) {
 
         //pass date today
@@ -433,7 +433,7 @@ public class PMOController {
      * @return
      */
     @GetMapping("/karyawan/projectlead/detail/{id}")
-    @PreAuthorize("hasAuthority('GET_')")
+    @PreAuthorize("hasAuthority('GET_KARYAWAN')")
     public String detailProyekProjlead(Model model, @PathVariable(value = "id") Integer id, Principal principal) {
         String dateToday = rekapMappingDAO.getCurrentDate();
         model.addAttribute("date_today", dateToday);
@@ -482,7 +482,7 @@ public class PMOController {
      * @return
      */
     @GetMapping("/karyawan/projectlead/detail/{idProyek}/{idKaryawan}")
-    @PreAuthorize("hasAuthority('GET_')")
+    @PreAuthorize("hasAuthority('GET_KARYAWAN')")
     public String detailKarproProjlead(Model model, @PathVariable(value = "idProyek") Integer idProyek,
                                        @PathVariable(value = "idKaryawan") Integer idKaryawan,
                                        @RequestParam(value = "periode", required = false) String periode,
@@ -546,7 +546,7 @@ public class PMOController {
      * @return
      */
     @PostMapping(value = "/karyawan/projectlead/detail/finalisasi")
-    @PreAuthorize("hasAuthority('POST_')")
+    @PreAuthorize("hasAuthority('POST_KARYAWAN_PROJECTLEADA_DETAIL_FINALISASI')")
     public String finalisasi(Model model,
                              RedirectAttributes ra,
                              @RequestParam(value = "periode") String periode,
@@ -569,7 +569,7 @@ public class PMOController {
     }
 
     @GetMapping(value = "pmo/detail-karyawan/{idKar}")
-    @PreAuthorize("hasAuthority('GET_')")
+    @PreAuthorize("hasAuthority('GET_PMO')")
     public String showDetailKaryawan(Model model,
                                      @RequestParam(value = "periode", required = false) String periode,
                                      @PathVariable(value = "idKar") int idKaryawan) {
@@ -651,7 +651,7 @@ public class PMOController {
      * @return
      */
     @GetMapping("/proyek/status/{id}")
-    @PreAuthorize("hasAuthority('GET_')")
+    @PreAuthorize("hasAuthority('GET_PROYEK_STATUS_ID')")
     public String changeStatus(Model model, @PathVariable(value = "id") Integer id,
                                RedirectAttributes ra,
                                @RequestParam(value = "newstatus", required = false) Integer newstatus,
