@@ -52,7 +52,7 @@ public class ManajerDivisiController {
      * @return
      */
     @GetMapping(value="/mngdivisi/rekap/{idKar}")
-    @PreAuthorize("hasAuthority('GET_')")
+    @PreAuthorize("hasAuthority('GET_MNGDIVISI')")
     public String showDetailKaryawan(Model model,
                                      RedirectAttributes ra,
                                      @RequestParam(value = "periode", required = false) String periode,
@@ -152,7 +152,7 @@ public class ManajerDivisiController {
      * @return
      */
     @PostMapping(value = "/mngdivisi/rekap/finalisasi")
-    @PreAuthorize("hasAuthority('POST_')")
+    @PreAuthorize("hasAuthority('POST_MNGDIVISI_REKAP_FINALISASI')")
     public String finalisasi(Model model,
                              RedirectAttributes ra,
                              @RequestParam(value = "periode") String periode,
