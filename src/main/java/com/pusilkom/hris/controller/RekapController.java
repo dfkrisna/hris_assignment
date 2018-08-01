@@ -51,7 +51,7 @@ public class RekapController {
             int ratingKaryawan = ratingFeedbackService.getAvgRatingKaryawan(karyawan.getId());
             int persentaseKontribusi = (int) (rekapService.getKaryawanKontribusi(karyawan.getId(), LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1)) * 100);
 
-
+            model.addAttribute("karyawan", karyawan);
             model.addAttribute("ratingKaryawan", ratingKaryawan);
             model.addAttribute("persentaseKontribusi", persentaseKontribusi);
             model.addAttribute("penugasanList", penugasanList);
