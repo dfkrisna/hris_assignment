@@ -3,6 +3,8 @@ package com.pusilkom.hris.service;
 import com.pusilkom.hris.dao.*;
 import com.pusilkom.hris.model.PenggunaModel;
 import com.pusilkom.hris.model.Roles;
+import com.pusilkom.hris.model.UserWeb;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -47,6 +49,37 @@ public class PenggunaServiceImpl implements PenggunaService {
 	public PenggunaModel getPenggunaLama(String username)
 	{
 		return penggunaMapper.getAPenggunaByUsername(username);
+	}
+
+	@Override
+	public void signUpIfNotExist(UserWeb user) {
+		if(getPenggunaLama(user.getUsername()) == null){
+			String userName = user.getUsername();
+			pegawaiMapper.addPegawai(userName);
+			
+			int idPegawai;
+			if(pegawaiMapper.getIdByName(userName) != null){
+				idPegawai = Integer.parseInt(pegawaiMapper.getIdByName(userName));
+			}
+			else {
+				idPegawai = 0;
+			}
+			
+			PenggunaModel newPengguna = new PenggunaModel();
+			newPengguna.setId_pegawai(idPegawai);
+			newPengguna.setNama(userName);
+			newPengguna.setUsername(userName);
+			newPengguna.setPassword(user.getPassword());
+			penggunaMapper.addPengguna(newPengguna);
+
+			int idPengguna = Integer.parseInt(penggunaMapper.getIdByUsername(userName));
+			for(String role : user.getStrRoles()){
+				if(penggunaMapper.getIdRoleByNamaRole(role) != null){
+					int idRole = Integer.parseInt(penggunaMapper.getIdRoleByNamaRole(role));
+					penggunaMapper.addRoleToPengguna(idPengguna, idRole);
+				}
+            }
+		}
 	}
 
 	@Override

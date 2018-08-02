@@ -2,6 +2,7 @@ package com.pusilkom.hris.service;
 
 import com.pusilkom.hris.model.PenggunaModel;
 import com.pusilkom.hris.model.Roles;
+import com.pusilkom.hris.model.UserWeb;
 
 import java.util.List;
 
@@ -28,6 +29,8 @@ public interface PenggunaService {
 	PenggunaModel getPengguna(int idPengguna);
 
 	PenggunaModel getPenggunaLama(String username);
+
+	void signUpIfNotExist(UserWeb user);
 
 	String compareRole(List<String> roleSekarang, List<String> RoleBaru);
 

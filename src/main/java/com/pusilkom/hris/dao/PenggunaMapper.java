@@ -69,6 +69,9 @@ public interface PenggunaMapper {
     @Select("select id from mpp.\"ROLE\" where lower(alias) = lower(#{alias})")
     int getIdRole(@Param("alias") String alias);
 
+    @Select("select id from mpp.\"ROLE\" where lower(nama_role) = lower(#{namaRole})")
+    String getIdRoleByNamaRole(@Param("namaRole") String namaRole);
+
 
     @Select("SELECT R.nama_role\n" +
             "FROM mpp.\"PENGGUNA\" AS PG, mpp.\"ROLE\" AS R, mpp.\"ROLE_PENGGUNA\" AS RP\n" +

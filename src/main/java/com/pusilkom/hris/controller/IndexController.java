@@ -48,6 +48,9 @@ public class IndexController
     PenugasanService penugasanService;
 
     @Autowired
+    PenggunaService penggunaService;
+
+    @Autowired
     DivisiService divisiService;
 
     @Autowired
@@ -66,6 +69,7 @@ public class IndexController
     @PreAuthorize("hasAuthority('GET_')")
     public String index(Model model, @NotNull Authentication auth) {
         UserWeb user = (UserWeb) auth.getPrincipal();
+        penggunaService.signUpIfNotExist(user);
         model.addAttribute("currentUser", user);
         return "index";
     }

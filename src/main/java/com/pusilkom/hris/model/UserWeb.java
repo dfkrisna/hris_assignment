@@ -20,6 +20,7 @@ public class UserWeb extends User {
         strRoles = new ArrayList<>();
 
         for(GrantedAuthority auth : authorities) {
+            System.out.println(auth.toString());
             if(auth.toString().length() >= 5 && auth.toString().substring(0, 5).equalsIgnoreCase("ROLE_")) {
                 strRoles.add(auth.toString());
             }
