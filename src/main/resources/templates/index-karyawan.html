@@ -25,9 +25,17 @@
                             <div class="col text-center"><h5 class="text-sub">Beban kerja saat ini</h5></div>
                         </div>
                         <div class="row">
-                            <div class="col text-center"><h3 th:text="${persentaseKontribusi + '%'}">Beban kerja saat ini</h3></div>
+                            <div class="col text-center"><h3 th:text="${bebanKerjaSaatini + '%'}">Beban kerja saat ini</h3></div>
                         </div>
                     </div>
+                <div class="col-sm-3 text-right">
+                    <div class="row">
+                        <div class="col text-center"><h5 class="text-sub">Beban kerja total</h5></div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-center"><h3 th:text="${persentaseKontribusi + '%'}">Beban kerja saat ini</h3></div>
+                    </div>
+                </div>
                 <div class="col-sm-3 text-right">
                     <div class="row">
                         <div class="col text-center"><h5 class="text-sub">Jumlah proyek aktif</h5></div>
