@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 <head th:replace="fragments/fragment :: header-title">
 </head>
 <body>
@@ -75,10 +74,10 @@
                 <div th:each="rekap,iterationStatus: ${map.rekapList}">
 
 
-                    <td data-toggle="tooltip" th:title="${roles.get(rekapRoleMap.get(rekap.id))}" data-placement="bottom" lass="text-center montserrat-small" th:if="${rekap.getPersentase() > 0}">
+                    <td class="text-center" data-toggle="tooltip" th:title="${roles.get(rekapRoleMap.get(rekap.id))}" data-placement="bottom" lass="text-center montserrat-small" th:if="${rekap.getPersentase() > 0}">
 
-                        <a th:text="${rekap.persentase + '%'}" data-toggle="modal" th:attr="data-target='#PmoModal-' + ${rekap.idKaryawanProyek} + '-' + ${current.year} + '-' + ${current.getMonthValue()}" role="dialog" class="text-center montserrat-small"
-                        ></a>
+                        <a  th:text="${rekap.persentase + '%'}" data-toggle="modal" th:attr="data-target='#PmoModal-' + ${rekap.idKaryawanProyek} + '-' + ${current.year} + '-' + ${current.getMonthValue()}" role="dialog" class="text-center montserrat-small"
+                                   style=""></a>
               
                         
 
@@ -118,7 +117,7 @@
                     </td>
 
                     <td class="text-center montserrat-small" th:unless="${rekap.getPersentase() > 0}" th:if="${current!=null}">
-                        <a th:href="'/pmo/assign/' + ${map.karyawan.id} + '/' + ${rekap.idProyek} + '/' + ${current.year} + '/' + ${current.getMonthValue()}"  type="button" class="btn btn-primary btn-md" style="color: white;border-radius: 100px;">Tugaskan</a>
+                        <a th:href="'/pmo/assign/' + ${map.karyawan.id} + '/' + ${rekap.idProyek} + '/' + ${current.year} + '/' + ${current.getMonthValue()}"  type="button"  style="background-color: #3498DB; color: white;border-radius: 10px; padding: 4px 8px; font-size: 11px;">Tugaskan</a>
                     </td>
                 </div>
             </div>
