@@ -90,7 +90,8 @@ public interface KaryawanMapper {
     @Select("select distinct kp.id from " +
             "mpp.\"RATING_FEEDBACK\" as rt, " +
             "mpp.\"KARYAWAN_PROYEK\" as kp " +
-            "where kp.id_karyawan = #{idKaryawan} and kp.id_proyek = #{idProyek}")
+            "where kp.id_karyawan = #{idKaryawan} and kp.id_proyek = #{idProyek}" +
+            "ORDER by kp.id DESC LIMIT 1")
     int getKaryawanIdPenilai(@Param("idKaryawan") int idKaryawan,
                              @Param("idProyek") int idProyek);
 

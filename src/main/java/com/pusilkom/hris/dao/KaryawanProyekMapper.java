@@ -63,7 +63,8 @@ public interface KaryawanProyekMapper {
     @Select("SELECT id, id_karyawan, id_proyek, start_periode, end_periode, timestamp_inisiasi, id_role, is_active\n" +
             "FROM mpp.\"KARYAWAN_PROYEK\"\n" +
             "WHERE id_karyawan = ${idKaryawan}" +
-            "AND id_proyek = ${idProyek}")
+            "AND id_proyek = ${idProyek}" +
+            "AND is_active = TRUE")
     @Results(value = {
             @Result(property="id", column="id"),
             @Result(property="idKaryawan", column="id_karyawan"),
@@ -97,7 +98,8 @@ public interface KaryawanProyekMapper {
     KaryawanProyekModel selectKaryawanProyekById(@Param("idKaryawanProyek") Integer idKaryawanProyek);
 
     @Update("UPDATE mpp.\"KARYAWAN_PROYEK\"\n" +
-            "\tSET end_periode=#{endPeriode}\n" +
+            "\tSET end_periode=#{endPeriode},\n" +
+            "is_active=#{isActive}" +
             "\tWHERE id=#{id};")
     void updateKaryawanProyek(KaryawanProyekModel karyawanProyek);
 

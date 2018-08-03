@@ -3,6 +3,7 @@ package com.pusilkom.hris.controller;
 import com.pusilkom.hris.model.*;
 import com.pusilkom.hris.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +41,7 @@ public class RekapController {
      * @return
      */
     @GetMapping(value = "/rekap/karyawan/riwayat/{idKaryawan}")
+    @PreAuthorize("hasAuthority('GET_REKAP_KARYAWAN_RIWAYAT_IDKARYAWAN')")
     public String rekapKaryawanRiwayat(Model model, @PathVariable Integer idKaryawan) {
         LocalDate  periodeDate = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1);
 
@@ -73,7 +75,8 @@ public class RekapController {
      * @param periode
      * @return
      */
-    @RequestMapping(value = "/rekap/karyawan/feedback/{idKaryawan}", method = RequestMethod.GET)
+    @GetMapping(value = "/rekap/karyawan/feedback/{idKaryawan}")
+    @PreAuthorize("hasAuthority('GET_REKAP_KARYAWAN_FEEDBACK_IDKARYAWAN')")
     public String rekapKaryawanFeedback(Model model, @PathVariable Integer idKaryawan,
                                         @RequestParam(value = "periode", required = false) String periode) {
         LocalDate periodeDate;
@@ -114,7 +117,8 @@ public class RekapController {
      * @param idProyek
      * @return
      */
-    @RequestMapping(value = "/rekap/proyek/{idProyek}")
+    @GetMapping(value = "/rekap/proyek/{idProyek}")
+    @PreAuthorize("hasAuthority('GET_REKAP_PROYEK_IDPROYEK')")
     public String rekapProyek(Model model, @PathVariable Integer idProyek) {
         ProyekModel proyek = proyekService.getProyekById(idProyek);
 

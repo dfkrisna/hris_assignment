@@ -3,6 +3,7 @@ package com.pusilkom.hris.controller;
 import com.pusilkom.hris.model.*;
 import com.pusilkom.hris.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -51,6 +52,7 @@ public class ManajerDivisiController {
      * @return
      */
     @GetMapping(value="/mngdivisi/rekap/{idKar}")
+    @PreAuthorize("hasAuthority('GET_MNGDIVISI')")
     public String showDetailKaryawan(Model model,
                                      RedirectAttributes ra,
                                      @RequestParam(value = "periode", required = false) String periode,
@@ -150,6 +152,7 @@ public class ManajerDivisiController {
      * @return
      */
     @PostMapping(value = "/mngdivisi/rekap/finalisasi")
+    @PreAuthorize("hasAuthority('POST_MNGDIVISI_REKAP_FINALISASI')")
     public String finalisasi(Model model,
                              RedirectAttributes ra,
                              @RequestParam(value = "periode") String periode,
