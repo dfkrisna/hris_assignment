@@ -26,5 +26,6 @@ public interface RatingFeedbackService {
     List<RatingFeedbackModel> selectRatingFeedbackPer(Integer idKaryawanProyek, LocalDate periode);
 
     int getAllAverageRating(LocalDate periodeDate);
+    int[] getRecapAllAverageRating(LocalDate periode);
 }
 

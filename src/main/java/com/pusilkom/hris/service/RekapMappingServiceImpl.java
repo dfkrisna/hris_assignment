@@ -116,6 +116,7 @@ public class RekapMappingServiceImpl implements RekapMappingService {
         else {return total/mapping.size();}
     }
 
+
     public List<KaryawanRekapModel> mapRekapAssignment(List<KaryawanModel> karyawanList, List<ProyekModel> proyekList, List<KaryawanProyekModel> karyawanProyekList, List<RekapModel> rekapList, int idProyek) {
         List<KaryawanRekapModel> mapping = new ArrayList<KaryawanRekapModel>();
         boolean isAssigned;
