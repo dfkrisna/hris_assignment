@@ -84,12 +84,11 @@ public class KaryawanController {
 
         int bebanKerjaSaatini = 0;
 
-        log.info(" kontol"+ penugasanPeriodeIni.size());
         for(int i =0; i < penugasanPeriodeIni.size(); i++){
             bebanKerjaSaatini+= penugasanPeriodeIni.get(i).getPersentase();
         }
 
-        int rataRataBeban = persentaseKontribusi/penugasanList.size();
+        int rataRataBeban = bebanKerjaSaatini/penugasanPeriodeIni.size();
 
         model.addAttribute("rataRataBeban", rataRataBeban);
         model.addAttribute("ratingKaryawan", ratingKaryawan);
