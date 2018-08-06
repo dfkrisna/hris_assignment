@@ -74,7 +74,7 @@
                 <div th:each="rekap,iterationStatus: ${map.rekapList}">
 
 
-                    <td data-toggle="tooltip" th:title="${roles.get(rekapRoleMap.get(rekap.id))}" data-placement="bottom" lass="text-center montserrat-small" th:if="${rekap.getPersentase() > 0}">
+                    <td data-toggle="tooltip" th:title="${roles.get(rekapRoleMap.get(rekap.id))}" data-placement="bottom" class="text-center montserrat-small" th:if="${rekap.getPersentase() > 0}">
 
                         <a th:text="${rekap.persentase + '%'}" data-toggle="modal" th:attr="data-target='#PmoModal-' + ${rekap.idKaryawanProyek} + '-' + ${current.year} + '-' + ${current.getMonthValue()}" role="dialog" class="text-center montserrat-small"
                         style="text-align: center;"></a>
