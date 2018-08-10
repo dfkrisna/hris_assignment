@@ -22,7 +22,7 @@
     <div class="panel panel-default">
 
         <div class="panel-body">
-            <form method="post" th:action="@{/auth/create}" th:object="${authItemChildCmd}" class="form-horizontal">
+            <form method="post" th:action="@{/assignment/auth/create}" th:object="${authItemChildCmd}" class="form-horizontal">
                 <div class="form-group" th:classappend="${#fields.hasErrors('parent')} ? has-error">
                     <label class="col-sm-2 control-label">Parent*</label>
                     <div class="col-lg-6">
@@ -46,7 +46,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                         <button type="submit" class="btn btn-success">Simpan</button>
-                        <a th:href="@{/auth/manage}" class="btn btn-default">Kembali</a>
+                        <a th:href="@{/assignment/auth/manage}" class="btn btn-default">Kembali</a>
                     </div>
                 </div>
             </form>

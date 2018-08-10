@@ -38,7 +38,7 @@
             </thead>
             <div th:each="karyawan, iterationStatus: ${listKaryawan}">
                 <tr>
-                    <td><a class="montserrat-small" th:text="${karyawan.nama}" th:href="'/mngdivisi/rekap/' + ${karyawan.id}"></a></td>
+                    <td><a class="montserrat-small" th:text="${karyawan.nama}" th:href="'/assignment/mngdivisi/rekap/' + ${karyawan.id}"></a></td>
                     <td>
                         <div th:if="${mapping.get(karyawan.id) >= 0 && mapping.get(karyawan.id) <= 60}">
                             <img class="d-inline icon-sidebar mr-2" src="/img/bronze-star.png">
