@@ -42,7 +42,7 @@
             </thead>
             <div th:each="penugasan,iterationStatus: ${listpenugasan}">
                 <tr>
-                    <td><a class="montserrat-small" th:text="${penugasan.namaProyek}" th:href="${'/karyawan/projectlead/detail/' + penugasan.idProyek}"></a></td>
+                    <td><a class="montserrat-small" th:text="${penugasan.namaProyek}" th:href="${'/assignment/karyawan/projectlead/detail/' + penugasan.idProyek}"></a></td>
                     <td class="montserrat-small" th:text="${penugasan.namaKlien}"></td>
                     <td class="montserrat-small" th:text="${penugasan.getPersentaseKontribusi()} + '%'"></td>
                     <td class="montserrat-small" th:text="${penugasan.getPeriode()}"></td>

@@ -6,8 +6,10 @@ import com.pusilkom.hris.model.KaryawanModel;
 import com.pusilkom.hris.model.PenugasanModel;
 import com.pusilkom.hris.model.RekapModel;
 import com.pusilkom.hris.service.*;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+@Slf4j
 @Controller
 public class KaryawanController {
     @Autowired
@@ -56,21 +58,36 @@ public class KaryawanController {
     @Autowired
     DivisiService divisiService;
 
+    @Autowired
+    RatingFeedbackService ratingFeedbackService;
+
     /**
      * method ini berfungsi untuk menampilkan beranda karyawan yang berisi penugasan pada periode ini
      * @param model
      * @param principal
      * @return
      */
-    @GetMapping("/karyawan")
+    @GetMapping("/assignment/karyawan")
+    @PreAuthorize("hasAuthority('GET_KARYAWAN')")
     public String indexKaryawan(Model model, Principal principal) {
         KaryawanModel karyawan = karyawanService.selectKaryawanByEmail(principal.getName());
-
+        KaryawanModel karyawanLogin = karyawanService.getKaryawanById(karyawan.getId());
         //get periode saat ini dan mengecek penugasan pada periode tersebut
         LocalDate periode = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1);
-        List<PenugasanModel> penugasanPeriodeIni = penugasanService.getPenugasanPeriodeIni(karyawan.getId(), periode);
+        List<PenugasanModel> penugasanPeriodeIni = penugasanService.getPenugasanAktifPeriodeIni(karyawan.getId(), periode);
+      
+        List<PenugasanModel> penugasanList = penugasanService.getPenugasanList(karyawan.getId());
+
+        int ratingKaryawan = ratingFeedbackService.getAvgRatingKaryawan(karyawan.getId());
+        int persentaseKontribusi = (int) (rekapService.getKaryawanKontribusi(karyawan.getId(), LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1)) * 100);
+
+
+        model.addAttribute("ratingKaryawan", ratingKaryawan);
+        model.addAttribute("persentaseKontribusi", persentaseKontribusi);
+        model.addAttribute("penugasanList", penugasanList);
 
         String dateToday = rekapMappingService.getCurrentDate();
+
         model.addAttribute("date_today", dateToday);
 
         if(penugasanPeriodeIni != null){
@@ -83,6 +100,10 @@ public class KaryawanController {
             model.addAttribute("notification", notification);
         }
 
+        log.info(" " + karyawanLogin.getNama());
+        log.info(" " + karyawan.getId());
+        log.info(" " + karyawanLogin.getId());
+        model.addAttribute("karyawanLogin", karyawanLogin);
         return "index-karyawan";
     }
 
@@ -92,7 +113,8 @@ public class KaryawanController {
      * @param principal
      * @return
      */
-    @RequestMapping("/karyawan/penugasan")
+    @GetMapping("/assignment/karyawan/penugasan")
+    @PreAuthorize("hasAuthority('GET_KARYAWAN')")
     public String penugasanKaryawan(Model model, Principal principal) {
         KaryawanModel karyawan = karyawanService.selectKaryawanByEmail(principal.getName());
 
@@ -124,8 +146,10 @@ public class KaryawanController {
      * @param principal
      * @return
      */
-    @GetMapping(value ="/karyawan/penugasan/detail/{idProyek}")
-    public String detailpenugasanKaryawan(Model model, @PathVariable Integer idProyek, Principal principal) {
+    @GetMapping(value ="/assignment/karyawan/penugasan/detail/{idProyek}")
+    @PreAuthorize("hasAuthority('GET_KARYAWAN')")
+    public String detailpenugasanKaryawan(Model model, HttpSession session, @PathVariable Integer idProyek,
+                                          Principal principal, @RequestParam(value = "periode", required = false) String periode) {
         //select karyawan, lalu cek detail penugasan dan rekap evaluasi diri
         KaryawanModel karyawan = karyawanService.selectKaryawanByEmail(principal.getName());
         PenugasanModel detailPenugasan = penugasanService.getDetailPenugasanById(idProyek, karyawan.getId());
@@ -137,72 +161,7 @@ public class KaryawanController {
         model.addAttribute("page_title","Detail Penugasan");
         model.addAttribute("detailPenugasan", detailPenugasan);
         model.addAttribute("rekapPenilaianMandiri", rekapPenilaianMandiri);
-
-        return "detail-proyek";
-    }
-
-    /**
-     * method ini digunakan untuk menambahkan evaluasi diri karyawan
-     * @param model
-     * @param session
-     * @param idProyek
-     * @param id
-     * @return
-     */
-    @GetMapping(value="/karyawan/penilaian-mandiri/tambah/{idProyek}/{id}")
-    public String tambahPenilaianMandiri (Model model, HttpSession session,@PathVariable Integer idProyek, @PathVariable Integer id){
-        //select rekap bulanan milik karyawan
-        RekapModel rekap = rekapService.selectRekapById(id);
-        //set deadline pengisian
-        LocalDate deadlinePengisian = rekap.getPeriode().plusMonths(1);
-
-        //pass ke view
-        model.addAttribute("deadlinePengisian", deadlinePengisian);
-        model.addAttribute("rekap", rekap);
-
-        return "form-add-penilaianmandiri";
-    }
-
-    /**
-     * method ini digunakan untuk submit evaluasi diri yang dimasukkan karyawan
-     * @param model
-     * @param session
-     * @param rekap
-     * @param idProyek
-     * @param id
-     * @param redirectAttributes
-     * @return
-     */
-    @PostMapping(value="/karyawan/penilaian-mandiri/tambah/{idProyek}/{id}")
-    public String tambahPenilaianMandiriSubmit (Model model, HttpSession session, @ModelAttribute RekapModel rekap,
-                                                @PathVariable Integer idProyek, @PathVariable Integer id, RedirectAttributes redirectAttributes){
-
-        //set tanggal penilaian
-        LocalDate tanggalPenilaian = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), LocalDate.now().getDayOfMonth());
-        rekap.setTanggalPenilaian(tanggalPenilaian);
-
-        //update object rekap bulanan
-        rekapService.updatePenilaianMandiri(rekap);
-
-        //add flash attribute
-        String notification = "Evaluasi diri berhasil disimpan";
-        redirectAttributes.addFlashAttribute("notification", notification);
-
-        return "redirect:/karyawan/penugasan/detail/"+rekap.getIdProyek();
-    }
-
-    /**
-     * Method ini berfungsi untuk menampilkan daftar rekan seproyek suatu karyawan,
-     * dan juga memfasilitasi untuk mengisi feedback dan penilaian
-     * @param principal
-     * @param periode
-     * @return
-     */
-    @GetMapping(value="/karyawan/rekanseproyek")
-    public String lihatRekanSekproyek(Model model, HttpSession session, Principal principal,
-                                      @RequestParam(value = "periode", required = false) String periode)
-    {
-
+        System.out.println(detailPenugasan.getIdProyek());
         LocalDate periodeNow = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1);
 
         //Melakukan handling periode yang akan ditampilkan pada halaman rekan seproyek
@@ -229,7 +188,156 @@ public class KaryawanController {
             session.setAttribute("periodeSelected", periodeNow);
         }
 
+        int userId = karyawan.getId();
+
+        String penugasan = karyawanService.cekPenugasanKaryawanById(userId);
+
+        //kondisional jika karyawan yang sedang login punya penugasan atau tidak punya penugasan
+        if(penugasan.equalsIgnoreCase("yes")){
+
+            List<Integer> proyekSekarang = karyawanService.getUserProyek(userId);
+
+            List<FeedbackRatingModel> rekanWithFeedback =
+                    karyawanService.getRekanSeproyekFeedback(proyekSekarang, userId, periodeNow);
+
+            List<FeedbackRatingModel> rekanNoFeedback =
+                    karyawanService.getRekanSeproyek(proyekSekarang, userId, periodeNow);
+
+            if(rekanWithFeedback.isEmpty() && rekanNoFeedback.isEmpty()) {
+                model.addAttribute("notification","Tidak ada rekan seproyek di periode ini");
+            }else if(rekanWithFeedback.isEmpty()) {
+                model.addAttribute("rekans",rekanNoFeedback);
+                model.addAttribute("noFeedback","noFeedback");
+            }else if(rekanNoFeedback.isEmpty()){
+                model.addAttribute("rekans",rekanWithFeedback);
+            }else {
+                model.addAttribute("rekans", rekanWithFeedback);
+                model.addAttribute("rekansNoFeedback", rekanNoFeedback);
+            }
+
+            for(FeedbackRatingModel rekan:rekanNoFeedback){
+                System.out.println("nama rekan: " + rekan.getNamaRekan());
+                System.out.println("nama project: " + rekan.getKodeProyek());
+                System.out.println("feed back: " + rekan.getFeedback() );
+                System.out.println("=================================");
+            }
+
+            System.out.println("<==========================================================>");
+
+            for(FeedbackRatingModel rekan:rekanWithFeedback){
+                System.out.println("nama rekan: " + rekan.getNamaRekan());
+                System.out.println("nama project: " + rekan.getKodeProyek());
+                System.out.println("feed back: " + rekan.getFeedback() );
+                System.out.println("=================================");
+            }
+
+            model.addAttribute("prevPeriode", periodeNow.minusMonths(1));
+            model.addAttribute("periodeNow", periodeNow);
+            model.addAttribute("nextPeriode", periodeNow.plusMonths(1));
+            model.addAttribute("date_today", dateToday);
+
+        }else {
+            model.addAttribute("noPenugasan", "noPenugasan");
+            model.addAttribute("date_today", dateToday);
+        }
+
+        return "detail-proyek";
+    }
+
+    /**
+     * method ini digunakan untuk menambahkan evaluasi diri karyawan
+     * @param model
+     * @param session
+     * @param idProyek
+     * @param id
+     * @return
+     */
+    @GetMapping(value="/assignment/karyawan/penilaian-mandiri/tambah/{idProyek}/{id}")
+    @PreAuthorize("hasAuthority('GET_KARYAWAN')")
+    public String tambahPenilaianMandiri (Model model, HttpSession session,@PathVariable Integer idProyek, @PathVariable Integer id){
+        //select rekap bulanan milik karyawan
+        RekapModel rekap = rekapService.selectRekapById(id);
+        //set deadline pengisian
+        LocalDate deadlinePengisian = rekap.getPeriode().plusMonths(1);
+
+        //pass ke view
+        model.addAttribute("deadlinePengisian", deadlinePengisian);
+        model.addAttribute("rekap", rekap);
+
+        return "form-add-penilaianmandiri";
+    }
+
+    /**
+     * method ini digunakan untuk submit evaluasi diri yang dimasukkan karyawan
+     * @param model
+     * @param session
+     * @param rekap
+     * @param idProyek
+     * @param id
+     * @param redirectAttributes
+     * @return
+     */
+    @PostMapping(value="/assignment/karyawan/penilaian-mandiri/tambah/{idProyek}/{id}")
+    @PreAuthorize("hasAuthority('POST_KARYAWAN_PENILAIAN_MANDIRI_TAMBAH_IDPROYEK_ID')")
+    public String tambahPenilaianMandiriSubmit (Model model, HttpSession session, @RequestParam(value = "isi-evaluasi") String isiEvaluasi,
+                                                @PathVariable Integer idProyek, @PathVariable Integer id, RedirectAttributes redirectAttributes){
+
+        
+        //Cari rekap by id
+        RekapModel rekap = rekapService.selectRekapById(id);
+
+        //set tanggal penilaian
+        LocalDate tanggalPenilaian = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), LocalDate.now().getDayOfMonth());
+        rekap.setTanggalPenilaian(tanggalPenilaian);
+
+        //update object rekap bulanan
+        rekapService.updatePenilaianMandiri(rekap, isiEvaluasi);
+
+        //add flash attribute
+        String notification = "Evaluasi diri berhasil disimpan";
+        redirectAttributes.addFlashAttribute("notification", notification);
+
+        return "redirect:/assignment/karyawan/penugasan/detail/"+rekap.getIdProyek();
+    }
+
+    /**
+     * Method ini berfungsi untuk menampilkan daftar rekan seproyek suatu karyawan,
+     * dan juga memfasilitasi untuk mengisi feedback dan penilaian
+     * @param principal
+     * @param periode
+     * @return
+     */
+    @GetMapping(value="/assignment/karyawan/rekanseproyek")
+    @PreAuthorize("hasAuthority('GET_KARYAWAN')")
+    public String lihatRekanSekproyek(Model model, HttpSession session, Principal principal,
+                                      @RequestParam(value = "periode", required = false) String periode)
+    {
+        LocalDate periodeNow = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1);
         KaryawanModel karyawan = karyawanService.selectKaryawanByEmail(principal.getName());
+        //Melakukan handling periode yang akan ditampilkan pada halaman rekan seproyek
+        if(periode != null) {
+            String[] split = periode.split(" ");
+            int year = Integer.parseInt(split[1]);
+            String monthString = split[0].toUpperCase();
+            LocalDate periodeCompare = LocalDate.of(year, Month.valueOf(split[0].toUpperCase()),1);
+            if(periodeCompare.equals(periodeNow)) {
+                model.addAttribute("offPeriode", "offPeriode");
+                session.setAttribute("periodeSelected", periodeNow);
+            }else{
+                if(periodeCompare.equals(periodeNow.plusMonths(1))) {
+                    session.setAttribute("periodeSelected", periodeNow);
+                    model.addAttribute("periodeOut", "Pengisian Feedback dan Penilaian Belum Dimulai atau Sudah Ditutup");
+                }else {
+                    periodeNow = periodeCompare;
+                    session.setAttribute("periodeSelected", periodeNow);
+                    model.addAttribute("periodeOut", "Pengisian Feedback dan Penilaian Belum Dimulai atau Sudah Ditutup");
+                }
+            }
+        }else {
+            model.addAttribute("offPeriode", "offPeriode");
+            session.setAttribute("periodeSelected", periodeNow);
+        }
+
         int userId = karyawan.getId();
 
         String penugasan = karyawanService.cekPenugasanKaryawanById(userId);
@@ -264,10 +372,12 @@ public class KaryawanController {
             model.addAttribute("date_today", dateToday);
 
         }else {
-            model.addAttribute("noPenugasan", "noPenugasan");
             String dateToday = rekapMappingService.getCurrentDate();
+            model.addAttribute("noPenugasan", "noPenugasan");
             model.addAttribute("date_today", dateToday);
         }
+
+
 
         return "karyawan-rekanseproyek";
     }
@@ -283,8 +393,9 @@ public class KaryawanController {
      * @param ratingRekan
      * @return
      */
-    @GetMapping(value="/karyawan/rekanseproyek/feedback")
-    public String manageFeedbackRekan(Model model, HttpSession session, Principal principal,
+    @GetMapping(value="/assignment/karyawan/rekanseproyek/feedback")
+    @PreAuthorize("hasAuthority('GET_KARYAWAN')")
+    public String manageFeedbackRekan(Model model, RedirectAttributes redirectAttributes, HttpSession session, Principal principal,
                                       @RequestParam(value = "namaRekan", required = false) String namaRekan,
                                       @RequestParam(value = "idRekan", required = false) int idRekan,
                                       @RequestParam(value = "kodeProyek", required = false) String kodeProyek,
@@ -346,7 +457,8 @@ public class KaryawanController {
         model.addAttribute("periodeNow", periodeSelected);
         model.addAttribute("nextPeriode", periodeSelected.plusMonths(1));
         model.addAttribute("date_today", dateToday);
-        return "karyawan-rekanseproyek";
+        redirectAttributes.addFlashAttribute("notification","Evaluasi rekan berhasil disimpian");
+        return "redirect:/assignment/karyawan/penugasan/detail/" + idProyek;
     }
 }
 

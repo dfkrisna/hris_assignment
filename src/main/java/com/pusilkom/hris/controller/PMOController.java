@@ -4,6 +4,7 @@ import com.pusilkom.hris.model.*;
 import com.pusilkom.hris.service.*;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -58,7 +59,8 @@ public class PMOController {
      * @param principal
      * @return halaman form tambah proyek
      */
-    @GetMapping("/proyek/tambah")
+    @GetMapping("/assignment/proyek/tambah")
+    @PreAuthorize("hasAuthority('GET_PROYEK_TAMBAH')")
     public String addProyek(Model model, Principal principal) {
         //mengambil data pengguna yang sedang login
         PenggunaModel pengguna = penggunaDAO.getPenggunaLama(principal.getName());
@@ -99,7 +101,8 @@ public class PMOController {
      * @param endPeriode
      * @return halaman mengelola penugasan
      */
-    @PostMapping(value = "/proyek/tambah")
+    @PostMapping(value = "/assignment/proyek/tambah")
+    @PreAuthorize("hasAuthority('POST_PROYEK_TAMBAH')")
     public String addProyekSubmit(Model model, @ModelAttribute ProyekModel proyek, @RequestParam(value = "startdate", required = false) String startPeriode,
                                   @RequestParam(value = "enddate", required = false) String endPeriode) {
        //null handling
@@ -111,7 +114,9 @@ public class PMOController {
         }
 
         // menyocokkan format untuk masukkan dari form
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy");
+
+        DateTimeFormatter formatter = new DateTimeFormatterBuilder().parseCaseInsensitive() .appendPattern("d MMMM yyyy").toFormatter(Locale.ENGLISH);
+
 
         //memasukkan value startperiode
         if (!startPeriode.equals("")) {
@@ -130,7 +135,7 @@ public class PMOController {
 
         model.addAttribute("proyek", proyek);
 
-        return "redirect:/pmo/proyek/tambah/assign/" + proyekID;
+        return "redirect:/assignment/pmo/proyek/tambah/assign/" + proyekID;
     }
 
     /**
@@ -139,7 +144,8 @@ public class PMOController {
      * @param id
      * @return
      */
-    @GetMapping("/proyek/ubah/{id}")
+    @GetMapping("/assignment/proyek/ubah/{id}")
+    @PreAuthorize("hasAuthority('GET_PROYEK_UBAH_ID')")
     public String ubahProyek(Model model, @PathVariable(value = "id") Integer id) {
 
         //mengambil date today
@@ -213,7 +219,8 @@ public class PMOController {
      * @param endPeriode
      * @return
      */
-    @PostMapping(value = "/proyek/ubah/{id}")
+    @PostMapping(value = "/assignment/proyek/ubah/{id}")
+    @PreAuthorize("hasAuthority('POST_PROYEK_UBAH_ID')")
     public String ubahProyek(Model model, @ModelAttribute ProyekModel proyek,
                              @RequestParam(value = "startdate", required = false) String startPeriode,
                              @RequestParam(value = "enddate", required = false) String endPeriode) {
@@ -320,7 +327,8 @@ public class PMOController {
      * @param notification
      * @return halaman detail proyek
      */
-    @GetMapping("/proyek/detail/{id}")
+    @GetMapping("/assignment/proyek/detail/{id}")
+    @PreAuthorize("hasAuthority('GET_PROYEK_DETAIL_ID')")
     public String detailProyek(Model model, @PathVariable(value = "id") Integer id,
                                @ModelAttribute("notification") String notification) {
 
@@ -387,7 +395,8 @@ public class PMOController {
      * @param principal
      * @return
      */
-    @GetMapping("/karyawan/projectlead")
+    @GetMapping("/assignment/karyawan/projectlead")
+    @PreAuthorize("hasAuthority('GET_KARYAWAN')")
     public String listProyekDipimin(Model model, Principal principal) {
 
         //pass date today
@@ -423,7 +432,8 @@ public class PMOController {
      * @param principal
      * @return
      */
-    @GetMapping("/karyawan/projectlead/detail/{id}")
+    @GetMapping("/assignment/karyawan/projectlead/detail/{id}")
+    @PreAuthorize("hasAuthority('GET_KARYAWAN')")
     public String detailProyekProjlead(Model model, @PathVariable(value = "id") Integer id, Principal principal) {
         String dateToday = rekapMappingDAO.getCurrentDate();
         model.addAttribute("date_today", dateToday);
@@ -471,7 +481,8 @@ public class PMOController {
      * @param notification
      * @return
      */
-    @GetMapping("/karyawan/projectlead/detail/{idProyek}/{idKaryawan}")
+    @GetMapping("/assignment/karyawan/projectlead/detail/{idProyek}/{idKaryawan}")
+    @PreAuthorize("hasAuthority('GET_KARYAWAN')")
     public String detailKarproProjlead(Model model, @PathVariable(value = "idProyek") Integer idProyek,
                                        @PathVariable(value = "idKaryawan") Integer idKaryawan,
                                        @RequestParam(value = "periode", required = false) String periode,
@@ -534,7 +545,8 @@ public class PMOController {
      * @param idKarProy
      * @return
      */
-    @PostMapping(value = "/karyawan/projectlead/detail/finalisasi")
+    @PostMapping(value = "/assignment/karyawan/projectlead/detail/finalisasi")
+    @PreAuthorize("hasAuthority('POST_KARYAWAN_PROJECTLEADA_DETAIL_FINALISASI')")
     public String finalisasi(Model model,
                              RedirectAttributes ra,
                              @RequestParam(value = "periode") String periode,
@@ -553,10 +565,11 @@ public class PMOController {
 
         ra.addFlashAttribute("notification", notification);
 
-        return "redirect:/karyawan/projectlead/detail/" + karyawanProyek.getIdProyek() + "/" + karyawanProyek.getIdKaryawan();
+        return "redirect:/assignment/karyawan/projectlead/detail/" + karyawanProyek.getIdProyek() + "/" + karyawanProyek.getIdKaryawan();
     }
 
-    @RequestMapping(value = "pmo/detail-karyawan/{idKar}")
+    @GetMapping(value = "/assignment/pmo/detail-karyawan/{idKar}")
+    @PreAuthorize("hasAuthority('GET_PMO')")
     public String showDetailKaryawan(Model model,
                                      @RequestParam(value = "periode", required = false) String periode,
                                      @PathVariable(value = "idKar") int idKaryawan) {
@@ -637,7 +650,8 @@ public class PMOController {
      * @param principal
      * @return
      */
-    @GetMapping("/proyek/status/{id}")
+    @GetMapping("/assignment/proyek/status/{id}")
+    @PreAuthorize("hasAuthority('GET_PROYEK_STATUS_ID')")
     public String changeStatus(Model model, @PathVariable(value = "id") Integer id,
                                RedirectAttributes ra,
                                @RequestParam(value = "newstatus", required = false) Integer newstatus,
@@ -653,8 +667,7 @@ public class PMOController {
         String notification ="";
         //null handling
         if(newstatus==null) {
-
-            return "redirect:/proyek/detail/" + proyeklama.getId();
+            return "redirect:/assignment/proyek/detail/" + proyeklama.getId();
         }
 
         LocalDate periodeNow = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), 1);
@@ -671,6 +684,7 @@ public class PMOController {
                 for (KaryawanProyekModel karyawanProyekItr : listKarPro) {
                     if (karyawanProyekItr.getEndPeriode() == null || karyawanProyekItr.getEndPeriode().compareTo(periodeNow) > 0) {
                         karyawanProyekItr.setEndPeriode(periodeNow);
+                        karyawanProyekItr.setActive(false);
                         karyawanProyekDAO.updateKaryawanProyek(karyawanProyekItr);
                     }
                 }
@@ -690,6 +704,7 @@ public class PMOController {
                 for (KaryawanProyekModel karyawanProyekItr : listKarPro) {
                     if (karyawanProyekItr.getEndPeriode().equals(proyeklama.getEndPeriode())) {
                         karyawanProyekItr.setEndPeriode(null);
+                        karyawanProyekItr.setActive(true);
                         karyawanProyekDAO.updateKaryawanProyek(karyawanProyekItr);
                     }
                 }
@@ -704,6 +719,6 @@ public class PMOController {
         //add notifikasi flash
         ra.addFlashAttribute("notification", notification);
 
-        return "redirect:/proyek/detail/" + proyeklama.getId();
+        return "redirect:/assignment/proyek/detail/" + proyeklama.getId();
     }
 }

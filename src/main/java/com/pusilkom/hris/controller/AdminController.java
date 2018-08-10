@@ -7,6 +7,7 @@ import com.pusilkom.hris.service.PegawaiService;
 import com.pusilkom.hris.service.PenggunaService;
 import com.pusilkom.hris.service.RekapMappingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,8 @@ public class AdminController
      * @param model
      * @return
      */
-    @GetMapping("/admin/addpengguna")
+    @GetMapping("/assignment/admin/addpengguna")
+    @PreAuthorize("hasAuthority('GET_ADMIN')")
     public String addPenggunaForm(Model model)
     {
         PenggunaModel pengguna = new PenggunaModel();
@@ -51,7 +53,8 @@ public class AdminController
      * @param newPengguna
      * @return
      */
-    @PostMapping(value = "/admin/addpengguna/submit")
+    @PostMapping(value = "/assignment/admin/addpengguna/submit")
+    @PreAuthorize("hasAuthority('POST_ADMIN_ADDPENGGUNA_SUBMIT')")
     public String addPenggunaSubmit(Model model, PenggunaModel newPengguna)
     {
 
@@ -72,7 +75,8 @@ public class AdminController
      * @param id
      *
      */
-    @GetMapping("/admin/updatepengguna/{id}")
+    @GetMapping("/assignment/admin/updatepengguna/{id}")
+    @PreAuthorize("hasAuthority('GET_ADMIN')")
     public String updatePengguna (Model model, @PathVariable(value = "id") int id)
     {
         PenggunaModel pengguna = penggunaDAO.getPengguna(id);
@@ -102,7 +106,8 @@ public class AdminController
      * Method ini berfungsi untuk melakukan pengolahan data yang di-update pada form update pengguna
      * termasuk nama dan role pengguna
      */
-    @PostMapping(value = "/admin/updatepengguna/submit")
+    @PostMapping(value = "/assignment/admin/updatepengguna/submit")
+    @PreAuthorize("hasAuthority('POST_ADMIN_UPDATEPENGGUNA_SUBTMIT')")
     public String updatePenggunaSubmit(Model model, PenggunaModel pengguna,
                                        @RequestParam(value="roleChecked") List<String> roleBaru)
     {
@@ -260,7 +265,8 @@ public class AdminController
     /*
      * method yang berfungsi untuk menghapus pengguna dari sistem
      */
-    @GetMapping("/admin/deletepengguna/{id}")
+    @GetMapping("/assignment/admin/deletepengguna/{id}")
+    @PreAuthorize("hasAuthority('GET_ADMIN')")
     public String deletePengguna (Model model, @PathVariable(value = "id") int id)
     {
         PenggunaModel pengguna = penggunaDAO.getPengguna(id);

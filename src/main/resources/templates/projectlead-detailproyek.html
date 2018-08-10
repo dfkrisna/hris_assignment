@@ -84,7 +84,7 @@
         </thead>
         <tbody>
         <tr th:each="subproy,iterationStatus: ${subproyek}">
-            <td><a th:text="${subproy.namaProyek}" th:href="${'/proyek/detail/' + subproy.getId()}"></a></td>
+            <td><a th:text="${subproy.namaProyek}" th:href="${'/assignment/proyek/detail/' + subproy.getId()}"></a></td>
             <td class="montserrat-small text-center text-value" th:text="${subproy.namaKlien}"></td>
             <td class="montserrat-small text-center text-value" th:text="${subproy.getPeriode()}"></td>
 
@@ -109,7 +109,7 @@
         </thead>
         <tbody>
         <tr th:each="anggota,iterationStatus: ${anggotaList}">
-            <td><a th:text="${anggota.namaKaryawan}" th:href="${'/karyawan/projectlead/detail/' + anggota.idProyek + '/'+ anggota.idKaryawan}">Nama Karyawan</a></td>
+            <td><a th:text="${anggota.namaKaryawan}" th:href="${'/assignment/karyawan/projectlead/detail/' + anggota.idProyek + '/'+ anggota.idKaryawan}">Nama Karyawan</a></td>
             <td class="montserrat-small text-center text-value" th:text="${anggota.role}">Role</td>
             <td class="montserrat-small text-center text-value" th:text="${anggota.getPersentaseKontribusi() + '%'}"></td>
             <td class="montserrat-small text-center text-value" th:text="${anggota.getPeriode()}"></td>

@@ -2,8 +2,10 @@ package com.pusilkom.hris.controller;
 
 import com.pusilkom.hris.model.*;
 import com.pusilkom.hris.service.*;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+@Slf4j
 @Controller
 public class AssignmentController {
     @Autowired
@@ -49,7 +52,8 @@ public class AssignmentController {
      * @param idProyek
      * @return
      */
-    @GetMapping("/pmo/assign/{idKaryawan}/{idProyek}/{tahun}/{bulan}")
+    @GetMapping("/assignment/pmo/assign/{idKaryawan}/{idProyek}/{tahun}/{bulan}")
+    @PreAuthorize("hasAuthority('GET_PMO')")
     public String assignKaryawanMatrix(Model model,
                                        @PathVariable(value = "tahun", required = true) Integer tahun,
                                        @PathVariable(value = "bulan", required = true) Integer bulan,
@@ -94,7 +98,8 @@ public class AssignmentController {
      * @param periodeSelesai
      * @return
      */
-    @PostMapping(value = "/pmo/assign/{idKaryawan}/{idProyek}")
+    @PostMapping(value = "/assignment/pmo/assign/{idKaryawan}/{idProyek}")
+    @PreAuthorize("hasAuthority('POST_PMO_ASSIGN_IDKARYAWAN_IDPROYEK')")
     public String saveNewAssignmentMatrix(Model model,
                                           RedirectAttributes ra,
                                           @PathVariable("idKaryawan") Integer idKaryawan,
@@ -125,16 +130,17 @@ public class AssignmentController {
 
         System.out.println("ini hasil nyari db " + karyawanProyekService.getKaryawanProyekByKaryawanandProyek(idKaryawan, idProyek));
 
-        if(karyawanProyekService.getKaryawanProyekByKaryawanandProyek(idKaryawan, idProyek) == null) {
-            karyawanProyekService.addKaryawanProyekMatrix(karyawanProyek, idKaryawan, idProyek, idRole);
-            System.out.println("knp masuk gaa");
-        } else {
-            karyawanProyek.setEndPeriode(null);
-            karyawanProyek.setStartPeriode(karyawanProyekService.getKaryawanProyekByKaryawanandProyek(idKaryawan, idProyek).getStartPeriode());
-            System.out.println("alhamdulillah gaa");
-
-            karyawanProyekService.updateKaryawanProyek(karyawanProyek);
-        }
+//        if(karyawanProyekService.getKaryawanProyekByKaryawanandProyek(idKaryawan, idProyek) == null) {
+        System.out.println("sampe sini");
+        karyawanProyekService.addKaryawanProyekMatrix(karyawanProyek, idKaryawan, idProyek, idRole);
+        System.out.println("knp masuk gaa");
+//        } else {
+//            karyawanProyek.setEndPeriode(null);
+//            karyawanProyek.setStartPeriode(karyawanProyekService.getKaryawanProyekByKaryawanandProyek(idKaryawan, idProyek).getStartPeriode());
+//            System.out.println("alhamdulillah gaa");
+//
+//            karyawanProyekService.updateKaryawanProyek(karyawanProyek);
+//        }
 
         KaryawanProyekModel karyawanAdded = karyawanProyekService.getKaryawanProyekByKaryawanandProyek(idKaryawan, idProyek);
 
@@ -151,7 +157,7 @@ public class AssignmentController {
 
         ra.addFlashAttribute("notification", "Penugasan Berhasil Ditambahkan");
 
-        return "redirect:/pmo";
+        return "redirect:/assignment/pmo";
     }
 
     /**
@@ -162,7 +168,8 @@ public class AssignmentController {
      * @param idKaryawanProyek
      * @return
      */
-    @RequestMapping(value = "/pmo/update_assignment/{idKaryawanProyek}/{tahun}/{bulan}")
+    @GetMapping(value = "/assignment/pmo/update_assignment/{idKaryawanProyek}/{tahun}/{bulan}")
+    @PreAuthorize("hasAuthority('GET_PMO')")
     public String updateAssignmentMatrix(Model model,
                                          @PathVariable(value = "tahun", required = true) Integer tahun,
                                          @PathVariable(value = "bulan", required = true) Integer bulan,
@@ -211,7 +218,8 @@ public class AssignmentController {
      * @param endPeriode
      * @return
      */
-    @RequestMapping(value = "/pmo/update_assignment/{idKaryawanProyek}",method = RequestMethod.POST)
+    @PostMapping(value = "/assignment/pmo/update_assignment/{idKaryawanProyek}")
+    @PreAuthorize("hasAuthority('POST_PMO_UPDATE_ASSIGNMENT_IDKARYAWANPROYEK')")
     public String updateAssignmentMatrix(Model model,
                                          RedirectAttributes ra,
                                          @PathVariable("idKaryawanProyek") Integer idKaryawanProyek,
@@ -252,8 +260,27 @@ public class AssignmentController {
 
         ra.addFlashAttribute("notification", "Penugasan Berhasil Diubah");
 
-        return "redirect:/pmo";
+        return "redirect:/assignment/pmo";
     }
+
+    @PostMapping(value = "/assignment/pmo/update_persentase/{idRekap}")
+    @PreAuthorize("hasAuthority('POST_PMO_UPDATE_PERSENTASE_IDREKAP')")
+    public String updateRekap(Model model, @PathVariable(value = "idRekap") int idRekap,
+                              @RequestParam(value = "persenKontribusi") double persenKontribusi
+                                         ) {
+
+        RekapModel retrievedRekap = rekapService.selectRekapById(idRekap);
+
+        retrievedRekap.setPersentaseKontribusi(persenKontribusi);
+
+        rekapService.updateRekap(retrievedRekap);
+
+        return "redirect:/assignment/pmo";
+
+    }
+
+
+
 
     /**
      * method ini digunakan untuk menampilkan daftar rekomendasi karyawan setelah membuat proyek
@@ -261,7 +288,8 @@ public class AssignmentController {
      * @param idProyek
      * @return
      */
-    @GetMapping("/pmo/proyek/tambah/assign/{idProyek}")
+    @GetMapping("/assignment/pmo/proyek/tambah/assign/{idProyek}")
+    @PreAuthorize("hasAuthority('GET_PMO')")
     public String assignKaryawan(Model model, @PathVariable(value = "idProyek") int idProyek) {
         ProyekModel proyek = proyekService.getProyekById(idProyek);
 
@@ -287,7 +315,8 @@ public class AssignmentController {
      * @param karyawanIDList
      * @return
      */
-    @PostMapping(value = "pmo/proyek/tambah/assign/{idProyek}")
+    @PostMapping(value = "/assignment/pmo/proyek/tambah/assign/{idProyek}")
+    @PreAuthorize("hasAuthority('POST_PMO_PROYEK_TAMBAH_ASSIGN_IDPROYEK')")
     public String assignKaryawan(Model model, @PathVariable(value = "idProyek") int idProyek,
                                  @RequestParam(value = "selectedKaryawan") List<Integer> karyawanIDList) {
         List<KaryawanModel> karyawanList = new ArrayList<KaryawanModel>();
@@ -326,7 +355,8 @@ public class AssignmentController {
      * @param periodeSelesai
      * @return
      */
-    @PostMapping(value = "pmo/proyek/tambah/assign/{idKaryawan}/{idProyek}")
+    @PostMapping(value = "/assignment/pmo/proyek/tambah/assign/{idKaryawan}/{idProyek}")
+    @PreAuthorize("hasAuthority('POST_PMO_PROYEK_TAMBAH_ASSIGN_IDKARYAWAN_IDPROYEK')")
     public String assignKaryawan(Model model, @PathVariable(value = "idKaryawan") int idKaryawan,
                                  @PathVariable(value = "idProyek") int idProyek,
                                  @RequestParam(value = "listKaryawanID", required = false) String listKaryawanID,

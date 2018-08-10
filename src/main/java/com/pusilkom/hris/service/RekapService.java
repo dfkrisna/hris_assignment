@@ -28,7 +28,7 @@ public interface RekapService {
 
 	List<RekapModel> selectRekapByIdKaryawanProyek(int idKaryawanProyek);
 
-	void updatePenilaianMandiri(RekapModel rekap);
+	void updatePenilaianMandiri(RekapModel rekap, String penilaianMandiri);
 
 	RekapModel selectRekapById(int id);
 
