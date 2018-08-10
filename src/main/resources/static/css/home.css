@@ -2,6 +2,10 @@
 	background-color: #FFCF26;
 }
 
+#moka-index-body {
+	background-color: #fbfbfb;
+}
+
 #logo-pusilkom {
 	height: 35px;
 	width: 74px;
@@ -153,6 +157,11 @@ a.effect-underline:hover:after {
 .icon-sidebar {
 	height: 16px;
 	width: 16px;
+}
+
+.icon-homemoka {
+	height: 100px;
+	width: 100px;
 }
 
 .icon-eksekutif {
