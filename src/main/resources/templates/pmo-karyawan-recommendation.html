@@ -20,7 +20,7 @@
     </div>
     <br/>
 
-    <form method="post" th:action="'/pmo/proyek/tambah/assign/' +${proyek.id}">
+    <form method="post" th:action="'/assignment/pmo/proyek/tambah/assign/' +${proyek.id}">
         <div class="form-row mb-3">
             <div class="form-group col mt-2 ">
                 <label></label>
@@ -28,7 +28,7 @@
                     <div class="col-sm-3"></div>
                     <div class="col-sm-3"></div>
                     <div class="col-sm-3">
-                        <a th:href="'/proyek/detail/' + ${proyek.id}" class="monsterrat-small pusil-btn-danger btn btn-danger btn-rounded">Lewati</a>
+                        <a th:href="'/assignment/proyek/detail/' + ${proyek.id}" class="monsterrat-small pusil-btn-danger btn btn-danger btn-rounded">Lewati</a>
                     </div>
                     <div class="col-sm-3">
                         <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" name="action" value="assign">Tugaskan</button>

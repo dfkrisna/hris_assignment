@@ -67,7 +67,7 @@ public class KaryawanController {
      * @param principal
      * @return
      */
-    @GetMapping("/karyawan")
+    @GetMapping("/assignment/karyawan")
     @PreAuthorize("hasAuthority('GET_KARYAWAN')")
     public String indexKaryawan(Model model, Principal principal) {
         KaryawanModel karyawan = karyawanService.selectKaryawanByEmail(principal.getName());
@@ -124,7 +124,7 @@ public class KaryawanController {
      * @param principal
      * @return
      */
-    @GetMapping("/karyawan/penugasan")
+    @GetMapping("/assignment/karyawan/penugasan")
     @PreAuthorize("hasAuthority('GET_KARYAWAN')")
     public String penugasanKaryawan(Model model, Principal principal) {
         KaryawanModel karyawan = karyawanService.selectKaryawanByEmail(principal.getName());
@@ -157,7 +157,7 @@ public class KaryawanController {
      * @param principal
      * @return
      */
-    @GetMapping(value ="/karyawan/penugasan/detail/{idProyek}")
+    @GetMapping(value ="/assignment/karyawan/penugasan/detail/{idProyek}")
     @PreAuthorize("hasAuthority('GET_KARYAWAN')")
     public String detailpenugasanKaryawan(Model model, HttpSession session, @PathVariable Integer idProyek,
                                           Principal principal, @RequestParam(value = "periode", required = false) String periode) {
@@ -263,7 +263,7 @@ public class KaryawanController {
      * @param id
      * @return
      */
-    @GetMapping(value="/karyawan/penilaian-mandiri/tambah/{idProyek}/{id}")
+    @GetMapping(value="/assignment/karyawan/penilaian-mandiri/tambah/{idProyek}/{id}")
     @PreAuthorize("hasAuthority('GET_KARYAWAN')")
     public String tambahPenilaianMandiri (Model model, HttpSession session,@PathVariable Integer idProyek, @PathVariable Integer id){
         //select rekap bulanan milik karyawan
@@ -288,7 +288,7 @@ public class KaryawanController {
      * @param redirectAttributes
      * @return
      */
-    @PostMapping(value="/karyawan/penilaian-mandiri/tambah/{idProyek}/{id}")
+    @PostMapping(value="/assignment/karyawan/penilaian-mandiri/tambah/{idProyek}/{id}")
     @PreAuthorize("hasAuthority('POST_KARYAWAN_PENILAIAN_MANDIRI_TAMBAH_IDPROYEK_ID')")
     public String tambahPenilaianMandiriSubmit (Model model, HttpSession session, @RequestParam(value = "isi-evaluasi") String isiEvaluasi,
                                                 @PathVariable Integer idProyek, @PathVariable Integer id, RedirectAttributes redirectAttributes){
@@ -308,7 +308,7 @@ public class KaryawanController {
         String notification = "Evaluasi diri berhasil disimpan";
         redirectAttributes.addFlashAttribute("notification", notification);
 
-        return "redirect:/karyawan/penugasan/detail/"+rekap.getIdProyek();
+        return "redirect:/assignment/karyawan/penugasan/detail/"+rekap.getIdProyek();
     }
 
     /**
@@ -318,7 +318,7 @@ public class KaryawanController {
      * @param periode
      * @return
      */
-    @GetMapping(value="/karyawan/rekanseproyek")
+    @GetMapping(value="/assignment/karyawan/rekanseproyek")
     @PreAuthorize("hasAuthority('GET_KARYAWAN')")
     public String lihatRekanSekproyek(Model model, HttpSession session, Principal principal,
                                       @RequestParam(value = "periode", required = false) String periode)
@@ -404,7 +404,7 @@ public class KaryawanController {
      * @param ratingRekan
      * @return
      */
-    @GetMapping(value="/karyawan/rekanseproyek/feedback")
+    @GetMapping(value="/assignment/karyawan/rekanseproyek/feedback")
     @PreAuthorize("hasAuthority('GET_KARYAWAN')")
     public String manageFeedbackRekan(Model model, RedirectAttributes redirectAttributes, HttpSession session, Principal principal,
                                       @RequestParam(value = "namaRekan", required = false) String namaRekan,
@@ -469,7 +469,7 @@ public class KaryawanController {
         model.addAttribute("nextPeriode", periodeSelected.plusMonths(1));
         model.addAttribute("date_today", dateToday);
         redirectAttributes.addFlashAttribute("notification","Evaluasi rekan berhasil disimpian");
-        return "redirect:/karyawan/penugasan/detail/" + idProyek;
+        return "redirect:/assignment/karyawan/penugasan/detail/" + idProyek;
     }
 }
 

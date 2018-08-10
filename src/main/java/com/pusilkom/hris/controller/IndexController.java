@@ -64,7 +64,7 @@ public class IndexController
      * @param auth
      * @return
      */
-    @GetMapping("/")
+    @GetMapping("/assignment")
     @PreAuthorize("hasAuthority('GET_')")
     public String index(Model model, @NotNull Authentication auth) {
         UserWeb user = (UserWeb) auth.getPrincipal();
@@ -72,7 +72,7 @@ public class IndexController
         return "landingpage";
     }
 
-    @GetMapping("/signin")
+    @GetMapping("/assignment/signin")
     public String login() {
         return "site/login";
     }
@@ -88,7 +88,7 @@ public class IndexController
         return user;
     }
 
-    @RequestMapping("/login")
+    @RequestMapping("/assignment/login")
     public String login (Model model,
                          @RequestParam(value="error", required = false) String error)
     {
@@ -104,7 +104,7 @@ public class IndexController
      * @param periode
      * @return
      */
-    @GetMapping(value = "/eksekutif")
+    @GetMapping(value = "/assignment/eksekutif")
     @PreAuthorize("hasAuthority('GET_EKSEKUTIF')")
     public String indexEksekutif (Model model, @RequestParam(value = "periode", required = false) String periode)
     {
@@ -176,7 +176,7 @@ public class IndexController
      * @param model
      * @return
      */
-    @GetMapping("/admin")
+    @GetMapping("/assignment/admin")
     @PreAuthorize("hasAuthority('GET_ADMIN')")
     public String indexAdmin (Model model)
     {
@@ -196,7 +196,7 @@ public class IndexController
      * @param notification
      * @return
      */
-    @GetMapping("/pmo")
+    @GetMapping("/assignment/pmo")
     @PreAuthorize("hasAuthority('GET_PMO')")
     public String indexPMO (Model model,
                             @RequestParam(value = "periode", required = false) String periode,
@@ -269,7 +269,7 @@ public class IndexController
      * @param principal
      * @return
      */
-    @GetMapping("/mngdivisi")
+    @GetMapping("/assignment/mngdivisi")
     @PreAuthorize("hasAuthority('GET_MNGDIVISI')")
     public String indexManajerDivisi(Model model, Principal principal) {
         PenggunaModel pengguna = penggunaDAO.getPenggunaLama(principal.getName());

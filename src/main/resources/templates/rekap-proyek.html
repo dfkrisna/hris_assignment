@@ -11,7 +11,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="roboto breadcrumb-item active" aria-current="page">
-                        <a th:href="'/eksekutif'">Beranda</a>
+                        <a th:href="'/assignment/eksekutif'">Beranda</a>
                     </li>
                     <li class="roboto breadcrumb-item active" aria-current="page">Rekap Proyek</li>
                 </ol>
@@ -51,12 +51,12 @@
                 <div class="row">
                     <div class="col-sm-3">
                         <h6 class="montserrat-big-bold">Parent Proyek:</h6>
-                        <a class="montserrat-small" th:if="${parentproyek != null}" th:text="${parentproyek.namaProyek}" th:href="${'/rekap/proyek/' + parentproyek.id}"></a>
+                        <a class="montserrat-small" th:if="${parentproyek != null}" th:text="${parentproyek.namaProyek}" th:href="${'/assignment/rekap/proyek/' + parentproyek.id}"></a>
                         <p th:if="${parentproyek ==null}" th:text="kosong" class="montserrat-small text-muted"></p>
                     </div>
                     <div class="col-sm-3">
                         <h6 class="montserrat-big-bold">Project Lead:</h6>
-                        <a class="montserrat-small" th:if="${projlead != null}" th:text="${projlead.nama}" th:href="${'/rekap/karyawan/riwayat/' + projlead.id}"></a>
+                        <a class="montserrat-small" th:if="${projlead != null}" th:text="${projlead.nama}" th:href="${'/assignment/rekap/karyawan/riwayat/' + projlead.id}"></a>
                         <p th:unless="${projlead != null}" th:text="kosong" class="montserrat-small text-muted"></p>
                     </div>
                     <div class="col-sm-3">
@@ -94,7 +94,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="anggota,iterationStatus: ${anggotaList}">
-                    <td><a th:text="${anggota.nama}" th:href="${'/rekap/karyawan/riwayat/' +  anggota.idKaryawan}">Nama Karyawan</a></td>
+                    <td><a th:text="${anggota.nama}" th:href="${'/assignment/rekap/karyawan/riwayat/' +  anggota.idKaryawan}">Nama Karyawan</a></td>
                     <td class="montserrat-small text-center text-value" th:text="${anggota.role}">Role</td>
                     <td class="montserrat-small text-center text-value" th:text="${anggota.persentase + '%'}"></td>
 

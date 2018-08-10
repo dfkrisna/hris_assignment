@@ -11,7 +11,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="roboto breadcrumb-item active" aria-current="page">
-                    <a th:href="'/pmo'">Beranda</a>
+                    <a th:href="'/assignment/pmo'">Beranda</a>
                 </li>
                 <li class="roboto breadcrumb-item active" aria-current="page">Ubah Penugasan</li>
             </ol>
@@ -25,7 +25,7 @@
     <h3 class="monsterrat-med" th:text="${karyawan.nama}"></h3>
 
     <div class="d-flex flex-row mb-2 ">
-        <form method="post" th:action="'/pmo/update_assignment/' + ${karyawanProyek.id}" class="form-horizontal" style="width: 70%">
+        <form method="post" th:action="'/assignment/pmo/update_assignment/' + ${karyawanProyek.id}" class="form-horizontal" style="width: 70%">
             <input type="hidden" name="idKaryawanProyek" th:field="${karyawanProyek.id}"/>
             <input type="hidden" name="periodeRekap" th:value="${periode}"/>
             <!--<input type="hidden" name="karyawanProyek" th:value="${karyawanProyek}"/>-->

@@ -69,7 +69,7 @@ $(document).ready(function() {
         var isiRekap = $(this).data('rekap');
         var id = $(this).data('id');
         var proyek = $(this).data('proyek');
-        var action = "/karyawan/penilaian-mandiri/tambah/" + proyek + "/" + id;
+        var action = "/assignment/karyawan/penilaian-mandiri/tambah/" + proyek + "/" + id;
 
         // generate date object with periode
         dateStr = periode.split("-");
