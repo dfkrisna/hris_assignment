@@ -253,6 +253,7 @@ a.effect-underline:hover:after {
 .portal-content{
 	margin-top: 25%;
 	height: 50vh;
+	font-size: 100px;
 }
 
 a.portal-black{
