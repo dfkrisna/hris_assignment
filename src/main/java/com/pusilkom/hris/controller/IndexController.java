@@ -69,7 +69,7 @@ public class IndexController
     public String index(Model model, @NotNull Authentication auth) {
         UserWeb user = (UserWeb) auth.getPrincipal();
         model.addAttribute("currentUser", user);
-        return "index";
+        return "landingpage";
     }
 
     @GetMapping("/signin")
