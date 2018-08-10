@@ -11,7 +11,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="roboto breadcrumb-item active" aria-current="page">
-                    <a th:href="'/admin'">Beranda</a>
+                    <a th:href="'/assignment/admin'">Beranda</a>
                 </li>
                 <li class="roboto breadcrumb-item active" aria-current="page">
                     Update pengguna
@@ -38,7 +38,7 @@
         </div>
 
         <div class="d-flex flex-row mb-2 ml-5">
-            <form th:action="'/admin/updatepengguna/submit'" th:object="${pengguna}" method="post">
+            <form th:action="'/assignment/admin/updatepengguna/submit'" th:object="${pengguna}" method="post">
                 <div class="form-row mb-5">
                     <div class="col mr-2">
                         <label class="montserrat-small-bold">Username</label>

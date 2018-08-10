@@ -69,7 +69,7 @@
                 </thead>
                 <tbody class="montserrat-small">
                 <tr th:each="penugasan, iterationStatus:${penugasanPeriodeIni}" >
-                    <td><a class="montserrat-small" th:text="${penugasan.namaProyek}" th:href="'/karyawan/penugasan/detail/' + ${penugasan.idProyek}"></a></td>
+                    <td><a class="montserrat-small" th:text="${penugasan.namaProyek}" th:href="'/assignment/karyawan/penugasan/detail/' + ${penugasan.idProyek}"></a></td>
                     <td th:text="${penugasan.role}"></td>
                     <td th:text="${penugasan.persentase} + '%'"></td>
                     <td th:text="${penugasan.statusProyek}"></td>

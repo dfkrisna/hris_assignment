@@ -19,7 +19,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="roboto breadcrumb-item active" aria-current="page">
-                    <a th:href="'/pmo'">Beranda</a>
+                    <a th:href="'assignment/pmo'">Beranda</a>
                 </li>
                 <li class="roboto breadcrumb-item active" aria-current="page">Ubah Data Proyek</li>
             </ol>
@@ -29,7 +29,7 @@
 
 
     <div class="d-flex flex-row mb-8" >
-        <form method="post" th:action="'/proyek/ubah/' + ${proyek.id}" th:object="${proyek}" class="form-horizontal" style="width: 70%">
+        <form method="post" th:action="'/assignment/proyek/ubah/' + ${proyek.id}" th:object="${proyek}" class="form-horizontal" style="width: 70%">
             <div class="form-row mb-3">
                 <div class="form-group col mr-2">
                     <label class="roboto">Nama Proyek</label>
@@ -152,7 +152,7 @@
                     <label></label>
                     <div class="row">
                         <div class="col-sm-3"><button type=button class="pusil-btn btn btn-primary col btn-rounded" data-toggle="modal" data-target="#updproyek-confirm">Simpan</button></div>
-                        <div class="col-sm-3"><a class="pusil-btn-danger btn text-white btn-rounded col btn-danger" th:href="'/proyek/detail/' + ${proyek.id}">Batalkan</a></div>
+                        <div class="col-sm-3"><a class="pusil-btn-danger btn text-white btn-rounded col btn-danger" th:href="'assignment/proyek/detail/' + ${proyek.id}">Batalkan</a></div>
                         <div class="col-sm-6"></div>
                     </div>
                 </div>

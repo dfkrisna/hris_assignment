@@ -51,7 +51,7 @@ public class ManajerDivisiController {
      * @param notification
      * @return
      */
-    @GetMapping(value="/mngdivisi/rekap/{idKar}")
+    @GetMapping(value="/assignment/mngdivisi/rekap/{idKar}")
     @PreAuthorize("hasAuthority('GET_MNGDIVISI')")
     public String showDetailKaryawan(Model model,
                                      RedirectAttributes ra,
@@ -71,7 +71,7 @@ public class ManajerDivisiController {
             warning = "Periode " + periodeDate.getMonth() + " " + periodeDate.getYear() + " belum berjalan";
 
             ra.addFlashAttribute("warning", warning);
-            return "redirect:/mngdivisi/rekap/" + idKaryawan;
+            return "redirect:/assignment/mngdivisi/rekap/" + idKaryawan;
         }
 
         KaryawanModel karyawan = karyawanService.getKaryawanById(idKaryawan);
@@ -151,7 +151,7 @@ public class ManajerDivisiController {
      * @param idKarProy
      * @return
      */
-    @PostMapping(value = "/mngdivisi/rekap/finalisasi")
+    @PostMapping(value = "/assignment/mngdivisi/rekap/finalisasi")
     @PreAuthorize("hasAuthority('POST_MNGDIVISI_REKAP_FINALISASI')")
     public String finalisasi(Model model,
                              RedirectAttributes ra,
@@ -171,6 +171,6 @@ public class ManajerDivisiController {
 
         System.out.println("nyampe sini lho");
 
-        return "redirect:/mngdivisi/rekap/" + karyawanProyek.getIdKaryawan();
+        return "redirect:/assignment/mngdivisi/rekap/" + karyawanProyek.getIdKaryawan();
     }
 }

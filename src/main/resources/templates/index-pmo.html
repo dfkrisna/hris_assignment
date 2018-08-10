@@ -12,7 +12,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="roboto breadcrumb-item active" aria-current="page">
-                    <a th:href="'/pmo'">Beranda</a>
+                    <a th:href="'assignment/pmo'">Beranda</a>
                 </li>
             </ol>
         </nav>
@@ -26,13 +26,13 @@
     <div class="row">
         <div class="col text-left">
             <div th:if="${previous != null}">
-                <a class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" th:href="@{'/pmo'(periode=${previous.month + ' ' + previous.year})}" th:text="${previous.month + ' ' + previous.year}"></a>
+                <a class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" th:href="@{'assignment/pmo'(periode=${previous.month + ' ' + previous.year})}" th:text="${previous.month + ' ' + previous.year}"></a>
             </div>
         </div>
         <div class="col text-center">
             <div th:if="${current != null}">
                 <h3 th:text="${current.month + ' ' + current.year}" class="montserrat-med-bold">Current Periode</h3>
-                <form action="#" th:action="@{/pmo}" method="get">
+                <form action="#" th:action="@{/assignment/pmo}" method="get">
                     <input name="periode" id="periode" class="date-picker form-rounded form-control" readonly="readonly" style="background-color: transparent;"/>
                     <br/>
                     <input class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" type="submit" value="Pilih Periode" />
@@ -41,7 +41,7 @@
         </div>
         <div class="col text-right">
             <div th:if="${next != null}">
-                <a class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" th:href="@{'/pmo'(periode=${next.month + ' ' + next.year})}" th:text="${next.month + ' ' + next.year}"></a>
+                <a class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" th:href="@{'assignment/pmo'(periode=${next.month + ' ' + next.year})}" th:text="${next.month + ' ' + next.year}"></a>
             </div>
             <div th:if="${next == null}">
                 <a disabled class="montserrat-small btn btn-dark text-white btn-rounded" th:text="${invalidMonth.month + ' ' + invalidMonth.year}"></a>
@@ -59,12 +59,12 @@
         <tr>
             <th class="text-center montserrat-small-bold">Karyawan</th>
             <th class="text-center montserrat-small-bold">Total</th>
-            <th class="text-center montserrat-small-bold" th:each="proyek,iterationStatus: ${proyekList}"><a th:text="${proyek.kode}" th:href="${'/proyek/detail/' + proyek.id}"></a></th>
+            <th class="text-center montserrat-small-bold" th:each="proyek,iterationStatus: ${proyekList}"><a th:text="${proyek.kode}" th:href="${'assignment/proyek/detail/' + proyek.id}"></a></th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="map,iterationStatus: ${mapping}">
-            <th class="table-header"><a class="montserrat-small-bold" th:text="${map.karyawan.nama}" th:href="${'/pmo/detail-karyawan/' + map.karyawan.id}">Nama Karyawan</a></th>
+            <th class="table-header"><a class="montserrat-small-bold" th:text="${map.karyawan.nama}" th:href="${'assignment/pmo/detail-karyawan/' + map.karyawan.id}">Nama Karyawan</a></th>
             <td class="text-center montserrat-small" th:text="${map.total + '%'}" th:style="|color: rgb(${map.red}, ${map.green}, 0);|"></td>
             <div th:if="${current.compareTo(periodeNow) < 0}">
                 <td class="text-center montserrat-small" th:each="rekap,iterationStatus: ${map.rekapList}" >
@@ -88,7 +88,7 @@
                                     <div class="modal-header">
                                         <h5 class="modal-title montserrat-med-bold">Ubah Persentase kontribusi</h5>
                                     </div>
-                                    <form th:action="'/pmo/update_persentase/' + ${rekap.id}" th:method="POST">
+                                    <form th:action="'/assignment/pmo/update_persentase/' + ${rekap.id}" th:method="POST">
                                     <div class="modal-body">
                                             <div class="form-group col mr-3">
                                                 <label class="montserrat-small-bold" for="persenKontribusi">Persentase Kontribusi (0-1)</label>
@@ -106,7 +106,7 @@
                                             <label></label>
                                             <div class="row">
                                                 <div class="col-sm-3"></div>
-                                                <a th:href="'/pmo/update_assignment/' + ${rekap.idKaryawanProyek} + '/' + ${current.year} + '/' + ${current.getMonthValue()}" class="monsterrat-small pusil-btn-danger btn btn-danger btn-rounded" style="margin-right: 15px; margin-left: -40px; font-size: 15px;">lihat detail</a>
+                                                <a th:href="'assignment/pmo/update_assignment/' + ${rekap.idKaryawanProyek} + '/' + ${current.year} + '/' + ${current.getMonthValue()}" class="monsterrat-small pusil-btn-danger btn btn-danger btn-rounded" style="margin-right: 15px; margin-left: -40px; font-size: 15px;">lihat detail</a>
                                                 <button type="sumbit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Ubah persentase</button>
                                             </div>
                                         </div>
@@ -118,7 +118,7 @@
                     </td>
 
                     <td class="text-center montserrat-small" th:unless="${rekap.getPersentase() > 0}" th:if="${current!=null}">
-                        <a th:href="'/pmo/assign/' + ${map.karyawan.id} + '/' + ${rekap.idProyek} + '/' + ${current.year} + '/' + ${current.getMonthValue()}"  type="button" class="btn btn-primary btn-md" style="color: white;border-radius: 100px;">Tugaskan</a>
+                        <a th:href="'assignment/pmo/assign/' + ${map.karyawan.id} + '/' + ${rekap.idProyek} + '/' + ${current.year} + '/' + ${current.getMonthValue()}"  type="button" class="btn btn-primary btn-md" style="color: white;border-radius: 100px;">Tugaskan</a>
                     </td>
                 </div>
             </div>
