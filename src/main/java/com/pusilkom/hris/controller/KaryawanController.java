@@ -82,9 +82,20 @@ public class KaryawanController {
         int persentaseKontribusi = (int) (rekapService.getKaryawanKontribusi(karyawan.getId(), LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1)) * 100);
 
 
+        int bebanKerjaSaatini = 0;
+
+        for(int i =0; i < penugasanPeriodeIni.size(); i++){
+            bebanKerjaSaatini+= penugasanPeriodeIni.get(i).getPersentase();
+        }
+
+        int rataRataBeban = bebanKerjaSaatini/penugasanPeriodeIni.size();
+
+        model.addAttribute("rataRataBeban", rataRataBeban);
         model.addAttribute("ratingKaryawan", ratingKaryawan);
         model.addAttribute("persentaseKontribusi", persentaseKontribusi);
         model.addAttribute("penugasanList", penugasanList);
+        model.addAttribute("bebanKerjaSaatini", bebanKerjaSaatini);
+
 
         String dateToday = rekapMappingService.getCurrentDate();
 

@@ -2,6 +2,7 @@ package com.pusilkom.hris.controller;
 
 import com.pusilkom.hris.model.*;
 import com.pusilkom.hris.service.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -19,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Controller
 @ControllerAdvice
 public class IndexController
@@ -123,6 +125,16 @@ public class IndexController
             List<KaryawanRekapModel> mapping = rekapMappingService.mapRekap(karyawanList, proyekList, karyawanProyekList, rekapList);
             int totalPerc = rekapMappingService.totalPercentage(mapping);
 
+            int[] AllBebanKerja = new int[6];
+
+            for(int i = 0; i < 6; i++) {
+                List<KaryawanProyekModel> karyawanProyekListBB = karyawanProyekService.getKaryawanProyekByPeriode(periodeDate.minusMonths(i));
+                List<RekapModel> rekapListBB = rekapService.getRekapByPeriode(periodeDate.minusMonths(i));
+                List<KaryawanRekapModel> mappingBB = rekapMappingService.mapRekap(karyawanList, proyekList, karyawanProyekListBB, rekapListBB);
+                AllBebanKerja [5-i] = rekapMappingService.totalPercentage(mappingBB);
+            }
+
+
             int avgNilai = ratingFeedbackService.getAllAverageRating(periodeDate);
             int[] chartValue = rekapMappingService.chartValue(mapping);
             int chartSize = karyawanList.size();
@@ -137,6 +149,7 @@ public class IndexController
                 roleMap.put(role.getId(), role.getNamaRole());
             }
 
+
             model.addAttribute("rekapRoleMap", rekapRoleMap);
             model.addAttribute("roles", roleMap);
             model.addAttribute("allAvgRating", avgNilai);
@@ -147,6 +160,10 @@ public class IndexController
             model.addAttribute("totalPercentage", totalPerc);
             model.addAttribute("totalGreen", (int) (255 - (2.55 * totalPerc)));
             model.addAttribute("totalRed", (int) (2.55 * totalPerc));
+            model.addAttribute("chartLabel", rekapService.getSixPeriod(periodeDate));
+            model.addAttribute("chartValueNilai", ratingFeedbackService.getRecapAllAverageRating(periodeDate));
+            model.addAttribute("AllBebanKerja", AllBebanKerja);
+
 
             return "index-eksekutif";
         } else {

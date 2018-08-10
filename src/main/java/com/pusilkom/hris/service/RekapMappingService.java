@@ -23,4 +23,5 @@ public interface RekapMappingService {
     KaryawanRekapModel getRekapBulananKaryawanProyek(int idKaryawan, int idProyek);
 
     Map mapRoleToRekap(List<KaryawanRekapModel> mapping);
+
 }
