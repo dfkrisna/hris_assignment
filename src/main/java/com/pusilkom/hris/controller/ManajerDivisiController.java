@@ -3,6 +3,7 @@ package com.pusilkom.hris.controller;
 import com.pusilkom.hris.model.*;
 import com.pusilkom.hris.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +40,9 @@ public class ManajerDivisiController {
     @Autowired
     KaryawanProyekService karyawanProyekService;
 
+    @Autowired
+    RoleProyekService roleProyekService;
+
     /**
      * method ini digunakan untuk menampilkan detail karyawan yang merupakan bawahan manajer divisi
      * @param model
@@ -48,17 +52,27 @@ public class ManajerDivisiController {
      * @return
      */
     @GetMapping(value="/mngdivisi/rekap/{idKar}")
+    @PreAuthorize("hasAuthority('GET_MNGDIVISI')")
     public String showDetailKaryawan(Model model,
+                                     RedirectAttributes ra,
                                      @RequestParam(value = "periode", required = false) String periode,
                                      @PathVariable(value = "idKar") int idKaryawan,
-                                     @ModelAttribute("notification") String notification) {
+                                     @ModelAttribute("notification") String notification,
+                                     @ModelAttribute("warning") String warning) {
         LocalDate periodeDate;
         if(periode != null) {
             String[] split = periode.split(" ");
             periodeDate = LocalDate.of(Integer.parseInt(split[1]), Month.valueOf(split[0].toUpperCase()), 1);
         } else { periodeDate = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1); }
 
-        System.out.println(periodeDate);
+        LocalDate periodeNow = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), 1);
+
+        if(periodeDate.compareTo(periodeNow) > 0) {
+            warning = "Periode " + periodeDate.getMonth() + " " + periodeDate.getYear() + " belum berjalan";
+
+            ra.addFlashAttribute("warning", warning);
+            return "redirect:/mngdivisi/rekap/" + idKaryawan;
+        }
 
         KaryawanModel karyawan = karyawanService.getKaryawanById(idKaryawan);
 
@@ -67,6 +81,7 @@ public class ManajerDivisiController {
         KaryawanRekapModel karyawanRekap = rekapMappingService.getRekapBulananKaryawan(periodeDate, idKaryawan);
 
         Map mapRekapProyek = new HashMap();
+        Map karyawanProyekRole = new HashMap();
 
         List<RekapModel> rekapList = karyawanRekap.getRekapList();
 
@@ -74,6 +89,9 @@ public class ManajerDivisiController {
             for(RekapModel rekap : rekapList) {
                 ProyekModel proyek = proyekService.getProyekById(rekap.getIdProyek());
                 mapRekapProyek.put(rekap.getId(), proyek);
+
+                String roleName =  roleProyekService.getRoleNameByID(karyawanProyekService.getKaryawanProyekById(rekap.getIdKaryawanProyek()).getIdRole());
+                karyawanProyekRole.put(rekap.getId(), roleName);
             }
         }
 
@@ -81,14 +99,19 @@ public class ManajerDivisiController {
             model.addAttribute("notification", notification);
         }
 
-        LocalDate periodeNow = LocalDate.now();
         boolean isNow = false;
         if(periodeDate.getYear() == periodeNow.getYear() && periodeDate.getMonth().equals(periodeNow.getMonth())) {
             isNow = true;
         }
 
+        int persentaseKontribusi = (int) (rekapService.getKaryawanKontribusi(karyawan.getId(), LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1)) * 100);
+        int ratingKaryawan = ratingFeedbackService.getAvgRatingKaryawan(karyawan.getId());
+
         model.addAttribute("isNow", isNow);
 
+        model.addAttribute("nilai", ratingKaryawan);
+        model.addAttribute("persenKontribusi", persentaseKontribusi);
+        model.addAttribute("role", karyawanProyekRole);
         model.addAttribute("isEmpty", rekapList.isEmpty());
         model.addAttribute("karyawanRekap", karyawanRekap);
         model.addAttribute("mapRekapProyek", mapRekapProyek);
@@ -102,7 +125,6 @@ public class ManajerDivisiController {
         boolean isEmptyRF = false;
         if(dicari.isEmpty()) {
             isEmptyRF = true;
-            return "mngdivisi-penilaian";
         } else {
 
             List<RatingFeedbackModel> listRF=null;
@@ -114,11 +136,11 @@ public class ManajerDivisiController {
             if (listRF.isEmpty() || listRF==null) {
                 isEmptyRF = true;
             }
-            model.addAttribute("isEmptyRF", isEmptyRF);
-            model.addAttribute("listRF", listRF);
 
-            return "mngdivisi-penilaian";
+            model.addAttribute("listRF", listRF);
         }
+        model.addAttribute("isEmptyRF", isEmptyRF);
+        return "mngdivisi-penilaian";
     }
 
     /**
@@ -130,6 +152,7 @@ public class ManajerDivisiController {
      * @return
      */
     @PostMapping(value = "/mngdivisi/rekap/finalisasi")
+    @PreAuthorize("hasAuthority('POST_MNGDIVISI_REKAP_FINALISASI')")
     public String finalisasi(Model model,
                              RedirectAttributes ra,
                              @RequestParam(value = "periode") String periode,

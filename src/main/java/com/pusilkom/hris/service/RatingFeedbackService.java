@@ -1,6 +1,7 @@
 package com.pusilkom.hris.service;
 
 import com.pusilkom.hris.dao.RatingFeedbackMapper;
+import com.pusilkom.hris.model.KaryawanRekapModel;
 import com.pusilkom.hris.model.RatingFeedbackModel;
 import com.pusilkom.hris.model.RoleProyekModel;
 import org.apache.ibatis.annotations.Param;
@@ -24,5 +25,7 @@ public interface RatingFeedbackService {
     List<RatingFeedbackModel> selectRatingFeedbackKP(Integer idKaryawanProyek);
     List<RatingFeedbackModel> selectRatingFeedbackPer(Integer idKaryawanProyek, LocalDate periode);
 
+    int getAllAverageRating(LocalDate periodeDate);
+    int[] getRecapAllAverageRating(LocalDate periode);
 }
 
