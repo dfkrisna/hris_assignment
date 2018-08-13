@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/fragment :: header-title-portal">
+</head>
+<body>
+    <div th:replace="fragments/fragment :: navbar-portal"></div>
+    <div class="row text-center portal">
+            <a href="/employee" class="col-md btn portal-black">
+                <div class="portal-content">
+                    <img src="/img/employee-portal.png" alt="">
+                    <br/>
+                    Karyawan     
+                </div>
+            </a>    
+            <a href="/assignment" class="col-md btn portal-yellow">
+                <div class="portal-content">
+                    <img src="/img/project-portal.png" alt="">
+                    <br/>
+                    Assignment
+                </div>
+            </a>
+    </div>
+</body>
+</html>

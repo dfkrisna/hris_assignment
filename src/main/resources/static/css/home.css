@@ -244,3 +244,35 @@ a.effect-underline:hover:after {
 .judul {
 	text-shadow: 0px 2px 1px #7c7c7c;
 }
+
+.portal{
+	margin: 0;
+	height: 100vh;
+}
+
+.portal-content{
+	margin-top: 25%;
+	height: 50vh;
+	font-size: 100px;
+}
+
+a.portal-black{
+	background-color: #232323;
+	color: #FFCF26;
+}
+
+a.portal-yellow{
+	background-color: #FFCF26;
+	color: #232323;
+}
+
+.portal-content img{
+	height: 400px;
+	width: 300x;
+}
+
+a:hover, a:visited, a:link, a:active
+{
+	text-decoration: none;
+}
+
