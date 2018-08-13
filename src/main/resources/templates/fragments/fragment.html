@@ -105,7 +105,7 @@
                 <span class="nav-link text-secondary"><img id="icon-navbar" class="mr-2 mb-1" alt="pusilkom" src="/img/avatar.png" style="display:inline-block;"><p style="display:inline-block;" th:text="${currentUser.username}">Jonathan Joestar</p></span>
             </li>
         </ul>
-        <form th:action="@{/assignment/logout}" class="navbar-form navbar-rightcol-md-2" method="post">
+        <form th:action="@{/logout}" class="navbar-form navbar-rightcol-md-2" method="post">
             <input class="btn btn-outline-danger" type="submit" value="logout"/>
         </form>
     </nav>

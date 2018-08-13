@@ -64,12 +64,20 @@ public class IndexController
      * @param auth
      * @return
      */
+    @GetMapping("/")
+    @PreAuthorize("hasAuthority('GET_')")
+    public String landingPage(Model model, @NotNull Authentication auth) {
+        UserWeb user = (UserWeb) auth.getPrincipal();
+        model.addAttribute("currentUser", user);
+        return "landingpage";
+    }
+
     @GetMapping("/assignment")
     @PreAuthorize("hasAuthority('GET_')")
     public String index(Model model, @NotNull Authentication auth) {
         UserWeb user = (UserWeb) auth.getPrincipal();
         model.addAttribute("currentUser", user);
-        return "landingpage";
+        return "index";
     }
 
     @GetMapping("/assignment/signin")
