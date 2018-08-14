@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/fragment :: header-title">
+</head>
+<body>
+<div th:replace="fragments/fragment :: navbar-employee"></div>
+<div th:replace="fragments/fragment :: sidebar"></div>
+
+<main id="content-isi" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 pb-3 pl-3 pr-3">
+    <div class="d-flex flex-row mb-5">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="roboto breadcrumb-item active" aria-current="page">
+                    <a href="/employee">Beranda</a>
+                </li>
+            </ol>
+        </nav>
+        <h2 class="ml-auto roboto" th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy')}"></h2>
+    </div>
+    <div class="text-center">
+        <h2 class="montserrat-bold-big" th:text="'Halo, ' + ${nama}"></h2>
+        <a class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" th:href="@{'/employee/karyawan/checkin'}">Check-in</a>
+    </div>
+</main >
+
+<div th:replace="fragments/fragment :: footer"></div>
+
+
+</body>
+</html>
