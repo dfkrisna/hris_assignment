@@ -12,7 +12,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="roboto breadcrumb-item active" aria-current="page">
-                    <a th:href="'/pmo'">Beranda</a>
+                    <a th:href="'/assignment/pmo'">Beranda</a>
                 </li>
                 <li class="roboto breadcrumb-item active" aria-current="page">Tambah Penugasan</li>
             </ol>
@@ -26,7 +26,7 @@
     <h3 class="montserrat-med" th:text="${karyawan.nama}"></h3>
 
     <div class="d-flex flex-row mb-2 ">
-        <form th:object="${karyawanProyek}" method="post" th:action="'/pmo/assign/' + ${karyawan.id} + '/' + ${proyek.id}" class="form-horizontal" style="width: 70%">
+        <form th:object="${karyawanProyek}" method="post" th:action="'/assignment/pmo/assign/' + ${karyawan.id} + '/' + ${proyek.id}" class="form-horizontal" style="width: 70%">
             <div class="form-row mb-3">
                 <div class="form-group col mr-2">
                     <label for="role" class="form-control-static montserrat-small-bold">Role dalam Proyek</label>

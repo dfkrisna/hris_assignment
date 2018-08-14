@@ -11,7 +11,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="roboto breadcrumb-item active" aria-current="page">
-                        <a th:href="'/eksekutif'">Beranda</a>
+                        <a th:href="'/assignment/eksekutif'">Beranda</a>
                     </li>
                 </ol>
             </nav>
@@ -23,13 +23,13 @@
         <div class="row">
             <div class="col text-left">
                 <div th:if="${previous != null}">
-                    <a class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" th:href="@{'/eksekutif'(periode=${previous.month + ' ' + previous.year})}" style="height:40px; width:160px;"><p th:text="${previous.month + ' ' + previous.year}"></p></a>
+                    <a class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" th:href="@{'/assignment/eksekutif'(periode=${previous.month + ' ' + previous.year})}" style="height:40px; width:160px;"><p th:text="${previous.month + ' ' + previous.year}"></p></a>
                 </div>
             </div>
             <div class="col text-center">
                 <div th:if="${current != null}">
                     <h3 th:text="${current.month + ' ' + current.year}" class="montserrat-med-bold">Current Periode</h3>
-                    <form action="#" th:action="@{/eksekutif}" method="get">
+                    <form action="#" th:action="@{/assignment/eksekutif}" method="get">
                         <input name="periode" id="periode" class="date-picker form-rounded form-control" readonly="readonly" />
                         <input class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" type="submit" value="Pilih Periode" />
                     </form>
@@ -37,7 +37,7 @@
             </div>
             <div class="col text-right">
                 <div th:if="${next != null}">
-                    <a class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" th:href="@{'/eksekutif'(periode=${next.month + ' ' + next.year})}" style="height:40px; width:160px;"><p th:text="${next.month + ' ' + next.year}"></p></a>
+                    <a class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" th:href="@{'/assignment/eksekutif'(periode=${next.month + ' ' + next.year})}" style="height:40px; width:160px;"><p th:text="${next.month + ' ' + next.year}"></p></a>
                 </div>
             </div>
         </div>
