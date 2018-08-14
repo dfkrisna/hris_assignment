@@ -56,26 +56,25 @@
 
         <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane fade show active" id="nav-matriks-penugasan" role="tabpanel" aria-labelledby="nav-matriks-penugasan">
-                <div class="col-sm-12">
-                    <table id="rekap-eksekutif" class="table- table table-hover">
-                        <thead>
-                        <tr>
-                            <th style="background-color: #FFCF26;">Karyawan</th>
-                            <th style="background-color: #FFCF26;" class="text-center">Total</th>
-                            <th style="background-color: #FFCF26;" class="text-center" th:each="proyek,iterationStatus: ${proyekList}" ><a th:text="${proyek.kode}" th:href="${'/rekap/proyek/' + proyek.id}"></a></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="map,iterationStatus: ${mapping}">
-                            <th style="background-color: #FFCF26;"><a th:text="${map.karyawan.nama}" th:href="${'/rekap/karyawan/riwayat/' + map.karyawan.id}">Nama Karyawan</a></th>
-                            <td class="text-center" th:text="${map.total + '%'}" th:style="|color: rgb(${map.red}, ${map.green}, 0);|"></td>
-                            <td class="text-center" th:each="rekap,iterationStatus: ${map.rekapList}">
-                                <p th:text="${rekap.persentase + '%'}" data-toggle="tooltip" th:title="${roles.get(rekapRoleMap.get(rekap.id))}" data-placement="bottom"></p>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <h2 class="text-center montserrat-bold-big">Matriks Penugasan</h2>
+                <table id="rekap-eksekutif" class="table-matrix table table-hover">
+                    <thead>
+                    <tr>
+                        <th style="background-color: #FFCF26;">Karyawan</th>
+                        <th style="background-color: #FFCF26;" class="text-center">Total</th>
+                        <th style="background-color: #FFCF26;" class="text-center" th:each="proyek,iterationStatus: ${proyekList}" ><a th:text="${proyek.kode}" th:href="${'/assignment/rekap/proyek/' + proyek.id}"></a></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="map,iterationStatus: ${mapping}">
+                        <th style="background-color: #FFCF26;"><a th:text="${map.karyawan.nama}" th:href="${'/assignment/rekap/karyawan/riwayat/' + map.karyawan.id}">Nama Karyawan</a></th>
+                        <td class="text-center" th:text="${map.total + '%'}" th:style="|color: rgb(${map.red}, ${map.green}, 0);|"></td>
+                        <td class="text-center" th:each="rekap,iterationStatus: ${map.rekapList}">
+                            <p th:text="${rekap.persentase + '%'}" data-toggle="tooltip" th:title="${roles.get(rekapRoleMap.get(rekap.id))}" data-placement="bottom"></p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
             <div class="tab-pane fade show" id="nav-rekap-persen" role="tabpanel" aria-labelledby="nav-rekap-persen">
                 <div class="row">
@@ -151,25 +150,8 @@
 
         <br/><br/><hr/><br/><br/>
 
-        <h3 class="montserrat-med-bold text-center">Matriks Penugasan</h3>
-        <table id="rekap-eksekutif" class="table-matrix table table-hover">
-            <thead>
-            <tr>
-                <th style="background-color: #FFCF26;">Karyawan</th>
-                <th style="background-color: #FFCF26;" class="text-center">Total</th>
-                <th style="background-color: #FFCF26;" class="text-center" th:each="proyek,iterationStatus: ${proyekList}" ><a th:text="${proyek.kode}" th:href="${'/assignment/rekap/proyek/' + proyek.id}"></a></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="map,iterationStatus: ${mapping}">
-                <th style="background-color: #FFCF26;"><a th:text="${map.karyawan.nama}" th:href="${'/assignment/rekap/karyawan/riwayat/' + map.karyawan.id}">Nama Karyawan</a></th>
-                <td class="text-center" th:text="${map.total + '%'}" th:style="|color: rgb(${map.red}, ${map.green}, 0);|"></td>
-                <td class="text-center" th:each="rekap,iterationStatus: ${map.rekapList}">
-                    <p th:text="${rekap.persentase + '%'}" data-toggle="tooltip" th:title="${roles.get(rekapRoleMap.get(rekap.id))}" data-placement="bottom"></p>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+
+
 
         <script th:inline="javascript">
             /*<![CDATA[*/
