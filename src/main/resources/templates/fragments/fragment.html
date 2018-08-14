@@ -125,7 +125,24 @@
             <form th:action="@{/logout}" class="navbar-form navbar-rightcol-md-2" method="post">
                 <input class="btn btn-outline-danger" type="submit" value="logout"/>
             </form>
-        </nav>
+    </nav>
+
+    <nav th:fragment="navbar-employee" id="navbar-utama" class="navbar bg-light sticky-top">
+        <div class="navbar-header col-md-2">
+            <a class="navbar-brand" ref="#">
+                <img id="logo-pusilkom" alt="pusilkom" src="/img/mainsite.png">
+            </a>
+            <span class="montserrat navbar-brand col-sm-3 col-md-2 mr-0 text-dark"><strong>SISDM</strong> MODUL <strong>KARYAWAN</strong></span>
+        </div>
+        <ul class="nav navbar-nav col-md-8 text-right">
+            <li class="nav-item text-nowrap">
+                <span class="nav-link text-secondary"><img id="icon-navbar" class="mr-2 mb-1" alt="pusilkom" src="/img/avatar.png" style="display:inline-block;"><p style="display:inline-block;" th:text="${currentUser.username}">Jonathan Joestar</p></span>
+            </li>
+        </ul>
+        <form th:action="@{/logout}" class="navbar-form navbar-rightcol-md-2" method="post">
+            <input class="btn btn-outline-danger" type="submit" value="logout"/>
+        </form>
+    </nav>
 
     <div th:fragment="sidebar" id="page-content" class="container-fluid d-block">
         <div class="row">

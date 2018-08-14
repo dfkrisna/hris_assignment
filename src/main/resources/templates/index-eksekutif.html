@@ -115,22 +115,6 @@
                             <img th:if="${allAvgRating>80 && allAvgRating<=100}" class="d-inline icon-eksekutif" src="/img/gold-star.png">
                             <h1 class="d-inline" th:text="${allAvgRating}" style="font-size: 80px;">0%</h1>
                             <br/>
-                            <!--<div th:if="${allAvgRating==0}">-->
-                                <!--<img class="d-inline icon-eksekutif" src="/img/black-star.png">-->
-                                <!--<h1 class="d-inline" th:text="${allAvgRating}" style="font-size: 80px;">0%</h1>-->
-                            <!--</div>-->
-                            <!--<div th:if="${allAvgRating>0 && allAvgRating<=60}">-->
-                                <!--<img class="d-inline icon-eksekutif" src="/img/bronze-star.png">-->
-                                <!--<h1 class="d-inline" th:text="${allAvgRating}" style="font-size: 80px;">0%</h1>-->
-                            <!--</div>-->
-                            <!--<div th:if="${allAvgRating>60 && allAvgRating<=80}" class="montserrat-small text-center text-value">-->
-                                <!--<h1 class="d-inline" th:text="${allAvgRating}" style="font-size: 80px;">0%</h1>-->
-                                <!--<img class="d-inline icon-eksekutif" src="/img/silver-star.png">-->
-                            <!--</div>-->
-                            <!--<div th:if="${allAvgRating>80 && allAvgRating<=100}" class="montserrat-small text-center text-value">-->
-                                <!--<img class="d-inline icon-eksekutif" src="/img/gold-star.png">-->
-                                <!--<h1 class="d-inline" th:text="${allAvgRating}" style="font-size: 80px;">0%</h1>-->
-                            <!--</div>-->
                             <div th:style="|height: 10px;width: 400px; background-color: rgb(${totalGreen}, ${totalRed}, 0);|"></div>
                         </div>
                     </div>
@@ -184,6 +168,35 @@
                 }
             });
             /*]]>*/
+
+            var ctx2 = document.getElementById("nilaiChart").getContext('2d');
+            var nilaiChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ["0 - 20", "21 - 40", "41 - 60", "61 - 80", "81 - 100"],
+                    datasets: [{
+                        label: 'Jumlah karyawan',
+                        data: /*[[${chartValue}]]*/ [],
+                        backgroundColor: [
+                            'rgb(0, 225, 0)',
+                            'rgb(179, 229, 0)',
+                            'rgb(255, 250, 0)',
+                            'rgb(216, 126, 0)',
+                            'rgb(216, 0, 0)'
+                        ],
+                        borderColor: [
+                            'rgb(0, 225, 50)',
+                            'rgb(179, 229, 50)',
+                            'rgb(255, 250, 50)',
+                            'rgb(216, 126, 50)',
+                            'rgb(216, 0, 50)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                }
+            });
 
 
         </script>
