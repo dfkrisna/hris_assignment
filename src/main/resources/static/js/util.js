@@ -3,6 +3,7 @@ $(document).ready(function() {
     $('#tabel-penugasan-periode-ini').DataTable();
     $('#tabel-riwayat-penugasan').DataTable();
     $('#tabel-penilaian-mandiri').DataTable();
+    $('#list-karyawan').DataTable();
     // $('#matrix-pmo').DataTable();
     $('#sub-proyek').DataTable();
     $('#table-rekomendasi').DataTable();

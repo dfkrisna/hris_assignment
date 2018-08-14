@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/fragment :: header-title">
+</head>
+<body>
+    <div th:replace="fragments/fragment :: navbar"></div>
+    <div th:replace="fragments/fragment :: sidebar"></div>
+
+    <main class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 pb-3">
+        <div class="d-flex flex-row mb-5">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="roboto breadcrumb-item active" aria-current="page">
+                        <a th:href="'/assignment/eksekutif'">Beranda</a>
+                    </li>
+                </ol>
+            </nav>
+            <h2 class="ml-auto roboto" th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy')}"></h2>
+        </div>
+
+        <h2 class="text-center montserrat-bold-big">List Karyawan</h2>
+        <table id="list-karyawan" class="table table-hover">
+            <thead>
+            <tr>
+                <th style="background-color: #FFCF26;">Karyawan</th>
+                <th style="background-color: #FFCF26;" class="text-center">Nama Panggilan</th>
+                <th style="background-color: #FFCF26;" class="text-center">NIP</th>
+                <th style="background-color: #FFCF26;" class="text-center">ID Divisi</th>
+                <th style="background-color: #FFCF26;" class="text-center">Email Pusilkom</th>
+                <th style="background-color: #FFCF26;" class="text-center">Email Pribadi</th>
+                <th style="background-color: #FFCF26;" class="text-center">Status Keaktifan</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="karyawan,iterationStatus:${karyawanList}">
+                <td th:text="${karyawan.getNamaLengkap()}"></td>
+                <td th:text="${karyawan.getNamaPanggilan()}"></td>
+                <td th:text="${karyawan.getNip()}"></td>
+                <td th:text="${karyawan.getIdDivisi()}"></td>
+                <td th:text="${karyawan.getEmailPusilkom()}"></td>
+                <td th:text="${karyawan.getEmailPribadi()}"></td>
+                <td>
+                    <div th:if="${karyawan.isActive()}">
+                        <a th:text="'Aktif'"></a>
+                    </div>
+                    <div th:if="${!karyawan.isActive()}">
+                        <a th:text="'Tidak Aktif'"></a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>
