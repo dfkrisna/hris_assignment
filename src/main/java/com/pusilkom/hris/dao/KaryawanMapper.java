@@ -169,4 +169,6 @@ public interface KaryawanMapper {
     @Delete("delete from mpp.\"KARYAWAN\" where id_pengguna = #{id}")
     void deleteKaryawan(@Param("id") int id);
 
+    @Select("SELECT id FROM employee.\"KARYAWAN\" where email_pusilkom = #{email}")
+    KaryawanModel getKaryawanModelByEmail(@Param("email") String email);
 }

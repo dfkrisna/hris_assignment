@@ -66,7 +66,7 @@ public class IndexController
      */
     @GetMapping("/")
     @PreAuthorize("hasAuthority('GET_')")
-    public String landingPage(Model model, @NotNull Authentication auth) {
+    public String landingPage  (Model model, @NotNull Authentication auth) {
         UserWeb user = (UserWeb) auth.getPrincipal();
         model.addAttribute("currentUser", user);
         return "landingpage";
@@ -305,6 +305,35 @@ public class IndexController
         model.addAttribute("mapping", mapKaryawanRating);
         model.addAttribute("divisi", divisi);
         return "index-manajerdivisi";
+    }
+
+    /**
+     * method ini digunakan untuk menampilkan index manajer divisi yang berisi daftar anggota di divisinya empployee
+     * @param model
+     * @param principal
+     * @return
+     */
+    @GetMapping("/employee/mngdivisi")
+    @PreAuthorize("hasAuthority('GET_MNGDIVISI')")
+    public String indexManajerDivisiEmployee(Model model, Principal principal) {
+        PenggunaModel pengguna = penggunaDAO.getPenggunaLama(principal.getName());
+        DivisiModel divisi = divisiService.getDivisiByManajer(pengguna.getId());
+        
+        List<KaryawanModel> karyawanList = karyawanService.getKaryawanByDivisi(divisi.getId());
+
+        Map mapKaryawanRating = new HashMap();
+
+        for(KaryawanModel karyawan:karyawanList) {
+            List<PenugasanModel> penugasanList = penugasanService.getPenugasanList(karyawan.getId());
+            int ratingKaryawan = ratingFeedbackService.getAvgRatingKaryawan(karyawan.getId());
+            mapKaryawanRating.put(karyawan.getId(), ratingKaryawan);
+            System.out.println("size penugasan = " + penugasanList.size() + "rating karyawan = " + ratingKaryawan);
+        }
+
+        model.addAttribute("listKaryawan", karyawanList);
+        model.addAttribute("mapping", mapKaryawanRating);
+        model.addAttribute("divisi", divisi);
+        return "index-manajerdivisi-employee";
     }
 
 }
