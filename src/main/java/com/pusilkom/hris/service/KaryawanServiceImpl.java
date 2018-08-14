@@ -2,6 +2,7 @@ package com.pusilkom.hris.service;
 
 import com.pusilkom.hris.dao.KaryawanMapper;
 import com.pusilkom.hris.model.FeedbackRatingModel;
+import com.pusilkom.hris.model.KaryawanBaruModel;
 import com.pusilkom.hris.model.KaryawanModel;
 import com.pusilkom.hris.model.KaryawanProyekModel;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +39,8 @@ public class KaryawanServiceImpl implements KaryawanService{
 	public List<KaryawanModel> getKaryawanAll() {
 		return karyawanMapper.selectKaryawanAll();
 	}
+
+	public List<KaryawanBaruModel> getKaryawanBaruAll(){ return karyawanMapper.selectKaryawanBaruAll();}
 
 	public KaryawanModel getKaryawanById(int idKaryawan) {
 		return karyawanMapper.selectKaryawanById(idKaryawan);
