@@ -153,5 +153,16 @@ public class KaryawanServiceImpl implements KaryawanService{
 		return listProyek;
 	}
 
+	@Override
+	public List<Integer> getAllDivisi(){
+		List<Integer> listDivisi = karyawanMapper.getAllDivisi();
+		return listDivisi;
+	}
+
+	@Override
+	public void addKaryawan(String namaLengkap, String namaPanggilan, String nip, int idDivisi,
+					 String emailPusilkom, String emailPribadi){
+		karyawanMapper.addKaryawan(namaLengkap, namaPanggilan, nip, emailPusilkom, emailPribadi, idDivisi, true);
+	}
 
 }

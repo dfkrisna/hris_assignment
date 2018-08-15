@@ -18,6 +18,60 @@
             <h2 class="ml-auto roboto" th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy')}"></h2>
         </div>
 
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah-karyawan">
+            Tambah Karyawan +
+        </button>
+        <div class="modal fade" id="modal-tambah-karyawan">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Tambah Karyawan Baru</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <form id="form-tambah-karyawan" action="/employee/hr/tambah-karyawan" method="POST">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="nama-lengkap" class="col-form-label">Nama Lengkap :</label>
+                                <input type="text" class="form-control" id="nama-lengkap" name="nama-lengkap"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="nama-panggilan" class="col-form-label">Nama Panggilan :</label>
+                                <input type="text" class="form-control" id="nama-panggilan" name="nama-panggilan"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="nip" class="col-form-label">NIP :</label>
+                                <input type="text" class="form-control" id="nip" name="nip"></input>
+                            </div>
+                            <div class="form-group">
+                                <label for="id-divisi" class="col-form-label">ID Divisi :</label>
+                                <select class="form-control" id="id-divisi" name="id-divisi">
+                                    <option selected="selected" disabled="disabled">Pilih Divisi</option>
+                                    <div th:each="idDivisi, IterationStatus:${listDivisi}">
+                                        <option th:text="${idDivisi}"></option>
+                                    </div>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="email-pusilkom" class="col-form-label">Email Pusilkom :</label>
+                                <input type="email" class="form-control" id="email-pusilkom" name="email-pusilkom"></input>
+                            </div>
+                            <div class="form-group">
+                                <label for="email-pribadi" class="col-form-label">Email Pribadi :</label>
+                                <input type="email" class="form-control" id="email-pribadi" name="email-pribadi"></input>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Tambah Karyawan</button>
+                            <button type="button" class="montserrat-small btn btn-dark btn-rounded" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         <h2 class="text-center montserrat-bold-big">List Karyawan</h2>
         <table id="list-karyawan" class="table table-hover">
             <thead>

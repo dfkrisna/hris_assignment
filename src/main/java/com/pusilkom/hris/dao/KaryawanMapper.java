@@ -159,6 +159,11 @@ public interface KaryawanMapper {
                                             @Param("idProyek") int idProyek,
                                             @Param("periodeSelected") LocalDate periodeSelected);
 
+    @Select("SELECT d.id " +
+            "FROM employee.\"DIVISI\" as d")
+    List<Integer> getAllDivisi();
+
+
     @Insert("insert into mpp.\"RATING_FEEDBACK\" (rating, feedback, tanggal, id_karyawan_dinilai, id_penilai, periode, id_proyek)\n" +
             "values (#{ratingRekan}, #{feedback}, #{waktuIsi}, #{idKaryawanProyek}, #{idPenilai}, #{periodeSelected}, " +
             "#{idProyek})")
@@ -185,4 +190,16 @@ public interface KaryawanMapper {
     @Delete("delete from mpp.\"KARYAWAN\" where id_pengguna = #{id}")
     void deleteKaryawan(@Param("id") int id);
 
+    @Insert("INSERT INTO employee.\"KARYAWAN\"" +
+            "(nama_lengkap, nama_panggilan, nip, email_pusilkom, email_pribadi, is_active, id_divisi)\n" +
+            "\tVALUES (#{namaLengkap}, #{namaPanggilan}, #{nip}, #{emailPusilkom}, #{emailPribadi}, #{isActive}, #{idDivisi})")
+    void addKaryawan(
+            @Param("namaLengkap") String namaLengkap,
+            @Param("namaPanggilan") String namaPanggilan,
+            @Param("nip") String nip,
+            @Param("emailPusilkom") String emailPusilkom,
+            @Param("emailPribadi") String emailPribadi,
+            @Param("idDivisi") int idDivisi,
+            @Param("isActive") boolean isActive
+    );
 }
