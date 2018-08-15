@@ -58,6 +58,9 @@ public class IndexController
     @Autowired
     RoleProyekService roleProyekService;
 
+    @Autowired
+    KaryawanCutiService karyawanCutiService;
+
     /**
      * method untuk mengakses beranda utama
      * @param model
@@ -313,26 +316,12 @@ public class IndexController
      * @param principal
      * @return
      */
-    @GetMapping("/employee/mngdivisi")
+    @GetMapping("/employee/cuti")
     @PreAuthorize("hasAuthority('GET_MNGDIVISI')")
     public String indexManajerDivisiEmployee(Model model, Principal principal) {
-        PenggunaModel pengguna = penggunaDAO.getPenggunaLama(principal.getName());
-        DivisiModel divisi = divisiService.getDivisiByManajer(pengguna.getId());
+        List<KaryawanCutiModel> listOfKaryawanCuti = karyawanCutiService.getAll(principal.getName());
         
-        List<KaryawanModel> karyawanList = karyawanService.getKaryawanByDivisi(divisi.getId());
-
-        Map mapKaryawanRating = new HashMap();
-
-        for(KaryawanModel karyawan:karyawanList) {
-            List<PenugasanModel> penugasanList = penugasanService.getPenugasanList(karyawan.getId());
-            int ratingKaryawan = ratingFeedbackService.getAvgRatingKaryawan(karyawan.getId());
-            mapKaryawanRating.put(karyawan.getId(), ratingKaryawan);
-            System.out.println("size penugasan = " + penugasanList.size() + "rating karyawan = " + ratingKaryawan);
-        }
-
-        model.addAttribute("listKaryawan", karyawanList);
-        model.addAttribute("mapping", mapKaryawanRating);
-        model.addAttribute("divisi", divisi);
+        model.addAttribute("listOfKaryawanCuti", listOfKaryawanCuti);
         return "index-manajerdivisi-employee";
     }
 

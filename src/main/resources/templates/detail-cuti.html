@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/fragment :: header-title-employee">
+</head>
+
+<body>
+    <div th:replace="fragments/fragment :: navbar-employee"></div>
+    <div th:replace="fragments/fragment :: sidebar"></div>
+
+    <main id="content-isi" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 pb-3 pl-3 pr-3">
+        <div th:if="${notification != null}" class="d-flex flex-row mb-3 col-md-12">
+            <h3 th:text="${notification}" class="text-primary montserrat-small-bold alert alert-success"></h3>
+        </div>
+        <div class="d-flex flex-row mb-5">
+            <h2 class="montserrat-bold-big">Rekapitulasi Permohonan Cuti Karyawan</h2>
+        </div>
+        <div class="d-flex flex-row mb-5">
+            <h3 class="montserrat-med" th:text="'Nama Karyawan : ' + ${namaLengkap}"></h3>
+        </div>
+        <div class="d-flex flex-row mb-2">
+            <table id="tabel-anggota-divisi" class="table table-hover">
+                <thead class="tabel-header">
+                    <tr>
+                        <th class="montserrat-small-bold" scope="col">Jumlah Hari</th>
+                        <th class="montserrat-small-bold" scope="col">Periode Mulai</th>
+                        <th class="montserrat-small-bold" scope="col">Periode Selesai</th>
+                        <th class="montserrat-small-bold" scope="col">Status Permohonan Cuti</th>
+                        <th class="montserrat-small-bold" scope="col">Action</th>
+                    </tr>
+                </thead>
+                <div th:each="karyawanCuti, iterationStatus: ${listOfKaryawanCuti}">
+                    <tr>
+                        <td>
+                            <p class="d-inline montserrat-small text-muted" th:text="${karyawanCuti.getJumlahHari()}"></p>
+                        </td>
+                        <td>
+                            <p class="d-inline montserrat-small text-muted" th:text="${karyawanCuti.getStartPeriode()}"></p>
+                        </td>
+                        <td>
+                            <p class="d-inline montserrat-small text-muted" th:text="${karyawanCuti.getEndPeriode()}"></p>
+                        </td>
+                        <td>
+                            <div th:if="${karyawanCuti.isTolak()}">
+                                <p class="d-inline montserrat-small text-muted">Sudah Ditolak</p>
+                            </div>
+                            <div th:if="${karyawanCuti.isDisetujui() && !karyawanCuti.isTolak()}">
+                                <p class="d-inline montserrat-small text-muted">Sudah Disetujui</p>
+                            </div>
+                            <div th:if="${!karyawanCuti.isDisetujui() && !karyawanCuti.isTolak()}">
+                                <p class="d-inline montserrat-small text-muted">Belum Disetujui</p>
+                            </div>
+                        </td>
+                        <td class="row">
+                                <div class="col-md-1"></div>
+                                <a th:if="${!karyawanCuti.isDisetujui()}" th:href="'/employee/detail-karyawan/'+ ${karyawanCuti.getIdKaryawan()} +'/approve/' + ${karyawanCuti.getId()}" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded col-md">Setujui</a>
+                                <a th:if="${karyawanCuti.isDisetujui()}" th:href="'/employee/detail-karyawan/'+ ${karyawanCuti.getIdKaryawan()} +'/cancel/' + ${karyawanCuti.getId()}" class="montserrat-small btn btn-dark text-white btn-rounded col-md">Batalkan</a>
+                                <div class="col-md-1"></div>
+                                <a th:if="${!karyawanCuti.isTolak()}" th:href="'/employee/detail-karyawan/'+ ${karyawanCuti.getIdKaryawan()} +'/tolak/' + ${karyawanCuti.getId()}" class="montserrat-small btn btn-dark text-white btn-rounded col-md">Tolak</a>
+                                <a th:if="${karyawanCuti.isTolak()}" th:href="'/employee/detail-karyawan/'+ ${karyawanCuti.getIdKaryawan()} +'/cancel-tolak/' + ${karyawanCuti.getId()}" class="montserrat-small btn btn-dark text-white btn-rounded col-md">Cancel Tolak</a>
+                                <div class="col-md-1"></div>
+                        </td>
+                    </tr>
+                </div>
+            </table>
+        </div>
+    </main>
+</body>
+
+</html>

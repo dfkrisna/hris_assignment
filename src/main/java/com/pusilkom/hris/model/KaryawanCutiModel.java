@@ -11,17 +11,17 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class KaryawanCutiModel {
+    private int id;
     private int idKaryawan;
     private String namaLengkap;
     private int jumlahHari;
     private boolean isDisetujui;
+    private boolean isTolak;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startPeriode;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endPeriode;
-
-    private boolean isActive;
-
+    
     public String getPeriode() {
         if (startPeriode == null && endPeriode == null) {
             return "-";

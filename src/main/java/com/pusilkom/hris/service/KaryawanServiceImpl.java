@@ -153,5 +153,10 @@ public class KaryawanServiceImpl implements KaryawanService{
 		return listProyek;
 	}
 
+	@Override
+	public KaryawanBaruModel getKaryawanBaruById(int idKaryawan){
+		return karyawanMapper.getKaryawanBaruById(idKaryawan);
+	}
+
 
 }
