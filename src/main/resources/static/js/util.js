@@ -32,6 +32,8 @@ $(document).ready(function() {
         "order": [[ 1, "desc" ]]
     } );
 
+    $('.notifModal').modal('show');
+
     $('#feedbackModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget); // Button that triggered the modal
         var header = button.data('title'); // Extract info from data-* attributes
