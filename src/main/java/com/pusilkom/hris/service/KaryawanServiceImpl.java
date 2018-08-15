@@ -143,6 +143,12 @@ public class KaryawanServiceImpl implements KaryawanService{
 	}
 
 	@Override
+	public KaryawanBaruModel getKaryawanByUsername(String username) {
+		KaryawanBaruModel karyawan = karyawanMapper.selectKaryawanByUsername(username);
+		return karyawan;
+	}
+
+	@Override
 	public int getKaryawanIdPenilai(int idKaryawan, int idProyek) {
 		return karyawanMapper.getKaryawanIdPenilai(idKaryawan, idProyek);
 	}

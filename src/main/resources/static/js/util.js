@@ -61,6 +61,19 @@ $(document).ready(function() {
 
     });
 
+    $('#checkoutModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var header = button.data('title'); // Extract info from data-* attributes
+        var waktuCheckin = button.data('waktu-checkin');
+
+        var modal = $(this);
+        modal.find('.modal-body textarea').val("");
+
+
+        modal.find('.modal-body #waktuCheckin').val(waktuCheckin);
+
+    });
+
     $(".btn-isi-evaluasi-karyawan").on("click", function(){
         event.preventDefault();
 

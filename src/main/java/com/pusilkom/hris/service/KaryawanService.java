@@ -49,4 +49,5 @@ public interface KaryawanService {
 							 int idProyek, LocalDate periode, Timestamp tanggal);
 
 
+    KaryawanBaruModel getKaryawanByUsername(String username);
 }

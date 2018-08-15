@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 
 @Data
 @AllArgsConstructor
@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class AbsenModel {
     private int id;
     private int idKaryawan;
-    private LocalDate checkInTime;
-    private LocalDate checkOutTime;
+    private Timestamp checkInTime;
+    private Timestamp checkOutTime;
     private String detail;
 }
