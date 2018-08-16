@@ -97,6 +97,14 @@ $(document).ready(function() {
         $("#modal-isi-ubah-evaluasi-karyawan").modal();
     })
 
+    $(".btn-hapus-karyawan").on("click", function(){
+        event.preventDefault();
+        var action = "/employee/hr/hapus/" + $(this).data('idkaryawan');
+        $("#btn-konfirmasi-hapus-karyawan").attr('href', action);
+        $("#modal-hapus-karyawan").modal();
+    })
+
+
     $('[data-toggle="tooltip"]').tooltip();
 
 } );

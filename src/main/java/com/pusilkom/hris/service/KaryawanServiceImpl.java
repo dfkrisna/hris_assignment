@@ -169,5 +169,15 @@ public class KaryawanServiceImpl implements KaryawanService{
 		return karyawanMapper.getKaryawanBaruById(idKaryawan);
 	}
 
+	@Override
+	public void deleteKaryawan(int idKaryawan){
+		karyawanMapper.deleteKaryawanBaru(idKaryawan);
+	}
+
+	@Override
+	public String cekKaryawanIsManager(int idKaryawan){
+		return karyawanMapper.cekKaryawanIsManager(idKaryawan);
+	}
+
 
 }

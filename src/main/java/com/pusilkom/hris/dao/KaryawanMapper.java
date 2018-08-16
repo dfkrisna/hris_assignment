@@ -27,7 +27,8 @@ public interface KaryawanMapper {
     List<KaryawanModel> selectKaryawanAll();
 
     @Select("SELECT K.*" +
-            "FROM   employee.\"KARYAWAN\" as K")
+            "FROM   employee.\"KARYAWAN\" as K " +
+            "WHERE K.is_deleted = false")
     @Results(value = {
             @Result(property="idKaryawan", column="id"),
             @Result(property="namaLengkap", column="nama_lengkap"),
@@ -190,6 +191,11 @@ public interface KaryawanMapper {
     @Delete("delete from mpp.\"KARYAWAN\" where id_pengguna = #{id}")
     void deleteKaryawan(@Param("id") int id);
 
+    @Update("UPDATE employee.\"KARYAWAN\"\n" +
+            "\tSET is_deleted=true\n" +
+            "\tWHERE id=#{id}")
+    void deleteKaryawanBaru(@Param("id") int id);
+
     @Insert("INSERT INTO employee.\"KARYAWAN\"" +
             "(nama_lengkap, nama_panggilan, nip, email_pusilkom, email_pribadi, is_active, id_divisi)\n" +
             "\tVALUES (#{namaLengkap}, #{namaPanggilan}, #{nip}, #{emailPusilkom}, #{emailPribadi}, #{isActive}, #{idDivisi})")
@@ -217,4 +223,9 @@ public interface KaryawanMapper {
             @Result(property="isActive", column="is_active")
     })
     KaryawanBaruModel getKaryawanBaruById(@Param("idKaryawan") int idKaryawan);
+
+    @Select("SELECT d.id_manager " +
+            "FROM employee.\"DIVISI\" as D " +
+            "WHERE D.id_manager=#{idKaryawan}")
+    String cekKaryawanIsManager(@Param("idKaryawan") int idKaryawan);
 }
