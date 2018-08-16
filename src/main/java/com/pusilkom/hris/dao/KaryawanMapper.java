@@ -169,4 +169,12 @@ public interface KaryawanMapper {
     @Delete("delete from mpp.\"KARYAWAN\" where id_pengguna = #{id}")
     void deleteKaryawan(@Param("id") int id);
 
+    @Select("SELECT DISTINCT id, nama_lengkap\n " +
+            "FROM employee.\"KARYAWAN\"")
+    @Results(value = {
+            @Result(property="id", column="id"),
+            @Result(property="nama", column="nama_lengkap")
+    })
+    List<KaryawanModel> selectNamaEmployeeAll();
+
 }

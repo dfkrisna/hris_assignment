@@ -150,5 +150,9 @@ public class KaryawanServiceImpl implements KaryawanService{
 		return listProyek;
 	}
 
+	@Override
+	public List<KaryawanModel> selectNamaEmployeeAll(){
+		return karyawanMapper.selectNamaEmployeeAll();
+	}
 
 }

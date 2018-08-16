@@ -210,6 +210,29 @@
         </div>
     </div>
 
+
+    <div th:fragment="sidebar-employee" id="page-content" class="container-fluid d-block">
+        <div class="row">
+            <nav id="pusilkom-sidebar" class="col-md-2 d-none d-md-block sidebar bg-dark">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column mt-4">
+                        <li class="nav-item">
+                            <a class="side-text roboto nav-link active text-light mb-2 effect-underline">
+                                Selamat Datang!
+                            </a>
+                        </li>
+                        <li th:if="${#lists.contains(currentUser.strRoles,'ROLE_SYSTEMADMIN')}" class="nav-item">
+                           <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/employee/admin/keloladivisi">
+                                <img class="icon-sidebar mr-2 mb-1" src="/img/yellow-building.png">Kelola Divisi
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+
     <footer th:fragment="footer" id="pusilkom-footer" class="col-md-12 bg-dark p-2">
         <div class="container">
             <a class="navbar-brand" href="#">
