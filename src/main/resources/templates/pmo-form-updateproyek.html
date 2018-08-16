@@ -19,7 +19,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="roboto breadcrumb-item active" aria-current="page">
-                    <a th:href="'assignment/pmo'">Beranda</a>
+                    <a th:href="'/assignment/pmo'">Beranda</a>
                 </li>
                 <li class="roboto breadcrumb-item active" aria-current="page">Ubah Data Proyek</li>
             </ol>
@@ -152,7 +152,7 @@
                     <label></label>
                     <div class="row">
                         <div class="col-sm-3"><button type=button class="pusil-btn btn btn-primary col btn-rounded" data-toggle="modal" data-target="#updproyek-confirm">Simpan</button></div>
-                        <div class="col-sm-3"><a class="pusil-btn-danger btn text-white btn-rounded col btn-danger" th:href="'assignment/proyek/detail/' + ${proyek.id}">Batalkan</a></div>
+                        <div class="col-sm-3"><a class="pusil-btn-danger btn text-white btn-rounded col btn-danger" th:href="'/assignment/proyek/detail/' + ${proyek.id}">Batalkan</a></div>
                         <div class="col-sm-6"></div>
                     </div>
                 </div>

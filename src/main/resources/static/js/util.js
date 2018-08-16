@@ -3,6 +3,7 @@ $(document).ready(function() {
     $('#tabel-penugasan-periode-ini').DataTable();
     $('#tabel-riwayat-penugasan').DataTable();
     $('#tabel-penilaian-mandiri').DataTable();
+    $('#list-karyawan').DataTable();
     // $('#matrix-pmo').DataTable();
     $('#sub-proyek').DataTable();
     $('#table-rekomendasi').DataTable();
@@ -110,6 +111,14 @@ $(document).ready(function() {
         // pop-up modal
         $("#modal-isi-ubah-evaluasi-karyawan").modal();
     })
+
+    $(".btn-hapus-karyawan").on("click", function(){
+        event.preventDefault();
+        var action = "/employee/hr/hapus/" + $(this).data('idkaryawan');
+        $("#btn-konfirmasi-hapus-karyawan").attr('href', action);
+        $("#modal-hapus-karyawan").modal();
+    })
+
 
     $('[data-toggle="tooltip"]').tooltip();
 

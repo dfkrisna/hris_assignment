@@ -22,7 +22,7 @@
     <div class="panel panel-default">
 
         <div class="panel-body">
-            <form method="post" th:action="@{/assignment/auth/create}" th:object="${authItemChildCmd}" class="form-horizontal">
+            <form method="post" th:action="@{/auth/create}" th:object="${authItemChildCmd}" class="form-horizontal">
                 <div class="form-group" th:classappend="${#fields.hasErrors('parent')} ? has-error">
                     <label class="col-sm-2 control-label">Parent*</label>
                     <div class="col-lg-6">
