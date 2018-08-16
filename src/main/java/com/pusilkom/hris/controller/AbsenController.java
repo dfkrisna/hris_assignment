@@ -2,11 +2,9 @@ package com.pusilkom.hris.controller;
 
 import com.pusilkom.hris.model.AbsenModel;
 import com.pusilkom.hris.model.KaryawanBaruModel;
-import com.pusilkom.hris.model.KaryawanModel;
 import com.pusilkom.hris.model.UserWeb;
 import com.pusilkom.hris.service.AbsenService;
 import com.pusilkom.hris.service.KaryawanService;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -18,7 +16,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -29,11 +28,6 @@ public class AbsenController {
 
     @Autowired
     AbsenService absenService;
-
-    @GetMapping("/fragments")
-    public String fragment() {
-        return "fragments/fragment";
-    }
 
     @ModelAttribute("statusCheckIn")
     public boolean isCheckedIn(Model model,
@@ -48,25 +42,20 @@ public class AbsenController {
         return isCheckedIn;
     }
 
-    @GetMapping("/employee/absen")
+    @GetMapping("/employee/riwayat-absen")
     public String homeKaryawan(Model model,
-                               @NotNull Authentication auth,
-                               @ModelAttribute("checkInNotif") String checkInNotif,
-                               @ModelAttribute("checkOutNotif") String checkOutNotif) {
+                               @NotNull Authentication auth) {
         UserWeb user = (UserWeb) auth.getPrincipal();
         KaryawanBaruModel karyawan = karyawanService.getKaryawanByUsername(user.getUsername());
-        boolean isCheckedIn = absenService.isCheckedIn(karyawan);
 
-        if(isCheckedIn) {
-            AbsenModel absen = absenService.getKaryawanLatestCheckIn(karyawan);
-            model.addAttribute("absen", absen);
-        }
+        List<AbsenModel> absens = absenService.getAbsenKaryawan(karyawan);
 
-        model.addAttribute("isCheckedIn", isCheckedIn);
-        model.addAttribute("karyawan", karyawan);
-        model.addAttribute("checkinSuccess", checkInNotif);
-        model.addAttribute("checkOutSuccess", checkOutNotif);
-        return "emp-karyawan";
+        Map mapDurasi = absenService.mapDurasiAbsen(absens);
+
+        model.addAttribute("absens", absens);
+        model.addAttribute("mapDurasi", mapDurasi);
+
+        return "rekap-absen";
     }
 
     @GetMapping("/employee/absen/checkin")

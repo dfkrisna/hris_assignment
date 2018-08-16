@@ -6,6 +6,7 @@ import com.pusilkom.hris.model.KaryawanModel;
 import org.apache.ibatis.annotations.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Mapper
 public interface AbsenMapper {
@@ -31,4 +32,17 @@ public interface AbsenMapper {
             "detail = #{detail} " +
             "where id = #{id}")
     void updateAbsen(AbsenModel absen);
+
+    @Select("select distinct id, id_karyawan, time_check_in, time_check_out, detail from " +
+            "employee.\"ABSEN\" " +
+            "where id_karyawan = #{idKaryawan} " +
+            "ORDER by time_check_in DESC")
+    @Results(value = {
+            @Result(property = "id", column = "id"),
+            @Result(property = "idKaryawan", column = "id_karyawan"),
+            @Result(property = "checkInTime", column = "time_check_in"),
+            @Result(property = "checkOutTime", column = "time_check_out"),
+            @Result(property = "detail", column = "detail")
+    })
+    List<AbsenModel> selectAbsenKaryawan(KaryawanBaruModel karyawan);
 }

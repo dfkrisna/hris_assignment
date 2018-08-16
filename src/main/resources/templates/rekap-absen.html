@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/fragment :: header-title">
+</head>
+<body>
+<div th:replace="fragments/fragment :: navbar-employee"></div>
+<div th:replace="fragments/fragment :: sidebar-employee"></div>
+<div th:replace="fragments/fragment :: absen-modals"></div>
+
+<main id="content-isi" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 pb-3">
+    <div class="d-flex flex-row mb-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="roboto breadcrumb-item active" aria-current="page">
+                    <a th:href="'/employee/beranda'">Beranda</a>
+                </li>
+                <li class="roboto breadcrumb-item active" aria-current="page">Riwayat Absen</li>
+            </ol>
+        </nav>
+        <h2 class="ml-auto roboto" th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy')}"></h2>
+    </div>
+
+    <h2 class="montserrat-bold-big">Riwayat Absen</h2><hr/>
+
+    <div th:if="${absens != null && !absens.isEmpty()}">
+
+        <table id="rekap-absen" class="table-mpp table table-hover">
+                <thead class="tabel-header">
+                <tr>
+                    <th class="montserrat-small-bold text-center">Waktu Check-in</th>
+                    <th class="montserrat-small-bold text-center">Waktu Check-out</th>
+                    <th class="montserrat-small-bold text-center">Durasi (dalam jam)</th>
+                    <th class="montserrat-small-bold text-center">Detail</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="absen,iterationStatus: ${absens}">
+                    <td class="text-center montserrat-small" th:text="${absen.getCheckInTime()}"></td>
+                    <td th:if="${absen.getCheckOutTime() != null}" class="text-center montserrat-small" th:text="${absen.getCheckOutTime()}"></td>
+                    <td th:unless="${absen.getCheckOutTime() != null}" class="text-center text-muted montserrat-small">Belum Check-out</td>
+                    <td class="text-center montserrat-small" th:text="${mapDurasi.get(absen.id)}"></td>
+                    <td class="text-center montserrat-small" th:text="${absen.getDetail()}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <br/>
+    </div>
+    <div th:unless="${absens != null && !absens.isEmpty()}" class="row">
+        <br/><br/>
+        <div class="col-2"></div>
+        <div class="col-8 text-center">
+            <h3 class="d-inline text-sub text-center mr-2 montserrat">Karyawan belum pernah</h3>
+            <h3 class="d-inline text-value text-center montserrat">melakukan check-in</h3>
+            <h3 class="d-inline text-sub text-center ml-2 montserrat">pada sistem</h3>
+        </div>
+        <div class="col-2"></div>
+        <br/><br/><br/>
+    </div>
+
+</main >
+
+<div th:replace="fragments/fragment :: footer"></div>
+
+</body>
+</html>
