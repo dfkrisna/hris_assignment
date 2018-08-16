@@ -25,25 +25,29 @@
             <table id="tabel-anggota-divisi" class="table table-hover">
                 <thead class="tabel-header">
                     <tr>
-                        <th class="montserrat-small-bold" scope="col">Jumlah Hari</th>
-                        <th class="montserrat-small-bold" scope="col">Periode Mulai</th>
-                        <th class="montserrat-small-bold" scope="col">Periode Selesai</th>
-                        <th class="montserrat-small-bold" scope="col">Status Permohonan Cuti</th>
-                        <th class="montserrat-small-bold" scope="col">Action</th>
+                        <th class="montserrat-small-bold text-center" scope="col">No.</th>
+                        <th class="montserrat-small-bold text-center" scope="col">Jumlah Hari</th>
+                        <th class="montserrat-small-bold text-center" scope="col">Periode Mulai</th>
+                        <th class="montserrat-small-bold text-center" scope="col">Periode Selesai</th>
+                        <th class="montserrat-small-bold text-center" scope="col">Status Permohonan Cuti</th>
+                        <th class="montserrat-small-bold text-center" scope="col">Action</th>
                     </tr>
                 </thead>
                 <div th:each="karyawanCuti, iterationStatus: ${listOfKaryawanCuti}">
                     <tr>
-                        <td>
+                        <td class="text-center">
+                            <p class="d-inline montserrat-small text-muted" th:text="${iterationStatus.count}"></p>
+                        </td>
+                        <td class="text-center">
                             <p class="d-inline montserrat-small text-muted" th:text="${karyawanCuti.getJumlahHari()}"></p>
                         </td>
-                        <td>
+                        <td class="text-center">
                             <p class="d-inline montserrat-small text-muted" th:text="${karyawanCuti.getStartPeriode()}"></p>
                         </td>
-                        <td>
+                        <td class="text-center">
                             <p class="d-inline montserrat-small text-muted" th:text="${karyawanCuti.getEndPeriode()}"></p>
                         </td>
-                        <td>
+                        <td class="text-center">
                             <div th:if="${karyawanCuti.isTolak()}">
                                 <p class="d-inline montserrat-small text-muted">Sudah Ditolak</p>
                             </div>
@@ -56,11 +60,11 @@
                         </td>
                         <td class="row">
                                 <div class="col-md-1"></div>
-                                <a th:if="${!karyawanCuti.isDisetujui()}" th:href="'/employee/detail-karyawan/'+ ${karyawanCuti.getIdKaryawan()} +'/approve/' + ${karyawanCuti.getId()}" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded col-md">Setujui</a>
-                                <a th:if="${karyawanCuti.isDisetujui()}" th:href="'/employee/detail-karyawan/'+ ${karyawanCuti.getIdKaryawan()} +'/cancel/' + ${karyawanCuti.getId()}" class="montserrat-small btn btn-dark text-white btn-rounded col-md">Batalkan</a>
+                                <a th:if="${!karyawanCuti.isDisetujui()}" th:href="'/employee/cuti/'+ ${karyawanCuti.getIdKaryawan()} +'/approve/' + ${karyawanCuti.getId()}" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded col-md">Setujui</a>
+                                <a th:if="${karyawanCuti.isDisetujui()}" th:href="'/employee/cuti/'+ ${karyawanCuti.getIdKaryawan()} +'/cancel/' + ${karyawanCuti.getId()}" class="montserrat-small btn btn-dark text-white btn-rounded col-md">Batalkan</a>
                                 <div class="col-md-1"></div>
-                                <a th:if="${!karyawanCuti.isTolak()}" th:href="'/employee/detail-karyawan/'+ ${karyawanCuti.getIdKaryawan()} +'/tolak/' + ${karyawanCuti.getId()}" class="montserrat-small btn btn-dark text-white btn-rounded col-md">Tolak</a>
-                                <a th:if="${karyawanCuti.isTolak()}" th:href="'/employee/detail-karyawan/'+ ${karyawanCuti.getIdKaryawan()} +'/cancel-tolak/' + ${karyawanCuti.getId()}" class="montserrat-small btn btn-dark text-white btn-rounded col-md">Cancel Tolak</a>
+                                <a th:if="${!karyawanCuti.isTolak()}" th:href="'/employee/cuti/'+ ${karyawanCuti.getIdKaryawan()} +'/tolak/' + ${karyawanCuti.getId()}" class="montserrat-small btn btn-dark text-white btn-rounded col-md">Tolak</a>
+                                <a th:if="${karyawanCuti.isTolak()}" th:href="'/employee/cuti/'+ ${karyawanCuti.getIdKaryawan()} +'/cancel-tolak/' + ${karyawanCuti.getId()}" class="montserrat-small btn btn-dark text-white btn-rounded col-md">Cancel Tolak</a>
                                 <div class="col-md-1"></div>
                         </td>
                     </tr>

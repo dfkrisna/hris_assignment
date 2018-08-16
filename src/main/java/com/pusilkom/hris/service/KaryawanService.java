@@ -58,4 +58,6 @@ public interface KaryawanService {
 	KaryawanBaruModel getKaryawanBaruById(int idKaryawan);
 
 	String cekKaryawanIsManager(int idKaryawan);
+	
+	KaryawanBaruModel getKaryawanByUsername(String username);
 }

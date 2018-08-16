@@ -33,6 +33,8 @@ $(document).ready(function() {
         "order": [[ 1, "desc" ]]
     } );
 
+    $('.notifModal').modal('show');
+
     $('#feedbackModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget); // Button that triggered the modal
         var header = button.data('title'); // Extract info from data-* attributes
@@ -59,6 +61,19 @@ $(document).ready(function() {
         modal.find('.modal-body #namaRekan').val(namaRekan);
         modal.find('.modal-body #idRekan').val(idRekan);
         modal.find('.modal-body #kodeProyek').val(kodeProyek);
+
+    });
+
+    $('#checkoutModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var header = button.data('title'); // Extract info from data-* attributes
+        var waktuCheckin = button.data('waktu-checkin');
+
+        var modal = $(this);
+        modal.find('.modal-body textarea').val("");
+
+
+        modal.find('.modal-body #waktuCheckin').val(waktuCheckin);
 
     });
 

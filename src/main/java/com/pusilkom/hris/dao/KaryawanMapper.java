@@ -228,4 +228,18 @@ public interface KaryawanMapper {
             "FROM employee.\"DIVISI\" as D " +
             "WHERE D.id_manager=#{idKaryawan}")
     String cekKaryawanIsManager(@Param("idKaryawan") int idKaryawan);
+    
+    @Select("select id, nama_lengkap, nama_panggilan, nip, email_pusilkom, email_pribadi, is_active, id_divisi " +
+            "from employee.\"KARYAWAN\" where email_pusilkom=#{email}")
+    @Results(value = {
+            @Result(property = "idKaryawan", column = "id"),
+            @Result(property = "namaLengkap", column = "nama_lengkap"),
+            @Result(property = "namaPanggilan", column = "nama_panggilan"),
+            @Result(property = "nip", column = "nip"),
+            @Result(property = "emailPusilkom", column = "email_pusilkom"),
+            @Result(property = "emailPribadi", column = "email_pribadi"),
+            @Result(property = "isActive", column = "is_active"),
+            @Result(property = "idDivisi", column = "id_divisi")
+    })
+    KaryawanBaruModel selectKaryawanByUsername(@Param("email") String username);
 }
