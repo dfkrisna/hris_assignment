@@ -52,4 +52,5 @@ public interface KaryawanService {
 
 	void addKaryawan(String namaLengkap, String namaPanggilan, String nip, int idDivisi,
 					 String emailPusilkom, String emailPribadi);
+	KaryawanBaruModel getKaryawanBaruById(int idKaryawan);
 }

@@ -202,4 +202,19 @@ public interface KaryawanMapper {
             @Param("idDivisi") int idDivisi,
             @Param("isActive") boolean isActive
     );
+    @Select("SELECT id FROM employee.\"KARYAWAN\" where email_pusilkom = #{email} ORDER BY id DESC LIMIT 1;")
+    String getKaryawanIdByEmail(@Param("email") String email);
+
+    @Select("SELECT K.* FROM employee.\"KARYAWAN\" as K WHERE K.id = #{idKaryawan}")
+    @Results(value = {
+            @Result(property="idKaryawan", column="id"),
+            @Result(property="namaLengkap", column="nama_lengkap"),
+            @Result(property="namaPanggilan", column="nama_panggilan"),
+            @Result(property="nip", column="nip"),
+            @Result(property="idDivisi", column="id_divisi"),
+            @Result(property="emailPusilkom", column="email_pusilkom"),
+            @Result(property="emailPribadi", column="email_pribadi"),
+            @Result(property="isActive", column="is_active")
+    })
+    KaryawanBaruModel getKaryawanBaruById(@Param("idKaryawan") int idKaryawan);
 }

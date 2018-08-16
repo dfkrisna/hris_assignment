@@ -58,6 +58,9 @@ public class IndexController
     @Autowired
     RoleProyekService roleProyekService;
 
+    @Autowired
+    KaryawanCutiService karyawanCutiService;
+
     /**
      * method untuk mengakses beranda utama
      * @param model
@@ -66,7 +69,7 @@ public class IndexController
      */
     @GetMapping("/")
     @PreAuthorize("hasAuthority('GET_')")
-    public String landingPage(Model model, @NotNull Authentication auth) {
+    public String landingPage  (Model model, @NotNull Authentication auth) {
         UserWeb user = (UserWeb) auth.getPrincipal();
         model.addAttribute("currentUser", user);
         return "landingpage";
@@ -305,6 +308,21 @@ public class IndexController
         model.addAttribute("mapping", mapKaryawanRating);
         model.addAttribute("divisi", divisi);
         return "index-manajerdivisi";
+    }
+
+    /**
+     * method ini digunakan untuk menampilkan index manajer divisi yang berisi daftar anggota di divisinya empployee
+     * @param model
+     * @param principal
+     * @return
+     */
+    @GetMapping("/employee/cuti")
+    @PreAuthorize("hasAuthority('GET_MNGDIVISI')")
+    public String indexManajerDivisiEmployee(Model model, Principal principal) {
+        List<KaryawanCutiModel> listOfKaryawanCuti = karyawanCutiService.getAll(principal.getName());
+        
+        model.addAttribute("listOfKaryawanCuti", listOfKaryawanCuti);
+        return "index-manajerdivisi-employee";
     }
 
 }

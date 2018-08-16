@@ -164,5 +164,10 @@ public class KaryawanServiceImpl implements KaryawanService{
 					 String emailPusilkom, String emailPribadi){
 		karyawanMapper.addKaryawan(namaLengkap, namaPanggilan, nip, emailPusilkom, emailPribadi, idDivisi, true);
 	}
+	@Override
+	public KaryawanBaruModel getKaryawanBaruById(int idKaryawan){
+		return karyawanMapper.getKaryawanBaruById(idKaryawan);
+	}
+
 
 }
