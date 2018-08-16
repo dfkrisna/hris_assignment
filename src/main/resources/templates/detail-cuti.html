@@ -6,8 +6,9 @@
 
 <body>
     <div th:replace="fragments/fragment :: navbar-employee"></div>
-    <div th:replace="fragments/fragment :: sidebar"></div>
-
+    <div th:replace="fragments/fragment :: absen-modals"></div>
+    <div th:replace="fragments/fragment :: sidebar-employee"></div>
+    
     <main id="content-isi" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 pb-3 pl-3 pr-3">
         <div th:if="${notificationGagal != null}" class="d-flex flex-row mb-3 col-md-12">
             <h3 th:text="${notificationGagal}" class="text-primary montserrat-small-bold alert alert-danger"></h3>
