@@ -13,28 +13,32 @@
             <table id="tabel-anggota-divisi" class="table table-hover">
                 <thead class="tabel-header">
                     <tr>
-                        <th class="montserrat-small-bold" scope="col">Nama Anggota</th>
-                        <th class="montserrat-small-bold" scope="col">Jumlah Hari</th>
-                        <th class="montserrat-small-bold" scope="col">Periode Mulai</th>
-                        <th class="montserrat-small-bold" scope="col">Periode Selesai</th>
-                        <th class="montserrat-small-bold" scope="col">Status Permohonan Cuti terakhir</th>
+                        <th class="montserrat-small-bold text-center" scope="col">No</th>
+                        <th class="montserrat-small-bold text-center" scope="col">Nama Anggota</th>
+                        <th class="montserrat-small-bold text-center" scope="col">Jumlah Hari</th>
+                        <th class="montserrat-small-bold text-center" scope="col">Periode Mulai</th>
+                        <th class="montserrat-small-bold text-center" scope="col">Periode Selesai</th>
+                        <th class="montserrat-small-bold text-center" scope="col">Status Permohonan Cuti terakhir</th>
                     </tr>
                 </thead>
                 <div th:each="karyawanCuti, iterationStatus: ${listOfKaryawanCuti}">
                     <tr>
+                        <td class="text-center">
+                            <a class="montserrat-small" th:text="${iterationStatus.count}"></a>
+                        </td>
                         <td>
                             <a class="montserrat-small" th:text="${karyawanCuti.getNamaLengkap()}" th:href="'/employee/cuti/' + ${karyawanCuti.getIdKaryawan()}"></a>
                         </td>
-                        <td>
+                        <td class="text-center">
                             <p class="d-inline montserrat-small text-muted" th:text="${karyawanCuti.getJumlahHari()}"></p>
                         </td>
-                        <td>
+                        <td class="text-center">
                             <p class="d-inline montserrat-small text-muted" th:text="${karyawanCuti.getStartPeriode()}"></p>
                         </td>
-                        <td>
+                        <td class="text-center">
                                 <p class="d-inline montserrat-small text-muted" th:text="${karyawanCuti.getEndPeriode()}"></p>
                             </td>
-                        <td>
+                        <td class="text-center">
                             <div th:if="${karyawanCuti.isDisetujui()}">
                                 <p class="d-inline montserrat-small text-muted">Sudah Disetujui</p>
                             </div>

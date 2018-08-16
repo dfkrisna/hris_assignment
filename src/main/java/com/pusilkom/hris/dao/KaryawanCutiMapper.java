@@ -15,7 +15,8 @@ public interface KaryawanCutiMapper {
                 "WHERE C.id IN (SELECT MAX(id) FROM employee.\"CUTI\" GROUP BY id_karyawan) \n" +
                 ") as CK \n" +
             "INNER JOIN employee.\"DIVISI\" as D on D.id = CK.id_divisi \n"+
-            "WHERE D.id_manager = #{idManager};")
+            "WHERE D.id_manager = #{idManager}\n" +
+            "ORDER BY CK.id DESC;")
     @Results(value = {
             @Result(property="id", column="id"),
             @Result(property="idKaryawan", column="id_karyawan"),
