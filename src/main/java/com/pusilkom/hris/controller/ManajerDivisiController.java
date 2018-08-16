@@ -177,7 +177,7 @@ public class ManajerDivisiController {
         return "redirect:/assignment/mngdivisi/rekap/" + karyawanProyek.getIdKaryawan();
     }
 
-    @GetMapping(value= "/employee/detail-karyawan/{idKaryawan}")
+    @GetMapping(value= "/employee/cuti/{idKaryawan}")
     public String showCutiKaryawan(Model model, 
                                    @PathVariable(value = "idKaryawan") int idKaryawan){
         List<KaryawanCutiModel> listOfRiwayatCuti = karyawanCutiService.getHistoryByKaryawanId(idKaryawan);
@@ -187,7 +187,7 @@ public class ManajerDivisiController {
         return "detail-cuti";
     }
 
-    @GetMapping(value= "/employee/detail-karyawan/{idKaryawan}/approve/{idKaryawanCuti}")
+    @GetMapping(value= "/employee/cuti/{idKaryawan}/approve/{idKaryawanCuti}")
     public String approveCutiKaryawan(RedirectAttributes ra,
                                     @PathVariable(value = "idKaryawan") int idKaryawan, 
                                     @PathVariable(value = "idKaryawanCuti") int idKaryawanCuti){
@@ -198,10 +198,10 @@ public class ManajerDivisiController {
             ra.addFlashAttribute("notificationGagal", "Tidak berhasil, karena sudah ditolak ");    
         }
 
-        return "redirect:/employee/detail-karyawan/" + idKaryawan;
+        return "redirect:/employee/cuti/" + idKaryawan;
     }
 
-    @GetMapping(value= "/employee/detail-karyawan/{idKaryawan}/cancel/{idKaryawanCuti}")
+    @GetMapping(value= "/employee/cuti/{idKaryawan}/cancel/{idKaryawanCuti}")
     public String cancelCutiKaryawan(RedirectAttributes ra,
                                     @PathVariable(value = "idKaryawan") int idKaryawan, 
                                     @PathVariable(value = "idKaryawanCuti") int idKaryawanCuti){
@@ -209,10 +209,10 @@ public class ManajerDivisiController {
         karyawanCutiService.cancel(idKaryawanCuti);
 
         ra.addFlashAttribute("notification", "Berhasil membatalkan permohonan cuti " + karyawanBaru.getNamaLengkap());
-        return "redirect:/employee/detail-karyawan/" + idKaryawan;
+        return "redirect:/employee/cuti/" + idKaryawan;
     }
 
-    @GetMapping(value= "/employee/detail-karyawan/{idKaryawan}/tolak/{idKaryawanCuti}")
+    @GetMapping(value= "/employee/cuti/{idKaryawan}/tolak/{idKaryawanCuti}")
     public String tolak(RedirectAttributes ra,
                                     @PathVariable(value = "idKaryawan") int idKaryawan, 
                                     @PathVariable(value = "idKaryawanCuti") int idKaryawanCuti){
@@ -220,10 +220,10 @@ public class ManajerDivisiController {
         karyawanCutiService.tolak(idKaryawanCuti);
 
         ra.addFlashAttribute("notification", "Berhasil menolak permohonan cuti " + karyawanBaru.getNamaLengkap());
-        return "redirect:/employee/detail-karyawan/" + idKaryawan;
+        return "redirect:/employee/cuti/" + idKaryawan;
     }
 
-    @GetMapping(value= "/employee/detail-karyawan/{idKaryawan}/cancel-tolak/{idKaryawanCuti}")
+    @GetMapping(value= "/employee/cuti/{idKaryawan}/cancel-tolak/{idKaryawanCuti}")
     public String cancelTolak(RedirectAttributes ra,
                                     @PathVariable(value = "idKaryawan") int idKaryawan, 
                                     @PathVariable(value = "idKaryawanCuti") int idKaryawanCuti){
@@ -231,7 +231,7 @@ public class ManajerDivisiController {
         karyawanCutiService.cancelTolak(idKaryawanCuti);
 
         ra.addFlashAttribute("notification", "Berhasil membatalkan penolakan cuti " + karyawanBaru.getNamaLengkap());
-        return "redirect:/employee/detail-karyawan/" + idKaryawan;
+        return "redirect:/employee/cuti/" + idKaryawan;
     }
 
 }
