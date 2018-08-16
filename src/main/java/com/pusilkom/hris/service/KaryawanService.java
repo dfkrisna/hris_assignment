@@ -48,6 +48,7 @@ public interface KaryawanService {
 	void updateFeedbackRekan(String feedback, int rating, int idRekan, int idPenilai,
 							 int idProyek, LocalDate periode, Timestamp tanggal);
 
+	KaryawanBaruModel getKaryawanBaruById(int idKaryawan);
 
     KaryawanBaruModel getKaryawanByUsername(String username);
 }

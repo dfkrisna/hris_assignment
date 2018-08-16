@@ -92,6 +92,53 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat:300,500,700' rel='stylesheet'>
     <script type="text/javascript" src="/js/util.js"></script>
 </head>
+<head th:fragment="header-title-employee">
+    <meta charset="UTF-8">
+    <title>SI SDM Karyawan</title>
+    <!--<script type="text/javascript" src="/js/bootstrap.min.js"></script>-->
+
+    <script type="text/javascript">
+        $.noConflict(true);
+    </script>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script>
+        $.widget.bridge('uibutton', $.ui.button);
+        $.widget.bridge('uitooltip', $.ui.tooltip);
+    </script>
+    <link rel="stylesheet" type="text/css" media="screen" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/fixedcolumns/3.2.4/js/dataTables.fixedColumns.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.datatables.net/fixedcolumns/3.2.4/css/fixedColumns.bootstrap4.min.css">
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+
+    <link rel="stylesheet" href="/css/home.css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:300,500,700' rel='stylesheet'>
+    <script type="text/javascript" src="/js/util.js"></script>
+</head>
+
 <body>
     <nav th:fragment="navbar" id="navbar-utama" class="navbar bg-light sticky-top">
         <div class="navbar-header col-md-2">
@@ -111,20 +158,20 @@
     </nav>
 
     <nav th:fragment="navbar-portal" id="navbar-utama" class="navbar bg-light sticky-top">
-            <div class="navbar-header col-md-2">
-                <a class="navbar-brand" ref="#">
-                    <img id="logo-pusilkom" alt="pusilkom" src="/img/mainsite.png">
-                </a>
-                <span class="montserrat navbar-brand col-sm-3 col-md-2 mr-0 text-dark"><strong>SISDM HRIS</strong></span>
-            </div>
-            <ul class="nav navbar-nav col-md-8 text-right">
-                <li class="nav-item text-nowrap">
-                    <span class="nav-link text-secondary"><img id="icon-navbar" class="mr-2 mb-1" alt="pusilkom" src="/img/avatar.png" style="display:inline-block;"><p style="display:inline-block;" th:text="${currentUser.username}">Jonathan Joestar</p></span>
-                </li>
-            </ul>
-            <form th:action="@{/logout}" class="navbar-form navbar-rightcol-md-2" method="post">
-                <input class="btn btn-outline-danger" type="submit" value="logout"/>
-            </form>
+        <div class="navbar-header col-md-2">
+            <a class="navbar-brand" ref="#">
+                <img id="logo-pusilkom" alt="pusilkom" src="/img/mainsite.png">
+            </a>
+            <span class="montserrat navbar-brand col-sm-3 col-md-2 mr-0 text-dark"><strong>SISDM HRIS</strong></span>
+        </div>
+        <ul class="nav navbar-nav col-md-8 text-right">
+            <li class="nav-item text-nowrap">
+                <span class="nav-link text-secondary"><img id="icon-navbar" class="mr-2 mb-1" alt="pusilkom" src="/img/avatar.png" style="display:inline-block;"><p style="display:inline-block;" th:text="${currentUser.username}">Jonathan Joestar</p></span>
+            </li>
+        </ul>
+        <form th:action="@{/logout}" class="navbar-form navbar-rightcol-md-2" method="post">
+            <input class="btn btn-outline-danger" type="submit" value="logout"/>
+        </form>
     </nav>
 
     <nav th:fragment="navbar-employee" id="navbar-utama" class="navbar bg-light sticky-top">
