@@ -23,7 +23,7 @@
                 <div th:each="karyawanCuti, iterationStatus: ${listOfKaryawanCuti}">
                     <tr>
                         <td>
-                            <a class="montserrat-small" th:text="${karyawanCuti.getNamaLengkap()}" th:href="'/employee/detail-karyawan/' + ${karyawanCuti.getIdKaryawan()}"></a>
+                            <a class="montserrat-small" th:text="${karyawanCuti.getNamaLengkap()}" th:href="'/employee/cuti/' + ${karyawanCuti.getIdKaryawan()}"></a>
                         </td>
                         <td>
                             <p class="d-inline montserrat-small text-muted" th:text="${karyawanCuti.getJumlahHari()}"></p>

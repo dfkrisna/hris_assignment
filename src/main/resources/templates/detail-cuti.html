@@ -56,11 +56,11 @@
                         </td>
                         <td class="row">
                                 <div class="col-md-1"></div>
-                                <a th:if="${!karyawanCuti.isDisetujui()}" th:href="'/employee/detail-karyawan/'+ ${karyawanCuti.getIdKaryawan()} +'/approve/' + ${karyawanCuti.getId()}" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded col-md">Setujui</a>
-                                <a th:if="${karyawanCuti.isDisetujui()}" th:href="'/employee/detail-karyawan/'+ ${karyawanCuti.getIdKaryawan()} +'/cancel/' + ${karyawanCuti.getId()}" class="montserrat-small btn btn-dark text-white btn-rounded col-md">Batalkan</a>
+                                <a th:if="${!karyawanCuti.isDisetujui()}" th:href="'/employee/cuti/'+ ${karyawanCuti.getIdKaryawan()} +'/approve/' + ${karyawanCuti.getId()}" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded col-md">Setujui</a>
+                                <a th:if="${karyawanCuti.isDisetujui()}" th:href="'/employee/cuti/'+ ${karyawanCuti.getIdKaryawan()} +'/cancel/' + ${karyawanCuti.getId()}" class="montserrat-small btn btn-dark text-white btn-rounded col-md">Batalkan</a>
                                 <div class="col-md-1"></div>
-                                <a th:if="${!karyawanCuti.isTolak()}" th:href="'/employee/detail-karyawan/'+ ${karyawanCuti.getIdKaryawan()} +'/tolak/' + ${karyawanCuti.getId()}" class="montserrat-small btn btn-dark text-white btn-rounded col-md">Tolak</a>
-                                <a th:if="${karyawanCuti.isTolak()}" th:href="'/employee/detail-karyawan/'+ ${karyawanCuti.getIdKaryawan()} +'/cancel-tolak/' + ${karyawanCuti.getId()}" class="montserrat-small btn btn-dark text-white btn-rounded col-md">Cancel Tolak</a>
+                                <a th:if="${!karyawanCuti.isTolak()}" th:href="'/employee/cuti/'+ ${karyawanCuti.getIdKaryawan()} +'/tolak/' + ${karyawanCuti.getId()}" class="montserrat-small btn btn-dark text-white btn-rounded col-md">Tolak</a>
+                                <a th:if="${karyawanCuti.isTolak()}" th:href="'/employee/cuti/'+ ${karyawanCuti.getIdKaryawan()} +'/cancel-tolak/' + ${karyawanCuti.getId()}" class="montserrat-small btn btn-dark text-white btn-rounded col-md">Cancel Tolak</a>
                                 <div class="col-md-1"></div>
                         </td>
                     </tr>
