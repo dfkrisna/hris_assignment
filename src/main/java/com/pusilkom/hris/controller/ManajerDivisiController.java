@@ -195,7 +195,7 @@ public class ManajerDivisiController {
         if(karyawanCutiService.approve(idKaryawanCuti)){
             ra.addFlashAttribute("notification", "Berhasil menyetujui permohonan cuti " + karyawanBaru.getNamaLengkap());    
         }else{
-            ra.addFlashAttribute("notification", "Tidak berhasil, karena sudah ditolak ");    
+            ra.addFlashAttribute("notificationGagal", "Tidak berhasil, karena sudah ditolak ");    
         }
 
         return "redirect:/employee/detail-karyawan/" + idKaryawan;

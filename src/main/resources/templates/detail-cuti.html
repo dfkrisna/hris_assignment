@@ -9,6 +9,9 @@
     <div th:replace="fragments/fragment :: sidebar"></div>
 
     <main id="content-isi" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 pb-3 pl-3 pr-3">
+        <div th:if="${notificationGagal != null}" class="d-flex flex-row mb-3 col-md-12">
+            <h3 th:text="${notificationGagal}" class="text-primary montserrat-small-bold alert alert-danger"></h3>
+        </div>
         <div th:if="${notification != null}" class="d-flex flex-row mb-3 col-md-12">
             <h3 th:text="${notification}" class="text-primary montserrat-small-bold alert alert-success"></h3>
         </div>
