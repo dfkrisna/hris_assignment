@@ -31,10 +31,10 @@
                 <h3 class="montserrat-med-bold" th:text="${proyek.namaProyek}"></h3><br/>
             </div>
             <div class="col-sm-2 mr-auto">
-                <a class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" th:href="@{'/proyek/ubah/'+ ${proyek.getId()} }" style="height:40px; width:160px;"><p th:text="Ubah"></p></a>
+                <a class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" th:href="@{'/assignment/proyek/ubah/'+ ${proyek.getId()} }" style="height:40px; width:160px;"><p th:text="Ubah"></p></a>
             </div>
             <div th:if="${status.equalsIgnoreCase('Aktif')}" class="col-sm-2 ml-auto mr-auto">
-                <form th:action="'/proyek/status/' + ${proyek.id}" method="get">
+                <form th:action="'/assignment/proyek/status/' + ${proyek.id}" method="get">
                     <button type="button" style="height:40px; width:160px;" class="montserrat-small pusil-btn-danger btn btn-dark text-white btn-rounded btn-danger" data-toggle="modal" data-target="#selesai-confirm" >Selesaikan</button>
                     <div class="modal fade" id="selesai-confirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -58,7 +58,7 @@
                 </form>
             </div>
             <div th:if="${status.equalsIgnoreCase('Tidak Aktif')}" class="col-sm-2 ml-autp mr-auto">
-                <form th:action="'/proyek/status/' + ${proyek.id}" method="get">
+                <form th:action="'/assignment/proyek/status/' + ${proyek.id}" method="get">
                     <button type="button" style="height:40px; width:160px;" class="montserrat-small pusil-btn-danger btn btn-dark text-white btn-rounded btn-danger" data-toggle="modal" data-target="#aktif-confirm" >Aktifkan</button>
                     <div class="modal fade" id="aktif-confirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -101,12 +101,12 @@
         <div class="row">
             <div class="col-sm-3">
                 <h6 class="montserrat-big-bold">Parent Proyek:</h6>
-                <a class="montserrat-small" th:if="${parentproyek != null}" th:text="${parentproyek.namaProyek}" th:href="${'/proyek/detail/' + parentproyek.id}"></a>
+                <a class="montserrat-small" th:if="${parentproyek != null}" th:text="${parentproyek.namaProyek}" th:href="${'/assignment/proyek/detail/' + parentproyek.id}"></a>
                 <p th:if="${parentproyek ==null}" th:text="kosong" class="montserrat-small text-muted"></p>
             </div>
             <div class="col-sm-3">
                 <h6 class="montserrat-big-bold">Project Lead:</h6>
-                <a class="montserrat-small" th:if="${projlead != null}" th:text="${projlead.nama}" th:href="${'/pmo/detail-karyawan/' + projlead.id}"></a>
+                <a class="montserrat-small" th:if="${projlead != null}" th:text="${projlead.nama}" th:href="${'/assignment/pmo/detail-karyawan/' + projlead.id}"></a>
                 <p th:unless="${projlead != null}" th:text="kosong" class="montserrat-small text-muted"></p>
             </div>
             <div class="col-sm-3">
@@ -131,7 +131,7 @@
         </thead>
         <tbody>
         <tr th:each="subproy,iterationStatus: ${subproyek}">
-            <td><a th:text="${subproy.namaProyek}" th:href="${'/proyek/detail/' + subproy.getId()}"></a></td>
+            <td><a th:text="${subproy.namaProyek}" th:href="${'/assignment/proyek/detail/' + subproy.getId()}"></a></td>
             <td class="montserrat-small text-center text-value" th:text="${subproy.namaKlien}"></td>
             <td class="montserrat-small text-center text-value" th:text="${subproy.getPeriode()}"></td>
 
@@ -156,7 +156,7 @@
             </thead>
             <tbody>
             <tr th:each="anggota,iterationStatus: ${anggotaList}">
-                <td><a th:text="${anggota.nama}" th:href="${'/pmo/detail-karyawan/' + anggota.idKaryawan}">Nama Karyawan</a></td>
+                <td><a th:text="${anggota.nama}" th:href="${'/assignment/pmo/detail-karyawan/' + anggota.idKaryawan}">Nama Karyawan</a></td>
                 <td class="montserrat-small text-center text-value" th:text="${anggota.role}">Role</td>
                 <td class="montserrat-small text-center text-value" th:text="${anggota.persentase + '%'}"></td>
 

@@ -52,7 +52,7 @@ public class AssignmentController {
      * @param idProyek
      * @return
      */
-    @GetMapping("/pmo/assign/{idKaryawan}/{idProyek}/{tahun}/{bulan}")
+    @GetMapping("/assignment/pmo/assign/{idKaryawan}/{idProyek}/{tahun}/{bulan}")
     @PreAuthorize("hasAuthority('GET_PMO')")
     public String assignKaryawanMatrix(Model model,
                                        @PathVariable(value = "tahun", required = true) Integer tahun,
@@ -98,7 +98,7 @@ public class AssignmentController {
      * @param periodeSelesai
      * @return
      */
-    @PostMapping(value = "/pmo/assign/{idKaryawan}/{idProyek}")
+    @PostMapping(value = "/assignment/pmo/assign/{idKaryawan}/{idProyek}")
     @PreAuthorize("hasAuthority('POST_PMO_ASSIGN_IDKARYAWAN_IDPROYEK')")
     public String saveNewAssignmentMatrix(Model model,
                                           RedirectAttributes ra,
@@ -157,7 +157,7 @@ public class AssignmentController {
 
         ra.addFlashAttribute("notification", "Penugasan Berhasil Ditambahkan");
 
-        return "redirect:/pmo";
+        return "redirect:/assignment/pmo";
     }
 
     /**
@@ -168,7 +168,7 @@ public class AssignmentController {
      * @param idKaryawanProyek
      * @return
      */
-    @GetMapping(value = "/pmo/update_assignment/{idKaryawanProyek}/{tahun}/{bulan}")
+    @GetMapping(value = "/assignment/pmo/update_assignment/{idKaryawanProyek}/{tahun}/{bulan}")
     @PreAuthorize("hasAuthority('GET_PMO')")
     public String updateAssignmentMatrix(Model model,
                                          @PathVariable(value = "tahun", required = true) Integer tahun,
@@ -218,7 +218,7 @@ public class AssignmentController {
      * @param endPeriode
      * @return
      */
-    @PostMapping(value = "/pmo/update_assignment/{idKaryawanProyek}")
+    @PostMapping(value = "/assignment/pmo/update_assignment/{idKaryawanProyek}")
     @PreAuthorize("hasAuthority('POST_PMO_UPDATE_ASSIGNMENT_IDKARYAWANPROYEK')")
     public String updateAssignmentMatrix(Model model,
                                          RedirectAttributes ra,
@@ -260,10 +260,10 @@ public class AssignmentController {
 
         ra.addFlashAttribute("notification", "Penugasan Berhasil Diubah");
 
-        return "redirect:/pmo";
+        return "redirect:/assignment/pmo";
     }
 
-    @PostMapping(value = "/pmo/update_persentase/{idRekap}")
+    @PostMapping(value = "/assignment/pmo/update_persentase/{idRekap}")
     @PreAuthorize("hasAuthority('POST_PMO_UPDATE_PERSENTASE_IDREKAP')")
     public String updateRekap(Model model, @PathVariable(value = "idRekap") int idRekap,
                               @RequestParam(value = "persenKontribusi") double persenKontribusi
@@ -275,7 +275,7 @@ public class AssignmentController {
 
         rekapService.updateRekap(retrievedRekap);
 
-        return "redirect:/pmo";
+        return "redirect:/assignment/pmo";
 
     }
 
@@ -288,7 +288,7 @@ public class AssignmentController {
      * @param idProyek
      * @return
      */
-    @GetMapping("/pmo/proyek/tambah/assign/{idProyek}")
+    @GetMapping("/assignment/pmo/proyek/tambah/assign/{idProyek}")
     @PreAuthorize("hasAuthority('GET_PMO')")
     public String assignKaryawan(Model model, @PathVariable(value = "idProyek") int idProyek) {
         ProyekModel proyek = proyekService.getProyekById(idProyek);
@@ -315,7 +315,7 @@ public class AssignmentController {
      * @param karyawanIDList
      * @return
      */
-    @PostMapping(value = "pmo/proyek/tambah/assign/{idProyek}")
+    @PostMapping(value = "/assignment/pmo/proyek/tambah/assign/{idProyek}")
     @PreAuthorize("hasAuthority('POST_PMO_PROYEK_TAMBAH_ASSIGN_IDPROYEK')")
     public String assignKaryawan(Model model, @PathVariable(value = "idProyek") int idProyek,
                                  @RequestParam(value = "selectedKaryawan") List<Integer> karyawanIDList) {
@@ -355,7 +355,7 @@ public class AssignmentController {
      * @param periodeSelesai
      * @return
      */
-    @PostMapping(value = "pmo/proyek/tambah/assign/{idKaryawan}/{idProyek}")
+    @PostMapping(value = "/assignment/pmo/proyek/tambah/assign/{idKaryawan}/{idProyek}")
     @PreAuthorize("hasAuthority('POST_PMO_PROYEK_TAMBAH_ASSIGN_IDKARYAWAN_IDPROYEK')")
     public String assignKaryawan(Model model, @PathVariable(value = "idKaryawan") int idKaryawan,
                                  @PathVariable(value = "idProyek") int idProyek,

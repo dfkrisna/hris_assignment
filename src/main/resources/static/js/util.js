@@ -3,6 +3,7 @@ $(document).ready(function() {
     $('#tabel-penugasan-periode-ini').DataTable();
     $('#tabel-riwayat-penugasan').DataTable();
     $('#tabel-penilaian-mandiri').DataTable();
+    $('#list-karyawan').DataTable();
     // $('#matrix-pmo').DataTable();
     $('#sub-proyek').DataTable();
     $('#table-rekomendasi').DataTable();
@@ -69,7 +70,7 @@ $(document).ready(function() {
         var isiRekap = $(this).data('rekap');
         var id = $(this).data('id');
         var proyek = $(this).data('proyek');
-        var action = "/karyawan/penilaian-mandiri/tambah/" + proyek + "/" + id;
+        var action = "/assignment/karyawan/penilaian-mandiri/tambah/" + proyek + "/" + id;
 
         // generate date object with periode
         dateStr = periode.split("-");

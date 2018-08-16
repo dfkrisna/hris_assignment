@@ -11,7 +11,7 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="roboto breadcrumb-item active" aria-current="page">
-                        <a th:href="'/eksekutif'">Beranda</a>
+                        <a th:href="'/assignment/eksekutif'">Beranda</a>
                     </li>
                     <li class="roboto breadcrumb-item active" aria-current="page">Rekap Karyawan</li>
                 </ol>
@@ -58,7 +58,7 @@
                     <a class="nav-link active"><h4 class="montserrat-med-bold">Riwayat Proyek</h4></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="${'/rekap/karyawan/feedback/' + karyawan.id}"><h4 class="montserrat-med-bold">Rekap Feedback</h4></a>
+                    <a class="nav-link" th:href="${'/assignment/rekap/karyawan/feedback/' + karyawan.id}"><h4 class="montserrat-med-bold">Rekap Feedback</h4></a>
                 </li>
             </ul>
 
@@ -90,7 +90,7 @@
                     </thead>
                     <tbody>
                     <tr th:each="penugasan,iterationStatus: ${penugasanList}">
-                        <th><a th:text="${penugasan.kodeProyek + ' (' + penugasan.namaProyek+ ')'}" th:href="${'/rekap/proyek/' + penugasan.idProyek}">Proyek</a></th>
+                        <th><a th:text="${penugasan.kodeProyek + ' (' + penugasan.namaProyek+ ')'}" th:href="${'/assignment/rekap/proyek/' + penugasan.idProyek}">Proyek</a></th>
                         <td class="text-center" th:text="${penugasan.role}">Role</td>
                         <td class="text-center" th:text="${penugasan.persentaseKontribusi + '%'}">Rata-rata beban kerja</td>
                         <td class="text-center" th:text="${penugasan.statusProyek}">Status proyek</td>

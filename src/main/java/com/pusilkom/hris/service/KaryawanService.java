@@ -1,6 +1,7 @@
 package com.pusilkom.hris.service;
 
 import com.pusilkom.hris.model.FeedbackRatingModel;
+import com.pusilkom.hris.model.KaryawanBaruModel;
 import com.pusilkom.hris.model.KaryawanModel;
 import com.pusilkom.hris.model.KaryawanProyekModel;
 import org.apache.tomcat.jni.Local;
@@ -25,6 +26,8 @@ public interface KaryawanService {
 
 	List<KaryawanModel> getKaryawanAll();
 
+	List<KaryawanBaruModel> getKaryawanBaruAll();
+
 	List<KaryawanModel> getKaryawanByKaryawanProyek(List<KaryawanProyekModel> karyawanProyekList);
 
 	List<KaryawanModel> getKaryawanByPeriode(LocalDate periode);
@@ -39,11 +42,14 @@ public interface KaryawanService {
 
 	List<FeedbackRatingModel> getRekanSeproyek(List<Integer> idProyeks, int idKaryawan, LocalDate periodeNow);
 
+	List<Integer> getAllDivisi();
+
 	void addFeedbackRekan(String feedback, int rating, int idRekan, int idPenilai,
 						  int idProyek, LocalDate periode, Timestamp tanggal);
 
 	void updateFeedbackRekan(String feedback, int rating, int idRekan, int idPenilai,
 							 int idProyek, LocalDate periode, Timestamp tanggal);
 
-
+	void addKaryawan(String namaLengkap, String namaPanggilan, String nip, int idDivisi,
+					 String emailPusilkom, String emailPribadi);
 }

@@ -125,7 +125,24 @@
             <form th:action="@{/logout}" class="navbar-form navbar-rightcol-md-2" method="post">
                 <input class="btn btn-outline-danger" type="submit" value="logout"/>
             </form>
-        </nav>
+    </nav>
+
+    <nav th:fragment="navbar-employee" id="navbar-utama" class="navbar bg-light sticky-top">
+        <div class="navbar-header col-md-2">
+            <a class="navbar-brand" ref="#">
+                <img id="logo-pusilkom" alt="pusilkom" src="/img/mainsite.png">
+            </a>
+            <span class="montserrat navbar-brand col-sm-3 col-md-2 mr-0 text-dark"><strong>SISDM</strong> MODUL <strong>KARYAWAN</strong></span>
+        </div>
+        <ul class="nav navbar-nav col-md-8 text-right">
+            <li class="nav-item text-nowrap">
+                <span class="nav-link text-secondary"><img id="icon-navbar" class="mr-2 mb-1" alt="pusilkom" src="/img/avatar.png" style="display:inline-block;"><p style="display:inline-block;" th:text="${currentUser.username}">Jonathan Joestar</p></span>
+            </li>
+        </ul>
+        <form th:action="@{/logout}" class="navbar-form navbar-rightcol-md-2" method="post">
+            <input class="btn btn-outline-danger" type="submit" value="logout"/>
+        </form>
+    </nav>
 
     <div th:fragment="sidebar" id="page-content" class="container-fluid d-block">
         <div class="row">
@@ -138,17 +155,17 @@
                             </a>
                         </li>
                         <li th:if="${#lists.contains(currentUser.strRoles,'ROLE_SYSTEMADMIN')}" class="nav-item">
-                            <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/admin">
+                            <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/assignment/admin">
                                 <img class="icon-sidebar mr-2 mb-1" src="/img/yellow-home.png">Beranda Admin
                             </a>
                         </li>
                         <li th:if="${#lists.contains(currentUser.strRoles,'ROLE_SYSTEMADMIN')}" class="nav-item">
-                            <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/admin/addpengguna">
+                            <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/assignment/admin/addpengguna">
                                 <img class="icon-sidebar mr-2 mb-1" src="/img/yellow-people.png">Tambah Pengguna
                             </a>
                         </li>
                         <li th:if="${#lists.contains(currentUser.strRoles,'ROLE_KARYAWAN')}" class="nav-item">
-                            <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/karyawan">
+                            <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/assignment/karyawan">
                                 <img class="icon-sidebar mr-2 mb-1" src="/img/yellow-home.png">Beranda Karyawan
                             </a>
                         </li>
@@ -158,32 +175,32 @@
                             <!--</a>-->
                         <!--</li>-->
                         <li th:if="${#lists.contains(currentUser.strRoles,'ROLE_KARYAWAN')}" class="nav-item">
-                            <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/karyawan/penugasan">
+                            <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/assignment/karyawan/penugasan">
                                 <img class="icon-sidebar mr-2 mb-1" src="/img/yellow-clock.png">Riwayat Penugasan
                             </a>
                         </li>
                         <li th:if="${#lists.contains(currentUser.strRoles,'ROLE_KARYAWAN')}" class="nav-item">
-                            <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/karyawan/projectlead">
+                            <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/assignment/karyawan/projectlead">
                                 <img class="icon-sidebar mr-2 mb-1" src="/img/yellow-role.png">Proyek Dipimpin
                             </a>
                         </li>
                         <li th:if="${#lists.contains(currentUser.strRoles,'ROLE_MANAJERDIVISI')}" class="nav-item">
-                            <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/mngdivisi">
+                            <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/assignment/mngdivisi">
                                 <img class="icon-sidebar mr-2 mb-1" src="/img/yellow-home.png">Beranda Manajer Divisi
                             </a>
                         </li>
                         <li th:if="${#lists.contains(currentUser.strRoles,'ROLE_PMO')}" class="nav-item">
-                            <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/pmo">
+                            <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/assignment/pmo">
                                 <img class="icon-sidebar mr-2 mb-1" src="/img/yellow-home.png">Beranda PMO
                             </a>
                         </li>
                         <li th:if="${#lists.contains(currentUser.strRoles,'ROLE_EKSEKUTIF')}" class="nav-item">
-                            <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/eksekutif">
+                            <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/assignment/eksekutif">
                                 <img class="icon-sidebar mr-2 mb-1" src="/img/yellow-home.png">Beranda Eksekutif
                             </a>
                         </li>
                         <li th:if="${#lists.contains(currentUser.strRoles,'ROLE_PMO')}" class="nav-item">
-                            <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/proyek/tambah">
+                            <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/assignment/proyek/tambah">
                                 <img class="icon-sidebar mr-2 mb-1" src="/img/yellow-project.png">Tambah Proyek
                             </a>
                         </li>
