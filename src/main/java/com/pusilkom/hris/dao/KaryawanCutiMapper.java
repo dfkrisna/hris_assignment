@@ -67,4 +67,12 @@ public interface KaryawanCutiMapper {
         @Result(property="isTolak", column="is_tolak")
     })
     KaryawanCutiModel getKaryawanCutiById(@Param("idCuti") int idCuti);
+
+    @Insert("INSERT INTO employee.\"CUTI\" (id_karyawan, jumlah_hari, is_disetujui, periode_mulai, periode_selesai, is_tolak) " +
+            "VALUES (#{idKaryawan}, #{jumlahHari}, 'f', #{startPeriode}, #{endPeriode}, 'f')")
+    void insertCutiKaryawan(KaryawanCutiModel kc);
+
+    @Update("UPDATE employee.\"CUTI\" SET jumlah_hari=#{jumlahHari}, periode_mulai=#{startPeriode}, " +
+            "periode_selesai=#{endPeriode}, is_disetujui=#{isDisetujui}, is_tolak=#{isTolak} WHERE id = #{id}")
+    void update(KaryawanCutiModel cutiBaru);
 }

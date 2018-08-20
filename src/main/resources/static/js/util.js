@@ -34,6 +34,27 @@ $(document).ready(function() {
 
     $('.notifModal').modal('show');
 
+    $(".edit-cuti-btn").on("click", function(){
+        event.preventDefault();
+
+        // get data from item penilaian mandiri
+        var jmlHari = $(this).data('haricuti');
+        var tanggalMulai = $(this).data('tanggalmulai');
+        var tanggalSelesai = $(this).data('tanggalselesai');
+        var idKaryawan = $(this).data('idkar');
+        var idCuti = $(this).data('id');
+
+        // fill form value and action
+        $("#jmlHari").attr('value', jmlHari);
+        $("#tgl-mulai").attr('value', tanggalMulai);
+        $("#tgl-selesai").attr('value', tanggalSelesai);
+        $("#idKaryawan").attr('value', idKaryawan);
+        $("#idCuti").attr('value', idCuti);
+
+        // pop-up modal
+        $("#editCutiModal").modal();
+    })
+
     $('#feedbackModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget); // Button that triggered the modal
         var header = button.data('title'); // Extract info from data-* attributes

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/fragment :: header-title">
+</head>
+<body>
+<div th:replace="fragments/fragment :: navbar-employee"></div>
+<div th:replace="fragments/fragment :: sidebar-employee"></div>
+<div th:replace="fragments/fragment :: absen-modals"></div>
+
+<main id="content-isi" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 pb-3">
+    <div class="d-flex flex-row mb-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="roboto breadcrumb-item active" aria-current="page">
+                    <a th:href="'/employee/beranda'">Beranda</a>
+                </li>
+                <li class="roboto breadcrumb-item active" aria-current="page">Riwayat Cuti</li>
+            </ol>
+        </nav>
+        <h2 class="ml-auto roboto" th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy')}"></h2>
+    </div>
+
+    <div th:if="${submitSuccessNotif != ''}" class="d-flex flex-row mb-5 alert alert-success" role="alert">
+        <h3 class="montserrat-small" th:text="${submitSuccessNotif}"></h3>
+    </div>
+
+    <div th:if="${updSuccessNotif != ''}" class="d-flex flex-row mb-5 alert alert-success" role="alert">
+        <h3 class="montserrat-small" th:text="${updSuccessNotif}"></h3>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <h2 class="montserrat-bold-big">Riwayat Cuti</h2>
+        </div>
+        <div class="col-8"></div>
+        <div class="col">
+            <button type="button" data-toggle="modal" data-target="#ajukanCutiModal"
+                    class="pusil-btn btn btn-primary btn-rounded montserrat-small">+ Ajukan Cuti</button>
+        </div>
+    </div>
+
+    <hr/>
+
+    <div class="modal fade" id="ajukanCutiModal" tabindex="-1" role="dialog" aria-labelledby="ajukanCutiModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title montserrat-med-bold" id="ajukanCutiModalLabel">Ajukan Cuti</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="/employee/ajukan-cuti" method="post">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="jumlahHari" class="col-form-label montserrat-small">Jumlah Hari</label>
+                            <input id="jumlahHari" type="number" class="form-control" name="jumlahHari" required/>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label for="tanggal-mulai" class="col-form-label montserrat-small">Tanggal Mulai</label>
+                                    <input type="date" th:min="${now}" class="form-control" id="tanggal-mulai" name="tanggalMulai" required />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="tanggal-selesai" class="col-form-label montserrat-small">Tanggal Selesai</label>
+                                    <input type="date" th:min="${now}" class="form-control" id="tanggal-selesai" name="tanggalSelesai" required />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded"
+                                data-dismiss="modal">Batal</button>
+                        <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Ajukan Cuti</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${cutis != null && !cutis.isEmpty()}">
+
+        <table id="rekap-absen" class="table-mpp table table-hover">
+            <thead class="tabel-header">
+            <tr>
+                <th class="montserrat-small-bold text-center">Tanggal Mulai</th>
+                <th class="montserrat-small-bold text-center">Tanggal Selesai</th>
+                <th class="montserrat-small-bold text-center">Jumlah Hari</th>
+                <th class="montserrat-small-bold text-center">Status</th>
+                <th class="montserrat-small-bold text-center">Aksi</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cuti,iterationStatus: ${cutis}">
+                <td class="text-center montserrat-small" th:text="${cuti.startPeriode}"></td>
+                <td class="text-center montserrat-small" th:text="${cuti.endPeriode}"></td>
+                <td class="text-center montserrat-small" th:text="${cuti.getJumlahHari()}"></td>
+                <div th:if="${cuti.isTolak()}">
+                    <td class="text-center montserrat-small" style="color: red;">Ditolak</td>
+                </div>
+                <div th:unless="${cuti.isTolak()}">
+                    <div th:if="${cuti.isDisetujui()}">
+                        <td class="text-center montserrat-small" style="color: green;">Disetujui</td>
+                    </div>
+                    <div th:if="${!cuti.isDisetujui()}">
+                        <td class="text-center montserrat-small text-muted">Belum Disetujui</td>
+                    </div>
+                </div>
+                <td th:if="${cuti.getStartPeriode().compareTo(now) > 0}" class="text-center montserrat-small text-muted">
+                    <button type="button" data-toggle="modal" data-target="#editCutiModal"
+                            th:attr="data-haricuti=${cuti.getJumlahHari()}, data-tanggalmulai=${cuti.getStartPeriode()}, data-tanggalselesai=${cuti.getEndPeriode()}, data-idkar=${cuti.getIdKaryawan()}, data-id=${cuti.getId()}"
+                            class="edit-cuti-btn pusil-btn btn btn-primary btn-rounded montserrat-small">Ubah</button>
+                </td>
+                <td th:unless="${cuti.getStartPeriode().compareTo(now) > 0}" class="text-center montserrat-small text-muted">
+                    <button type="button" class="montserrat-small btn btn-secondary text-white btn-rounded disabled">Ubah</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br/>
+    </div>
+    <div th:unless="${cutis != null && !cutis.isEmpty()}" class="row">
+        <br/><br/>
+        <div class="col-2"></div>
+        <div class="col-8 text-center">
+            <h3 class="d-inline text-sub text-center mr-2 montserrat">Karyawan belum pernah</h3>
+            <h3 class="d-inline text-value text-center montserrat">mengambil cuti</h3>
+        </div>
+        <div class="col-2"></div>
+        <br/><br/><br/>
+    </div>
+
+
+    <div class="modal fade" id="editCutiModal" tabindex="-1" role="dialog" aria-labelledby="editCutiModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title montserrat-med-bold" id="editCutiModalLabel">Ubah Pengajuan Cuti</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="/employee/ubah-cuti" method="post">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="jmlHari" class="col-form-label montserrat-small">Jumlah Hari</label>
+                            <input type="number" id="jmlHari" class="form-control" name="jumlahHari" required/>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label for="tgl-mulai" class="col-form-label montserrat-small">Tanggal Mulai</label>
+                                    <input type="date" th:min="${now}" class="form-control" id="tgl-mulai" name="tanggalMulai" required />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="tgl-selesai" class="col-form-label montserrat-small">Tanggal Selesai</label>
+                                    <input type="date" th:min="${now}" class="form-control" id="tgl-selesai" name="tanggalSelesai" required />
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="idKaryawan" name="idKaryawan">
+                        <input type="hidden" id="idCuti" name="idCuti">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded"
+                                data-dismiss="modal">Batal</button>
+                        <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Ubah Cuti</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</main >
+
+<div th:replace="fragments/fragment :: footer"></div>
+
+</body>
+</html>
