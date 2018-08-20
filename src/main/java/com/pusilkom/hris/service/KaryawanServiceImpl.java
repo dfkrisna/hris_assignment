@@ -160,7 +160,6 @@ public class KaryawanServiceImpl implements KaryawanService{
 	}
 
 	@Override
-
 	public List<KaryawanModel> selectNamaEmployeeAll(){
 		return karyawanMapper.selectNamaEmployeeAll();
 	}

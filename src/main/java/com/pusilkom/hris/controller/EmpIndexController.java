@@ -30,6 +30,9 @@ public class EmpIndexController {
 
     @Autowired
     KaryawanService karyawanService;
+
+    @Autowired
+    DivisiService divisiService;
     
     @GetMapping("/employee")
     public String indexMoka(Model model, @NotNull Authentication auth) {
@@ -60,7 +63,10 @@ public class EmpIndexController {
     @PreAuthorize("hasAnyAuthority('GET_HR','GET_MNGDIVISI')")
     public String detailKaryawan(Model model, @PathVariable("idKaryawan") int idKaryawan){
         KaryawanBaruModel karyawanBaru = karyawanService.getKaryawanBaruById(idKaryawan);
+        DivisibaruModel divisi = divisiService.selectDivisiBaruByID(karyawanBaru.getIdDivisi());
+
         model.addAttribute("karyawan", karyawanBaru);
+        model.addAttribute("divisi", divisi);
         return "detail-karyawan";
     }
 
