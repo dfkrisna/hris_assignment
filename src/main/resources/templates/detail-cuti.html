@@ -50,10 +50,10 @@
                         </td>
                         <td class="text-center">
                             <div th:if="${karyawanCuti.isTolak()}">
-                                <p class="d-inline montserrat-small text-muted">Sudah Ditolak</p>
+                                <p class="d-inline montserrat-small text-muted">Ditolak</p>
                             </div>
                             <div th:if="${karyawanCuti.isDisetujui() && !karyawanCuti.isTolak()}">
-                                <p class="d-inline montserrat-small text-muted">Sudah Disetujui</p>
+                                <p class="d-inline montserrat-small text-muted">Disetujui</p>
                             </div>
                             <div th:if="${!karyawanCuti.isDisetujui() && !karyawanCuti.isTolak()}">
                                 <p class="d-inline montserrat-small text-muted">Belum Disetujui</p>
