@@ -3,6 +3,7 @@ $(document).ready(function() {
     $('#tabel-penugasan-periode-ini').DataTable();
     $('#tabel-riwayat-penugasan').DataTable();
     $('#tabel-penilaian-mandiri').DataTable();
+    $('#list-karyawan').DataTable();
     // $('#matrix-pmo').DataTable();
     $('#sub-proyek').DataTable();
     $('#table-rekomendasi').DataTable();
@@ -12,6 +13,7 @@ $(document).ready(function() {
     $('#tabel-detailkar').DataTable();
     $('#tabel-listproyek').DataTable();
     $('#rekan-seproyek').DataTable();
+    $('#divisi-nonaktif').DataTable();
     $('#rekap-proyek').DataTable();
     $('#pmo-proyek').DataTable();
     $('#rekap-riwayat').DataTable( {
@@ -130,6 +132,39 @@ $(document).ready(function() {
         
         // pop-up modal
         $("#modal-isi-ubah-evaluasi-karyawan").modal();
+    })
+
+
+
+    $(".pusil-btn-nonactive").on("click", function(){
+        event.preventDefault();
+        var action = "/employee/admin/keloladivisi/nonaktifkan/"  + $(this).data('id');
+
+        $("#btn-konfirmasi-nonaktifkan-divisi").attr('href', action);
+        $("#modal-nonaktifkan-divisi").modal();
+    })
+
+    $(".pusil-btn-active").on("click", function(){
+        event.preventDefault();
+        var action = "/employee/admin/keloladivisi/aktifkan/"  + $(this).data('idnonaktif');
+
+        $("#btn-konfirmasi-aktifkan-divisi").attr('href', action);
+        $("#modal-aktifkan-divisi").modal();
+    })
+
+    $(".pusil-btn-delete").on("click", function(){
+        event.preventDefault();
+        var action = "/employee/admin/keloladivisi/hapus/"  + $(this).data('id');
+
+        $("#btn-konfirmasi-hapus-divisi").attr('href', action);
+        $("#modal-hapus-divisi").modal();
+    })
+
+    $(".btn-hapus-karyawan").on("click", function(){
+        event.preventDefault();
+        var action = "/employee/hr/hapus/" + $(this).data('idkaryawan');
+        $("#btn-konfirmasi-hapus-karyawan").attr('href', action);
+        $("#modal-hapus-karyawan").modal();
     })
 
     $('[data-toggle="tooltip"]').tooltip();

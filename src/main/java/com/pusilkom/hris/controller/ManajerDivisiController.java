@@ -178,6 +178,7 @@ public class ManajerDivisiController {
     }
 
     @GetMapping(value= "/employee/cuti/{idKaryawan}")
+    @PreAuthorize("hasAuthority('GET_MNGDIVISI')")
     public String showCutiKaryawan(Model model, 
                                    @PathVariable(value = "idKaryawan") int idKaryawan){
         List<KaryawanCutiModel> listOfRiwayatCuti = karyawanCutiService.getHistoryByKaryawanId(idKaryawan);

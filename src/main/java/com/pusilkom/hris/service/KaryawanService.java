@@ -42,13 +42,26 @@ public interface KaryawanService {
 
 	List<FeedbackRatingModel> getRekanSeproyek(List<Integer> idProyeks, int idKaryawan, LocalDate periodeNow);
 
+	List<Integer> getAllDivisi();
+
 	void addFeedbackRekan(String feedback, int rating, int idRekan, int idPenilai,
 						  int idProyek, LocalDate periode, Timestamp tanggal);
 
 	void updateFeedbackRekan(String feedback, int rating, int idRekan, int idPenilai,
 							 int idProyek, LocalDate periode, Timestamp tanggal);
 
+
+	List<KaryawanModel> selectNamaEmployeeAll();
+
+	void addKaryawan(String namaLengkap, String namaPanggilan, String nip, int idDivisi,
+					 String emailPusilkom, String emailPribadi);
+
+	void deleteKaryawan(int idKaryawan);
+
 	KaryawanBaruModel getKaryawanBaruById(int idKaryawan);
 
-    KaryawanBaruModel getKaryawanByUsername(String username);
+	String cekKaryawanIsManager(int idKaryawan);
+	
+	KaryawanBaruModel getKaryawanByUsername(String username);
+
 }

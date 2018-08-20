@@ -310,19 +310,4 @@ public class IndexController
         return "index-manajerdivisi";
     }
 
-    /**
-     * method ini digunakan untuk menampilkan index manajer divisi yang berisi daftar anggota di divisinya empployee
-     * @param model
-     * @param principal
-     * @return
-     */
-    @GetMapping("/employee/cuti")
-    @PreAuthorize("hasAuthority('GET_MNGDIVISI')")
-    public String indexManajerDivisiEmployee(Model model, Principal principal) {
-        List<KaryawanCutiModel> listOfKaryawanCuti = karyawanCutiService.getAll(principal.getName());
-        
-        model.addAttribute("listOfKaryawanCuti", listOfKaryawanCuti);
-        return "index-manajerdivisi-employee";
-    }
-
 }

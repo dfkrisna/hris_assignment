@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/fragment :: header-title">
+</head>
+<body>
+    <div th:replace="fragments/fragment :: navbar-employee"></div>
+    <div th:replace="fragments/fragment :: absen-modals"></div>
+    <div th:replace="fragments/fragment :: sidebar-employee"></div>
+
+    <main class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 pb-3">
+        <div class="d-flex flex-row mb-5">
+            <div th:if="${notification != null}" class="d-flex flex-row mb-3 col-md-12">
+                <h3 th:text="${notification}" class="text-primary montserrat-small-bold alert alert-success"></h3>
+            </div>
+            <div th:if="${notificationGagal != null}" class="d-flex flex-row mb-3 col-md-12">
+                <h3 th:text="${notificationGagal}" class="text-primary montserrat-small-bold alert alert-danger"></h3>
+            </div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="roboto breadcrumb-item active" aria-current="page">
+                        <a th:href="'/assignment/eksekutif'">Beranda</a>
+                    </li>
+                </ol>
+            </nav>
+            <h2 class="ml-auto roboto" th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy')}"></h2>
+        </div>
+
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah-karyawan">
+            Tambah Karyawan +
+        </button>
+        <h2 class="text-center montserrat-bold-big">List Karyawan</h2>
+        <div th:if="${karyawanList}==null">
+            <h1>Tidak ada karyawan</h1>
+        </div>
+        <div th:if="${karyawanList}!=null">
+            <table id="list-karyawan" class="table table-hover">
+                <thead>
+                <tr>
+                    <th style="background-color: #FFCF26;">Karyawan</th>
+                    <th style="background-color: #FFCF26;" class="text-center">Nama Panggilan</th>
+                    <th style="background-color: #FFCF26;" class="text-center">NIP</th>
+                    <th style="background-color: #FFCF26;" class="text-center">ID Divisi</th>
+                    <th style="background-color: #FFCF26;" class="text-center">Email Pusilkom</th>
+                    <th style="background-color: #FFCF26;" class="text-center">Email Pribadi</th>
+                    <th style="background-color: #FFCF26;" class="text-center">Status Keaktifan</th>
+                    <th style="background-color: #FFCF26;" class="text-center">Aksi</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="karyawan,iterationStatus:${karyawanList}">
+                    <td th:text="${karyawan.getNamaLengkap()}"></td>
+                    <td class="text-center" th:text="${karyawan.getNamaPanggilan()}"></td>
+                    <td th:text="${karyawan.getNip()}"></td>
+                    <td class="text-center" th:text="${karyawan.getIdDivisi()}"></td>
+                    <td th:text="${karyawan.getEmailPusilkom()}"></td>
+                    <td th:text="${karyawan.getEmailPribadi()}"></td>
+                    <td class="text-center" >
+                        <div th:if="${karyawan.isActive()}">
+                            <a th:text="'Aktif'"></a>
+                        </div>
+                        <div th:if="${!karyawan.isActive()}">
+                            <a th:text="'Tidak Aktif'"></a>
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <button type="button" class="btn-hapus-karyawan btn btn-danger" data-toggle="modal" data-target="#modal-hapus-karyawan"
+                                th:attr="data-idKaryawan=${karyawan.idKaryawan}">
+                            Hapus Karyawan
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--Modal tambah Karyawan-->
+        <div class="modal fade" id="modal-tambah-karyawan">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Tambah Karyawan Baru</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <form id="form-tambah-karyawan" action="/employee/hr/tambah-karyawan" method="POST">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="nama-lengkap" class="col-form-label">Nama Lengkap :</label>
+                                <input type="text" class="form-control" id="nama-lengkap" name="nama-lengkap"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="nama-panggilan" class="col-form-label">Nama Panggilan :</label>
+                                <input type="text" class="form-control" id="nama-panggilan" name="nama-panggilan"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="nip" class="col-form-label">NIP :</label>
+                                <input type="text" class="form-control" id="nip" name="nip"></input>
+                            </div>
+                            <div class="form-group">
+                                <label for="id-divisi" class="col-form-label">ID Divisi :</label>
+                                <select class="form-control" id="id-divisi" name="id-divisi">
+                                    <option selected="selected" disabled="disabled">Pilih Divisi</option>
+                                    <div th:each="idDivisi, IterationStatus:${listDivisi}">
+                                        <option th:text="${idDivisi}"></option>
+                                    </div>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="email-pusilkom" class="col-form-label">Email Pusilkom :</label>
+                                <input type="email" class="form-control" id="email-pusilkom" name="email-pusilkom"></input>
+                            </div>
+                            <div class="form-group">
+                                <label for="email-pribadi" class="col-form-label">Email Pribadi :</label>
+                                <input type="email" class="form-control" id="email-pribadi" name="email-pribadi"></input>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Tambah Karyawan</button>
+                            <button type="button" class="montserrat-small btn btn-dark btn-rounded" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--Modal hapus karyawan-->
+        <div class="modal fade" id="modal-hapus-karyawan">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Hapus Karyawan</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <h5>Apakah anda yakin ingin menghapus karyawan?</h5>
+                    </div>
+                    <div class="modal-footer">
+                        <a id="btn-konfirmasi-hapus-karyawan" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Hapus Karyawan</a>
+                        <button type="button" class="montserrat-small btn btn-dark btn-rounded" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
