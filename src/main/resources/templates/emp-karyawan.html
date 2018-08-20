@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/fragment :: header-title">
+</head>
+<body>
+<div th:replace="fragments/fragment :: navbar-employee"></div>
+<div th:replace="fragments/fragment :: sidebar"></div>
+<div th:replace="fragments/fragment :: absen-modals"></div>
+
+<main id="content-isi" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 pb-3 pl-3 pr-3">
+    <div class="d-flex flex-row mb-5">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="roboto breadcrumb-item active" aria-current="page">
+                    <a href="/employee">Beranda</a>
+                </li>
+            </ol>
+        </nav>
+        <h2 class="ml-auto roboto" th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy')}"></h2>
+    </div>
+    <div th:if="${checkinSuccess != null && checkinSuccess != ''}" class="d-flex flex-row mb-5 alert alert-success" role="alert">
+        <h3 class="montserrat-small" th:text="${checkinSuccess}"></h3>
+    </div>
+    <div th:if="${checkOutSuccess != null && checkOutSuccess != ''}" class="d-flex flex-row mb-5 alert alert-success" role="alert">
+        <h3 class="montserrat-small" th:text="${checkOutSuccess}"></h3>
+    </div>
+    <div class="text-center">
+        <h2 class="montserrat-bold-big" th:text="'Halo, ' + ${karyawan.getNamaPanggilan()}"></h2>
+        <!--<div th:if="${!isCheckedIn}" class="text-center">-->
+            <!--<button type="button" data-toggle="modal" data-target="#checkinModal"-->
+                    <!--class="pusil-btn btn btn-primary montserrat-small btn-rounded">Check-in</button>-->
+            <!--<div class="modal fade" id="checkinModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">-->
+                <!--<div class="modal-dialog" role="document">-->
+                    <!--<div class="modal-content">-->
+                        <!--<div class="modal-header">-->
+                            <!--<h5 class="montserrat-bold-big" id="exampleModalLabel">Check-in</h5>-->
+                            <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+                                <!--<span aria-hidden="true">&times;</span>-->
+                            <!--</button>-->
+                        <!--</div>-->
+                        <!--<div class="modal-body">-->
+                            <!--<p class="montserrat-small">Apakah Anda yakin ingin melakukan check-in?</p>-->
+                        <!--</div>-->
+                        <!--<div class="modal-footer">-->
+                            <!--<button type="button" class="montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded" data-dismiss="modal">Batal</button>-->
+                            <!--<a class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" th:href="@{'/employee/absen/checkin'}">Check-in</a>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div th:unless="${!isCheckedIn}">-->
+            <!--<button type="button" data-toggle="modal" data-target="#checkoutModal" data-title="Check-out"-->
+                        <!--th:attr="data-waktu-checkin=${absen.getCheckInTime()}" class="modal-button montserrat-small pusil-btn btn btn-dark text-center text-white btn-rounded">Check-out</button>-->
+
+
+                <!--<div class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="checkoutModalLabel" aria-hidden="true">-->
+                    <!--<div class="modal-dialog" role="document">-->
+                        <!--<div class="modal-content">-->
+                            <!--<div class="modal-header">-->
+                                <!--<h5 class="modal-title montserrat-med-bold" id="checkoutModalLabel">Check-out</h5>-->
+                            <!--</div>-->
+                            <!--<div class="modal-body">-->
+                                <!--<div class="form-group">-->
+                                    <!--<label for="waktuCheckin" class="col-form-label montserrat-small">Waktu Check-In</label>-->
+                                    <!--<input id="waktuCheckin" class="form-control" readonly="true" name="waktuCheckin"/>-->
+                                <!--</div>-->
+                                <!--<form action="/employee/absen/checkout" method="post">-->
+                                    <!--<div class="form-group">-->
+                                        <!--<label for="detail" class="col-form-label montserrat-small">Detail</label>-->
+                                        <!--<textarea type="text" class="form-control" id="detail" name="detail" required></textarea>-->
+                                    <!--</div>-->
+                                    <!--<button type="button" class="montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded"-->
+                                            <!--data-dismiss="modal">Batal</button>-->
+                                    <!--<button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">-->
+                                        <!--Check-out</button>-->
+                                <!--</form>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+        <!--</div>-->
+    </div>
+</main >
+
+<div th:replace="fragments/fragment :: footer"></div>
+
+
+</body>
+</html>

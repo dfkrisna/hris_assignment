@@ -2,6 +2,7 @@ package com.pusilkom.hris.service;
 
 import com.pusilkom.hris.dao.KaryawanMapper;
 import com.pusilkom.hris.model.FeedbackRatingModel;
+import com.pusilkom.hris.model.KaryawanBaruModel;
 import com.pusilkom.hris.model.KaryawanModel;
 import com.pusilkom.hris.model.KaryawanProyekModel;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +39,8 @@ public class KaryawanServiceImpl implements KaryawanService{
 	public List<KaryawanModel> getKaryawanAll() {
 		return karyawanMapper.selectKaryawanAll();
 	}
+
+	public List<KaryawanBaruModel> getKaryawanBaruAll(){ return karyawanMapper.selectKaryawanBaruAll();}
 
 	public KaryawanModel getKaryawanById(int idKaryawan) {
 		return karyawanMapper.selectKaryawanById(idKaryawan);
@@ -140,6 +143,12 @@ public class KaryawanServiceImpl implements KaryawanService{
 	}
 
 	@Override
+	public KaryawanBaruModel getKaryawanByUsername(String username) {
+		KaryawanBaruModel karyawan = karyawanMapper.selectKaryawanByUsername(username);
+		return karyawan;
+	}
+
+	@Override
 	public int getKaryawanIdPenilai(int idKaryawan, int idProyek) {
 		return karyawanMapper.getKaryawanIdPenilai(idKaryawan, idProyek);
 	}
@@ -151,8 +160,36 @@ public class KaryawanServiceImpl implements KaryawanService{
 	}
 
 	@Override
+
 	public List<KaryawanModel> selectNamaEmployeeAll(){
 		return karyawanMapper.selectNamaEmployeeAll();
 	}
+
+	public List<Integer> getAllDivisi(){
+		List<Integer> listDivisi = karyawanMapper.getAllDivisi();
+		return listDivisi;
+	}
+
+	@Override
+	public void addKaryawan(String namaLengkap, String namaPanggilan, String nip, int idDivisi,
+					 String emailPusilkom, String emailPribadi){
+		karyawanMapper.addKaryawan(namaLengkap, namaPanggilan, nip, emailPusilkom, emailPribadi, idDivisi, true);
+	}
+	@Override
+	public KaryawanBaruModel getKaryawanBaruById(int idKaryawan){
+		return karyawanMapper.getKaryawanBaruById(idKaryawan);
+	}
+
+	@Override
+	public void deleteKaryawan(int idKaryawan){
+		karyawanMapper.deleteKaryawanBaru(idKaryawan);
+	}
+
+	@Override
+	public String cekKaryawanIsManager(int idKaryawan){
+		return karyawanMapper.cekKaryawanIsManager(idKaryawan);
+	}
+
+
 
 }

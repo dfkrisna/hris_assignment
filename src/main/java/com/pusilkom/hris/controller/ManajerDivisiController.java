@@ -43,6 +43,9 @@ public class ManajerDivisiController {
     @Autowired
     RoleProyekService roleProyekService;
 
+    @Autowired
+    KaryawanCutiService karyawanCutiService;
+
     /**
      * method ini digunakan untuk menampilkan detail karyawan yang merupakan bawahan manajer divisi
      * @param model
@@ -173,4 +176,67 @@ public class ManajerDivisiController {
 
         return "redirect:/assignment/mngdivisi/rekap/" + karyawanProyek.getIdKaryawan();
     }
+
+    @GetMapping(value= "/employee/cuti/{idKaryawan}")
+    @PreAuthorize("hasAuthority('GET_MNGDIVISI')")
+    public String showCutiKaryawan(Model model, 
+                                   @PathVariable(value = "idKaryawan") int idKaryawan){
+        List<KaryawanCutiModel> listOfRiwayatCuti = karyawanCutiService.getHistoryByKaryawanId(idKaryawan);
+        KaryawanBaruModel karyawanBaru = karyawanService.getKaryawanBaruById(idKaryawan);
+        model.addAttribute("listOfKaryawanCuti", listOfRiwayatCuti);
+        model.addAttribute("namaLengkap", karyawanBaru.getNamaLengkap());
+        return "detail-cuti";
+    }
+
+    @GetMapping(value= "/employee/cuti/{idKaryawan}/approve/{idKaryawanCuti}")
+    @PreAuthorize("hasAuthority('POST_MNGDIVISI')")
+    public String approveCutiKaryawan(RedirectAttributes ra,
+                                    @PathVariable(value = "idKaryawan") int idKaryawan, 
+                                    @PathVariable(value = "idKaryawanCuti") int idKaryawanCuti){
+        KaryawanBaruModel karyawanBaru = karyawanService.getKaryawanBaruById(idKaryawan);
+        if(karyawanCutiService.approve(idKaryawanCuti)){
+            ra.addFlashAttribute("notification", "Berhasil menyetujui permohonan cuti " + karyawanBaru.getNamaLengkap());    
+        }else{
+            ra.addFlashAttribute("notificationGagal", "Tidak berhasil, karena sudah ditolak ");    
+        }
+
+        return "redirect:/employee/cuti/" + idKaryawan;
+    }
+
+    @GetMapping(value= "/employee/cuti/{idKaryawan}/cancel/{idKaryawanCuti}")
+    @PreAuthorize("hasAuthority('POST_MNGDIVISI')")
+    public String cancelCutiKaryawan(RedirectAttributes ra,
+                                    @PathVariable(value = "idKaryawan") int idKaryawan, 
+                                    @PathVariable(value = "idKaryawanCuti") int idKaryawanCuti){
+        KaryawanBaruModel karyawanBaru = karyawanService.getKaryawanBaruById(idKaryawan);
+        karyawanCutiService.cancel(idKaryawanCuti);
+
+        ra.addFlashAttribute("notification", "Berhasil membatalkan permohonan cuti " + karyawanBaru.getNamaLengkap());
+        return "redirect:/employee/cuti/" + idKaryawan;
+    }
+
+    @GetMapping(value= "/employee/cuti/{idKaryawan}/tolak/{idKaryawanCuti}")
+    @PreAuthorize("hasAuthority('POST_MNGDIVISI')")
+    public String tolak(RedirectAttributes ra,
+                                    @PathVariable(value = "idKaryawan") int idKaryawan, 
+                                    @PathVariable(value = "idKaryawanCuti") int idKaryawanCuti){
+        KaryawanBaruModel karyawanBaru = karyawanService.getKaryawanBaruById(idKaryawan);
+        karyawanCutiService.tolak(idKaryawanCuti);
+
+        ra.addFlashAttribute("notification", "Berhasil menolak permohonan cuti " + karyawanBaru.getNamaLengkap());
+        return "redirect:/employee/cuti/" + idKaryawan;
+    }
+
+    @GetMapping(value= "/employee/cuti/{idKaryawan}/cancel-tolak/{idKaryawanCuti}")
+    @PreAuthorize("hasAuthority('POST_MNGDIVISI')")
+    public String cancelTolak(RedirectAttributes ra,
+                                    @PathVariable(value = "idKaryawan") int idKaryawan, 
+                                    @PathVariable(value = "idKaryawanCuti") int idKaryawanCuti){
+        KaryawanBaruModel karyawanBaru = karyawanService.getKaryawanBaruById(idKaryawan);
+        karyawanCutiService.cancelTolak(idKaryawanCuti);
+
+        ra.addFlashAttribute("notification", "Berhasil membatalkan penolakan cuti " + karyawanBaru.getNamaLengkap());
+        return "redirect:/employee/cuti/" + idKaryawan;
+    }
+
 }

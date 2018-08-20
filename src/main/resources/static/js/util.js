@@ -3,6 +3,7 @@ $(document).ready(function() {
     $('#tabel-penugasan-periode-ini').DataTable();
     $('#tabel-riwayat-penugasan').DataTable();
     $('#tabel-penilaian-mandiri').DataTable();
+    $('#list-karyawan').DataTable();
     // $('#matrix-pmo').DataTable();
     $('#sub-proyek').DataTable();
     $('#table-rekomendasi').DataTable();
@@ -33,6 +34,8 @@ $(document).ready(function() {
         "order": [[ 1, "desc" ]]
     } );
 
+    $('.notifModal').modal('show');
+
     $('#feedbackModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget); // Button that triggered the modal
         var header = button.data('title'); // Extract info from data-* attributes
@@ -59,6 +62,19 @@ $(document).ready(function() {
         modal.find('.modal-body #namaRekan').val(namaRekan);
         modal.find('.modal-body #idRekan').val(idRekan);
         modal.find('.modal-body #kodeProyek').val(kodeProyek);
+
+    });
+
+    $('#checkoutModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var header = button.data('title'); // Extract info from data-* attributes
+        var waktuCheckin = button.data('waktu-checkin');
+
+        var modal = $(this);
+        modal.find('.modal-body textarea').val("");
+
+
+        modal.find('.modal-body #waktuCheckin').val(waktuCheckin);
 
     });
 
@@ -98,6 +114,7 @@ $(document).ready(function() {
     })
 
 
+
     $(".pusil-btn-nonactive").on("click", function(){
         event.preventDefault();
         var action = "/employee/admin/keloladivisi/nonaktifkan/"  + $(this).data('id');
@@ -120,6 +137,13 @@ $(document).ready(function() {
 
         $("#btn-konfirmasi-hapus-divisi").attr('href', action);
         $("#modal-hapus-divisi").modal();
+    })
+
+    $(".btn-hapus-karyawan").on("click", function(){
+        event.preventDefault();
+        var action = "/employee/hr/hapus/" + $(this).data('idkaryawan');
+        $("#btn-konfirmasi-hapus-karyawan").attr('href', action);
+        $("#modal-hapus-karyawan").modal();
     })
 
     $('[data-toggle="tooltip"]').tooltip();

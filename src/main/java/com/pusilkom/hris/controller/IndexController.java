@@ -58,6 +58,9 @@ public class IndexController
     @Autowired
     RoleProyekService roleProyekService;
 
+    @Autowired
+    KaryawanCutiService karyawanCutiService;
+
     /**
      * method untuk mengakses beranda utama
      * @param model
@@ -66,7 +69,7 @@ public class IndexController
      */
     @GetMapping("/")
     @PreAuthorize("hasAuthority('GET_')")
-    public String landingPage(Model model, @NotNull Authentication auth) {
+    public String landingPage  (Model model, @NotNull Authentication auth) {
         UserWeb user = (UserWeb) auth.getPrincipal();
         model.addAttribute("currentUser", user);
         return "landingpage";

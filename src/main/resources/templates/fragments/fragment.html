@@ -92,6 +92,53 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat:300,500,700' rel='stylesheet'>
     <script type="text/javascript" src="/js/util.js"></script>
 </head>
+<head th:fragment="header-title-employee">
+    <meta charset="UTF-8">
+    <title>SI SDM Karyawan</title>
+    <!--<script type="text/javascript" src="/js/bootstrap.min.js"></script>-->
+
+    <script type="text/javascript">
+        $.noConflict(true);
+    </script>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script>
+        $.widget.bridge('uibutton', $.ui.button);
+        $.widget.bridge('uitooltip', $.ui.tooltip);
+    </script>
+    <link rel="stylesheet" type="text/css" media="screen" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/fixedcolumns/3.2.4/js/dataTables.fixedColumns.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.datatables.net/fixedcolumns/3.2.4/css/fixedColumns.bootstrap4.min.css">
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+
+    <link rel="stylesheet" href="/css/home.css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:300,500,700' rel='stylesheet'>
+    <script type="text/javascript" src="/js/util.js"></script>
+</head>
+
 <body>
     <nav th:fragment="navbar" id="navbar-utama" class="navbar bg-light sticky-top">
         <div class="navbar-header col-md-2">
@@ -111,28 +158,11 @@
     </nav>
 
     <nav th:fragment="navbar-portal" id="navbar-utama" class="navbar bg-light sticky-top">
-            <div class="navbar-header col-md-2">
-                <a class="navbar-brand" ref="#">
-                    <img id="logo-pusilkom" alt="pusilkom" src="/img/mainsite.png">
-                </a>
-                <span class="montserrat navbar-brand col-sm-3 col-md-2 mr-0 text-dark"><strong>SISDM HRIS</strong></span>
-            </div>
-            <ul class="nav navbar-nav col-md-8 text-right">
-                <li class="nav-item text-nowrap">
-                    <span class="nav-link text-secondary"><img id="icon-navbar" class="mr-2 mb-1" alt="pusilkom" src="/img/avatar.png" style="display:inline-block;"><p style="display:inline-block;" th:text="${currentUser.username}">Jonathan Joestar</p></span>
-                </li>
-            </ul>
-            <form th:action="@{/logout}" class="navbar-form navbar-rightcol-md-2" method="post">
-                <input class="btn btn-outline-danger" type="submit" value="logout"/>
-            </form>
-    </nav>
-
-    <nav th:fragment="navbar-employee" id="navbar-utama" class="navbar bg-light sticky-top">
         <div class="navbar-header col-md-2">
             <a class="navbar-brand" ref="#">
                 <img id="logo-pusilkom" alt="pusilkom" src="/img/mainsite.png">
             </a>
-            <span class="montserrat navbar-brand col-sm-3 col-md-2 mr-0 text-dark"><strong>SISDM</strong> MODUL <strong>KARYAWAN</strong></span>
+            <span class="montserrat navbar-brand col-sm-3 col-md-2 mr-0 text-dark"><strong>SISDM HRIS</strong></span>
         </div>
         <ul class="nav navbar-nav col-md-8 text-right">
             <li class="nav-item text-nowrap">
@@ -143,6 +173,118 @@
             <input class="btn btn-outline-danger" type="submit" value="logout"/>
         </form>
     </nav>
+
+    <nav th:fragment="navbar-employee" id="navbar-utama" class="navbar bg-light sticky-top">
+        <div class="navbar-header col-md-2">
+            <a class="navbar-brand" ref="#">
+                <img id="logo-pusilkom" alt="pusilkom" src="/img/mainsite.png">
+            </a>
+            <span class="montserrat navbar-brand col-sm-3 col-md-2 mr-0 text-dark"><strong>SISDM</strong> MODUL <strong>KARYAWAN</strong></span>
+        </div>
+        <ul class="nav navbar-nav col-md-7 text-right">
+            <li class="nav-item text-nowrap">
+                <span class="nav-link text-secondary"><img id="icon-navbar" class="mr-2 mb-1" alt="pusilkom" src="/img/avatar.png" style="display:inline-block;"><p style="display:inline-block;" th:text="${currentUser.username}">Jonathan Joestar</p></span>
+            </li>
+        </ul>
+        <div class="navbar-form navbar-rightcol-md-5">
+            <div th:if="${!statusCheckIn}" class="text-center">
+                <button type="button" data-toggle="modal" data-target="#checkinModal"
+                        class="pusil-btn btn btn-primary btn-rounded montserrat-small">Check-in</button>
+            </div>
+            <div th:unless="${!statusCheckIn}">
+                <button type="button" data-toggle="modal" data-target="#checkoutModal" data-title="Check-out"
+                        th:attr="data-waktu-checkin=${absen.getCheckInTime()}" class="modal-button montserrat-small pusil-btn btn btn-dark text-center text-white btn-rounded">Check-out</button>
+
+            </div>
+        </div>
+
+        <form th:action="@{/logout}" class="navbar-form navbar-rightcol-md-2" method="post">
+            <input class="montserrat-small btn btn-rounded btn-outline-danger" type="submit" value="logout"/>
+        </form>
+    </nav>
+
+    <div th:fragment="absen-modals">
+        <div class="modal fade" id="checkinModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="montserrat-bold-big" id="exampleModalLabel">Check-in</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="montserrat-small">Apakah Anda yakin ingin melakukan check-in?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded" data-dismiss="modal">Batal</button>
+                        <a class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" th:href="@{'/employee/absen/checkin'}">Check-in</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title montserrat-med-bold" id="checkoutModalLabel">Check-out</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="waktuCheckin" class="col-form-label montserrat-small">Waktu Check-In</label>
+                            <input id="waktuCheckin" class="form-control" readonly="true" name="waktuCheckin"/>
+                        </div>
+                        <form action="/employee/absen/checkout" method="post">
+                            <div class="form-group">
+                                <label for="detail" class="col-form-label montserrat-small">Detail</label>
+                                <textarea type="text" class="form-control" id="detail" name="detail" required></textarea>
+                            </div>
+                            <button type="button" class="montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded"
+                                    data-dismiss="modal">Batal</button>
+                            <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">
+                                Check-out</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:if="${checkOutNotif != null && checkOutNotif != ''}" class="modal fade in notifModal" id="checkOutSuccessModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="montserrat-bold-big" id="exampleModalLabel">Sukses Check-Out</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="montserrat-small" th:text="${checkOutNotif}"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded" data-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:if="${checkInNotif != null && checkInNotif != ''}" class="modal fade in notifModal" id="checkInSuccessModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="montserrat-bold-big" id="exampleModalLabel">Sukses Check-In</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="montserrat-small" th:text="${checkInNotif}"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded" data-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div th:fragment="sidebar" id="page-content" class="container-fluid d-block">
         <div class="row">
@@ -211,6 +353,7 @@
     </div>
 
 
+
     <div th:fragment="sidebar-employee" id="page-content" class="container-fluid d-block">
         <div class="row">
             <nav id="pusilkom-sidebar" class="col-md-2 d-none d-md-block sidebar bg-dark">
@@ -221,9 +364,25 @@
                                 Selamat Datang!
                             </a>
                         </li>
+
                         <li th:if="${#lists.contains(currentUser.strRoles,'ROLE_SYSTEMADMIN')}" class="nav-item">
                            <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/employee/admin/keloladivisi">
                                 <img class="icon-sidebar mr-2 mb-1" src="/img/yellow-building.png">Kelola Divisi
+
+                        <li class="nav-item">
+                            <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/employee">
+                                <img class="icon-sidebar mr-2 mb-1" src="/img/yellow-home.png">Beranda
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/employee/riwayat-absen">
+                                <img class="icon-sidebar mr-2 mb-1" src="/img/clock.png">Riwayat Absen
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/employee/cuti">
+                                <img class="icon-sidebar mr-2 mb-1" src="/img/airplane-ticket.png">Riwayat Cuti
+
                             </a>
                         </li>
                     </ul>

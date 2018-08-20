@@ -1,6 +1,7 @@
 package com.pusilkom.hris.dao;
 
 import com.pusilkom.hris.model.FeedbackRatingModel;
+import com.pusilkom.hris.model.KaryawanBaruModel;
 import com.pusilkom.hris.model.KaryawanModel;
 import org.apache.ibatis.annotations.*;
 
@@ -24,6 +25,22 @@ public interface KaryawanMapper {
             @Result(property="nama", column="nama")
     })
     List<KaryawanModel> selectKaryawanAll();
+
+    @Select("SELECT K.*" +
+            "FROM   employee.\"KARYAWAN\" as K " +
+            "WHERE K.is_deleted = false")
+    @Results(value = {
+            @Result(property="idKaryawan", column="id"),
+            @Result(property="namaLengkap", column="nama_lengkap"),
+            @Result(property="namaPanggilan", column="nama_panggilan"),
+            @Result(property="nip", column="nip"),
+            @Result(property="idDivisi", column="id_divisi"),
+            @Result(property="emailPusilkom", column="email_pusilkom"),
+            @Result(property="emailPribadi", column="email_pribadi"),
+            @Result(property="isActive", column="is_active")
+    })
+    List<KaryawanBaruModel> selectKaryawanBaruAll();
+
 
     @Select("SELECT DISTINCT K.id, id_pengguna, id_divisi, P.nama\n" +
             "FROM mpp.\"KARYAWAN\" AS K, mpp.\"PENGGUNA\" AS P\n" +
@@ -143,6 +160,11 @@ public interface KaryawanMapper {
                                             @Param("idProyek") int idProyek,
                                             @Param("periodeSelected") LocalDate periodeSelected);
 
+    @Select("SELECT d.id " +
+            "FROM employee.\"DIVISI\" as d")
+    List<Integer> getAllDivisi();
+
+
     @Insert("insert into mpp.\"RATING_FEEDBACK\" (rating, feedback, tanggal, id_karyawan_dinilai, id_penilai, periode, id_proyek)\n" +
             "values (#{ratingRekan}, #{feedback}, #{waktuIsi}, #{idKaryawanProyek}, #{idPenilai}, #{periodeSelected}, " +
             "#{idProyek})")
@@ -169,6 +191,7 @@ public interface KaryawanMapper {
     @Delete("delete from mpp.\"KARYAWAN\" where id_pengguna = #{id}")
     void deleteKaryawan(@Param("id") int id);
 
+
     @Select("SELECT DISTINCT id, nama_lengkap\n " +
             "FROM employee.\"KARYAWAN\"")
     @Results(value = {
@@ -176,5 +199,58 @@ public interface KaryawanMapper {
             @Result(property="nama", column="nama_lengkap")
     })
     List<KaryawanModel> selectNamaEmployeeAll();
+
+
+    @Update("UPDATE employee.\"KARYAWAN\"\n" +
+            "\tSET is_deleted=true\n" +
+            "\tWHERE id=#{id}")
+    void deleteKaryawanBaru(@Param("id") int id);
+
+    @Insert("INSERT INTO employee.\"KARYAWAN\"" +
+            "(nama_lengkap, nama_panggilan, nip, email_pusilkom, email_pribadi, is_active, id_divisi)\n" +
+            "\tVALUES (#{namaLengkap}, #{namaPanggilan}, #{nip}, #{emailPusilkom}, #{emailPribadi}, #{isActive}, #{idDivisi})")
+    void addKaryawan(
+            @Param("namaLengkap") String namaLengkap,
+            @Param("namaPanggilan") String namaPanggilan,
+            @Param("nip") String nip,
+            @Param("emailPusilkom") String emailPusilkom,
+            @Param("emailPribadi") String emailPribadi,
+            @Param("idDivisi") int idDivisi,
+            @Param("isActive") boolean isActive
+    );
+    @Select("SELECT id FROM employee.\"KARYAWAN\" where email_pusilkom = #{email} ORDER BY id DESC LIMIT 1;")
+    String getKaryawanIdByEmail(@Param("email") String email);
+
+    @Select("SELECT K.* FROM employee.\"KARYAWAN\" as K WHERE K.id = #{idKaryawan}")
+    @Results(value = {
+            @Result(property="idKaryawan", column="id"),
+            @Result(property="namaLengkap", column="nama_lengkap"),
+            @Result(property="namaPanggilan", column="nama_panggilan"),
+            @Result(property="nip", column="nip"),
+            @Result(property="idDivisi", column="id_divisi"),
+            @Result(property="emailPusilkom", column="email_pusilkom"),
+            @Result(property="emailPribadi", column="email_pribadi"),
+            @Result(property="isActive", column="is_active")
+    })
+    KaryawanBaruModel getKaryawanBaruById(@Param("idKaryawan") int idKaryawan);
+
+    @Select("SELECT d.id_manager " +
+            "FROM employee.\"DIVISI\" as D " +
+            "WHERE D.id_manager=#{idKaryawan}")
+    String cekKaryawanIsManager(@Param("idKaryawan") int idKaryawan);
+    
+    @Select("select id, nama_lengkap, nama_panggilan, nip, email_pusilkom, email_pribadi, is_active, id_divisi " +
+            "from employee.\"KARYAWAN\" where email_pusilkom=#{email}")
+    @Results(value = {
+            @Result(property = "idKaryawan", column = "id"),
+            @Result(property = "namaLengkap", column = "nama_lengkap"),
+            @Result(property = "namaPanggilan", column = "nama_panggilan"),
+            @Result(property = "nip", column = "nip"),
+            @Result(property = "emailPusilkom", column = "email_pusilkom"),
+            @Result(property = "emailPribadi", column = "email_pribadi"),
+            @Result(property = "isActive", column = "is_active"),
+            @Result(property = "idDivisi", column = "id_divisi")
+    })
+    KaryawanBaruModel selectKaryawanByUsername(@Param("email") String username);
 
 }
