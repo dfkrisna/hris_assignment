@@ -50,6 +50,9 @@ public interface KaryawanService {
 	void updateFeedbackRekan(String feedback, int rating, int idRekan, int idPenilai,
 							 int idProyek, LocalDate periode, Timestamp tanggal);
 
+
+	List<KaryawanModel> selectNamaEmployeeAll();
+
 	void addKaryawan(String namaLengkap, String namaPanggilan, String nip, int idDivisi,
 					 String emailPusilkom, String emailPribadi);
 
@@ -60,4 +63,5 @@ public interface KaryawanService {
 	String cekKaryawanIsManager(int idKaryawan);
 	
 	KaryawanBaruModel getKaryawanByUsername(String username);
+
 }

@@ -191,6 +191,16 @@ public interface KaryawanMapper {
     @Delete("delete from mpp.\"KARYAWAN\" where id_pengguna = #{id}")
     void deleteKaryawan(@Param("id") int id);
 
+
+    @Select("SELECT DISTINCT id, nama_lengkap\n " +
+            "FROM employee.\"KARYAWAN\"")
+    @Results(value = {
+            @Result(property="id", column="id"),
+            @Result(property="nama", column="nama_lengkap")
+    })
+    List<KaryawanModel> selectNamaEmployeeAll();
+
+
     @Update("UPDATE employee.\"KARYAWAN\"\n" +
             "\tSET is_deleted=true\n" +
             "\tWHERE id=#{id}")
@@ -242,4 +252,5 @@ public interface KaryawanMapper {
             @Result(property = "idDivisi", column = "id_divisi")
     })
     KaryawanBaruModel selectKaryawanByUsername(@Param("email") String username);
+
 }

@@ -186,6 +186,23 @@ a.effect-underline:hover:after {
 	border-color: #f26245;
 }
 
+.pusil-btn-nonactive {
+	background-color: #F2994A;
+	border-color: #f26245;
+}
+
+
+.pusil-btn-delete {
+	background-color: #f26245;
+	border-color: #F2994A;
+}
+
+.pusil-btn-active {
+	background-color: #80ff00;
+	border-color: #F2994A;
+}
+
+
 .form-rounded {
 	padding: 0.5em 3em 0.5em 1em;
 	border-radius: 1rem; !important;

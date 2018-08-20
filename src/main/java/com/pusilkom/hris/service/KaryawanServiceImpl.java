@@ -160,6 +160,11 @@ public class KaryawanServiceImpl implements KaryawanService{
 	}
 
 	@Override
+
+	public List<KaryawanModel> selectNamaEmployeeAll(){
+		return karyawanMapper.selectNamaEmployeeAll();
+	}
+
 	public List<Integer> getAllDivisi(){
 		List<Integer> listDivisi = karyawanMapper.getAllDivisi();
 		return listDivisi;
@@ -184,6 +189,7 @@ public class KaryawanServiceImpl implements KaryawanService{
 	public String cekKaryawanIsManager(int idKaryawan){
 		return karyawanMapper.cekKaryawanIsManager(idKaryawan);
 	}
+
 
 
 }
