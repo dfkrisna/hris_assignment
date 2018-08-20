@@ -32,7 +32,7 @@ public class CutiSubmissionController {
     @Autowired
     KaryawanService karyawanService;
 
-    @GetMapping("/employee/riwayat-cuti")
+    @GetMapping("/employee/pengajuan-cuti")
     public String viewRiwayatCutiKaryawan(Model model,
                                           @NotNull Authentication auth,
                                           @ModelAttribute("submitSuccessNotif") String submitSuccessNotif,
@@ -76,7 +76,7 @@ public class CutiSubmissionController {
 
         ra.addFlashAttribute("submitSuccessNotif", notif);
 
-        return "redirect:/employee/riwayat-cuti";
+        return "redirect:/employee/pengajuan-cuti";
     }
 
     @PostMapping(value = "/employee/ubah-cuti")
@@ -107,6 +107,6 @@ public class CutiSubmissionController {
 
         ra.addFlashAttribute("updSuccessNotif", notif);
 
-        return "redirect:/employee/riwayat-cuti";
+        return "redirect:/employee/pengajuan-cuti";
     }
 }
