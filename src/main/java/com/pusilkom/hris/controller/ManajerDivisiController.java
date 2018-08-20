@@ -178,6 +178,7 @@ public class ManajerDivisiController {
     }
 
     @GetMapping(value= "/employee/cuti/{idKaryawan}")
+    @PreAuthorize("hasAuthority('GET_MNGDIVISI')")
     public String showCutiKaryawan(Model model, 
                                    @PathVariable(value = "idKaryawan") int idKaryawan){
         List<KaryawanCutiModel> listOfRiwayatCuti = karyawanCutiService.getHistoryByKaryawanId(idKaryawan);
@@ -188,6 +189,7 @@ public class ManajerDivisiController {
     }
 
     @GetMapping(value= "/employee/cuti/{idKaryawan}/approve/{idKaryawanCuti}")
+    @PreAuthorize("hasAuthority('POST_MNGDIVISI')")
     public String approveCutiKaryawan(RedirectAttributes ra,
                                     @PathVariable(value = "idKaryawan") int idKaryawan, 
                                     @PathVariable(value = "idKaryawanCuti") int idKaryawanCuti){
@@ -202,6 +204,7 @@ public class ManajerDivisiController {
     }
 
     @GetMapping(value= "/employee/cuti/{idKaryawan}/cancel/{idKaryawanCuti}")
+    @PreAuthorize("hasAuthority('POST_MNGDIVISI')")
     public String cancelCutiKaryawan(RedirectAttributes ra,
                                     @PathVariable(value = "idKaryawan") int idKaryawan, 
                                     @PathVariable(value = "idKaryawanCuti") int idKaryawanCuti){
@@ -213,6 +216,7 @@ public class ManajerDivisiController {
     }
 
     @GetMapping(value= "/employee/cuti/{idKaryawan}/tolak/{idKaryawanCuti}")
+    @PreAuthorize("hasAuthority('POST_MNGDIVISI')")
     public String tolak(RedirectAttributes ra,
                                     @PathVariable(value = "idKaryawan") int idKaryawan, 
                                     @PathVariable(value = "idKaryawanCuti") int idKaryawanCuti){
@@ -224,6 +228,7 @@ public class ManajerDivisiController {
     }
 
     @GetMapping(value= "/employee/cuti/{idKaryawan}/cancel-tolak/{idKaryawanCuti}")
+    @PreAuthorize("hasAuthority('POST_MNGDIVISI')")
     public String cancelTolak(RedirectAttributes ra,
                                     @PathVariable(value = "idKaryawan") int idKaryawan, 
                                     @PathVariable(value = "idKaryawanCuti") int idKaryawanCuti){
