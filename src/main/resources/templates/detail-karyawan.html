@@ -6,7 +6,30 @@
     <div th:replace="fragments/fragment :: sidebar"></div>
 
     <main id="content-isi" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 pb-3">
-        <h1 th:text="${karyawan.getNamaLengkap()}">Nama Lengkap Karyawan</h1>
+        <div class="d-flex flex-row mb-5">
+            <h2 class="ml-auto roboto" th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy')}"></h2>
+        </div>
+        <h1 th:text="${karyawan.getNamaLengkap()} + ' (' + ${karyawan.getNamaPanggilan()} + ')'">Nama Lengkap Karyawan (Nama Penggilan)</h1>
+        <h3 th:text="${karyawan.getNip()}">NIP</h3>
+        <br/>
+        <div class="row">
+            <div class="col row">
+                <h6 class="col-md-4">E-Mail Pusilkom</h6>
+                <h6 class="col-md" th:text="': ' + ${karyawan.getEmailPusilkom()}"> EMAIL PUSILKOM</h6>
+            </div>
+            <div class="col"></div>
+            <div class="col">
+                <h5 th:text="'DIVISI : ' + ${karyawan.getIdDivisi()}">Divisi</h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col row">
+                <h6 class="col-md-4">E-Mail Pribadi</h6>
+                <h6 class="col-md" th:text="': ' + ${karyawan.getEmailPribadi()}"> EMAIL PRIBADI</h6>
+            </div>
+            <div class="col"></div>
+            <div class="col"></div>
+        </div>
     </main>
 </body>
 </html>
