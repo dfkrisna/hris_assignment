@@ -5,6 +5,7 @@ import com.pusilkom.hris.model.FeedbackRatingModel;
 import com.pusilkom.hris.model.KaryawanBaruModel;
 import com.pusilkom.hris.model.KaryawanModel;
 import com.pusilkom.hris.model.KaryawanProyekModel;
+import com.pusilkom.hris.model.DataDiriModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -14,6 +15,8 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.crypto.Data;
 
 @Slf4j
 @Service
@@ -160,7 +163,6 @@ public class KaryawanServiceImpl implements KaryawanService{
 	}
 
 	@Override
-
 	public List<KaryawanModel> selectNamaEmployeeAll(){
 		return karyawanMapper.selectNamaEmployeeAll();
 	}
@@ -190,6 +192,16 @@ public class KaryawanServiceImpl implements KaryawanService{
 		return karyawanMapper.cekKaryawanIsManager(idKaryawan);
 	}
 
+	@Override
+	public DataDiriModel getDataDiriByIdKaryawan(int idKaryawan){
+		if(karyawanMapper.getDataDiriByIdKaryawan(idKaryawan) == null){
+			System.out.println("masuk sini");
+		}
+		return karyawanMapper.getDataDiriByIdKaryawan(idKaryawan);
+	}
 
-
+	@Override
+	public void insertDataDiri(DataDiriModel dataDiri){
+		karyawanMapper.insertDataDiri(dataDiri);
+	}
 }

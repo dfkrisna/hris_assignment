@@ -228,23 +228,30 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title montserrat-med-bold" id="checkoutModalLabel">Check-out</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="waktuCheckin" class="col-form-label montserrat-small">Waktu Check-In</label>
                             <input id="waktuCheckin" class="form-control" readonly="true" name="waktuCheckin"/>
                         </div>
-                        <form action="/employee/absen/checkout" method="post">
+                    </div>
+                    <form action="/employee/absen/checkout" method="post">
+                        <div class="modal-body">
                             <div class="form-group">
                                 <label for="detail" class="col-form-label montserrat-small">Detail</label>
                                 <textarea type="text" class="form-control" id="detail" name="detail" required></textarea>
                             </div>
+                        </div>
+                        <div class="modal-footer">
                             <button type="button" class="montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded"
                                     data-dismiss="modal">Batal</button>
                             <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">
                                 Check-out</button>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -382,6 +389,13 @@
                                 <img class="icon-sidebar mr-2 mb-1" src="/img/clock.png">Riwayat Absen
                             </a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/employee/pengajuan-cuti">
+                                <img class="icon-sidebar mr-2 mb-1" src="/img/pengajuan-cuti.png">Pengajuan Cuti
+                            </a>
+                        </li>
+
                         <li class="nav-item">
                             <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/employee/cuti">
                                 <img class="icon-sidebar mr-2 mb-1" src="/img/airplane-ticket.png">Riwayat Cuti

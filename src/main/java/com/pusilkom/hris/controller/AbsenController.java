@@ -33,7 +33,7 @@ public class AbsenController {
     public boolean isCheckedIn(Model model,
                                @NotNull Authentication auth) {
         UserWeb user = (UserWeb) auth.getPrincipal();
-        KaryawanBaruModel karyawan = karyawanService.getKaryawanByUsername(user.getUsername());
+        KaryawanBaruModel karyawan = karyawanService.getKaryawanByUsername("tatangsutarna@pusilkom.ui.ac.id");
         boolean isCheckedIn = absenService.isCheckedIn(karyawan);
         if(isCheckedIn) {
             AbsenModel absen = absenService.getKaryawanLatestCheckIn(karyawan);
@@ -43,7 +43,7 @@ public class AbsenController {
     }
 
     @GetMapping("/employee/riwayat-absen")
-    public String homeKaryawan(Model model,
+    public String absenKaryawan(Model model,
                                @NotNull Authentication auth) {
         UserWeb user = (UserWeb) auth.getPrincipal();
         KaryawanBaruModel karyawan = karyawanService.getKaryawanByUsername(user.getUsername());
