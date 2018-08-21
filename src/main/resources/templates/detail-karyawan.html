@@ -62,43 +62,44 @@
 
         <div class="tab-content container" id="nav-tabContent">
             <div class="tab-pane fade show active" id="nav-data-diri" role="tabpanel" aria-labelledby="nav-data-diri">
-                <form class="form-horizontal" th:action="'/employee/detail-karyawan/' + ${karyawan.getIdKaryawan()} + '/insert-data-diri'"
+                <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
+                <form th:if="${isEmployeeSelected || isHR}" class="form-horizontal" th:action="'/employee/detail-karyawan/' + ${karyawan.getIdKaryawan()} + '/insert-data-diri'"
                     th:object="${dataDiri}" method="POST">
 
                     <div class="form-row mb-3">
                         <div class="form-group col mr-2">
                             <label class="roboto">Tempat Lahir</label>
-                            <input type="text" class="form-control form-rounded" th:field="*{tempatLahir}" name="tempatLahir" required  th:disabled="${disabled}"/>
+                            <input type="text" class="form-control form-rounded" th:field="*{tempatLahir}" name="tempatLahir" required />
                         </div>
                         <div class="form-group col">
 
                             <label class="roboto">Tanggal Lahir</label>
-                            <input type="date" class="form-control form-rounded" th:field="*{tanggalLahir}" name="tanggalLahir" required  th:disabled="${disabled}"/>
+                            <input type="date" class="form-control form-rounded" th:field="*{tanggalLahir}" name="tanggalLahir" required />
                         </div>
                     </div>
                     <div class="form-row mb-3">
                         <div class="form-group col mr-2">
                             <label class="roboto">Nomor HP</label>
-                            <input type="text" class="form-control form-rounded" th:field="*{noHp}" name="noHp" required  th:disabled="${disabled}" />
+                            <input type="text" class="form-control form-rounded" th:field="*{noHp}" name="noHp" required />
                         </div>
                         <div class="form-group col"></div>
                     </div>
                     <div class="form-row mb-3">
                         <div class="form-group col mr-2">
                             <label class="roboto">Nomor KTP</label>
-                            <input type="text" class="form-control form-rounded" th:field="*{nomorKtp}" name="noKtp" required  th:disabled="${disabled}"/>
+                            <input type="text" class="form-control form-rounded" th:field="*{nomorKtp}" name="noKtp" required />
                         </div>
                         <div class="form-group col">
 
                             <label class="roboto">NPWP</label>
-                            <input type="text" class="form-control form-rounded" th:field="*{npwp}" name="npwp"  th:disabled="${disabled}" required />
+                            <input type="text" class="form-control form-rounded" th:field="*{npwp}" name="npwp" required />
                         </div>
                     </div>
                     <div class="form-row mb-1">
 
                         <div class="form-group col mr-2">
                             <label class="roboto">Alamat Tinggal</label>
-                            <textarea class="form-control form-rounded" name="alamat" th:field="*{alamatTinggal}" rows="5"  th:disabled="${disabled}"></textarea>
+                            <textarea class="form-control form-rounded" name="alamat" th:field="*{alamatTinggal}" rows="5"></textarea>
                         </div>
 
                     </div>
@@ -117,26 +118,32 @@
                 </form>
             </div>
             <div class="tab-pane fade show" id="nav-data-pendidikan" role="tabpanel" aria-labelledby="nav-data-pendidikan">
+                <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
 
             </div>
             <div class="tab-pane fade show" id="nav-data-benefit" role="tabpanel" aria-labelledby="nav-data-darurat">
+                <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
 
             </div>
 
             <div class="tab-pane fade show" id="nav-data-keluarga" role="tabpanel" aria-labelledby="nav-data-keluarga">
+                <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
 
             </div>
 
             <div class="tab-pane fade show" id="nav-data-gaji" role="tabpanel" aria-labelledby="nav-data-gaji">
-
+                <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
+                <!-- gunakan boolean isHR agar disabled -->
             </div>
 
             <div class="tab-pane fade show" id="nav-data-benefit" role="tabpanel" aria-labelledby="nav-data-benefit">
-
+                <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
+                <!-- gunakan boolean isHR agar disabled -->
             </div>
 
             <div class="tab-pane fade show" id="nav-data-kontrak" role="tabpanel" aria-labelledby="nav-data-kontrak">
-
+                <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
+                <!-- gunakan boolean isHR agar disabled -->
             </div>
         </div>
     </main>

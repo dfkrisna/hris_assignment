@@ -73,18 +73,20 @@ public class EmpIndexController {
         
         // check if user can edit
         UserWeb user = (UserWeb) auth.getPrincipal();
-        boolean canEdit = false;
+        boolean isEmployeeSelected = false;
+        boolean isHR = false;
         KaryawanBaruModel karyawan = karyawanService.getKaryawanByUsername(user.getUsername());
         if(karyawan != null && karyawan.getIdKaryawan() == idKaryawan){
-            canEdit = true;
+            isEmployeeSelected = true;
         }
         for (String role : user.getStrRoles()) {
             if(role.equals("ROLE_HR") || role.equals("ROLE_MANAJERDIVISI")){
-                canEdit = true;
+                isHR = true;                
             }
         }
 
-        model.addAttribute("disabled", !canEdit);
+        model.addAttribute("isEmployeeSelected", isEmployeeSelected);
+        model.addAttribute("isHR", isHR);
         model.addAttribute("karyawan", karyawanBaru);
         model.addAttribute("divisi", divisi);
         model.addAttribute("dataDiri", dataDiri);
