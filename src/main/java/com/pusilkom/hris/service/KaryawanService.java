@@ -4,11 +4,14 @@ import com.pusilkom.hris.model.FeedbackRatingModel;
 import com.pusilkom.hris.model.KaryawanBaruModel;
 import com.pusilkom.hris.model.KaryawanModel;
 import com.pusilkom.hris.model.KaryawanProyekModel;
+import com.pusilkom.hris.model.DataDiriModel;
 import org.apache.tomcat.jni.Local;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
+
+import javax.xml.crypto.Data;
 
 public interface KaryawanService {
 
@@ -64,4 +67,7 @@ public interface KaryawanService {
 	
 	KaryawanBaruModel getKaryawanByUsername(String username);
 
+	DataDiriModel getDataDiriByIdKaryawan(int idKaryawan);
+
+	void insertDataDiri(DataDiriModel dataDiri);
 }
