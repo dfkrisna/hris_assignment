@@ -4,6 +4,7 @@ import com.pusilkom.hris.model.DataDiriModel;
 import com.pusilkom.hris.model.FeedbackRatingModel;
 import com.pusilkom.hris.model.KaryawanBaruModel;
 import com.pusilkom.hris.model.KaryawanModel;
+import com.pusilkom.hris.model.RiwayatGajiModel;
 import org.apache.ibatis.annotations.*;
 
 import java.sql.Timestamp;
@@ -271,4 +272,19 @@ public interface KaryawanMapper {
     @Insert("INSERT INTO employee.\"DATA_DIRI\" (id_karyawan, tempat_lahir, tanggal_lahir, no_hp, alamat_tinggal, nomor_ktp, npwp) \n"
         + "VALUES (#{idKaryawan}, #{tempatLahir}, #{tanggalLahir}, #{noHp}, #{alamatTinggal}, #{nomorKtp}, #{npwp})")
     void insertDataDiri(DataDiriModel dataDiri);
+
+    @Select("SELECT * FROM employee.\"GAJI\" WHERE id_karyawan = #{idKaryawan} ORDER BY id DESC")
+    @Results(value ={
+            @Result(property = "id", column = "id"),
+            @Result(property = "idKaryawan", column = "id_karyawan"),
+            @Result(property = "tanggalAktif", column = "tanggal_aktif"),
+            @Result(property = "nilaiGaji", column = "nilai_gaji")
+    })
+    List<RiwayatGajiModel> selectAllRiwayatGajiById(int idKaryawan);
+
+    @Insert("INSERT INTO employee.\"GAJI\" (id_karyawan, nilai_gaji) VALUES (#{idKaryawan}, #{gaji})")
+    void insertGaji(@Param("idKaryawan") int idKaryawan, @Param("gaji") int gaji);
+
+    @Update("UPDATE employee.\"GAJI\" set nilai_gaji=#{gaji} where id=#{idGaji}")
+    void updateGajiById(@Param("idGaji") int idGaji, @Param("gaji") int gaji);
 }

@@ -169,4 +169,14 @@ $(document).ready(function() {
 
     $('[data-toggle="tooltip"]').tooltip();
 
+
+    $(".btn-update-gaji").on("click",function(){
+        var id = $(this).data('idgaji');
+        var idKaryawan = $(this).data("idkaryawan")
+        var gaji = $(this).data("gaji")
+        var action = "/employee/detail-karyawan/" + idKaryawan + "/update-gaji/" + id;
+        $("#input-gaji").attr("value", gaji)
+        $("#form-update-gaji").attr('action' , action);
+        $("#modal-update-gaji").modal();
+    });
 } );
