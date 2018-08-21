@@ -70,6 +70,8 @@ public class EmpIndexController {
             dataDiri = new DataDiriModel();
             dataDiri.setIdKaryawan(idKaryawan);
         }
+        
+        // check if user can edit
         UserWeb user = (UserWeb) auth.getPrincipal();
         boolean canEdit = false;
         KaryawanBaruModel karyawan = karyawanService.getKaryawanByUsername(user.getUsername());
@@ -94,6 +96,7 @@ public class EmpIndexController {
                                 @ModelAttribute("dataDiri") DataDiriModel dataDiri,
                                 @PathVariable("idKaryawan") int idKaryawan,
                                 @NotNull Authentication auth){
+        //check if user can edit
         UserWeb user = (UserWeb) auth.getPrincipal();
         boolean canEdit = false;
         KaryawanBaruModel karyawan = karyawanService.getKaryawanByUsername(user.getUsername());
