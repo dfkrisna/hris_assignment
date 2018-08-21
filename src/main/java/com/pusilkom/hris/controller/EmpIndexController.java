@@ -62,8 +62,7 @@ public class EmpIndexController {
      * Method ini untuk melihat detail karyawan
      */
     @GetMapping("/employee/detail-karyawan/{idKaryawan}")
-    @PreAuthorize("hasAnyAuthority('GET_HR','GET_MNGDIVISI')")
-    public String detailKaryawan(Model model, @PathVariable("idKaryawan") int idKaryawan){
+    public String detailKaryawan(Model model, @PathVariable("idKaryawan") int idKaryawan, @NotNull Authentication auth){
         KaryawanBaruModel karyawanBaru = karyawanService.getKaryawanBaruById(idKaryawan);
         DivisibaruModel divisi = divisiService.selectDivisiBaruByID(karyawanBaru.getIdDivisi());
         DataDiriModel dataDiri = karyawanService.getDataDiriByIdKaryawan(karyawanBaru.getIdKaryawan());
@@ -71,6 +70,21 @@ public class EmpIndexController {
             dataDiri = new DataDiriModel();
             dataDiri.setIdKaryawan(idKaryawan);
         }
+        
+        // check if user can edit
+        UserWeb user = (UserWeb) auth.getPrincipal();
+        boolean canEdit = false;
+        KaryawanBaruModel karyawan = karyawanService.getKaryawanByUsername(user.getUsername());
+        if(karyawan != null && karyawan.getIdKaryawan() == idKaryawan){
+            canEdit = true;
+        }
+        for (String role : user.getStrRoles()) {
+            if(role.equals("ROLE_HR") || role.equals("ROLE_MANAJERDIVISI")){
+                canEdit = true;
+            }
+        }
+
+        model.addAttribute("disabled", !canEdit);
         model.addAttribute("karyawan", karyawanBaru);
         model.addAttribute("divisi", divisi);
         model.addAttribute("dataDiri", dataDiri);
@@ -80,8 +94,25 @@ public class EmpIndexController {
     @PostMapping("/employee/detail-karyawan/{idKaryawan}/insert-data-diri")
     public String updateKaryawan(Model model, 
                                 @ModelAttribute("dataDiri") DataDiriModel dataDiri,
-                                @PathVariable("idKaryawan") int idKaryawan){
-        karyawanService.insertDataDiri(dataDiri);
+                                @PathVariable("idKaryawan") int idKaryawan,
+                                @NotNull Authentication auth){
+        //check if user can edit
+        UserWeb user = (UserWeb) auth.getPrincipal();
+        boolean canEdit = false;
+        KaryawanBaruModel karyawan = karyawanService.getKaryawanByUsername(user.getUsername());
+        if(karyawan != null && karyawan.getIdKaryawan() == idKaryawan){
+            canEdit = true;
+        }
+        for (String role : user.getStrRoles()) {
+            if(role.equals("ROLE_HR") || role.equals("ROLE_MANAJERDIVISI")){
+                canEdit = true;
+            }
+        }
+
+        if(canEdit){
+            karyawanService.insertDataDiri(dataDiri);
+        }
+        System.out.println(canEdit);
         return "redirect:/employee/detail-karyawan/"+idKaryawan;
     }
 
