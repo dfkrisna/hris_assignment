@@ -1,5 +1,6 @@
 package com.pusilkom.hris.dao;
 
+import com.pusilkom.hris.model.DataDiriModel;
 import com.pusilkom.hris.model.FeedbackRatingModel;
 import com.pusilkom.hris.model.KaryawanBaruModel;
 import com.pusilkom.hris.model.KaryawanModel;
@@ -253,4 +254,17 @@ public interface KaryawanMapper {
     })
     KaryawanBaruModel selectKaryawanByUsername(@Param("email") String username);
 
+
+    @Select("SELECT * FROM employee.\"DATA_DIRI\" WHERE id_karyawan=#{idKaryawan} ORDER BY id DESC LIMIT 1")
+    @Results(value = {
+            @Result(property= "id", column = "id"),
+            @Result(property= "idKaryawan", column = "id_karyawan"),
+            @Result(property= "tempatLahir", column = "tempat_lahir"),
+            @Result(property= "tanggalLahir", column = "tanggal_lahir"),
+            @Result(property= "noHp", column = "no_hp"),
+            @Result(property= "alamatTinggal", column = "alamat_tinggal"),
+            @Result(property= "nomorKtp", column =  "nomor_ktp"),
+            @Result(property= "npwp", column = "npwp")
+    })
+    DataDiriModel getDataDiriByIdKaryawan(int idKaryawan);
 }

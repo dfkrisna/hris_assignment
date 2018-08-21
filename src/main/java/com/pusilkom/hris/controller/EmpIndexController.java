@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotNull;
+import javax.xml.crypto.Data;
+
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.Month;
@@ -64,9 +66,10 @@ public class EmpIndexController {
     public String detailKaryawan(Model model, @PathVariable("idKaryawan") int idKaryawan){
         KaryawanBaruModel karyawanBaru = karyawanService.getKaryawanBaruById(idKaryawan);
         DivisibaruModel divisi = divisiService.selectDivisiBaruByID(karyawanBaru.getIdDivisi());
-
+        DataDiriModel dataDiri = karyawanService.getDataDiriByIdKaryawan(karyawanBaru.getIdKaryawan());
         model.addAttribute("karyawan", karyawanBaru);
         model.addAttribute("divisi", divisi);
+        model.addAttribute("dataDiri", dataDiri);
         return "detail-karyawan";
     }
 
