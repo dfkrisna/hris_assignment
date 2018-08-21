@@ -55,7 +55,7 @@ public class AbsenController {
         model.addAttribute("absens", absens);
         model.addAttribute("mapDurasi", mapDurasi);
 
-        return "rekap-absen";
+        return "riwayat-absen";
     }
 
     @GetMapping("/employee/absen/checkin")

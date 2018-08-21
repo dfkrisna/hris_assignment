@@ -5,6 +5,7 @@ import com.pusilkom.hris.model.KaryawanBaruModel;
 import com.pusilkom.hris.model.KaryawanModel;
 import org.apache.ibatis.annotations.*;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -45,4 +46,29 @@ public interface AbsenMapper {
             @Result(property = "detail", column = "detail")
     })
     List<AbsenModel> selectAbsenKaryawan(KaryawanBaruModel karyawan);
+
+    @Select("select id, id_karyawan, time_check_in, time_check_out, detail from " +
+            "employee.\"ABSEN\" " +
+            "ORDER by time_check_in DESC")
+    @Results(value = {
+            @Result(property = "id", column = "id"),
+            @Result(property = "idKaryawan", column = "id_karyawan"),
+            @Result(property = "checkInTime", column = "time_check_in"),
+            @Result(property = "checkOutTime", column = "time_check_out"),
+            @Result(property = "detail", column = "detail")
+    })
+    List<AbsenModel> selectAllAbsen();
+
+    @Select("select id, id_karyawan, time_check_in, time_check_out, detail from " +
+            "employee.\"ABSEN\" where time_check_in between '${tanggalAwal}'::timestamp " +
+            "and '${tanggalAkhir}'::timestamp " +
+            "ORDER by time_check_in DESC")
+    @Results(value = {
+            @Result(property = "id", column = "id"),
+            @Result(property = "idKaryawan", column = "id_karyawan"),
+            @Result(property = "checkInTime", column = "time_check_in"),
+            @Result(property = "checkOutTime", column = "time_check_out"),
+            @Result(property = "detail", column = "detail")
+    })
+    List<AbsenModel> selectAbsenByPeriode(@Param("tanggalAwal") Timestamp tanggalAwal, @Param("tanggalAkhir") Timestamp tanggalAkhir);
 }
