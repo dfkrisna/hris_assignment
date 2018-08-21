@@ -24,4 +24,10 @@ public interface KaryawanCutiService {
 	void tolak(int idKaryawanCuti);
 
 	void cancelTolak(int idKaryawanCuti);
+
+    void submitCutiKaryawan(KaryawanCutiModel kc);
+
+	KaryawanCutiModel getCutiById(Integer id);
+
+	void updateCuti(KaryawanCutiModel cutiBaru);
 }

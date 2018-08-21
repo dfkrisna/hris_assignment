@@ -65,4 +65,20 @@ public class KaryawanCutiServiceImpl implements KaryawanCutiService{
 	public void cancelTolak(int idKaryawanCuti){
 		karyawanCutiMapper.cancelTolak(idKaryawanCuti);
 	}
+
+	@Override
+	public void submitCutiKaryawan(KaryawanCutiModel kc) {
+		karyawanCutiMapper.insertCutiKaryawan(kc);
+	}
+
+	@Override
+	public KaryawanCutiModel getCutiById(Integer id) {
+		KaryawanCutiModel cuti = karyawanCutiMapper.getKaryawanCutiById(id);
+		return cuti;
+	}
+
+	@Override
+	public void updateCuti(KaryawanCutiModel cutiBaru) {
+		karyawanCutiMapper.update(cutiBaru);
+	}
 }
