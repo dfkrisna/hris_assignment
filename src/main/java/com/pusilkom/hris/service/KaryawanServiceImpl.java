@@ -200,4 +200,8 @@ public class KaryawanServiceImpl implements KaryawanService{
 		return karyawanMapper.getDataDiriByIdKaryawan(idKaryawan);
 	}
 
+	@Override
+	public void insertDataDiri(DataDiriModel dataDiri){
+		karyawanMapper.insertDataDiri(dataDiri);
+	}
 }

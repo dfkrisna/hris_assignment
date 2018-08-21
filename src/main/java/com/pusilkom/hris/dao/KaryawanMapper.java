@@ -267,4 +267,8 @@ public interface KaryawanMapper {
             @Result(property= "npwp", column = "npwp")
     })
     DataDiriModel getDataDiriByIdKaryawan(int idKaryawan);
+
+    @Insert("INSERT INTO employee.\"DATA_DIRI\" (id_karyawan, tempat_lahir, tanggal_lahir, no_hp, alamat_tinggal, nomor_ktp, npwp) \n"
+        + "VALUES (#{idKaryawan}, #{tempatLahir}, #{tanggalLahir}, #{noHp}, #{alamatTinggal}, #{nomorKtp}, #{npwp})")
+    void insertDataDiri(DataDiriModel dataDiri);
 }

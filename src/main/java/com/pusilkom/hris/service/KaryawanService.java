@@ -11,6 +11,8 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.xml.crypto.Data;
+
 public interface KaryawanService {
 
 	String cekPenugasanKaryawanById(int idKaryawan);
@@ -66,4 +68,6 @@ public interface KaryawanService {
 	KaryawanBaruModel getKaryawanByUsername(String username);
 
 	DataDiriModel getDataDiriByIdKaryawan(int idKaryawan);
+
+	void insertDataDiri(DataDiriModel dataDiri);
 }
