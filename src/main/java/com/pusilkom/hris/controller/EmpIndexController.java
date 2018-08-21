@@ -83,6 +83,7 @@ public class EmpIndexController {
         }
 
         model.addAttribute("disabled", !canEdit);
+        model.addAttribute("canEdit", canEdit);
         model.addAttribute("karyawan", karyawanBaru);
         model.addAttribute("divisi", divisi);
         model.addAttribute("dataDiri", dataDiri);
