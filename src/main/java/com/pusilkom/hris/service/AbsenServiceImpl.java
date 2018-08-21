@@ -162,4 +162,16 @@ public class AbsenServiceImpl implements AbsenService{
 
         return map;
     }
+
+    @Override
+    public List<AbsenModel> getAbsenKaryawanByPeriode(KaryawanBaruModel karyawan, LocalDate periode) {
+        Timestamp tanggalAwal = Timestamp.valueOf(periode.atStartOfDay());
+        Timestamp tanggalAkhir = Timestamp.valueOf(periode.plusMonths(1).minusDays(1).atTime(23, 59, 59));
+        List<AbsenModel> absens = absenMapper.selectAbsenKaryawanByPeriode(karyawan.getIdKaryawan(), tanggalAwal, tanggalAkhir);
+        for(AbsenModel absen: absens) {
+            absen.setCheckInTime(modifyTime(absen.getCheckInTime()));
+            absen.setCheckOutTime(modifyTime(absen.getCheckOutTime()));
+        }
+        return absens;
+    }
 }

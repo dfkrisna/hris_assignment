@@ -71,7 +71,7 @@ public class HRController {
     @GetMapping("/employee/hr/rekap-absen")
     public String showRiwayatAbsen(Model model,
                                    @RequestParam(value = "periode", required = false) String periode,
-                                   @RequestParam(value = "idKaryawan", required = false) Integer idKaryawan) {
+                                   @ModelAttribute("idKaryawan") String idKaryawan) {
 
         LocalDate periodeNow = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1);
 
@@ -97,12 +97,15 @@ public class HRController {
         model.addAttribute("invalidMonth", next);
 
         List<AbsenModel> absens = null;
+        int idKar = 0;
+        if(idKaryawan.length() != 0) {
+            idKar = Integer.parseInt(idKaryawan);
+        }
+        if(idKar != 0) {
+            KaryawanBaruModel karyawan = karyawanService.getKaryawanBaruById(idKar);
+            absens = absenService.getAbsenKaryawanByPeriode(karyawan, periodeDate);
 
-        if(idKaryawan != null) {
-            KaryawanBaruModel k = karyawanService.getKaryawanBaruById(idKaryawan);
-            absens = absenService.getAbsenKaryawan(k);
-
-            model.addAttribute("karyawan", k);
+            model.addAttribute("karyawan", karyawan);
             model.addAttribute("absens", absens);
         } else {
             absens = absenService.getAbsenByPeriode(periodeDate);
@@ -120,5 +123,12 @@ public class HRController {
         model.addAttribute("karyawans", karyawans);
 
         return "hr-rekap-absen";
+    }
+
+    @PostMapping("/employee/hr/select-karyawan")
+    public String passValue(RedirectAttributes ra,
+                            @RequestParam("idKaryawan") String idKaryawan) {
+        ra.addFlashAttribute("idKaryawan", idKaryawan);
+        return "redirect:/employee/hr/rekap-absen";
     }
 }

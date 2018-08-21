@@ -26,18 +26,21 @@
             <label class="montserrat-med-bold">Nama Pegawai</label>
             <div class="form-row mb-5">
                 <div class="col">
-                    <select class="custom-select custom-select-md mb-3">
-                        <option value="view-all">Lihat Semua Absen</option>
+                    <select class="custom-select custom-select-md mb-3" name="idKaryawan">
+                        <option value="0">Lihat Semua Absen</option>
                         <div th:each="karyawan,iterationStatus: ${karyawans}">
                             <option th:value="${karyawan.idKaryawan}" th:text="${karyawan.namaLengkap}"></option>
                         </div>
                     </select>
                 </div>
                 <div class="col">
-                    <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" name="action" value="save">Pilih Karyawan</button>
+                    <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" name="action">Pilih Karyawan</button>
                 </div>
             </div>
         </form>
+    </div>
+    <div th:if="${karyawan!=null}">
+        <h2 class="montserrat-bold-big" th:text="${karyawan.getNamaLengkap()}"></h2>
     </div>
     <hr/>
     <br/>
