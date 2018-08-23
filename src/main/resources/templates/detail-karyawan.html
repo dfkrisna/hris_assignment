@@ -140,7 +140,15 @@
                     + Ubah Gaji
                 </button>
                 <h2 class="text-center montserrat-bold-big">List Riwayat Gaji</h2>
-                <div th:if="${isEmployeeSelected || isHR}">
+                <hr/>
+                <div th:if="${listRiwayatGaji.isEmpty()}" class="row">
+                    <div class="col text-center">
+                        <h3 class="d-inline text-sub text-center mr-2 montserrat-bold-big">Karyawan tidak memiliki</h3>
+                        <h3 class="d-inline text-value text-center montserrat-bold-big">riwayat gaji</h3>
+                        <h3 class="d-inline text-sub text-center ml-2 montserrat-bold-big">pada sistem</h3>
+                    </div>
+                </div>
+                <div th:if="${(isEmployeeSelected || isHR) && !listRiwayatGaji.isEmpty()}">
                     <table class="table table-hover">
                         <thead class="tabel-header">
                             <tr>
