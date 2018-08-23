@@ -255,4 +255,9 @@ public class KaryawanServiceImpl implements KaryawanService{
 			karyawanMapper.insertKontakDarurat(kontak);
 		}
 	}
+
+	@Override
+	public void updateKontakDarurat(KontakDaruratModel kontak) {
+		karyawanMapper.updateKontakDarurat(kontak);
+	}
 }

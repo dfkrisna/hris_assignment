@@ -91,4 +91,6 @@ public interface KaryawanService {
     List<KontakDaruratModel> getKontakDaruratKaryawan(int idKaryawan);
 
 	void addKontakDarurat(KontakDaruratModel kontak);
+
+	void updateKontakDarurat(KontakDaruratModel kontak);
 }

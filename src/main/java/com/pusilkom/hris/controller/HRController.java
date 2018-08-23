@@ -138,21 +138,37 @@ public class HRController {
 
     @PostMapping("/employee/tambah-kontak")
     public String tambahKontak(RedirectAttributes ra,
-                               @NotNull Authentication auth,
+                               @RequestParam(value = "idKar") Integer idKar,
                                @RequestParam(value = "namaKontak") String namaKontak,
                                @RequestParam(value = "hubungan") String hubungan,
                                @RequestParam(value = "nomorTelepon") String nomorTelepon) {
-        UserWeb user = (UserWeb) auth.getPrincipal();
-        KaryawanBaruModel karyawan = karyawanService.getKaryawanByUsername(user.getUsername());
-
         KontakDaruratModel kontak = new KontakDaruratModel();
-        kontak.setIdKaryawan(karyawan.getIdKaryawan());
+        kontak.setIdKaryawan(idKar);
         kontak.setNama(namaKontak);
         kontak.setHubungan(hubungan);
         kontak.setKontak(nomorTelepon);
 
         karyawanService.addKontakDarurat(kontak);
 
-        return "redirect:/employee/detail-karyawan/" + karyawan.getIdKaryawan();
+        return "redirect:/employee/detail-karyawan/" + idKar;
+    }
+
+    @PostMapping("/employee/ubah-kontak-darurat")
+    public String ubahKontak(RedirectAttributes ra,
+                             @RequestParam(value = "idKontak") Integer idKontak,
+                             @RequestParam(value = "idKaryawan") Integer idKar,
+                             @RequestParam(value = "namaKontak") String namaKontak,
+                             @RequestParam(value = "hubunganKontak") String hubungan,
+                             @RequestParam(value = "nomorTelepon") String nomorTelepon) {
+        KontakDaruratModel kontak = new KontakDaruratModel();
+        kontak.setId(idKontak);
+        kontak.setIdKaryawan(idKar);
+        kontak.setNama(namaKontak);
+        kontak.setHubungan(hubungan);
+        kontak.setKontak(nomorTelepon);
+
+        karyawanService.updateKontakDarurat(kontak);
+
+        return "redirect:/employee/detail-karyawan/" + idKar;
     }
 }

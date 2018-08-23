@@ -234,4 +234,25 @@ $(document).ready(function() {
         $("#form-update-status").attr('action' , action);
         $("#modal-update-status").modal();
     });
+
+    $(".ubah-kontak-darurat").on("click",function () {
+        event.preventDefault();
+
+        // get data from item penilaian mandiri
+        var nama = $(this).data('nama-kontak');
+        var hubungan = $(this).data('hubungan-kontak');
+        var nomorTlp = $(this).data('nomor-tlp');
+        var idKaryawan = $(this).data('id-karyawan');
+        var idKontak = $(this).data('id');
+
+        // fill form value and action
+        $("#nama-kontak-darurat").attr('value', nama);
+        $("#hubungan-kontak").attr('value', hubungan);
+        $("#nomor-tlp").attr('value', nomorTlp);
+        $("#id-kar").attr('value', idKaryawan);
+        $("#id-kontak").attr('value', idKontak);
+
+        // pop-up modal
+        $("#ubahKontakDaruratModal").modal();
+    });
 } );

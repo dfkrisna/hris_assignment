@@ -151,6 +151,13 @@
                             <td class="text-center montserrat-small" th:text="${data.nama}"></td>
                             <td class="text-center montserrat-small" th:text="${data.hubungan}"></td>
                             <td class="text-center montserrat-small" th:text="${data.kontak}"></td>
+                            <td class="text-center montserrat-small">
+                                <button type="button" data-toggle="modal" data-target="#ubahKontakModal"
+                                        th:attr="data-nama-kontak=${data.nama}, data-hubungan-kontak=${data.hubungan},
+                                        data-nomor-tlp=${data.kontak}, data-id-karyawan=${data.idKaryawan}, data-id=${data.id}"
+                                        class="ubah-kontak-darurat pusil-btn btn btn-primary btn-rounded montserrat-small">Ubah</button>
+                                <button type="button" class="montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded">Hapus</button>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -336,6 +343,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <input type="hidden" th:value="${karyawan.idKaryawan}" name="idKar"/>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded"
@@ -492,5 +500,44 @@
     </div>
 </div>
 
+<div class="modal fade" id="ubahKontakDaruratModal" tabindex="-1" role="dialog" aria-labelledby="ubahKontakDaruratModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title montserrat-med-bold" id="ubahKontakDaruratModalLabel">Ubah Kontak Darurat</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/employee/ubah-kontak-darurat" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="nama-kontak-darurat" class="col-form-label montserrat-small">Nama</label>
+                        <input id="nama-kontak-darurat" class="form-control" name="namaKontak" required/>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label for="hubungan-kontak" class="col-form-label montserrat-small">Hubungan</label>
+                                <input class="form-control" id="hubungan-kontak" name="hubunganKontak" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label for="nomor-tlp" class="col-form-label montserrat-small">Nomor Telepon</label>
+                                <input class="form-control" id="nomor-tlp" name="nomorTelepon" required />
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="id-kar" name="idKaryawan">
+                    <input type="hidden" id="id-kontak" name="idKontak">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded"
+                            data-dismiss="modal">Batal</button>
+                    <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Ubah Kontak</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 </html>

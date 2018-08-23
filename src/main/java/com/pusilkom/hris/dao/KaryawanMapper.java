@@ -332,4 +332,8 @@ public interface KaryawanMapper {
     @Insert("INSERT INTO employee.\"DATA_DARURAT\" (id_karyawan, nama, hubungan, nomor_telepon, timestamp) \n"
             + "VALUES (#{idKaryawan}, #{nama}, #{hubungan}, #{kontak}, now())")
     void insertKontakDarurat(KontakDaruratModel kontak);
+
+    @Update("update employee.\"DATA_DARURAT\" set nama=#{nama}, hubungan=#{hubungan}, nomor_telepon=#{kontak} " +
+            "where id=#{id} and id_karyawan=#{idKaryawan}")
+    void updateKontakDarurat(KontakDaruratModel kontak);
 }
