@@ -6,8 +6,9 @@
 <head th:replace="fragments/fragment :: header-title"></head>
 
 <body>
-    <div th:replace="fragments/fragment :: navbar"></div>
-    <div th:replace="fragments/fragment :: sidebar"></div>
+<div th:replace="fragments/fragment :: navbar-employee"></div>
+<div th:replace="fragments/fragment :: sidebar-employee"></div>
+<div th:replace="fragments/fragment :: absen-modals"></div>
 
     <main id="content-isi" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 pb-3">
         <div class="d-flex flex-row mb-5">
@@ -367,6 +368,9 @@
         </div>
 
     </main>
+
+    <div th:replace="fragments/fragment :: footer"></div>
+
     <div class="modal fade" id="modal-tambah-gaji">
         <div class="modal-dialog">
             <div class="modal-content">
