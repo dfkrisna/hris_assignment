@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+    crossorigin="anonymous">
 
 <head th:replace="fragments/fragment :: header-title"></head>
 
 <body>
-    <div th:replace="fragments/fragment :: navbar"></div>
-    <div th:replace="fragments/fragment :: sidebar"></div>
+<div th:replace="fragments/fragment :: navbar-employee"></div>
+<div th:replace="fragments/fragment :: sidebar-employee"></div>
+<div th:replace="fragments/fragment :: absen-modals"></div>
 
     <main id="content-isi" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 pb-3">
         <div class="d-flex flex-row mb-5">
@@ -14,6 +16,11 @@
         </div>
         <h1 th:text="${karyawan.getNamaLengkap()} + ' (' + ${karyawan.getNamaPanggilan()} + ')'">Nama Lengkap Karyawan (Nama Penggilan)</h1>
         <h3 th:text="${karyawan.getNip()}">NIP</h3>
+        <button th:if="${karyawan.isActive()}" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded toogle-status-karyawan"
+            data-status="aktif" th:attr="data-idKaryawan=${karyawan.getIdKaryawan()}" th:disabled="${!isHR}">Aktif</button>
+        <button th:if="${!karyawan.isActive()}" class="montserrat-small btn btn-dark text-white btn-rounded toogle-status-karyawan"
+            data-status="nonaktif" th:attr="data-idKaryawan=${karyawan.getIdKaryawan()}" th:disabled="${!isHR}">Tidak Aktif</button>
+        <br/>
         <br/>
         <div class="row">
             <div class="col-6 row">
@@ -199,16 +206,60 @@
                 </div>
             </div>
 
-            <div class="tab-pane fade show" id="nav-data-benefit" role="tabpanel" aria-labelledby="nav-data-darurat">
+            <div class="tab-pane fade show" id="nav-data-darurat" role="tabpanel" aria-labelledby="nav-data-darurat">
                 <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
                 <!-- gunakan th:if="${isEmployeeSelected || isHR}" untuk menampilkan -->
-
+                <!-- gunakan boolean isHR agar disabled -->
+                <div th:unless="${!isEmployeeSelected && !isHR}">
+                    <div class="row">
+                        <div class="col-3">
+                            <h2 class="montserrat-bold-big">Daftar Kontak Darurat</h2>
+                        </div>
+                        <div class="col-6"></div>
+                        <div class="col">
+                            <button type="button" data-toggle="modal" data-target="#tambahKontakModal" class="pusil-btn btn btn-primary btn-rounded montserrat-small">+ Tambah Kontak</button>
+                        </div>
+                    </div>
+                    <hr/>
+                    <table th:if="${darurats != null && !darurats.isEmpty()}" id="list-darurat" class="table-mpp table table-hover">
+                        <thead class="tabel-header">
+                            <tr>
+                                <th class="montserrat-small-bold text-center">Nama</th>
+                                <th class="montserrat-small-bold text-center">Hubungan</th>
+                                <th class="montserrat-small-bold text-center">Nomor Telepon</th>
+                                <th class="montserrat-small-bold text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="data,iterationStatus: ${darurats}">
+                                <td class="text-center montserrat-small" th:text="${data.nama}"></td>
+                                <td class="text-center montserrat-small" th:text="${data.hubungan}"></td>
+                                <td class="text-center montserrat-small" th:text="${data.kontak}"></td>
+                                <td class="text-center montserrat-small">
+                                    <button type="button" data-toggle="modal" data-target="#ubahKontakModal" th:attr="data-nama-kontak=${data.nama}, data-hubungan-kontak=${data.hubungan},
+                                        data-nomor-tlp=${data.kontak}, data-id-karyawan=${data.idKaryawan}, data-id=${data.id}"
+                                        class="ubah-kontak-darurat pusil-btn btn btn-primary btn-rounded montserrat-small">Ubah</button>
+                                    <button type="button" data-toggle="modal" data-target="#konfirmHapusDaruratModal" th:attr="data-id=${data.id}, data-id-kar=${data.idKaryawan}"
+                                        class="hapus-kontak-darurat montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded">Hapus</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div th:unless="${darurats != null && !darurats.isEmpty()}" class="row">
+                        <div class="col text-center">
+                            <h3 class="d-inline text-sub text-center mr-2 montserrat-bold-big">Karyawan tidak memiliki</h3>
+                            <h3 class="d-inline text-value text-center montserrat-bold-big">kontak darurat</h3>
+                            <h3 class="d-inline text-sub text-center ml-2 montserrat-bold-big">pada sistem</h3>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="tab-pane fade show" id="nav-data-keluarga" role="tabpanel" aria-labelledby="nav-data-keluarga">
                 <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
                 <!-- gunakan th:if="${isEmployeeSelected || isHR}" untuk menampilkan -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah-keluarga"><i class="fas fa-plus" style="font-size: 15px;"></i> Tambah Anggota Keluarga
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah-keluarga">
+                    <i class="fas fa-plus" style="font-size: 15px;"></i> Tambah Anggota Keluarga
                 </button>
 
                 <h2 class="text-center montserrat-bold-big">List Anggota Keluarga</h2>
@@ -234,7 +285,7 @@
                             <td class="montserrat-small text-center" th:text="${keluarga.tanggalLahir}" ></td>
                             <td class="text-center" >
                                 <a data-toggle="modal" data-target="#modal-ubah-anggota-keluarga" data-title="Ubah Anggota Keluarga"
-                                   th:attr="data-id=${keluarga.id},data-idKaryawan=${keluarga.idKaryawan},data-hubungan=${keluarga.hubungan},data-nama=${keluarga.nama}, data-nik=${keluarga.nik}, data-tanggalLahir=${keluarga.tanggalLahir}
+                                   th:attr="data-id=${keluarga.id},data-idKaryawan=${keluarga.idKaryawan},data-hubungankeluarga=${keluarga.hubungan},data-nama=${keluarga.nama}, data-nik=${keluarga.nik}, data-tanggalLahir=${keluarga.tanggalLahir}
                                     " th:title="Ubah" class="btn-ubah-anggota-keluarga montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Ubah</a>
 
                                 <a data-toggle="modal" data-target="#modal-hapus-keluarga" th:attr="data-id=${keluarga.id},data-idKaryawan=${keluarga.idKaryawan}" data-placement="bottom" th:title="Hapus"  class="montserrat-small btn btn-dark text-white btn-rounded btn-hapus-keluarga">Hapus</a>
@@ -256,24 +307,24 @@
                         </div>
 
                         <!-- Modal body -->
-                        <form  th:action="'/employee/detail-karyawan/' + ${karyawan.getIdKaryawan()}  + '/insert-keluarga'"  method="POST">
+                        <form th:action="'/employee/detail-karyawan/' + ${karyawan.getIdKaryawan()}  + '/insert-keluarga'" method="POST">
                             <div class="form-body">
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label class="col-form-label">Hubungan :</label>
-                                        <input type="text" class="form-control"  name="hubungan" required />
+                                        <input type="text" class="form-control" name="hubungan" required />
                                     </div>
                                     <div class="form-group">
-                                        <label  class="col-form-label">Nama :</label>
-                                        <input type="text" class="form-control"  name="nama"   required />
+                                        <label class="col-form-label">Nama :</label>
+                                        <input type="text" class="form-control" name="nama" required />
                                     </div>
                                     <div class="form-group">
-                                        <label  class="col-form-label">NIK :</label>
-                                        <input type="number" class="form-control"  name="nik"  required />
+                                        <label class="col-form-label">NIK :</label>
+                                        <input type="text" class="form-control" name="nik" required />
                                     </div>
                                     <div class="form-group">
-                                        <label  class="col-form-label">Tanggal Lahir :</label>
-                                        <input type="date" class="form-control"  name="tanggalLahir"  required />
+                                        <label class="col-form-label">Tanggal Lahir :</label>
+                                        <input type="date" class="form-control" name="tanggalLahir" required />
                                     </div>
                                 </div>
                             </div>
@@ -289,39 +340,57 @@
 
             <div class="tab-pane fade show" id="nav-data-gaji" role="tabpanel" aria-labelledby="nav-data-gaji">
                 <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
-                <button th:if="${isHR}" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah-gaji">
-                    + Ubah Gaji
-                </button>
-                <h2 class="text-center montserrat-bold-big">List Riwayat Gaji</h2>
+
                 <div th:if="${isEmployeeSelected || isHR}">
-                    <table class="table table-hover">
-                        <thead class="tabel-header">
-                        <tr>
-                            <th class="montserrat-small-bold text-center" scope="col">No.</th>
-                            <th class="montserrat-small-bold text-center" scope="col">Tanggal Aktif</th>
-                            <th class="montserrat-small-bold text-center" scope="col">Nilai Gaji</th>
-                            <th th:if="${isHR}" class="montserrat-small-bold text-center" scope="col">Action</th>
-                        </tr>
-                        </thead>
-                        <!-- th:each="karyawanCuti, iterationStatus: ${listOfKaryawanCuti}" -->
-                        <div th:each="riwayatGaji, iterationStatus: ${listRiwayatGaji}">
-                            <tr>
-                                <td class="text-center">
-                                    <p class="d-inline montserrat-small text-muted" th:text="${iterationStatus.count}">No</p>
-                                </td>
-                                <td class="text-center">
-                                    <p class="d-inline montserrat-small text-muted" th:text="${riwayatGaji.tanggalAktif}">Tanggal Aktif</p>
-                                </td>
-                                <td class="text-center">
-                                    <p class="d-inline montserrat-small text-muted" th:text="${riwayatGaji.nilaiGaji}">Nilai Gaji</p>
-                                </td>
-                                <td class="text-center" th:if="${isHR}">
-                                    <button class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded btn-update-gaji" th:attr="data-idGaji=${riwayatGaji.id},data-idKaryawan=${karyawan.getIdKaryawan()}, data-gaji=${riwayatGaji.nilaiGaji}">Ubah</button>
-                                    <button class="montserrat-small btn btn-dark text-white btn-rounded btn-delete-gaji" th:attr="data-idGaji=${riwayatGaji.id},data-idKaryawan=${karyawan.getIdKaryawan()}">Delete</button>
-                                </td>
-                            </tr>
+                    <div class="row">
+                        <div class="col-3">
+                            <h2 class="text-center montserrat-bold-big">List Riwayat Gaji</h2>
                         </div>
-                    </table>
+                        <div class="col-6"></div>
+                        <button th:if="${isHR}" type="button" class="pusil-btn btn btn-primary btn-rounded montserrat-small" data-toggle="modal"
+                            data-target="#modal-tambah-gaji">
+                            + Ubah Gaji
+                        </button>
+                    </div>
+
+                    <hr/>
+                    <div th:if="${listRiwayatGaji.isEmpty()}" class="row">
+                        <div class="col text-center">
+                            <h3 class="d-inline text-sub text-center mr-2 montserrat-bold-big">Karyawan tidak memiliki</h3>
+                            <h3 class="d-inline text-value text-center montserrat-bold-big">riwayat gaji</h3>
+                            <h3 class="d-inline text-sub text-center ml-2 montserrat-bold-big">pada sistem</h3>
+                        </div>
+                    </div>
+                    <div th:if="${!listRiwayatGaji.isEmpty()}">
+                        <table class="table table-hover">
+                            <thead class="tabel-header">
+                                <tr>
+                                    <th class="montserrat-small-bold text-center" scope="col">No.</th>
+                                    <th class="montserrat-small-bold text-center" scope="col">Tanggal Aktif</th>
+                                    <th class="montserrat-small-bold text-center" scope="col">Nilai Gaji</th>
+                                    <th th:if="${isHR}" class="montserrat-small-bold text-center" scope="col">Aksi</th>
+                                </tr>
+                            </thead>
+                            <!-- th:each="karyawanCuti, iterationStatus: ${listOfKaryawanCuti}" -->
+                            <div th:each="riwayatGaji, iterationStatus: ${listRiwayatGaji}">
+                                <tr>
+                                    <td class="text-center">
+                                        <p class="d-inline montserrat-small text-muted" th:text="${iterationStatus.count}">No</p>
+                                    </td>
+                                    <td class="text-center">
+                                        <p class="d-inline montserrat-small text-muted" th:text="${riwayatGaji.tanggalAktif}">Tanggal Aktif</p>
+                                    </td>
+                                    <td class="text-center">
+                                        <p class="d-inline montserrat-small text-muted" th:text="${riwayatGaji.nilaiGaji}">Nilai Gaji</p>
+                                    </td>
+                                    <td class="text-center" th:if="${isHR}">
+                                        <button class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded btn-update-gaji" th:attr="data-idGaji=${riwayatGaji.id},data-idKaryawan=${karyawan.getIdKaryawan()}, data-gaji=${riwayatGaji.nilaiGaji}">Ubah</button>
+                                        <button class="montserrat-small btn btn-dark text-white btn-rounded btn-delete-gaji" th:attr="data-idGaji=${riwayatGaji.id},data-idKaryawan=${karyawan.getIdKaryawan()}">Hapus</button>
+                                    </td>
+                                </tr>
+                            </div>
+                        </table>
+                    </div>
                 </div>
                 <!-- gunakan boolean isHR agar disabled -->
             </div>
@@ -340,7 +409,49 @@
                 <input type="text" name="" id="" th:disabled="${!isHR}">
             </div>
         </div>
+
+        <div class="modal fade" id="tambahKontakModal" tabindex="-1" role="dialog" aria-labelledby="tambahKontakModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title montserrat-med-bold" id="tambahKontakModalLabel">Tambah Kontak Darurat</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="/employee/tambah-kontak" method="post">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="namaKontak" class="col-form-label montserrat-small">Nama Kontak</label>
+                                <input id="namaKontak" class="form-control" name="namaKontak" required/>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <label for="hubungan" class="col-form-label montserrat-small">Hubungan</label>
+                                        <input class="form-control" id="hubungan" name="hubungan" required />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="nomorTelepon" class="col-form-label montserrat-small">Nomor Telepon</label>
+                                        <input class="form-control" id="nomorTelepon" name="nomorTelepon" required />
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" th:value="${karyawan.idKaryawan}" name="idKar" />
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded" data-dismiss="modal">Batal</button>
+                            <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Tambah</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </main>
+
+    <div th:replace="fragments/fragment :: footer"></div>
+
     <div class="modal fade" id="modal-tambah-gaji">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -400,7 +511,7 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Delete Gaji</h4>
+                    <h4 class="modal-title">Hapus Riwayat Gaji</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
@@ -412,7 +523,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Delete Gaji</button>
+                        <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Hapus Gaji</button>
                         <button type="button" class="montserrat-small btn btn-dark btn-rounded" data-dismiss="modal">Close</button>
                     </div>
                 </form>
@@ -420,7 +531,31 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modal-update-status">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Update Status</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <form id="form-update-status" method="GET">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <h5 id="text-konfirmasi-status"></h5>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" id="ubah-konfirmasi-status"></button>
+                        <button type="button" class="montserrat-small btn btn-dark btn-rounded" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" id="modal-ubah-pendidikan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -471,8 +606,8 @@
                 <form id="form-ubah-anggota-keluarga" method="POST">
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="hubungan" class="col-form-label">Hubungan :</label>
-                            <input type="text" class="form-control" id="hubungan" name="hubungan"/>
+                            <label for="hubungankeluarga" class="col-form-label">Hubungan :</label>
+                            <input type="text" class="form-control" id="hubungankeluarga" name="hubungan"/>
                         </div>
                         <div class="form-group">
                             <label for="nama" class="col-form-label">Nama :</label>
@@ -541,6 +676,75 @@
         </div>
     </div>
 
+
 </body>
+
+<div class="modal fade" id="ubahKontakDaruratModal" tabindex="-1" role="dialog" aria-labelledby="ubahKontakDaruratModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title montserrat-med-bold" id="ubahKontakDaruratModalLabel">Ubah Kontak Darurat</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/employee/ubah-kontak-darurat" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="nama-kontak-darurat" class="col-form-label montserrat-small">Nama</label>
+                        <input id="nama-kontak-darurat" class="form-control" name="namaKontak" required/>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label for="hubungan-kontak" class="col-form-label montserrat-small">Hubungan</label>
+                                <input class="form-control" id="hubungan-kontak" name="hubunganKontak" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label for="nomor-tlp" class="col-form-label montserrat-small">Nomor Telepon</label>
+                                <input class="form-control" id="nomor-tlp" name="nomorTelepon" required />
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="id-kar" name="idKaryawan">
+                    <input type="hidden" id="id-kontak" name="idKontak">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Ubah Kontak</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="konfirmHapusDaruratModal" tabindex="-1" role="dialog" aria-labelledby="konfirmHapusDaruratModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="konfirmHapusDaruratModalLabel">Konfirmasi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="montserrat-small">
+                    Apakah anda yakin ingin menghapus data kontak darurat?
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded" data-dismiss="modal">Batal</button>
+                <form action="/employee/hapus-kontak-darurat" method="post">
+                    <input type="hidden" id="idkontak" name="idKontak">
+                    <input type="hidden" id="idkar" name="idKaryawan">
+                    <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Hapus Kontak</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 </html>

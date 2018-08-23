@@ -2,14 +2,9 @@ package com.pusilkom.hris.service;
 
 import com.pusilkom.hris.dao.KaryawanMapper;
 
-import com.pusilkom.hris.model.FeedbackRatingModel;
-import com.pusilkom.hris.model.KaryawanBaruModel;
-import com.pusilkom.hris.model.KaryawanModel;
-import com.pusilkom.hris.model.KaryawanProyekModel;
-import com.pusilkom.hris.model.DataDiriModel;
-import com.pusilkom.hris.model.RiwayatGajiModel;
-import com.pusilkom.hris.model.KeluargaModel;
-import com.pusilkom.hris.model.PendidikanModel;
+
+import com.pusilkom.hris.model.*;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -251,5 +246,37 @@ public class KaryawanServiceImpl implements KaryawanService{
 
 	@Override
 	public void updatePendidikan (PendidikanModel pendidikan){karyawanMapper.updatePendidikan(pendidikan);}
+
+	public void activateKaryawan(int idKaryawan){
+		karyawanMapper.activateKaryawan(idKaryawan);
+	}
+
+	@Override
+	public void deActivateKaryawan(int idKaryawan){
+		karyawanMapper.deActivateKaryawan(idKaryawan);
+	}
+
+	@Override
+	public List<KontakDaruratModel> getKontakDaruratKaryawan(int idKaryawan) {
+		return karyawanMapper.selectKontakDaruratKaryawan(idKaryawan);
+	}
+
+	@Override
+	public void addKontakDarurat(KontakDaruratModel kontak) {
+		KaryawanBaruModel k = karyawanMapper.getKaryawanBaruById(kontak.getIdKaryawan());
+		if(k != null) {
+			karyawanMapper.insertKontakDarurat(kontak);
+		}
+	}
+
+	@Override
+	public void updateKontakDarurat(KontakDaruratModel kontak) {
+		karyawanMapper.updateKontakDarurat(kontak);
+	}
+
+	@Override
+	public void deleteKontakDaruratById(Integer idKontak) {
+		karyawanMapper.deleteKontakDaruratById(idKontak);
+	}
 }
 

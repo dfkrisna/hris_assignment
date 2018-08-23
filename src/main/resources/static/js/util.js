@@ -173,7 +173,7 @@ $(document).ready(function() {
 
         var id = $(this).data('id');
         var idKaryawan = $(this).data('idkaryawan');
-        var hubungan = $(this).data('hubungan');
+        var hubungan = $(this).data('hubungankeluarga');
         var nama = $(this).data('nama');
         var nik = $(this).data('nik');
         var tanggalLahir = $(this).data('tanggallahir');
@@ -182,7 +182,7 @@ $(document).ready(function() {
         // fill form value and action
         $("#id").attr('value', id);
         $("#idKaryawan").attr('value', idKaryawan);
-        $("#hubungan").attr('value', hubungan);
+        $("#hubungankeluarga").attr('value', hubungan);
         $("#nama").attr('value', nama);
         $("#nik").attr('value', nik);
         $("#tanggal-lahir").attr('value', tanggalLahir);
@@ -255,4 +255,61 @@ $(document).ready(function() {
         // pop-up modal
         $("modal-ubah-pendidikan").modal();
     })
+
+    $(".toogle-status-karyawan").on("click",function(){
+        var statusKaryawan = $(this).data("status");
+        var idKaryawan = $(this).data("idkaryawan")
+        var textBtn;
+        var textKonfirmasi;
+        var action;
+        if(statusKaryawan == "aktif"){
+            textBtn = "Nonaktifkan";
+            textKonfirmasi = "Apakah anda ingin menonaktifkan anggota ini?";
+            action = "/employee/detail-karyawan/"+idKaryawan+"/deactivate";
+        }else{
+            textBtn = "Aktifkan";
+            textKonfirmasi = "Apakah anda ingin mengaktifkan anggota ini?"
+            action = "/employee/detail-karyawan/"+idKaryawan+"/activate";
+        }
+        $("#text-konfirmasi-status").text(textKonfirmasi);
+        $("#ubah-konfirmasi-status").text(textBtn);
+        $("#form-update-status").attr('action' , action);
+        $("#modal-update-status").modal();
+    });
+
+    $(".ubah-kontak-darurat").on("click",function () {
+        event.preventDefault();
+
+        // get data from item penilaian mandiri
+        var nama = $(this).data('nama-kontak');
+        var hubungan = $(this).data('hubungan-kontak');
+        var nomorTlp = $(this).data('nomor-tlp');
+        var idKaryawan = $(this).data('id-karyawan');
+        var idKontak = $(this).data('id');
+
+        // fill form value and action
+        $("#nama-kontak-darurat").attr('value', nama);
+        $("#hubungan-kontak").attr('value', hubungan);
+        $("#nomor-tlp").attr('value', nomorTlp);
+        $("#id-kar").attr('value', idKaryawan);
+        $("#id-kontak").attr('value', idKontak);
+
+        // pop-up modal
+        $("#ubahKontakDaruratModal").modal();
+    });
+
+    $(".hapus-kontak-darurat").on("click",function () {
+        event.preventDefault();
+
+        // get data from item penilaian mandiri
+        var idKontak = $(this).data('id');
+        var idKaryawan = $(this).data('id-kar');
+
+        // fill form value and action
+        $("#idkontak").attr('value', idKontak);
+        $("#idkar").attr('value', idKaryawan);
+        $("#konfirmHapusDaruratModal").modal();
+    });
+
+
 } );

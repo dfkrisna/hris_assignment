@@ -10,6 +10,9 @@ import com.pusilkom.hris.model.DataDiriModel;
 import com.pusilkom.hris.model.KeluargaModel;
 import com.pusilkom.hris.model.PendidikanModel;
 
+
+import com.pusilkom.hris.model.*;
+
 import org.apache.tomcat.jni.Local;
 
 import java.sql.Timestamp;
@@ -99,4 +102,17 @@ public interface KaryawanService {
 	void deletePendidikan (int id);
 
 	void updatePendidikan (PendidikanModel pendidikan);
+
+	void activateKaryawan(int idKaryawan);
+
+	void deActivateKaryawan(int idKaryawan);
+
+    List<KontakDaruratModel> getKontakDaruratKaryawan(int idKaryawan);
+
+	void addKontakDarurat(KontakDaruratModel kontak);
+
+	void updateKontakDarurat(KontakDaruratModel kontak);
+
+	void deleteKontakDaruratById(Integer idKontak);
+
 }
