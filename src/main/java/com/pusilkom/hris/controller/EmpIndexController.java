@@ -85,11 +85,14 @@ public class EmpIndexController {
             }
         }
 
+        List<KontakDaruratModel> dataDarurat = karyawanService.getKontakDaruratKaryawan(idKaryawan);
+
         model.addAttribute("isEmployeeSelected", isEmployeeSelected);
         model.addAttribute("isHR", isHR);
         model.addAttribute("karyawan", karyawanBaru);
         model.addAttribute("divisi", divisi);
         model.addAttribute("dataDiri", dataDiri);
+        model.addAttribute("darurats", dataDarurat);
         return "detail-karyawan";
     }
 

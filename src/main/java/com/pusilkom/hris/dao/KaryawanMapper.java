@@ -1,9 +1,6 @@
 package com.pusilkom.hris.dao;
 
-import com.pusilkom.hris.model.DataDiriModel;
-import com.pusilkom.hris.model.FeedbackRatingModel;
-import com.pusilkom.hris.model.KaryawanBaruModel;
-import com.pusilkom.hris.model.KaryawanModel;
+import com.pusilkom.hris.model.*;
 import org.apache.ibatis.annotations.*;
 
 import java.sql.Timestamp;
@@ -271,4 +268,15 @@ public interface KaryawanMapper {
     @Insert("INSERT INTO employee.\"DATA_DIRI\" (id_karyawan, tempat_lahir, tanggal_lahir, no_hp, alamat_tinggal, nomor_ktp, npwp) \n"
         + "VALUES (#{idKaryawan}, #{tempatLahir}, #{tanggalLahir}, #{noHp}, #{alamatTinggal}, #{nomorKtp}, #{npwp})")
     void insertDataDiri(DataDiriModel dataDiri);
+
+    @Select("select * from employee.\"DATA_DARURAT\" as D where D.id_karyawan=#{idKaryawan} ORDER BY id DESC")
+    @Results(value = {
+            @Result(property = "id", column = "id"),
+            @Result(property = "idKaryawan", column = "id_karyawan"),
+            @Result(property = "nama", column = "nama"),
+            @Result(property = "hubungan", column = "hubungan"),
+            @Result(property = "kontak", column = "nomor_telepon"),
+            @Result(property = "timestamp", column = "timestamp")
+    })
+    List<KontakDaruratModel> selectKontakDaruratKaryawan(int idKaryawan);
 }

@@ -117,6 +117,49 @@
                     </div>
                 </form>
             </div>
+            <div class="tab-pane fade show active" id="nav-data-darurat" role="tabpanel" aria-labelledby="nav-data-darurat">
+                <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
+                <!-- gunakan th:if="${isEmployeeSelected || isHR}" untuk menampilkan -->
+                <!-- gunakan boolean isHR agar disabled -->
+                <div th:unless="${!isEmployeeSelected && !isHR}">
+                    <div class="row">
+                        <div class="col-3">
+                            <h2 class="montserrat-bold-big">Daftar Kontak Darurat</h2>
+                        </div>
+                        <div class="col-6"></div>
+                        <div class="col">
+                            <button type="button" data-toggle="modal" data-target="#tambahKontakModal"
+                                    class="pusil-btn btn btn-primary btn-rounded montserrat-small">+ Tambah Kontak</button>
+                        </div>
+                    </div>
+                    <br/>
+                    <hr/>
+                    <table th:if="${darurats != null && !darurats.isEmpty()}" id="list-darurat" class="table-mpp table table-hover">
+                        <thead class="tabel-header">
+                        <tr>
+                            <th class="montserrat-small-bold text-center">Nama</th>
+                            <th class="montserrat-small-bold text-center">Hubungan</th>
+                            <th class="montserrat-small-bold text-center">Nomor Telepon</th>
+                            <th class="montserrat-small-bold text-center">Aksi</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="data,iterationStatus: ${darurats}">
+                            <td class="text-center montserrat-small" th:text="${data.nama}"></td>
+                            <td class="text-center montserrat-small" th:text="${data.hubungan}"></td>
+                            <td class="text-center montserrat-small" th:text="${data.kontak}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div th:unless="${darurats != null && !darurats.isEmpty()}" class="row">
+                        <div class="col text-center">
+                            <h3 class="d-inline text-sub text-center mr-2 montserrat-bold-big">Karyawan tidak memiliki</h3>
+                            <h3 class="d-inline text-value text-center montserrat-bold-big">kontak darurat</h3>
+                            <h3 class="d-inline text-sub text-center ml-2 montserrat-bold-big">pada sistem</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="tab-pane fade show" id="nav-data-pendidikan" role="tabpanel" aria-labelledby="nav-data-pendidikan">
                 <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
                 <!-- gunakan th:if="${isEmployeeSelected || isHR}" untuk menampilkan -->
@@ -141,7 +184,7 @@
                 <input type="text" name="" id="" th:disabled="${!isHR}">
             </div>
 
-            <div class="tab-pane fade show" id="nav-data-benefit" role="tabpanel" aria-labelledby="nav-data-benefit">
+            <div class="tab-pane fade show" id="nav-dat-benefit" role="tabpanel" aria-labelledby="nav-data-benefit">
                 <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
                 <!-- gunakan th:if="${isEmployeeSelected || isHR}" untuk menampilkan -->
                 <!-- gunakan boolean isHR agar disabled -->

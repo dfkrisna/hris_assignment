@@ -1,11 +1,7 @@
 package com.pusilkom.hris.service;
 
 import com.pusilkom.hris.dao.KaryawanMapper;
-import com.pusilkom.hris.model.FeedbackRatingModel;
-import com.pusilkom.hris.model.KaryawanBaruModel;
-import com.pusilkom.hris.model.KaryawanModel;
-import com.pusilkom.hris.model.KaryawanProyekModel;
-import com.pusilkom.hris.model.DataDiriModel;
+import com.pusilkom.hris.model.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -203,5 +199,10 @@ public class KaryawanServiceImpl implements KaryawanService{
 	@Override
 	public void insertDataDiri(DataDiriModel dataDiri){
 		karyawanMapper.insertDataDiri(dataDiri);
+	}
+
+	@Override
+	public List<KontakDaruratModel> getKontakDaruratKaryawan(int idKaryawan) {
+		return karyawanMapper.selectKontakDaruratKaryawan(idKaryawan);
 	}
 }

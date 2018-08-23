@@ -1,10 +1,6 @@
 package com.pusilkom.hris.service;
 
-import com.pusilkom.hris.model.FeedbackRatingModel;
-import com.pusilkom.hris.model.KaryawanBaruModel;
-import com.pusilkom.hris.model.KaryawanModel;
-import com.pusilkom.hris.model.KaryawanProyekModel;
-import com.pusilkom.hris.model.DataDiriModel;
+import com.pusilkom.hris.model.*;
 import org.apache.tomcat.jni.Local;
 
 import java.sql.Timestamp;
@@ -70,4 +66,6 @@ public interface KaryawanService {
 	DataDiriModel getDataDiriByIdKaryawan(int idKaryawan);
 
 	void insertDataDiri(DataDiriModel dataDiri);
+
+    List<KontakDaruratModel> getKontakDaruratKaryawan(int idKaryawan);
 }
