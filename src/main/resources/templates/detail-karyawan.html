@@ -13,8 +13,8 @@
         </div>
         <h1 th:text="${karyawan.getNamaLengkap()} + ' (' + ${karyawan.getNamaPanggilan()} + ')'">Nama Lengkap Karyawan (Nama Penggilan)</h1>
         <h3 th:text="${karyawan.getNip()}">NIP</h3>
-        <h4 th:if="${karyawan.isActive()}">Aktif</h4>
-        <h4 th:if="${!karyawan.isActive()}">Tidak Aktif</h4>
+        <h4 th:if="${karyawan.isActive()}" class="toogle-status-karyawan" data-status="aktif">Aktif</h4>
+        <h4 th:if="${!karyawan.isActive()}" class="toogle-status-karyawan" data-status="nonaktif">Tidak Aktif</h4>
         <br/>
         <div class="row">
             <div class="col-6 row">
