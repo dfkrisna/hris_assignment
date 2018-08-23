@@ -4,6 +4,7 @@ import com.pusilkom.hris.model.FeedbackRatingModel;
 import com.pusilkom.hris.model.KaryawanBaruModel;
 import com.pusilkom.hris.model.KaryawanModel;
 import com.pusilkom.hris.model.KaryawanProyekModel;
+import com.pusilkom.hris.model.RiwayatGajiModel;
 import com.pusilkom.hris.model.DataDiriModel;
 import org.apache.tomcat.jni.Local;
 
@@ -70,4 +71,12 @@ public interface KaryawanService {
 	DataDiriModel getDataDiriByIdKaryawan(int idKaryawan);
 
 	void insertDataDiri(DataDiriModel dataDiri);
+
+	List<RiwayatGajiModel> selectAllRiwayatGajiById(int idKaryawan);
+
+	void insertGaji(int idKaryawan, int gaji);
+
+	void updateGajiById(int idGaji, int gaji);
+
+	void deleteGajiById(int idGaji);
 }

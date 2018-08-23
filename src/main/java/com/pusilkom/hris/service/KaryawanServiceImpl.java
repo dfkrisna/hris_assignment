@@ -6,6 +6,7 @@ import com.pusilkom.hris.model.KaryawanBaruModel;
 import com.pusilkom.hris.model.KaryawanModel;
 import com.pusilkom.hris.model.KaryawanProyekModel;
 import com.pusilkom.hris.model.DataDiriModel;
+import com.pusilkom.hris.model.RiwayatGajiModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -203,5 +204,25 @@ public class KaryawanServiceImpl implements KaryawanService{
 	@Override
 	public void insertDataDiri(DataDiriModel dataDiri){
 		karyawanMapper.insertDataDiri(dataDiri);
+	}
+
+	@Override
+	public List<RiwayatGajiModel> selectAllRiwayatGajiById(int idKaryawan){
+		return karyawanMapper.selectAllRiwayatGajiById(idKaryawan);
+	}
+
+	@Override
+	public void insertGaji(int idKaryawan, int gaji){
+		karyawanMapper.insertGaji(idKaryawan, gaji);
+	}
+
+	@Override
+	public void updateGajiById(int idGaji, int gaji){
+		karyawanMapper.updateGajiById(idGaji, gaji);
+	}
+
+	@Override
+	public void deleteGajiById(int idGaji){
+		karyawanMapper.deleteGajiById(idGaji);
 	}
 }

@@ -65,11 +65,16 @@ public class EmpIndexController {
     public String detailKaryawan(Model model, @PathVariable("idKaryawan") int idKaryawan, @NotNull Authentication auth){
         KaryawanBaruModel karyawanBaru = karyawanService.getKaryawanBaruById(idKaryawan);
         DivisibaruModel divisi = divisiService.selectDivisiBaruByID(karyawanBaru.getIdDivisi());
+        
+        //get data diri
         DataDiriModel dataDiri = karyawanService.getDataDiriByIdKaryawan(karyawanBaru.getIdKaryawan());
         if(dataDiri == null){
             dataDiri = new DataDiriModel();
             dataDiri.setIdKaryawan(idKaryawan);
         }
+
+        //get data gaji
+        List<RiwayatGajiModel> listRiwayatGaji = karyawanService.selectAllRiwayatGajiById(idKaryawan);
         
         // check if user can edit
         UserWeb user = (UserWeb) auth.getPrincipal();
@@ -90,6 +95,7 @@ public class EmpIndexController {
         model.addAttribute("karyawan", karyawanBaru);
         model.addAttribute("divisi", divisi);
         model.addAttribute("dataDiri", dataDiri);
+        model.addAttribute("listRiwayatGaji", listRiwayatGaji);
         return "detail-karyawan";
     }
 
@@ -115,6 +121,24 @@ public class EmpIndexController {
             karyawanService.insertDataDiri(dataDiri);
         }
         System.out.println(canEdit);
+        return "redirect:/employee/detail-karyawan/"+idKaryawan;
+    }
+
+    @PostMapping("/employee/detail-karyawan/{idKaryawan}/insert-gaji")
+    public String insertGaji(Model model, @RequestParam("gaji") int gaji, @PathVariable("idKaryawan") int idKaryawan){
+        karyawanService.insertGaji(idKaryawan, gaji);
+        return "redirect:/employee/detail-karyawan/"+idKaryawan;
+    }
+
+    @PostMapping("/employee/detail-karyawan/{idKaryawan}/update-gaji/{idGaji}")
+    public String updateGaji(@RequestParam("gaji") int gaji, @PathVariable("idKaryawan") int idKaryawan, @PathVariable("idGaji") int idGaji){
+        karyawanService.updateGajiById(idGaji, gaji);
+        return "redirect:/employee/detail-karyawan/"+idKaryawan; 
+    }
+
+    @GetMapping("/employee/detail-karyawan/{idKaryawan}/delete-gaji/{idGaji}")
+    public String deleteGaji(@PathVariable("idKaryawan") int idKaryawan, @PathVariable("idGaji") int idGaji){
+        karyawanService.deleteGajiById(idGaji);
         return "redirect:/employee/detail-karyawan/"+idKaryawan;
     }
 
