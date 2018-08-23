@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+    crossorigin="anonymous">
 
 <head th:replace="fragments/fragment :: header-title"></head>
 
@@ -14,8 +15,10 @@
         </div>
         <h1 th:text="${karyawan.getNamaLengkap()} + ' (' + ${karyawan.getNamaPanggilan()} + ')'">Nama Lengkap Karyawan (Nama Penggilan)</h1>
         <h3 th:text="${karyawan.getNip()}">NIP</h3>
-        <button th:if="${karyawan.isActive()}" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded toogle-status-karyawan" data-status="aktif" th:attr="data-idKaryawan=${karyawan.getIdKaryawan()}" th:disabled="${!isHR}">Aktif</button>
-        <button th:if="${!karyawan.isActive()}" class="montserrat-small btn btn-dark text-white btn-rounded toogle-status-karyawan" data-status="nonaktif" th:attr="data-idKaryawan=${karyawan.getIdKaryawan()}" th:disabled="${!isHR}">Tidak Aktif</button>
+        <button th:if="${karyawan.isActive()}" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded toogle-status-karyawan"
+            data-status="aktif" th:attr="data-idKaryawan=${karyawan.getIdKaryawan()}" th:disabled="${!isHR}">Aktif</button>
+        <button th:if="${!karyawan.isActive()}" class="montserrat-small btn btn-dark text-white btn-rounded toogle-status-karyawan"
+            data-status="nonaktif" th:attr="data-idKaryawan=${karyawan.getIdKaryawan()}" th:disabled="${!isHR}">Tidak Aktif</button>
         <br/>
         <br/>
         <div class="row">
@@ -121,7 +124,7 @@
                     </div>
                 </form>
             </div>
-            <div class="tab-pane fade show active" id="nav-data-darurat" role="tabpanel" aria-labelledby="nav-data-darurat">
+            <div class="tab-pane fade show" id="nav-data-darurat" role="tabpanel" aria-labelledby="nav-data-darurat">
                 <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
                 <!-- gunakan th:if="${isEmployeeSelected || isHR}" untuk menampilkan -->
                 <!-- gunakan boolean isHR agar disabled -->
@@ -132,19 +135,18 @@
                         </div>
                         <div class="col-6"></div>
                         <div class="col">
-                            <button type="button" data-toggle="modal" data-target="#tambahKontakModal"
-                                    class="pusil-btn btn btn-primary btn-rounded montserrat-small">+ Tambah Kontak</button>
+                            <button type="button" data-toggle="modal" data-target="#tambahKontakModal" class="pusil-btn btn btn-primary btn-rounded montserrat-small">+ Tambah Kontak</button>
                         </div>
                     </div>
                     <hr/>
                     <table th:if="${darurats != null && !darurats.isEmpty()}" id="list-darurat" class="table-mpp table table-hover">
                         <thead class="tabel-header">
-                        <tr>
-                            <th class="montserrat-small-bold text-center">Nama</th>
-                            <th class="montserrat-small-bold text-center">Hubungan</th>
-                            <th class="montserrat-small-bold text-center">Nomor Telepon</th>
-                            <th class="montserrat-small-bold text-center">Aksi</th>
-                        </tr>
+                            <tr>
+                                <th class="montserrat-small-bold text-center">Nama</th>
+                                <th class="montserrat-small-bold text-center">Hubungan</th>
+                                <th class="montserrat-small-bold text-center">Nomor Telepon</th>
+                                <th class="montserrat-small-bold text-center">Aksi</th>
+                            </tr>
                         </thead>
                         <tbody>
                         <tr th:each="data,iterationStatus: ${darurats}">
@@ -175,48 +177,47 @@
                 <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
                 <!-- gunakan th:if="${isEmployeeSelected || isHR}" untuk menampilkan -->
             </div>
-
-            <div class="tab-pane fade show" id="nav-data-benefit" role="tabpanel" aria-labelledby="nav-data-darurat">
-                <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
-                <!-- gunakan th:if="${isEmployeeSelected || isHR}" untuk menampilkan -->
-
-            </div>
-
             <div class="tab-pane fade show" id="nav-data-keluarga" role="tabpanel" aria-labelledby="nav-data-keluarga">
                 <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
                 <!-- gunakan th:if="${isEmployeeSelected || isHR}" untuk menampilkan -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah-keluarga"><i class="fas fa-plus" style="font-size: 15px;"></i> Tambah Anggota Keluarga
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah-keluarga">
+                    <i class="fas fa-plus" style="font-size: 15px;"></i> Tambah Anggota Keluarga
                 </button>
 
                 <table class="table table-hover mt-3">
                     <thead style="background-color: #FFCF25;">
-                    <tr>
-                        <th class="montserrat-small-bold" scope="col" >No.</th>
-                        <th class="montserrat-small-bold" scope="col" >Hubungan</th>
-                        <th class="montserrat-small-bold" scope="col" >Nama</th>
-                        <th class="montserrat-small-bold" scope="col" >NIK</th>
-                        <th class="montserrat-small-bold" scope="col" >Tanggal Lahir</th>
-                        <th class="montserrat-small-bold" scope="col">Aksi</th>
-                    </tr>
+                        <tr>
+                            <th class="montserrat-small-bold" scope="col">No.</th>
+                            <th class="montserrat-small-bold" scope="col">Hubungan</th>
+                            <th class="montserrat-small-bold" scope="col">Nama</th>
+                            <th class="montserrat-small-bold" scope="col">NIK</th>
+                            <th class="montserrat-small-bold" scope="col">Tanggal Lahir</th>
+                            <th class="montserrat-small-bold" scope="col">Aksi</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <div th:each="keluarga,iterationStatus: ${keluarga}">
-                        <tr>
-                            <td class="montserrat-small" scope="row" th:text="${iterationStatus.count}" width="1%"></td>
-                            <td class="montserrat-small" th:text="${keluarga.hubungan}" width="15%"></td>
-                            <td class="montserrat-small" th:text="${keluarga.nama}" width="25%"></td>
-                            <td class="montserrat-small" th:text="${keluarga.nik}" width="25%"></td>
-                            <td class="montserrat-small" th:text="${keluarga.tanggalLahir}" width="19%"></td>
-                            <td width="15%">
-                                <a data-toggle="modal" data-target="#modal-ubah-anggota-keluarga" data-title="Ubah Anggota Keluarga"
-                                   th:attr="data-id=${keluarga.id},data-idKaryawan=${keluarga.idKaryawan},data-hubungan=${keluarga.hubungan},data-nama=${keluarga.nama}, data-nik=${keluarga.nik}, data-tanggalLahir=${keluarga.tanggalLahir}
-                                    " th:title="Ubah" class="btn-ubah-anggota-keluarga d-inline pusil-btn btn btn-dark montserrat-small text-white btn-rounded" style="padding: 5px 10px;"  ><i class="fas fa-pencil-alt" style="font-size: 15px;"></i></a>
+                        <div th:each="keluarga,iterationStatus: ${keluarga}">
+                            <tr>
+                                <td class="montserrat-small" scope="row" th:text="${iterationStatus.count}" width="1%"></td>
+                                <td class="montserrat-small" th:text="${keluarga.hubungan}" width="15%"></td>
+                                <td class="montserrat-small" th:text="${keluarga.nama}" width="25%"></td>
+                                <td class="montserrat-small" th:text="${keluarga.nik}" width="25%"></td>
+                                <td class="montserrat-small" th:text="${keluarga.tanggalLahir}" width="19%"></td>
+                                <td width="15%">
+                                    <a data-toggle="modal" data-target="#modal-ubah-anggota-keluarga" data-title="Ubah Anggota Keluarga" th:attr="data-id=${keluarga.id},data-idKaryawan=${keluarga.idKaryawan},data-hubungan=${keluarga.hubungan},data-nama=${keluarga.nama}, data-nik=${keluarga.nik}, data-tanggalLahir=${keluarga.tanggalLahir}
+                                    " th:title="Ubah" class="btn-ubah-anggota-keluarga d-inline pusil-btn btn btn-dark montserrat-small text-white btn-rounded"
+                                        style="padding: 5px 10px;">
+                                        <i class="fas fa-pencil-alt" style="font-size: 15px;"></i>
+                                    </a>
 
 
-                                <a data-toggle="tooltip"  data-placement="bottom"th th:title="Hapus" th:href="'/employee/detail-karyawan/hapus/'+ ${keluarga.idKaryawan} + '/' + ${keluarga.id}" class="btn btn-danger montserrat-small text-white btn-rounded" style="padding: 5px 10px;"><i class="fas fa-trash-alt" style="font-size: 15px;"></i></a>
-                            </td>
-                        </tr>
-                    </div>
+                                    <a data-toggle="tooltip" data-placement="bottom" th th:title="Hapus" th:href="'/employee/detail-karyawan/hapus/'+ ${keluarga.idKaryawan} + '/' + ${keluarga.id}"
+                                        class="btn btn-danger montserrat-small text-white btn-rounded" style="padding: 5px 10px;">
+                                        <i class="fas fa-trash-alt" style="font-size: 15px;"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </div>
                     </tbody>
                 </table>
             </div>
@@ -232,24 +233,24 @@
                         </div>
 
                         <!-- Modal body -->
-                        <form  th:action="'/employee/detail-karyawan/' + ${karyawan.getIdKaryawan()}  + '/insert-keluarga'"  method="POST">
+                        <form th:action="'/employee/detail-karyawan/' + ${karyawan.getIdKaryawan()}  + '/insert-keluarga'" method="POST">
                             <div class="form-body">
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label class="col-form-label">Hubungan :</label>
-                                        <input type="text" class="form-control"  name="hubungan" required />
+                                        <input type="text" class="form-control" name="hubungan" required />
                                     </div>
                                     <div class="form-group">
-                                        <label  class="col-form-label">Nama :</label>
-                                        <input type="text" class="form-control"  name="nama"   required />
+                                        <label class="col-form-label">Nama :</label>
+                                        <input type="text" class="form-control" name="nama" required />
                                     </div>
                                     <div class="form-group">
-                                        <label  class="col-form-label">NIK :</label>
-                                        <input type="number" class="form-control"  name="nik"  required />
+                                        <label class="col-form-label">NIK :</label>
+                                        <input type="number" class="form-control" name="nik" required />
                                     </div>
                                     <div class="form-group">
-                                        <label  class="col-form-label">Tanggal Lahir :</label>
-                                        <input type="date" class="form-control"  name="tanggalLahir"  required />
+                                        <label class="col-form-label">Tanggal Lahir :</label>
+                                        <input type="date" class="form-control" name="tanggalLahir" required />
                                     </div>
                                 </div>
                             </div>
@@ -268,41 +269,51 @@
                 <button th:if="${isHR}" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah-gaji">
                     + Ubah Gaji
                 </button>
-                <h2 class="text-center montserrat-bold-big">List Riwayat Gaji</h2>
                 <div th:if="${isEmployeeSelected || isHR}">
-                    <table class="table table-hover">
-                        <thead class="tabel-header">
-                        <tr>
-                            <th class="montserrat-small-bold text-center" scope="col">No.</th>
-                            <th class="montserrat-small-bold text-center" scope="col">Tanggal Aktif</th>
-                            <th class="montserrat-small-bold text-center" scope="col">Nilai Gaji</th>
-                            <th th:if="${isHR}" class="montserrat-small-bold text-center" scope="col">Action</th>
-                        </tr>
-                        </thead>
-                        <!-- th:each="karyawanCuti, iterationStatus: ${listOfKaryawanCuti}" -->
-                        <div th:each="riwayatGaji, iterationStatus: ${listRiwayatGaji}">
-                            <tr>
-                                <td class="text-center">
-                                    <p class="d-inline montserrat-small text-muted" th:text="${iterationStatus.count}">No</p>
-                                </td>
-                                <td class="text-center">
-                                    <p class="d-inline montserrat-small text-muted" th:text="${riwayatGaji.tanggalAktif}">Tanggal Aktif</p>
-                                </td>
-                                <td class="text-center">
-                                    <p class="d-inline montserrat-small text-muted" th:text="${riwayatGaji.nilaiGaji}">Nilai Gaji</p>
-                                </td>
-                                <td class="text-center" th:if="${isHR}">
-                                    <button class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded btn-update-gaji" th:attr="data-idGaji=${riwayatGaji.id},data-idKaryawan=${karyawan.getIdKaryawan()}, data-gaji=${riwayatGaji.nilaiGaji}">Ubah</button>
-                                    <button class="montserrat-small btn btn-dark text-white btn-rounded btn-delete-gaji" th:attr="data-idGaji=${riwayatGaji.id},data-idKaryawan=${karyawan.getIdKaryawan()}">Delete</button>
-                                </td>
-                            </tr>
+                    <h2 class="text-center montserrat-bold-big">List Riwayat Gaji</h2>
+                    <hr/>
+                    <div th:if="${listRiwayatGaji.isEmpty()}" class="row">
+                        <div class="col text-center">
+                            <h3 class="d-inline text-sub text-center mr-2 montserrat-bold-big">Karyawan tidak memiliki</h3>
+                            <h3 class="d-inline text-value text-center montserrat-bold-big">riwayat gaji</h3>
+                            <h3 class="d-inline text-sub text-center ml-2 montserrat-bold-big">pada sistem</h3>
                         </div>
-                    </table>
+                    </div>
+                    <div th:if="${!listRiwayatGaji.isEmpty()}">
+                        <table class="table table-hover">
+                            <thead class="tabel-header">
+                                <tr>
+                                    <th class="montserrat-small-bold text-center" scope="col">No.</th>
+                                    <th class="montserrat-small-bold text-center" scope="col">Tanggal Aktif</th>
+                                    <th class="montserrat-small-bold text-center" scope="col">Nilai Gaji</th>
+                                    <th th:if="${isHR}" class="montserrat-small-bold text-center" scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <!-- th:each="karyawanCuti, iterationStatus: ${listOfKaryawanCuti}" -->
+                            <div th:each="riwayatGaji, iterationStatus: ${listRiwayatGaji}">
+                                <tr>
+                                    <td class="text-center">
+                                        <p class="d-inline montserrat-small text-muted" th:text="${iterationStatus.count}">No</p>
+                                    </td>
+                                    <td class="text-center">
+                                        <p class="d-inline montserrat-small text-muted" th:text="${riwayatGaji.tanggalAktif}">Tanggal Aktif</p>
+                                    </td>
+                                    <td class="text-center">
+                                        <p class="d-inline montserrat-small text-muted" th:text="${riwayatGaji.nilaiGaji}">Nilai Gaji</p>
+                                    </td>
+                                    <td class="text-center" th:if="${isHR}">
+                                        <button class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded btn-update-gaji" th:attr="data-idGaji=${riwayatGaji.id},data-idKaryawan=${karyawan.getIdKaryawan()}, data-gaji=${riwayatGaji.nilaiGaji}">Ubah</button>
+                                        <button class="montserrat-small btn btn-dark text-white btn-rounded btn-delete-gaji" th:attr="data-idGaji=${riwayatGaji.id},data-idKaryawan=${karyawan.getIdKaryawan()}">Delete</button>
+                                    </td>
+                                </tr>
+                            </div>
+                        </table>
+                    </div>
                 </div>
                 <!-- gunakan boolean isHR agar disabled -->
             </div>
 
-            <div class="tab-pane fade show" id="nav-dat-benefit" role="tabpanel" aria-labelledby="nav-data-benefit">
+            <div class="tab-pane fade show" id="nav-data-benefit" role="tabpanel" aria-labelledby="nav-data-benefit">
                 <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
                 <!-- gunakan th:if="${isEmployeeSelected || isHR}" untuk menampilkan -->
                 <!-- gunakan boolean isHR agar disabled -->
@@ -347,8 +358,7 @@
                             <input type="hidden" th:value="${karyawan.idKaryawan}" name="idKar"/>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded"
-                                    data-dismiss="modal">Batal</button>
+                            <button type="button" class="montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded" data-dismiss="modal">Batal</button>
                             <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Tambah</button>
                         </div>
                     </form>
@@ -464,7 +474,8 @@
 </body>
 
 
-<div class="modal fade" id="modal-ubah-anggota-keluarga" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal-ubah-anggota-keluarga" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -477,19 +488,19 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="hubungan" class="col-form-label">Hubungan :</label>
-                        <input type="text" class="form-control" id="hubungan" name="hubungan"/>
+                        <input type="text" class="form-control" id="hubungan" name="hubungan" />
                     </div>
                     <div class="form-group">
                         <label for="nama" class="col-form-label">Nama :</label>
-                        <input type="text" class="form-control" id="nama" name="nama"/>
+                        <input type="text" class="form-control" id="nama" name="nama" />
                     </div>
                     <div class="form-group">
                         <label for="nik" class="col-form-label">NIK :</label>
-                        <input type="text" class="form-control" id="nik" name="nik"/>
+                        <input type="text" class="form-control" id="nik" name="nik" />
                     </div>
                     <div class="form-group">
-                        <label  class="col-form-label">Tanggal Lahir:</label>
-                        <input  type="date" class="form-control" id="tanggal-lahir" name="tanggalLahir"/>
+                        <label class="col-form-label">Tanggal Lahir:</label>
+                        <input type="date" class="form-control" id="tanggal-lahir" name="tanggalLahir" />
                     </div>
                 </div>
                 <div class="modal-footer">
