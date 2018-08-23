@@ -6,9 +6,9 @@
 <head th:replace="fragments/fragment :: header-title"></head>
 
 <body>
-<div th:replace="fragments/fragment :: navbar-employee"></div>
-<div th:replace="fragments/fragment :: sidebar-employee"></div>
-<div th:replace="fragments/fragment :: absen-modals"></div>
+    <div th:replace="fragments/fragment :: navbar-employee"></div>
+    <div th:replace="fragments/fragment :: sidebar-employee"></div>
+    <div th:replace="fragments/fragment :: absen-modals"></div>
 
     <main id="content-isi" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 pb-3">
         <div class="d-flex flex-row mb-5">
@@ -258,9 +258,10 @@
             <div class="tab-pane fade show" id="nav-data-keluarga" role="tabpanel" aria-labelledby="nav-data-keluarga">
                 <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
                 <!-- gunakan th:if="${isEmployeeSelected || isHR}" untuk menampilkan -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah-keluarga">
-                    <i class="fas fa-plus" style="font-size: 15px;"></i> Tambah Anggota Keluarga
-                </button>
+                <div th:unless="${!isEmployeeSelected && !isHR}">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah-keluarga">
+                        <i class="fas fa-plus" style="font-size: 15px;"></i> Tambah Anggota Keluarga
+                    </button>
 
                 <h2 class="text-center montserrat-bold-big">List Anggota Keluarga</h2>
 
@@ -293,7 +294,8 @@
                         </tr>
                     </div>
                     </tbody>
-                </table>
+                    </table>
+                </div>
             </div>
 
             <div class="modal fade" id="modal-tambah-keluarga">
