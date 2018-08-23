@@ -35,7 +35,7 @@ public class EmpIndexController {
 
     @Autowired
     DivisiService divisiService;
-    
+
     @GetMapping("/employee")
     public String indexMoka(Model model, @NotNull Authentication auth) {
         UserWeb user = (UserWeb) auth.getPrincipal();
@@ -68,6 +68,7 @@ public class EmpIndexController {
         
         //get data diri
         DataDiriModel dataDiri = karyawanService.getDataDiriByIdKaryawan(karyawanBaru.getIdKaryawan());
+        List<KeluargaModel> keluarga = karyawanService.selectAnggotaKeluargaAll(idKaryawan);
         if(dataDiri == null){
             dataDiri = new DataDiriModel();
             dataDiri.setIdKaryawan(idKaryawan);
@@ -95,7 +96,13 @@ public class EmpIndexController {
         model.addAttribute("karyawan", karyawanBaru);
         model.addAttribute("divisi", divisi);
         model.addAttribute("dataDiri", dataDiri);
+
+        model.addAttribute("keluarga", keluarga);
+
+        System.out.println(keluarga);
+
         model.addAttribute("listRiwayatGaji", listRiwayatGaji);
+
         return "detail-karyawan";
     }
 
@@ -153,4 +160,32 @@ public class EmpIndexController {
         karyawanService.deActivateKaryawan(idKaryawan);
         return "redirect:/employee/detail-karyawan/"+idKaryawan;
     }
+    @PostMapping("/employee/detail-karyawan/{idKaryawan}/insert-keluarga")
+    public String insertKeluarga(Model model,
+                                 @ModelAttribute("keluarga") KeluargaModel keluarga,
+                                 @PathVariable("idKaryawan") int idKaryawan){
+
+        keluarga.setIdKaryawan(idKaryawan);
+        karyawanService.insertAnggotaKeluarga(keluarga);
+        return "redirect:/employee/detail-karyawan/"+idKaryawan;
+    }
+
+    @RequestMapping(value = "/employee/detail-karyawan/{idKaryawan}/update-anggota-keluarga/{id}" , method = RequestMethod.POST)
+    public String updateAnggotaKeluarga (@ModelAttribute KeluargaModel keluarga, Model model, @PathVariable("idKaryawan") int idKaryawan, @PathVariable(value = "id") int id) {
+
+        karyawanService.updateAnggotaKeluarga(keluarga);
+
+        return "redirect:/employee/detail-karyawan/"+idKaryawan;
+    }
+
+
+    @RequestMapping("/employee/detail-karyawan/hapus/{idKaryawan}/{id}")
+    public String deleteAnggotaKeluarga (Model model, @PathVariable("idKaryawan") int idKaryawan, @PathVariable(value = "id") int id)
+    {
+        karyawanService.deleteAnggotaKeluarga(id);
+
+        return "redirect:/employee/detail-karyawan/"+idKaryawan;
+    }
+
+
 }
