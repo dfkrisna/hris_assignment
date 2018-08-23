@@ -29,7 +29,7 @@ public class AbsenController {
     @Autowired
     AbsenService absenService;
 
-    @ModelAttribute("checkinStatus")
+    @ModelAttribute("statusCheckIn")
     public boolean isCheckedIn(Model model,
                                @NotNull Authentication auth) {
         UserWeb user = (UserWeb) auth.getPrincipal();

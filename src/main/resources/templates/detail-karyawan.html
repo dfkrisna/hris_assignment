@@ -43,13 +43,6 @@
             <div class="col"></div>
         </div>
 
-        <div th:if="${isHR}">
-            <button id="ubah-data" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded toogle-status-karyawan"
-                    data-status="aktif" th:attr="data-idKaryawan=${karyawan.getIdKaryawan()}, data-listdivisi=${divisis}, data-nama-lengkap=${karyawan.getNamaLengkap()},
-                    data-nama-panggilan=${karyawan.getNamaPanggilan()}, data-nip=${karyawan.getNip()}, data-id-divisi=${karyawan.idDivisi}, data-email-pusil=${karyawan.emailPusilkom}, data-email-pr=${karyawan.emailPribadi}"
-                    th:disabled="${!isHR}">Ubah</button>
-        </div>
-
         <br/>
         <br/>
 
