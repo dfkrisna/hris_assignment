@@ -122,9 +122,17 @@
             <div class="tab-pane fade show" id="nav-data-pendidikan" role="tabpanel" aria-labelledby="nav-data-pendidikan">
                 <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
                 <!-- gunakan th:if="${isEmployeeSelected || isHR}" untuk menampilkan -->
+            </div>
 
+            <div class="tab-pane fade show" id="nav-data-benefit" role="tabpanel" aria-labelledby="nav-data-darurat">
+                <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
+                <!-- gunakan th:if="${isEmployeeSelected || isHR}" untuk menampilkan -->
+
+            </div>
 
             <div class="tab-pane fade show" id="nav-data-keluarga" role="tabpanel" aria-labelledby="nav-data-keluarga">
+                <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
+                <!-- gunakan th:if="${isEmployeeSelected || isHR}" untuk menampilkan -->
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah-keluarga"><i class="fas fa-plus" style="font-size: 15px;"></i> Tambah Anggota Keluarga
                 </button>
 
@@ -160,13 +168,6 @@
                     </tbody>
                 </table>
             </div>
-<<<<<<< HEAD
-=======
-            <div class="tab-pane fade show" id="nav-data-benefit" role="tabpanel" aria-labelledby="nav-data-darurat">
-                <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
-                <!-- gunakan th:if="${isEmployeeSelected || isHR}" untuk menampilkan -->
->>>>>>> bc186808f103e70380d5ca55c5a78ca2e20017e5
-
 
             <div class="modal fade" id="modal-tambah-keluarga">
                 <div class="modal-dialog">
@@ -210,21 +211,6 @@
             </div>
 
 
-            <div class="tab-pane fade show" id="nav-data-pendidikan" role="tabpanel" aria-labelledby="nav-data-pendidikan">
-
-            </div>
-
-            </div>
-            <div class="tab-pane fade show" id="nav-data-benefit" role="tabpanel" aria-labelledby="nav-data-darurat">
-
-            <div class="tab-pane fade show" id="nav-data-keluarga" role="tabpanel" aria-labelledby="nav-data-keluarga">
-                <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
-                <!-- gunakan th:if="${isEmployeeSelected || isHR}" untuk menampilkan -->
-
-
-            </div>
-
-
             <div class="tab-pane fade show" id="nav-data-gaji" role="tabpanel" aria-labelledby="nav-data-gaji">
                 <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
                 <button th:if="${isHR}" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah-gaji">
@@ -234,12 +220,12 @@
                 <div th:if="${isEmployeeSelected || isHR}">
                     <table class="table table-hover">
                         <thead class="tabel-header">
-                            <tr>
-                                <th class="montserrat-small-bold text-center" scope="col">No.</th>
-                                <th class="montserrat-small-bold text-center" scope="col">Tanggal Aktif</th>
-                                <th class="montserrat-small-bold text-center" scope="col">Nilai Gaji</th>
-                                <th th:if="${isHR}" class="montserrat-small-bold text-center" scope="col">Action</th>
-                            </tr>
+                        <tr>
+                            <th class="montserrat-small-bold text-center" scope="col">No.</th>
+                            <th class="montserrat-small-bold text-center" scope="col">Tanggal Aktif</th>
+                            <th class="montserrat-small-bold text-center" scope="col">Nilai Gaji</th>
+                            <th th:if="${isHR}" class="montserrat-small-bold text-center" scope="col">Action</th>
+                        </tr>
                         </thead>
                         <!-- th:each="karyawanCuti, iterationStatus: ${listOfKaryawanCuti}" -->
                         <div th:each="riwayatGaji, iterationStatus: ${listRiwayatGaji}">
