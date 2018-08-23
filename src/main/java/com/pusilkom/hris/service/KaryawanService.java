@@ -77,4 +77,6 @@ public interface KaryawanService {
 	void insertGaji(int idKaryawan, int gaji);
 
 	void updateGajiById(int idGaji, int gaji);
+
+	void deleteGajiById(int idGaji);
 }

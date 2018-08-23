@@ -220,4 +220,9 @@ public class KaryawanServiceImpl implements KaryawanService{
 	public void updateGajiById(int idGaji, int gaji){
 		karyawanMapper.updateGajiById(idGaji, gaji);
 	}
+
+	@Override
+	public void deleteGajiById(int idGaji){
+		karyawanMapper.deleteGajiById(idGaji);
+	}
 }

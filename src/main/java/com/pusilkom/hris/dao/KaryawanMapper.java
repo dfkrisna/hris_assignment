@@ -287,4 +287,7 @@ public interface KaryawanMapper {
 
     @Update("UPDATE employee.\"GAJI\" set nilai_gaji=#{gaji} where id=#{idGaji}")
     void updateGajiById(@Param("idGaji") int idGaji, @Param("gaji") int gaji);
+
+    @Delete("DELETE FROM employee.\"GAJI\" WHERE id = #{idGaji}")
+    void deleteGajiById(@Param("idGaji") int idGaji);
 }

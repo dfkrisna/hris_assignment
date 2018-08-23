@@ -179,4 +179,12 @@ $(document).ready(function() {
         $("#form-update-gaji").attr('action' , action);
         $("#modal-update-gaji").modal();
     });
+
+    $(".btn-delete-gaji").on("click",function(){
+        var id = $(this).data('idgaji');
+        var idKaryawan = $(this).data("idkaryawan")
+        var action = "/employee/detail-karyawan/" + idKaryawan + "/delete-gaji/" + id;
+        $("#form-delete-gaji").attr('action' , action);
+        $("#modal-delete-gaji").modal();
+    });
 } );

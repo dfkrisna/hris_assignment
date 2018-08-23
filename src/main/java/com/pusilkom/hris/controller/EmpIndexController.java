@@ -136,4 +136,10 @@ public class EmpIndexController {
         return "redirect:/employee/detail-karyawan/"+idKaryawan; 
     }
 
+    @GetMapping("/employee/detail-karyawan/{idKaryawan}/delete-gaji/{idGaji}")
+    public String deleteGaji(@PathVariable("idKaryawan") int idKaryawan, @PathVariable("idGaji") int idGaji){
+        karyawanService.deleteGajiById(idGaji);
+        return "redirect:/employee/detail-karyawan/"+idKaryawan;
+    }
+
 }

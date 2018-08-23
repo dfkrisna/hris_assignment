@@ -164,7 +164,7 @@
                                 </td>
                                 <td class="text-center" th:if="${isHR}">
                                     <button class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded btn-update-gaji" th:attr="data-idGaji=${riwayatGaji.id},data-idKaryawan=${karyawan.getIdKaryawan()}, data-gaji=${riwayatGaji.nilaiGaji}">Ubah</button>
-                                    <a href="#" class="montserrat-small btn btn-dark text-white btn-rounded">Hapus</a>
+                                    <button class="montserrat-small btn btn-dark text-white btn-rounded btn-delete-gaji" th:attr="data-idGaji=${riwayatGaji.id},data-idKaryawan=${karyawan.getIdKaryawan()}">Delete</button>
                                 </td>
                             </tr>
                         </div>
@@ -234,6 +234,32 @@
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Update Gaji</button>
+                        <button type="button" class="montserrat-small btn btn-dark btn-rounded" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-delete-gaji">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Gaji</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <form id="form-delete-gaji" method="GET">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <h5>Apakah anda yakin untuk menghapus riwayat gaji ini?</h5>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Delete Gaji</button>
                         <button type="button" class="montserrat-small btn btn-dark btn-rounded" data-dismiss="modal">Close</button>
                     </div>
                 </form>
