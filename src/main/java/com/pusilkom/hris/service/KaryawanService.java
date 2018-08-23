@@ -93,4 +93,6 @@ public interface KaryawanService {
 	void addKontakDarurat(KontakDaruratModel kontak);
 
 	void updateKontakDarurat(KontakDaruratModel kontak);
+
+	void deleteKontakDaruratById(Integer idKontak);
 }

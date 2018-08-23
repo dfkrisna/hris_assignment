@@ -255,4 +255,18 @@ $(document).ready(function() {
         // pop-up modal
         $("#ubahKontakDaruratModal").modal();
     });
+
+    $(".hapus-kontak-darurat").on("click",function () {
+        event.preventDefault();
+
+        // get data from item penilaian mandiri
+        var idKontak = $(this).data('id');
+        var idKaryawan = $(this).data('id-kar');
+
+        // fill form value and action
+        $("#idkontak").attr('value', idKontak);
+        $("#idkar").attr('value', idKaryawan);
+        $("#konfirmHapusDaruratModal").modal();
+    });
+
 } );

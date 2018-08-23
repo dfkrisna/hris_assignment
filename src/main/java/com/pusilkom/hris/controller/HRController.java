@@ -171,4 +171,12 @@ public class HRController {
 
         return "redirect:/employee/detail-karyawan/" + idKar;
     }
+
+    @PostMapping("/employee/hapus-kontak-darurat")
+    public String hapusKontak(RedirectAttributes ra,
+                              @RequestParam(value = "idKontak") Integer idKontak,
+                              @RequestParam(value = "idKaryawan") Integer idKaryawan) {
+        karyawanService.deleteKontakDaruratById(idKontak);
+        return "redirect:/employee/detail-karyawan/" + idKaryawan;
+    }
 }

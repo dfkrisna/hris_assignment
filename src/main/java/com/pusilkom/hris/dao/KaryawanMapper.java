@@ -336,4 +336,7 @@ public interface KaryawanMapper {
     @Update("update employee.\"DATA_DARURAT\" set nama=#{nama}, hubungan=#{hubungan}, nomor_telepon=#{kontak} " +
             "where id=#{id} and id_karyawan=#{idKaryawan}")
     void updateKontakDarurat(KontakDaruratModel kontak);
+
+    @Delete("delete from employee.\"DATA_DARURAT\" where id=#{idKontak}")
+    void deleteKontakDaruratById(Integer idKontak);
 }
