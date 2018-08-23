@@ -239,4 +239,13 @@ public class KaryawanServiceImpl implements KaryawanService{
 		karyawanMapper.deleteGajiById(idGaji);
 	}
 
+	@Override
+	public void activateKaryawan(int idKaryawan){
+		karyawanMapper.activateKaryawan(idKaryawan);
+	}
+
+	@Override
+	public void deActivateKaryawan(int idKaryawan){
+		karyawanMapper.deActivateKaryawan(idKaryawan);
+	}
 }

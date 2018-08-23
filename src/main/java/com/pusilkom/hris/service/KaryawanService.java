@@ -90,4 +90,7 @@ public interface KaryawanService {
 
 	void deleteGajiById(int idGaji);
 
+	void activateKaryawan(int idKaryawan);
+
+	void deActivateKaryawan(int idKaryawan);
 }

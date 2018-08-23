@@ -14,6 +14,9 @@
         </div>
         <h1 th:text="${karyawan.getNamaLengkap()} + ' (' + ${karyawan.getNamaPanggilan()} + ')'">Nama Lengkap Karyawan (Nama Penggilan)</h1>
         <h3 th:text="${karyawan.getNip()}">NIP</h3>
+        <button th:if="${karyawan.isActive()}" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded toogle-status-karyawan" data-status="aktif" th:attr="data-idKaryawan=${karyawan.getIdKaryawan()}" th:disabled="${!isHR}">Aktif</button>
+        <button th:if="${!karyawan.isActive()}" class="montserrat-small btn btn-dark text-white btn-rounded toogle-status-karyawan" data-status="nonaktif" th:attr="data-idKaryawan=${karyawan.getIdKaryawan()}" th:disabled="${!isHR}">Tidak Aktif</button>
+        <br/>
         <br/>
         <div class="row">
             <div class="col-6 row">
@@ -337,6 +340,32 @@
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Delete Gaji</button>
+                        <button type="button" class="montserrat-small btn btn-dark btn-rounded" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-update-status">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Update Status</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <form id="form-update-status" method="GET">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <h5 id="text-konfirmasi-status"></h5>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" id="ubah-konfirmasi-status"></button>
                         <button type="button" class="montserrat-small btn btn-dark btn-rounded" data-dismiss="modal">Close</button>
                     </div>
                 </form>
