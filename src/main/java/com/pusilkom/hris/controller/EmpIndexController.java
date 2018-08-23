@@ -152,6 +152,17 @@ public class EmpIndexController {
         return "redirect:/employee/detail-karyawan/"+idKaryawan;
     }
 
+    @GetMapping("employee/detail-karyawan/{idKaryawan}/activate")
+    public String activateKaryawan(@PathVariable("idKaryawan") int idKaryawan){
+        karyawanService.activateKaryawan(idKaryawan);
+        return "redirect:/employee/detail-karyawan/"+idKaryawan;
+    }
+
+    @GetMapping("employee/detail-karyawan/{idKaryawan}/deactivate")
+    public String deActivateKaryawan(@PathVariable("idKaryawan") int idKaryawan){
+        karyawanService.deActivateKaryawan(idKaryawan);
+        return "redirect:/employee/detail-karyawan/"+idKaryawan;
+    }
     @PostMapping("/employee/detail-karyawan/{idKaryawan}/insert-keluarga")
     public String insertKeluarga(Model model,
                                  @ModelAttribute("keluarga") KeluargaModel keluarga,

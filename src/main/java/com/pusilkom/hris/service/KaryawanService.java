@@ -84,6 +84,9 @@ public interface KaryawanService {
 
 	void deleteGajiById(int idGaji);
 
+	void activateKaryawan(int idKaryawan);
+
+	void deActivateKaryawan(int idKaryawan);
 
     List<KontakDaruratModel> getKontakDaruratKaryawan(int idKaryawan);
 
