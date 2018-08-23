@@ -150,19 +150,18 @@
                             </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="data,iterationStatus: ${darurats}">
-                            <td class="text-center montserrat-small" th:text="${data.nama}"></td>
-                            <td class="text-center montserrat-small" th:text="${data.hubungan}"></td>
-                            <td class="text-center montserrat-small" th:text="${data.kontak}"></td>
-                            <td class="text-center montserrat-small">
-                                <button type="button" data-toggle="modal" data-target="#ubahKontakModal"
-                                        th:attr="data-nama-kontak=${data.nama}, data-hubungan-kontak=${data.hubungan},
+                            <tr th:each="data,iterationStatus: ${darurats}">
+                                <td class="text-center montserrat-small" th:text="${data.nama}"></td>
+                                <td class="text-center montserrat-small" th:text="${data.hubungan}"></td>
+                                <td class="text-center montserrat-small" th:text="${data.kontak}"></td>
+                                <td class="text-center montserrat-small">
+                                    <button type="button" data-toggle="modal" data-target="#ubahKontakModal" th:attr="data-nama-kontak=${data.nama}, data-hubungan-kontak=${data.hubungan},
                                         data-nomor-tlp=${data.kontak}, data-id-karyawan=${data.idKaryawan}, data-id=${data.id}"
                                         class="ubah-kontak-darurat pusil-btn btn btn-primary btn-rounded montserrat-small">Ubah</button>
-                                <button type="button" data-toggle="modal" data-target="#konfirmHapusDaruratModal" th:attr="data-id=${data.id}, data-id-kar=${data.idKaryawan}"
+                                    <button type="button" data-toggle="modal" data-target="#konfirmHapusDaruratModal" th:attr="data-id=${data.id}, data-id-kar=${data.idKaryawan}"
                                         class="hapus-kontak-darurat montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded">Hapus</button>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <div th:unless="${darurats != null && !darurats.isEmpty()}" class="row">
@@ -267,11 +266,19 @@
 
             <div class="tab-pane fade show" id="nav-data-gaji" role="tabpanel" aria-labelledby="nav-data-gaji">
                 <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
-                <button th:if="${isHR}" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah-gaji">
-                    + Ubah Gaji
-                </button>
+
                 <div th:if="${isEmployeeSelected || isHR}">
-                    <h2 class="text-center montserrat-bold-big">List Riwayat Gaji</h2>
+                    <div class="row">
+                        <div class="col-3">
+                            <h2 class="text-center montserrat-bold-big">List Riwayat Gaji</h2>
+                        </div>
+                        <div class="col-6"></div>
+                        <button th:if="${isHR}" type="button" class="pusil-btn btn btn-primary btn-rounded montserrat-small" data-toggle="modal"
+                            data-target="#modal-tambah-gaji">
+                            + Ubah Gaji
+                        </button>
+                    </div>
+
                     <hr/>
                     <div th:if="${listRiwayatGaji.isEmpty()}" class="row">
                         <div class="col text-center">
@@ -287,7 +294,7 @@
                                     <th class="montserrat-small-bold text-center" scope="col">No.</th>
                                     <th class="montserrat-small-bold text-center" scope="col">Tanggal Aktif</th>
                                     <th class="montserrat-small-bold text-center" scope="col">Nilai Gaji</th>
-                                    <th th:if="${isHR}" class="montserrat-small-bold text-center" scope="col">Action</th>
+                                    <th th:if="${isHR}" class="montserrat-small-bold text-center" scope="col">Aksi</th>
                                 </tr>
                             </thead>
                             <!-- th:each="karyawanCuti, iterationStatus: ${listOfKaryawanCuti}" -->
@@ -304,7 +311,7 @@
                                     </td>
                                     <td class="text-center" th:if="${isHR}">
                                         <button class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded btn-update-gaji" th:attr="data-idGaji=${riwayatGaji.id},data-idKaryawan=${karyawan.getIdKaryawan()}, data-gaji=${riwayatGaji.nilaiGaji}">Ubah</button>
-                                        <button class="montserrat-small btn btn-dark text-white btn-rounded btn-delete-gaji" th:attr="data-idGaji=${riwayatGaji.id},data-idKaryawan=${karyawan.getIdKaryawan()}">Delete</button>
+                                        <button class="montserrat-small btn btn-dark text-white btn-rounded btn-delete-gaji" th:attr="data-idGaji=${riwayatGaji.id},data-idKaryawan=${karyawan.getIdKaryawan()}">Hapus</button>
                                     </td>
                                 </tr>
                             </div>
@@ -356,7 +363,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <input type="hidden" th:value="${karyawan.idKaryawan}" name="idKar"/>
+                            <input type="hidden" th:value="${karyawan.idKaryawan}" name="idKar" />
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded" data-dismiss="modal">Batal</button>
@@ -430,7 +437,7 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Delete Gaji</h4>
+                    <h4 class="modal-title">Hapus Riwayat Gaji</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
@@ -442,7 +449,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Delete Gaji</button>
+                        <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Hapus Gaji</button>
                         <button type="button" class="montserrat-small btn btn-dark btn-rounded" data-dismiss="modal">Close</button>
                     </div>
                 </form>
@@ -516,7 +523,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="ubahKontakDaruratModal" tabindex="-1" role="dialog" aria-labelledby="ubahKontakDaruratModalLabel" aria-hidden="true">
+<div class="modal fade" id="ubahKontakDaruratModal" tabindex="-1" role="dialog" aria-labelledby="ubahKontakDaruratModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -547,8 +555,7 @@
                     <input type="hidden" id="id-kontak" name="idKontak">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded"
-                            data-dismiss="modal">Batal</button>
+                    <button type="button" class="montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded" data-dismiss="modal">Batal</button>
                     <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Ubah Kontak</button>
                 </div>
             </form>
@@ -556,7 +563,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="konfirmHapusDaruratModal" tabindex="-1" role="dialog" aria-labelledby="konfirmHapusDaruratModalLabel" aria-hidden="true">
+<div class="modal fade" id="konfirmHapusDaruratModal" tabindex="-1" role="dialog" aria-labelledby="konfirmHapusDaruratModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -567,12 +575,11 @@
             </div>
             <div class="modal-body">
                 <p class="montserrat-small">
-                   Apakah anda yakin ingin menghapus data kontak darurat?
+                    Apakah anda yakin ingin menghapus data kontak darurat?
                 </p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded"
-                        data-dismiss="modal">Batal</button>
+                <button type="button" class="montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded" data-dismiss="modal">Batal</button>
                 <form action="/employee/hapus-kontak-darurat" method="post">
                     <input type="hidden" id="idkontak" name="idKontak">
                     <input type="hidden" id="idkar" name="idKaryawan">
