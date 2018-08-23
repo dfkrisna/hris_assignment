@@ -13,8 +13,8 @@
         </div>
         <h1 th:text="${karyawan.getNamaLengkap()} + ' (' + ${karyawan.getNamaPanggilan()} + ')'">Nama Lengkap Karyawan (Nama Penggilan)</h1>
         <h3 th:text="${karyawan.getNip()}">NIP</h3>
-        <button th:if="${karyawan.isActive()}" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded toogle-status-karyawan" data-status="aktif" th:attr="data-idKaryawan=${karyawan.getIdKaryawan()}">Aktif</button>
-        <button th:if="${!karyawan.isActive()}" class="montserrat-small btn btn-dark text-white btn-rounded toogle-status-karyawan" data-status="nonaktif" th:attr="data-idKaryawan=${karyawan.getIdKaryawan()}">Tidak Aktif</button>
+        <button th:if="${karyawan.isActive()}" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded toogle-status-karyawan" data-status="aktif" th:attr="data-idKaryawan=${karyawan.getIdKaryawan()}" th:disabled="${!isHR}">Aktif</button>
+        <button th:if="${!karyawan.isActive()}" class="montserrat-small btn btn-dark text-white btn-rounded toogle-status-karyawan" data-status="nonaktif" th:attr="data-idKaryawan=${karyawan.getIdKaryawan()}" th:disabled="${!isHR}">Tidak Aktif</button>
         <br/>
         <br/>
         <div class="row">
