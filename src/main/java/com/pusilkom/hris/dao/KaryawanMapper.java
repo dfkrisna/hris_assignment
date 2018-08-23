@@ -290,4 +290,10 @@ public interface KaryawanMapper {
 
     @Delete("DELETE FROM employee.\"GAJI\" WHERE id = #{idGaji}")
     void deleteGajiById(@Param("idGaji") int idGaji);
+
+    @Update("UPDATE employee.\"KARYAWAN\" set is_active = true")
+    void activateKaryawan(int idKaryawan);
+
+    @Update("UPDATE employee.\"KARYAWAN\" set is_active = false ")
+    void deActivateKaryawan(int idKaryawan);
 }

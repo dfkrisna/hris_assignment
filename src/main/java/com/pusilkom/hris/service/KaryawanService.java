@@ -79,4 +79,8 @@ public interface KaryawanService {
 	void updateGajiById(int idGaji, int gaji);
 
 	void deleteGajiById(int idGaji);
+
+	void activateKaryawan(int idKaryawan);
+
+	void deActivateKaryawan(int idKaryawan);
 }

@@ -187,4 +187,25 @@ $(document).ready(function() {
         $("#form-delete-gaji").attr('action' , action);
         $("#modal-delete-gaji").modal();
     });
+
+    $(".toogle-status-karyawan").on("click",function(){
+        var statusKaryawan = $(this).data("status");
+        var idKaryawan = $(this).data("idkaryawan")
+        var textBtn;
+        var textKonfirmasi;
+        var action;
+        if(statusKaryawan == "aktif"){
+            textBtn = "Nonaktifkan";
+            textKonfirmasi = "Apakah anda ingin menonaktifkan anggota ini?";
+            action = "/employee/detail-karyawan/"+idKaryawan+"/deactivate";
+        }else{
+            textBtn = "Aktifkan";
+            textKonfirmasi = "Apakah anda ingin mengaktifkan anggota ini?"
+            action = "/employee/detail-karyawan/"+idKaryawan+"/activate";
+        }
+        $("#text-konfirmasi-status").text(textKonfirmasi);
+        $("#ubah-konfirmasi-status").text(textBtn);
+        $("#form-update-status").attr('action' , action);
+        $("#modal-update-status").modal();
+    });
 } );
