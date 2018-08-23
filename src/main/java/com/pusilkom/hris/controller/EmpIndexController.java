@@ -35,7 +35,7 @@ public class EmpIndexController {
 
     @Autowired
     DivisiService divisiService;
-    
+
     @GetMapping("/employee")
     public String indexMoka(Model model, @NotNull Authentication auth) {
         UserWeb user = (UserWeb) auth.getPrincipal();
@@ -65,11 +65,17 @@ public class EmpIndexController {
     public String detailKaryawan(Model model, @PathVariable("idKaryawan") int idKaryawan, @NotNull Authentication auth){
         KaryawanBaruModel karyawanBaru = karyawanService.getKaryawanBaruById(idKaryawan);
         DivisibaruModel divisi = divisiService.selectDivisiBaruByID(karyawanBaru.getIdDivisi());
+        
+        //get data diri
         DataDiriModel dataDiri = karyawanService.getDataDiriByIdKaryawan(karyawanBaru.getIdKaryawan());
+        List<KeluargaModel> keluarga = karyawanService.selectAnggotaKeluargaAll(idKaryawan);
         if(dataDiri == null){
             dataDiri = new DataDiriModel();
             dataDiri.setIdKaryawan(idKaryawan);
         }
+
+        //get data gaji
+        List<RiwayatGajiModel> listRiwayatGaji = karyawanService.selectAllRiwayatGajiById(idKaryawan);
         
         // check if user can edit
         UserWeb user = (UserWeb) auth.getPrincipal();
@@ -92,6 +98,13 @@ public class EmpIndexController {
         model.addAttribute("karyawan", karyawanBaru);
         model.addAttribute("divisi", divisi);
         model.addAttribute("dataDiri", dataDiri);
+
+        model.addAttribute("keluarga", keluarga);
+
+        System.out.println(keluarga);
+
+        model.addAttribute("listRiwayatGaji", listRiwayatGaji);
+
         model.addAttribute("darurats", dataDarurat);
         return "detail-karyawan";
     }
@@ -120,5 +133,51 @@ public class EmpIndexController {
         System.out.println(canEdit);
         return "redirect:/employee/detail-karyawan/"+idKaryawan;
     }
+
+    @PostMapping("/employee/detail-karyawan/{idKaryawan}/insert-gaji")
+    public String insertGaji(Model model, @RequestParam("gaji") int gaji, @PathVariable("idKaryawan") int idKaryawan){
+        karyawanService.insertGaji(idKaryawan, gaji);
+        return "redirect:/employee/detail-karyawan/"+idKaryawan;
+    }
+
+    @PostMapping("/employee/detail-karyawan/{idKaryawan}/update-gaji/{idGaji}")
+    public String updateGaji(@RequestParam("gaji") int gaji, @PathVariable("idKaryawan") int idKaryawan, @PathVariable("idGaji") int idGaji){
+        karyawanService.updateGajiById(idGaji, gaji);
+        return "redirect:/employee/detail-karyawan/"+idKaryawan; 
+    }
+
+    @GetMapping("/employee/detail-karyawan/{idKaryawan}/delete-gaji/{idGaji}")
+    public String deleteGaji(@PathVariable("idKaryawan") int idKaryawan, @PathVariable("idGaji") int idGaji){
+        karyawanService.deleteGajiById(idGaji);
+        return "redirect:/employee/detail-karyawan/"+idKaryawan;
+    }
+
+    @PostMapping("/employee/detail-karyawan/{idKaryawan}/insert-keluarga")
+    public String insertKeluarga(Model model,
+                                 @ModelAttribute("keluarga") KeluargaModel keluarga,
+                                 @PathVariable("idKaryawan") int idKaryawan){
+
+        keluarga.setIdKaryawan(idKaryawan);
+        karyawanService.insertAnggotaKeluarga(keluarga);
+        return "redirect:/employee/detail-karyawan/"+idKaryawan;
+    }
+
+    @RequestMapping(value = "/employee/detail-karyawan/{idKaryawan}/update-anggota-keluarga/{id}" , method = RequestMethod.POST)
+    public String updateAnggotaKeluarga (@ModelAttribute KeluargaModel keluarga, Model model, @PathVariable("idKaryawan") int idKaryawan, @PathVariable(value = "id") int id) {
+
+        karyawanService.updateAnggotaKeluarga(keluarga);
+
+        return "redirect:/employee/detail-karyawan/"+idKaryawan;
+    }
+
+
+    @RequestMapping("/employee/detail-karyawan/hapus/{idKaryawan}/{id}")
+    public String deleteAnggotaKeluarga (Model model, @PathVariable("idKaryawan") int idKaryawan, @PathVariable(value = "id") int id)
+    {
+        karyawanService.deleteAnggotaKeluarga(id);
+
+        return "redirect:/employee/detail-karyawan/"+idKaryawan;
+    }
+
 
 }

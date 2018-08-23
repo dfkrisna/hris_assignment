@@ -1,6 +1,13 @@
 package com.pusilkom.hris.service;
 
-import com.pusilkom.hris.model.*;
+
+import com.pusilkom.hris.model.FeedbackRatingModel;
+import com.pusilkom.hris.model.KaryawanBaruModel;
+import com.pusilkom.hris.model.KaryawanModel;
+import com.pusilkom.hris.model.KaryawanProyekModel;
+import com.pusilkom.hris.model.RiwayatGajiModel;
+import com.pusilkom.hris.model.DataDiriModel;
+import com.pusilkom.hris.model.KeluargaModel;
 import org.apache.tomcat.jni.Local;
 
 import java.sql.Timestamp;
@@ -66,6 +73,23 @@ public interface KaryawanService {
 	DataDiriModel getDataDiriByIdKaryawan(int idKaryawan);
 
 	void insertDataDiri(DataDiriModel dataDiri);
+
+	List<KeluargaModel> selectAnggotaKeluargaAll(int idKaryawan);
+
+	void insertAnggotaKeluarga(KeluargaModel keluarga);
+
+	void updateAnggotaKeluarga (KeluargaModel keluarga);
+
+	void deleteAnggotaKeluarga (int id);
+
+	List<RiwayatGajiModel> selectAllRiwayatGajiById(int idKaryawan);
+
+	void insertGaji(int idKaryawan, int gaji);
+
+	void updateGajiById(int idGaji, int gaji);
+
+	void deleteGajiById(int idGaji);
+
 
     List<KontakDaruratModel> getKontakDaruratKaryawan(int idKaryawan);
 
