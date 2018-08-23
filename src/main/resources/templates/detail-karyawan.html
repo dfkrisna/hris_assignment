@@ -132,7 +132,6 @@
                                     class="pusil-btn btn btn-primary btn-rounded montserrat-small">+ Tambah Kontak</button>
                         </div>
                     </div>
-                    <br/>
                     <hr/>
                     <table th:if="${darurats != null && !darurats.isEmpty()}" id="list-darurat" class="table-mpp table table-hover">
                         <thead class="tabel-header">
@@ -198,6 +197,45 @@
                 <input type="text" name="" id="" th:disabled="${!isHR}">
             </div>
         </div>
+
+        <div class="modal fade" id="tambahKontakModal" tabindex="-1" role="dialog" aria-labelledby="tambahKontakModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title montserrat-med-bold" id="tambahKontakModalLabel">Tambah Kontak Darurat</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="/employee/tambah-kontak" method="post">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="namaKontak" class="col-form-label montserrat-small">Nama Kontak</label>
+                                <input id="namaKontak" class="form-control" name="namaKontak" required/>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-row">
+                                    <div class="col-md-6">
+                                        <label for="hubungan" class="col-form-label montserrat-small">Hubungan</label>
+                                        <input class="form-control" id="hubungan" name="hubungan" required />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="nomorTelepon" class="col-form-label montserrat-small">Nomor Telepon</label>
+                                        <input class="form-control" id="nomorTelepon" name="nomorTelepon" required />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded"
+                                    data-dismiss="modal">Batal</button>
+                            <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Tambah</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     </main>
 </body>
 

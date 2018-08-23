@@ -2,15 +2,19 @@ package com.pusilkom.hris.controller;
 
 import com.pusilkom.hris.model.AbsenModel;
 import com.pusilkom.hris.model.KaryawanBaruModel;
+import com.pusilkom.hris.model.KontakDaruratModel;
+import com.pusilkom.hris.model.UserWeb;
 import com.pusilkom.hris.service.AbsenService;
 import com.pusilkom.hris.service.KaryawanService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
@@ -130,5 +134,25 @@ public class HRController {
                             @RequestParam("idKaryawan") String idKaryawan) {
         ra.addFlashAttribute("idKaryawan", idKaryawan);
         return "redirect:/employee/hr/rekap-absen";
+    }
+
+    @PostMapping("/employee/tambah-kontak")
+    public String tambahKontak(RedirectAttributes ra,
+                               @NotNull Authentication auth,
+                               @RequestParam(value = "namaKontak") String namaKontak,
+                               @RequestParam(value = "hubungan") String hubungan,
+                               @RequestParam(value = "nomorTelepon") String nomorTelepon) {
+        UserWeb user = (UserWeb) auth.getPrincipal();
+        KaryawanBaruModel karyawan = karyawanService.getKaryawanByUsername(user.getUsername());
+
+        KontakDaruratModel kontak = new KontakDaruratModel();
+        kontak.setIdKaryawan(karyawan.getIdKaryawan());
+        kontak.setNama(namaKontak);
+        kontak.setHubungan(hubungan);
+        kontak.setKontak(nomorTelepon);
+
+        karyawanService.addKontakDarurat(kontak);
+
+        return "redirect:/employee/detail-karyawan/" + karyawan.getIdKaryawan();
     }
 }

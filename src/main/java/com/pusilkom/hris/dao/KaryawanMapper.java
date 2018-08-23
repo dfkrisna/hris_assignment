@@ -279,4 +279,8 @@ public interface KaryawanMapper {
             @Result(property = "timestamp", column = "timestamp")
     })
     List<KontakDaruratModel> selectKontakDaruratKaryawan(int idKaryawan);
+
+    @Insert("INSERT INTO employee.\"DATA_DARURAT\" (id_karyawan, nama, hubungan, nomor_telepon, timestamp) \n"
+            + "VALUES (#{idKaryawan}, #{nama}, #{hubungan}, #{kontak}, now())")
+    void insertKontakDarurat(KontakDaruratModel kontak);
 }

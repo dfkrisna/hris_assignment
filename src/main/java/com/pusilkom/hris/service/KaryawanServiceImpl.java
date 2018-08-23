@@ -205,4 +205,12 @@ public class KaryawanServiceImpl implements KaryawanService{
 	public List<KontakDaruratModel> getKontakDaruratKaryawan(int idKaryawan) {
 		return karyawanMapper.selectKontakDaruratKaryawan(idKaryawan);
 	}
+
+	@Override
+	public void addKontakDarurat(KontakDaruratModel kontak) {
+		KaryawanBaruModel k = karyawanMapper.getKaryawanBaruById(kontak.getIdKaryawan());
+		if(k != null) {
+			karyawanMapper.insertKontakDarurat(kontak);
+		}
+	}
 }

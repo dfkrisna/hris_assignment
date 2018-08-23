@@ -68,4 +68,6 @@ public interface KaryawanService {
 	void insertDataDiri(DataDiriModel dataDiri);
 
     List<KontakDaruratModel> getKontakDaruratKaryawan(int idKaryawan);
+
+	void addKontakDarurat(KontakDaruratModel kontak);
 }
