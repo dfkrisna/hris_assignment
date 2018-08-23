@@ -16,9 +16,9 @@
         <h3 th:text="${karyawan.getNip()}">NIP</h3>
         <br/>
         <div class="row">
-            <div class="col row">
+            <div class="col-6 row">
                 <h6 class="col-md-4">E-Mail Pusilkom</h6>
-                <h6 class="col-md-1">:</h6>
+                <h6 class="col-md-0">:</h6>
                 <h6 class="col-md" th:text="${karyawan.getEmailPusilkom()}"> EMAIL PUSILKOM</h6>
             </div>
             <div class="col"></div>
@@ -27,9 +27,9 @@
             </div>
         </div>
         <div class="row">
-            <div class="col row">
+            <div class="col-6 row">
                 <h6 class="col-md-4">E-Mail Pribadi</h6>
-                <h6 class="col-md-1">:</h6>
+                <h6 class="col-md-0">:</h6>
                 <h6 class="col-md" th:text="${karyawan.getEmailPribadi()}"> EMAIL PRIBADI</h6>
             </div>
             <div class="col"></div>
@@ -63,7 +63,8 @@
 
         <div class="tab-content container" id="nav-tabContent">
             <div class="tab-pane fade show active" id="nav-data-diri" role="tabpanel" aria-labelledby="nav-data-diri">
-                <form class="form-horizontal" th:action="'/employee/detail-karyawan/' + ${karyawan.getIdKaryawan()} + '/insert-data-diri'"
+                <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
+                <form th:if="${isEmployeeSelected || isHR}" class="form-horizontal" th:action="'/employee/detail-karyawan/' + ${karyawan.getIdKaryawan()} + '/insert-data-diri'"
                     th:object="${dataDiri}" method="POST">
 
                     <div class="form-row mb-3">
@@ -118,6 +119,11 @@
                 </form>
             </div>
 
+            <div class="tab-pane fade show" id="nav-data-pendidikan" role="tabpanel" aria-labelledby="nav-data-pendidikan">
+                <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
+                <!-- gunakan th:if="${isEmployeeSelected || isHR}" untuk menampilkan -->
+
+
             <div class="tab-pane fade show" id="nav-data-keluarga" role="tabpanel" aria-labelledby="nav-data-keluarga">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah-keluarga"><i class="fas fa-plus" style="font-size: 15px;"></i> Tambah Anggota Keluarga
                 </button>
@@ -154,6 +160,12 @@
                     </tbody>
                 </table>
             </div>
+<<<<<<< HEAD
+=======
+            <div class="tab-pane fade show" id="nav-data-benefit" role="tabpanel" aria-labelledby="nav-data-darurat">
+                <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
+                <!-- gunakan th:if="${isEmployeeSelected || isHR}" untuk menampilkan -->
+>>>>>>> bc186808f103e70380d5ca55c5a78ca2e20017e5
 
 
             <div class="modal fade" id="modal-tambah-keluarga">
@@ -197,6 +209,7 @@
                 </div>
             </div>
 
+
             <div class="tab-pane fade show" id="nav-data-pendidikan" role="tabpanel" aria-labelledby="nav-data-pendidikan">
 
             </div>
@@ -204,22 +217,146 @@
             </div>
             <div class="tab-pane fade show" id="nav-data-benefit" role="tabpanel" aria-labelledby="nav-data-darurat">
 
+            <div class="tab-pane fade show" id="nav-data-keluarga" role="tabpanel" aria-labelledby="nav-data-keluarga">
+                <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
+                <!-- gunakan th:if="${isEmployeeSelected || isHR}" untuk menampilkan -->
+
+
             </div>
 
 
             <div class="tab-pane fade show" id="nav-data-gaji" role="tabpanel" aria-labelledby="nav-data-gaji">
-
+                <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
+                <button th:if="${isHR}" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah-gaji">
+                    + Ubah Gaji
+                </button>
+                <h2 class="text-center montserrat-bold-big">List Riwayat Gaji</h2>
+                <div th:if="${isEmployeeSelected || isHR}">
+                    <table class="table table-hover">
+                        <thead class="tabel-header">
+                            <tr>
+                                <th class="montserrat-small-bold text-center" scope="col">No.</th>
+                                <th class="montserrat-small-bold text-center" scope="col">Tanggal Aktif</th>
+                                <th class="montserrat-small-bold text-center" scope="col">Nilai Gaji</th>
+                                <th th:if="${isHR}" class="montserrat-small-bold text-center" scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <!-- th:each="karyawanCuti, iterationStatus: ${listOfKaryawanCuti}" -->
+                        <div th:each="riwayatGaji, iterationStatus: ${listRiwayatGaji}">
+                            <tr>
+                                <td class="text-center">
+                                    <p class="d-inline montserrat-small text-muted" th:text="${iterationStatus.count}">No</p>
+                                </td>
+                                <td class="text-center">
+                                    <p class="d-inline montserrat-small text-muted" th:text="${riwayatGaji.tanggalAktif}">Tanggal Aktif</p>
+                                </td>
+                                <td class="text-center">
+                                    <p class="d-inline montserrat-small text-muted" th:text="${riwayatGaji.nilaiGaji}">Nilai Gaji</p>
+                                </td>
+                                <td class="text-center" th:if="${isHR}">
+                                    <button class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded btn-update-gaji" th:attr="data-idGaji=${riwayatGaji.id},data-idKaryawan=${karyawan.getIdKaryawan()}, data-gaji=${riwayatGaji.nilaiGaji}">Ubah</button>
+                                    <button class="montserrat-small btn btn-dark text-white btn-rounded btn-delete-gaji" th:attr="data-idGaji=${riwayatGaji.id},data-idKaryawan=${karyawan.getIdKaryawan()}">Delete</button>
+                                </td>
+                            </tr>
+                        </div>
+                    </table>
+                </div>
+                <!-- gunakan boolean isHR agar disabled -->
             </div>
 
             <div class="tab-pane fade show" id="nav-data-benefit" role="tabpanel" aria-labelledby="nav-data-benefit">
-
+                <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
+                <!-- gunakan th:if="${isEmployeeSelected || isHR}" untuk menampilkan -->
+                <!-- gunakan boolean isHR agar disabled -->
+                <input type="text" name="" id="" th:disabled="${!isHR}">
             </div>
 
             <div class="tab-pane fade show" id="nav-data-kontrak" role="tabpanel" aria-labelledby="nav-data-kontrak">
-
+                <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
+                <!-- gunakan th:if="${isEmployeeSelected || isHR}" untuk menampilkan -->
+                <!-- gunakan boolean isHR agar disabled -->
+                <input type="text" name="" id="" th:disabled="${!isHR}">
             </div>
         </div>
     </main>
+    <div class="modal fade" id="modal-tambah-gaji">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Ubah Gaji</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <form id="form-tambah-gaji" th:action="'/employee/detail-karyawan/' + ${karyawan.getIdKaryawan()} + '/insert-gaji'" method="POST">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="gaji" class="col-form-label">Gaji :</label>
+                            <input type="number" class="form-control" id="gaji" name="gaji" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Tambah Gaji</button>
+                        <button type="button" class="montserrat-small btn btn-dark btn-rounded" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-update-gaji">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Ubah Gaji</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <form id="form-update-gaji" method="POST">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="gaji" class="col-form-label">Gaji :</label>
+                            <input type="number" class="form-control" id="input-gaji" name="gaji" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Update Gaji</button>
+                        <button type="button" class="montserrat-small btn btn-dark btn-rounded" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-delete-gaji">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Gaji</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <form id="form-delete-gaji" method="GET">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <h5>Apakah anda yakin untuk menghapus riwayat gaji ini?</h5>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Delete Gaji</button>
+                        <button type="button" class="montserrat-small btn btn-dark btn-rounded" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 
 

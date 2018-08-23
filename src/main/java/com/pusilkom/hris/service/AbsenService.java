@@ -25,4 +25,12 @@ public interface AbsenService {
     Timestamp modifyTime(Timestamp time);
 
     Map mapDurasiAbsen(List<AbsenModel> absens);
+
+    List<AbsenModel> getAllAbsen();
+
+    List<AbsenModel> getAbsenByPeriode(LocalDate periode);
+
+    Map mapAbsenKaryawan(List<AbsenModel> absens);
+
+    List<AbsenModel> getAbsenKaryawanByPeriode(KaryawanBaruModel karyawan, LocalDate periode);
 }

@@ -4,7 +4,10 @@ import com.pusilkom.hris.model.DataDiriModel;
 import com.pusilkom.hris.model.FeedbackRatingModel;
 import com.pusilkom.hris.model.KaryawanBaruModel;
 import com.pusilkom.hris.model.KaryawanModel;
+
 import com.pusilkom.hris.model.KeluargaModel;
+
+import com.pusilkom.hris.model.RiwayatGajiModel;
 import org.apache.ibatis.annotations.*;
 
 import java.sql.Timestamp;
@@ -274,6 +277,7 @@ public interface KaryawanMapper {
     void insertDataDiri(DataDiriModel dataDiri);
 
 
+
     @Select("SELECT * FROM employee.\"KELUARGA\" WHERE id_karyawan=#{idKaryawan}" )
     @Results(value = {
             @Result(property="id", column="id"),
@@ -295,4 +299,23 @@ public interface KaryawanMapper {
 
     @Delete("DELETE FROM employee.\"KELUARGA\" WHERE id = #{id}")
     void deleteAnggotaKeluarga (int id);
+
+    @Select("SELECT * FROM employee.\"GAJI\" WHERE id_karyawan = #{idKaryawan} ORDER BY id DESC")
+    @Results(value ={
+            @Result(property = "id", column = "id"),
+            @Result(property = "idKaryawan", column = "id_karyawan"),
+            @Result(property = "tanggalAktif", column = "tanggal_aktif"),
+            @Result(property = "nilaiGaji", column = "nilai_gaji")
+    })
+    List<RiwayatGajiModel> selectAllRiwayatGajiById(int idKaryawan);
+
+    @Insert("INSERT INTO employee.\"GAJI\" (id_karyawan, nilai_gaji) VALUES (#{idKaryawan}, #{gaji})")
+    void insertGaji(@Param("idKaryawan") int idKaryawan, @Param("gaji") int gaji);
+
+    @Update("UPDATE employee.\"GAJI\" set nilai_gaji=#{gaji} where id=#{idGaji}")
+    void updateGajiById(@Param("idGaji") int idGaji, @Param("gaji") int gaji);
+
+    @Delete("DELETE FROM employee.\"GAJI\" WHERE id = #{idGaji}")
+    void deleteGajiById(@Param("idGaji") int idGaji);
+
 }

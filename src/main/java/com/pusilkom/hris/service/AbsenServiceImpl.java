@@ -3,7 +3,9 @@ package com.pusilkom.hris.service;
 import com.pusilkom.hris.dao.AbsenMapper;
 import com.pusilkom.hris.model.AbsenModel;
 import com.pusilkom.hris.model.KaryawanBaruModel;
+import com.pusilkom.hris.model.KaryawanModel;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,9 @@ import java.util.Map;
 public class AbsenServiceImpl implements AbsenService{
     @Autowired
     AbsenMapper absenMapper;
+
+    @Autowired
+    KaryawanService karyawanService;
 
     @Override
     public void checkIn(KaryawanBaruModel karyawan) {
@@ -119,5 +124,54 @@ public class AbsenServiceImpl implements AbsenService{
             mapDurasi.put(absen.getId(), durasiStr);
         }
         return mapDurasi;
+    }
+
+    @Override
+    public List<AbsenModel> getAllAbsen() {
+        List<AbsenModel> absens = absenMapper.selectAllAbsen();
+        for(AbsenModel absen: absens) {
+            absen.setCheckInTime(modifyTime(absen.getCheckInTime()));
+            absen.setCheckOutTime(modifyTime(absen.getCheckOutTime()));
+        }
+        return absens;
+    }
+
+    @Override
+    public List<AbsenModel> getAbsenByPeriode(LocalDate periode) {
+        Timestamp tanggalAwal = Timestamp.valueOf(periode.atStartOfDay());
+        Timestamp tanggalAkhir = Timestamp.valueOf(periode.plusMonths(1).minusDays(1).atTime(23, 59, 59));
+        List<AbsenModel> absens = absenMapper.selectAbsenByPeriode(tanggalAwal, tanggalAkhir);
+        for(AbsenModel absen: absens) {
+            absen.setCheckInTime(modifyTime(absen.getCheckInTime()));
+            absen.setCheckOutTime(modifyTime(absen.getCheckOutTime()));
+        }
+        return absens;
+    }
+
+    @Override
+    public Map mapAbsenKaryawan(List<AbsenModel> absens) {
+        Map map = new HashMap();
+
+        for(int i = 0; i < absens.size(); i++) {
+            AbsenModel absen = absens.get(i);
+            KaryawanBaruModel karyawan = karyawanService.getKaryawanBaruById(absen.getIdKaryawan());
+            if(karyawan != null) {
+                map.put(absen.getId(), karyawan.getNamaLengkap());
+            }
+        }
+
+        return map;
+    }
+
+    @Override
+    public List<AbsenModel> getAbsenKaryawanByPeriode(KaryawanBaruModel karyawan, LocalDate periode) {
+        Timestamp tanggalAwal = Timestamp.valueOf(periode.atStartOfDay());
+        Timestamp tanggalAkhir = Timestamp.valueOf(periode.plusMonths(1).minusDays(1).atTime(23, 59, 59));
+        List<AbsenModel> absens = absenMapper.selectAbsenKaryawanByPeriode(karyawan.getIdKaryawan(), tanggalAwal, tanggalAkhir);
+        for(AbsenModel absen: absens) {
+            absen.setCheckInTime(modifyTime(absen.getCheckInTime()));
+            absen.setCheckOutTime(modifyTime(absen.getCheckOutTime()));
+        }
+        return absens;
     }
 }
