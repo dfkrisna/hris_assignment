@@ -8,6 +8,8 @@ import com.pusilkom.hris.model.KaryawanProyekModel;
 import com.pusilkom.hris.model.RiwayatGajiModel;
 import com.pusilkom.hris.model.DataDiriModel;
 import com.pusilkom.hris.model.KeluargaModel;
+import com.pusilkom.hris.model.PendidikanModel;
+
 import org.apache.tomcat.jni.Local;
 
 import java.sql.Timestamp;
@@ -90,4 +92,11 @@ public interface KaryawanService {
 
 	void deleteGajiById(int idGaji);
 
+	List<PendidikanModel> selectPendidikanAll(int idKaryawan);
+
+	void insertPendidikan(PendidikanModel pendidikan);
+
+	void deletePendidikan (int id);
+
+	void updatePendidikan (PendidikanModel pendidikan);
 }

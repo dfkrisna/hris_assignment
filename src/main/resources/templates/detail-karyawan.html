@@ -122,6 +122,81 @@
             <div class="tab-pane fade show" id="nav-data-pendidikan" role="tabpanel" aria-labelledby="nav-data-pendidikan">
                 <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
                 <!-- gunakan th:if="${isEmployeeSelected || isHR}" untuk menampilkan -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah-pendidikan"><i class="fas fa-plus" style="font-size: 15px;"></i> Tambah Pendidikan
+                </button>
+
+                <h2 class="text-center montserrat-bold-big">List Riwayat Pendidikan</h2>
+
+                <table class="table table-hover mt-3">
+                    <thead style="background-color: #FFCF25;">
+                    <tr>
+                        <th class="montserrat-small-bold text-center" scope="col" >No.</th>
+                        <th class="montserrat-small-bold text-center" scope="col" >Gelar</th>
+                        <th class="montserrat-small-bold text-center" scope="col" >Institusi</th>
+                        <th class="montserrat-small-bold text-center" scope="col" >Perioda Mulai</th>
+                        <th class="montserrat-small-bold text-center" scope="col" >Periode Selesai</th>
+                        <th class="montserrat-small-bold text-center" scope="col">Aksi</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <div th:each="pendidikan,iterationStatus: ${pendidikan}">
+                        <tr>
+                            <td class="montserrat-small text-center" scope="row" th:text="${iterationStatus.count}"></td>
+                            <td class="montserrat-small text-center" th:text="${pendidikan.gelar}" ></td>
+                            <td class="montserrat-small text-center" th:text="${pendidikan.institusi}"></td>
+                            <td class="montserrat-small text-center" th:text="${pendidikan.periodeMulai}"></td>
+                            <td class="montserrat-small text-center" th:text="${pendidikan.periodeSelesai}"></td>
+                            <td class="text-center">
+                                <a data-toggle="modal" data-target="#modal-ubah-pendidikan" data-title="Ubah Pendidiikan"
+                                   th:attr="data-id=${pendidikan.id},data-idKaryawan=${pendidikan.idKaryawan},data-gelar=${pendidikan.gelar},data-institusi=${pendidikan.institusi}, data-periodemulai=${pendidikan.periodeMulai}, data-periodeselesai=${pendidikan.periodeSelesai}
+                                    " th:title="Ubah" class="btn-ubah-pendidikan montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Ubah</a>
+                                <a data-toggle="modal" data-target="#modal-hapus-pendidikan" th:attr="data-id=${pendidikan.id},data-idKaryawan=${pendidikan.idKaryawan}" data-placement="bottom" th:title="Hapus"  class="montserrat-small btn btn-dark text-white btn-rounded btn-hapus-pendidikan">Hapus</a>
+                            </td>
+                        </tr>
+                    </div>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="modal fade" id="modal-tambah-pendidikan">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Tambah Pendidikan</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <form  th:action="'/employee/detail-karyawan/' + ${karyawan.getIdKaryawan()}  + '/insert-pendidikan'"  method="POST">
+                            <div class="form-body">
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Gelar :</label>
+                                        <input type="text" class="form-control"  name="gelar" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label  class="col-form-label">Institusi :</label>
+                                        <input type="text" class="form-control"  name="institusi"   required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label  class="col-form-label">periode Mulai :</label>
+                                        <input type="date" class="form-control"  name="periodeMulai"  required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label  class="col-form-label">Periode Selesai :</label>
+                                        <input type="date" class="form-control"  name="periodeSelesai"  required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Tambah Pendidikan</button>
+                                <button type="button" class="montserrat-small btn btn-dark btn-rounded" data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
 
             <div class="tab-pane fade show" id="nav-data-benefit" role="tabpanel" aria-labelledby="nav-data-darurat">
@@ -136,32 +211,33 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah-keluarga"><i class="fas fa-plus" style="font-size: 15px;"></i> Tambah Anggota Keluarga
                 </button>
 
+                <h2 class="text-center montserrat-bold-big">List Anggota Keluarga</h2>
+
                 <table class="table table-hover mt-3">
-                    <thead style="background-color: #FFCF25;">
+                    <thead style="background-color: #FFCF25; ">
                     <tr>
-                        <th class="montserrat-small-bold" scope="col" >No.</th>
-                        <th class="montserrat-small-bold" scope="col" >Hubungan</th>
-                        <th class="montserrat-small-bold" scope="col" >Nama</th>
-                        <th class="montserrat-small-bold" scope="col" >NIK</th>
-                        <th class="montserrat-small-bold" scope="col" >Tanggal Lahir</th>
-                        <th class="montserrat-small-bold" scope="col">Aksi</th>
+                        <th class="montserrat-small-bold text-center" scope="col" >No.</th>
+                        <th class="montserrat-small-bold text-center" scope="col" >Hubungan</th>
+                        <th class="montserrat-small-bold text-center" scope="col" >Nama</th>
+                        <th class="montserrat-small-bold text-center" scope="col" >NIK</th>
+                        <th class="montserrat-small-bold text-center" scope="col" >Tanggal Lahir</th>
+                        <th class="montserrat-small-bold text-center" scope="col">Aksi</th>
                     </tr>
                     </thead>
                     <tbody>
                     <div th:each="keluarga,iterationStatus: ${keluarga}">
                         <tr>
-                            <td class="montserrat-small" scope="row" th:text="${iterationStatus.count}" width="1%"></td>
-                            <td class="montserrat-small" th:text="${keluarga.hubungan}" width="15%"></td>
-                            <td class="montserrat-small" th:text="${keluarga.nama}" width="25%"></td>
-                            <td class="montserrat-small" th:text="${keluarga.nik}" width="25%"></td>
-                            <td class="montserrat-small" th:text="${keluarga.tanggalLahir}" width="19%"></td>
-                            <td width="15%">
+                            <td class="montserrat-small text-center" scope="row" th:text="${iterationStatus.count}" ></td>
+                            <td class="montserrat-small text-center" th:text="${keluarga.hubungan}" ></td>
+                            <td class="montserrat-small text-center" th:text="${keluarga.nama}" ></td>
+                            <td class="montserrat-small text-center" th:text="${keluarga.nik}" ></td>
+                            <td class="montserrat-small text-center" th:text="${keluarga.tanggalLahir}" ></td>
+                            <td class="text-center" >
                                 <a data-toggle="modal" data-target="#modal-ubah-anggota-keluarga" data-title="Ubah Anggota Keluarga"
                                    th:attr="data-id=${keluarga.id},data-idKaryawan=${keluarga.idKaryawan},data-hubungan=${keluarga.hubungan},data-nama=${keluarga.nama}, data-nik=${keluarga.nik}, data-tanggalLahir=${keluarga.tanggalLahir}
-                                    " th:title="Ubah" class="btn-ubah-anggota-keluarga d-inline pusil-btn btn btn-dark montserrat-small text-white btn-rounded" style="padding: 5px 10px;"  ><i class="fas fa-pencil-alt" style="font-size: 15px;"></i></a>
+                                    " th:title="Ubah" class="btn-ubah-anggota-keluarga montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Ubah</a>
 
-
-                                <a data-toggle="tooltip"  data-placement="bottom"th th:title="Hapus" th:href="'/employee/detail-karyawan/hapus/'+ ${keluarga.idKaryawan} + '/' + ${keluarga.id}" class="btn btn-danger montserrat-small text-white btn-rounded" style="padding: 5px 10px;"><i class="fas fa-trash-alt" style="font-size: 15px;"></i></a>
+                                <a data-toggle="modal" data-target="#modal-hapus-keluarga" th:attr="data-id=${keluarga.id},data-idKaryawan=${keluarga.idKaryawan}" data-placement="bottom" th:title="Hapus"  class="montserrat-small btn btn-dark text-white btn-rounded btn-hapus-keluarga">Hapus</a>
                             </td>
                         </tr>
                     </div>
@@ -343,45 +419,128 @@
             </div>
         </div>
     </div>
-</body>
 
 
-<div class="modal fade" id="modal-ubah-anggota-keluarga" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+
+    <div class="modal fade" id="modal-ubah-pendidikan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ubah Pendidikan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="form-ubah-pendidikan" method="POST">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="gelar" class="col-form-label">Gelar :</label>
+                            <input type="text" class="form-control" id="gelar" name="gelar"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="institusi" class="col-form-label">Institusi :</label>
+                            <input type="text" class="form-control" id="institusi" name="institusi"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label">Periode Mulai :</label>
+                            <input type="date" class="form-control" id="periodemulai" name="periodeMulai"/>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-form-label">Periode Selesai:</label>
+                            <input  type="date" class="form-control" id="periodeselesai" name="periodeSelesai"/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Ubah</button>
+                        <button type="button" class="montserrat-small btn btn-dark btn-rounded" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
             </div>
-            <form id="form-ubah-anggota-keluarga" method="POST">
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="hubungan" class="col-form-label">Hubungan :</label>
-                        <input type="text" class="form-control" id="hubungan" name="hubungan"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="nama" class="col-form-label">Nama :</label>
-                        <input type="text" class="form-control" id="nama" name="nama"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="nik" class="col-form-label">NIK :</label>
-                        <input type="text" class="form-control" id="nik" name="nik"/>
-                    </div>
-                    <div class="form-group">
-                        <label  class="col-form-label">Tanggal Lahir:</label>
-                        <input  type="date" class="form-control" id="tanggal-lahir" name="tanggalLahir"/>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Ubah</button>
-                    <button type="button" class="montserrat-small btn btn-dark btn-rounded" data-dismiss="modal">Close</button>
-                </div>
-            </form>
         </div>
     </div>
-</div>
 
+    <div class="modal fade" id="modal-ubah-anggota-keluarga" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ubah Anggota Keluarga</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="form-ubah-anggota-keluarga" method="POST">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="hubungan" class="col-form-label">Hubungan :</label>
+                            <input type="text" class="form-control" id="hubungan" name="hubungan"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="nama" class="col-form-label">Nama :</label>
+                            <input type="text" class="form-control" id="nama" name="nama"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="nik" class="col-form-label">NIK :</label>
+                            <input type="text" class="form-control" id="nik" name="nik"/>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-form-label">Tanggal Lahir:</label>
+                            <input  type="date" class="form-control" id="tanggal-lahir" name="tanggalLahir"/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Ubah</button>
+                        <button type="button" class="montserrat-small btn btn-dark btn-rounded" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="modal-hapus-pendidikan">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Hapus Pendidikan</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <h5>Apakah anda yakin ingin menghapus pendidikan?</h5>
+                </div>
+                <div class="modal-footer">
+                    <a id="btn-konfirmasi-hapus-pendidikan" class="montserrat-small pusil-btn-danger btn btn-dark text-white btn-rounded">Hapus Pendidikan</a>
+                    <button type="button" class="montserrat-small btn btn-dark btn-rounded" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-hapus-keluarga">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Hapus Anggota Keluarga</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <h5>Apakah anda yakin ingin menghapus anggota keluarga?</h5>
+                </div>
+                <div class="modal-footer">
+                    <a id="btn-konfirmasi-hapus-keluarga" class="montserrat-small pusil-btn-danger btn btn-dark text-white btn-rounded">Hapus Anggota Keluarga</a>
+                    <button type="button" class="montserrat-small btn btn-dark btn-rounded" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
 
 </html>

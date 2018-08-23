@@ -9,6 +9,7 @@ import com.pusilkom.hris.model.KaryawanProyekModel;
 import com.pusilkom.hris.model.DataDiriModel;
 import com.pusilkom.hris.model.RiwayatGajiModel;
 import com.pusilkom.hris.model.KeluargaModel;
+import com.pusilkom.hris.model.PendidikanModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -239,4 +240,16 @@ public class KaryawanServiceImpl implements KaryawanService{
 		karyawanMapper.deleteGajiById(idGaji);
 	}
 
+	@Override
+	public List<PendidikanModel> selectPendidikanAll(int idKaryawan){return karyawanMapper.selectPendidikanAll(idKaryawan);}
+
+	@Override
+	public void insertPendidikan(PendidikanModel pendidikan){karyawanMapper.insertPendidikan(pendidikan);}
+
+	@Override
+	public void deletePendidikan (int id){karyawanMapper.deletePendidikan(id);}
+
+	@Override
+	public void updatePendidikan (PendidikanModel pendidikan){karyawanMapper.updatePendidikan(pendidikan);}
 }
+
