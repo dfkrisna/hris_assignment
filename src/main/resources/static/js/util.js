@@ -167,6 +167,32 @@ $(document).ready(function() {
         $("#modal-hapus-karyawan").modal();
     })
 
+    $(".btn-ubah-anggota-keluarga").on("click", function(){
+        event.preventDefault();
+
+
+        var id = $(this).data('id');
+        var idKaryawan = $(this).data('idkaryawan');
+        var hubungan = $(this).data('hubungan');
+        var nama = $(this).data('nama');
+        var nik = $(this).data('nik');
+        var tanggalLahir = $(this).data('tanggallahir');
+        var action = "/employee/detail-karyawan/" +idKaryawan +"/update-anggota-keluarga/" + id;
+
+        // fill form value and action
+        $("#id").attr('value', id);
+        $("#idKaryawan").attr('value', idKaryawan);
+        $("#hubungan").attr('value', hubungan);
+        $("#nama").attr('value', nama);
+        $("#nik").attr('value', nik);
+        $("#tanggal-lahir").attr('value', tanggalLahir);
+        $("#form-ubah-anggota-keluarga").attr('action', action);
+
+        console.log(tanggalLahir.toDateString());
+        // pop-up modal
+        $("modal-ubah-anggota-keluarga").modal();
+    })
+
     $('[data-toggle="tooltip"]').tooltip();
 
 } );
