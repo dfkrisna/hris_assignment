@@ -173,7 +173,7 @@ $(document).ready(function() {
 
         var id = $(this).data('id');
         var idKaryawan = $(this).data('idkaryawan');
-        var hubungan = $(this).data('hubungan');
+        var hubungan = $(this).data('hubungankeluarga');
         var nama = $(this).data('nama');
         var nik = $(this).data('nik');
         var tanggalLahir = $(this).data('tanggallahir');
@@ -182,7 +182,7 @@ $(document).ready(function() {
         // fill form value and action
         $("#id").attr('value', id);
         $("#idKaryawan").attr('value', idKaryawan);
-        $("#hubungan").attr('value', hubungan);
+        $("#hubungankeluarga").attr('value', hubungan);
         $("#nama").attr('value', nama);
         $("#nik").attr('value', nik);
         $("#tanggal-lahir").attr('value', tanggalLahir);
@@ -213,6 +213,48 @@ $(document).ready(function() {
         $("#form-delete-gaji").attr('action' , action);
         $("#modal-delete-gaji").modal();
     });
+
+
+    $(".btn-hapus-keluarga").on("click", function(){
+        event.preventDefault();
+        var action = "/employee/detail-karyawan/hapus-keluarga/"  + $(this).data('idkaryawan') + "/" + $(this).data('id');
+
+        $("#btn-konfirmasi-hapus-keluarga").attr('href', action);
+        $("#modal-hapus-keluarga").modal();
+    })
+
+    $(".btn-hapus-pendidikan").on("click", function(){
+        event.preventDefault();
+        var action = "/employee/detail-karyawan/hapus-pendidikan/"  + $(this).data('idkaryawan') + "/" + $(this).data('id');
+
+        $("#btn-konfirmasi-hapus-pendidikan").attr('href', action);
+        $("#modal-hapus-pendidikan").modal();
+    })
+
+    $(".btn-ubah-pendidikan").on("click", function(){
+        event.preventDefault();
+
+
+        var id = $(this).data('id');
+        var idKaryawan = $(this).data('idkaryawan');
+        var gelar = $(this).data('gelar');
+        var institusi = $(this).data('institusi');
+        var periodemulai = $(this).data('periodemulai');
+        var periodeselesai = $(this).data('periodeselesai');
+        var action = "/employee/detail-karyawan/" +idKaryawan +"/update-pendidikan/" + id;
+
+        // fill form value and action
+        $("#id").attr('value', id);
+        $("#idKaryawan").attr('value', idKaryawan);
+        $("#gelar").attr('value',gelar);
+        $("#institusi").attr('value', institusi);
+        $("#periodemulai").attr('value', periodemulai);
+        $("#periodeselesai").attr('value', periodeselesai);
+        $("#form-ubah-pendidikan").attr('action', action);
+
+        // pop-up modal
+        $("modal-ubah-pendidikan").modal();
+    })
 
     $(".toogle-status-karyawan").on("click",function(){
         var statusKaryawan = $(this).data("status");
@@ -269,6 +311,5 @@ $(document).ready(function() {
         $("#konfirmHapusDaruratModal").modal();
     });
 
-    $("#ubah-data").on("click")
 
 } );

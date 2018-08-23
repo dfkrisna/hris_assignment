@@ -2,7 +2,9 @@ package com.pusilkom.hris.service;
 
 import com.pusilkom.hris.dao.KaryawanMapper;
 
+
 import com.pusilkom.hris.model.*;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -234,6 +236,17 @@ public class KaryawanServiceImpl implements KaryawanService{
 	}
 
 	@Override
+	public List<PendidikanModel> selectPendidikanAll(int idKaryawan){return karyawanMapper.selectPendidikanAll(idKaryawan);}
+
+	@Override
+	public void insertPendidikan(PendidikanModel pendidikan){karyawanMapper.insertPendidikan(pendidikan);}
+
+	@Override
+	public void deletePendidikan (int id){karyawanMapper.deletePendidikan(id);}
+
+	@Override
+	public void updatePendidikan (PendidikanModel pendidikan){karyawanMapper.updatePendidikan(pendidikan);}
+
 	public void activateKaryawan(int idKaryawan){
 		karyawanMapper.activateKaryawan(idKaryawan);
 	}
@@ -266,3 +279,4 @@ public class KaryawanServiceImpl implements KaryawanService{
 		karyawanMapper.deleteKontakDaruratById(idKontak);
 	}
 }
+

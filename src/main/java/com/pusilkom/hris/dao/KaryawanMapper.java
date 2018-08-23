@@ -281,8 +281,8 @@ public interface KaryawanMapper {
             @Result(property="hubungan", column="hubungan"),
             @Result(property="tanggalLahir", column="tanggal_lahir")
     })
-
     List<KeluargaModel> selectAnggotaKeluargaAll(int idKaryawan);
+
     @Insert("INSERT INTO employee.\"KELUARGA\" (id_karyawan, hubungan, nama, tanggal_lahir, nik) " +
             "VALUES (#{idKaryawan}, #{hubungan}, #{nama}, #{tanggalLahir}, #{nik})")
     void insertAnggotaKeluarga(KeluargaModel keluarga);
@@ -312,6 +312,29 @@ public interface KaryawanMapper {
     @Delete("DELETE FROM employee.\"GAJI\" WHERE id = #{idGaji}")
     void deleteGajiById(@Param("idGaji") int idGaji);
 
+
+    @Select("SELECT * FROM employee.\"PENDIDIKAN\" WHERE id_karyawan=#{idKaryawan}" )
+    @Results(value = {
+            @Result(property="id", column="id"),
+            @Result(property="idKaryawan", column="id_karyawan"),
+            @Result(property="institusi", column="institusi"),
+            @Result(property="gelar", column="gelar"),
+            @Result(property="periodeMulai", column="periode_mulai"),
+            @Result(property="periodeSelesai", column="periode_selesai")
+    })
+    List<PendidikanModel> selectPendidikanAll(int idKaryawan);
+
+    @Insert("INSERT INTO employee.\"PENDIDIKAN\" (id_karyawan, gelar, institusi, periode_mulai, periode_selesai) " +
+            "VALUES (#{idKaryawan}, #{gelar}, #{institusi}, #{periodeMulai}, #{periodeSelesai})")
+    void insertPendidikan(PendidikanModel pendidikan);
+
+    @Delete("DELETE FROM employee.\"PENDIDIKAN\" WHERE id = #{id}")
+    void deletePendidikan (int id);
+
+    @Update("UPDATE employee.\"PENDIDIKAN\"  SET gelar = #{gelar}, institusi = #{institusi}, periode_mulai = #{periodeMulai}, periode_selesai = #{periodeSelesai}" +
+            " WHERE id = #{id}")
+    void updatePendidikan (PendidikanModel pendidikan);
+
     @Update("UPDATE employee.\"KARYAWAN\" set is_active = true")
     void activateKaryawan(int idKaryawan);
 
@@ -339,4 +362,5 @@ public interface KaryawanMapper {
 
     @Delete("delete from employee.\"DATA_DARURAT\" where id=#{idKontak}")
     void deleteKontakDaruratById(Integer idKontak);
+
 }
