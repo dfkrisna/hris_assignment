@@ -93,6 +93,8 @@ public class EmpIndexController {
 
         List<KontakDaruratModel> dataDarurat = karyawanService.getKontakDaruratKaryawan(idKaryawan);
 
+        List<DivisibaruModel> divisis = divisiService.selectAllDivisiAktif();
+
         model.addAttribute("isEmployeeSelected", isEmployeeSelected);
         model.addAttribute("isHR", isHR);
         model.addAttribute("karyawan", karyawanBaru);
@@ -106,6 +108,7 @@ public class EmpIndexController {
         model.addAttribute("listRiwayatGaji", listRiwayatGaji);
 
         model.addAttribute("darurats", dataDarurat);
+        model.addAttribute("divisis", divisis);
         return "detail-karyawan";
     }
 

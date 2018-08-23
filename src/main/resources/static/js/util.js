@@ -269,4 +269,6 @@ $(document).ready(function() {
         $("#konfirmHapusDaruratModal").modal();
     });
 
+    $("#ubah-data").on("click")
+
 } );
