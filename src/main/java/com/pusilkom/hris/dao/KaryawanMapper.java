@@ -1,10 +1,7 @@
 package com.pusilkom.hris.dao;
 
-import com.pusilkom.hris.model.DataDiriModel;
-import com.pusilkom.hris.model.FeedbackRatingModel;
-import com.pusilkom.hris.model.KaryawanBaruModel;
-import com.pusilkom.hris.model.KaryawanModel;
-import com.pusilkom.hris.model.RiwayatGajiModel;
+import com.pusilkom.hris.model.*;
+
 import org.apache.ibatis.annotations.*;
 
 import java.sql.Timestamp;
@@ -273,6 +270,30 @@ public interface KaryawanMapper {
         + "VALUES (#{idKaryawan}, #{tempatLahir}, #{tanggalLahir}, #{noHp}, #{alamatTinggal}, #{nomorKtp}, #{npwp})")
     void insertDataDiri(DataDiriModel dataDiri);
 
+
+
+    @Select("SELECT * FROM employee.\"KELUARGA\" WHERE id_karyawan=#{idKaryawan}" )
+    @Results(value = {
+            @Result(property="id", column="id"),
+            @Result(property="idKaryawan", column="id_karyawan"),
+            @Result(property="nama", column="nama"),
+            @Result(property="nik", column="nik"),
+            @Result(property="hubungan", column="hubungan"),
+            @Result(property="tanggalLahir", column="tanggal_lahir")
+    })
+
+    List<KeluargaModel> selectAnggotaKeluargaAll(int idKaryawan);
+    @Insert("INSERT INTO employee.\"KELUARGA\" (id_karyawan, hubungan, nama, tanggal_lahir, nik) " +
+            "VALUES (#{idKaryawan}, #{hubungan}, #{nama}, #{tanggalLahir}, #{nik})")
+    void insertAnggotaKeluarga(KeluargaModel keluarga);
+
+    @Update("UPDATE employee.\"KELUARGA\"  SET hubungan = #{hubungan}, nama = #{nama}, nik = #{nik}, tanggal_lahir = #{tanggalLahir}" +
+            " WHERE id = #{id}")
+    void updateAnggotaKeluarga (KeluargaModel keluarga);
+
+    @Delete("DELETE FROM employee.\"KELUARGA\" WHERE id = #{id}")
+    void deleteAnggotaKeluarga (int id);
+
     @Select("SELECT * FROM employee.\"GAJI\" WHERE id_karyawan = #{idKaryawan} ORDER BY id DESC")
     @Results(value ={
             @Result(property = "id", column = "id"),
@@ -290,4 +311,25 @@ public interface KaryawanMapper {
 
     @Delete("DELETE FROM employee.\"GAJI\" WHERE id = #{idGaji}")
     void deleteGajiById(@Param("idGaji") int idGaji);
+
+    @Update("UPDATE employee.\"KARYAWAN\" set is_active = true")
+    void activateKaryawan(int idKaryawan);
+
+    @Update("UPDATE employee.\"KARYAWAN\" set is_active = false ")
+    void deActivateKaryawan(int idKaryawan);
+
+    @Select("select * from employee.\"DATA_DARURAT\" as D where D.id_karyawan=#{idKaryawan} ORDER BY id DESC")
+    @Results(value = {
+            @Result(property = "id", column = "id"),
+            @Result(property = "idKaryawan", column = "id_karyawan"),
+            @Result(property = "nama", column = "nama"),
+            @Result(property = "hubungan", column = "hubungan"),
+            @Result(property = "kontak", column = "nomor_telepon"),
+            @Result(property = "timestamp", column = "timestamp")
+    })
+    List<KontakDaruratModel> selectKontakDaruratKaryawan(int idKaryawan);
+
+    @Insert("INSERT INTO employee.\"DATA_DARURAT\" (id_karyawan, nama, hubungan, nomor_telepon, timestamp) \n"
+            + "VALUES (#{idKaryawan}, #{nama}, #{hubungan}, #{kontak}, now())")
+    void insertKontakDarurat(KontakDaruratModel kontak);
 }
