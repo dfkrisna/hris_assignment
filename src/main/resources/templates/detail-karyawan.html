@@ -43,6 +43,10 @@
             <div class="col"></div>
         </div>
 
+        <button th:if="${isHR}" id="edit-karyawan-btn" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded"
+                th:attr="data-id-kar=${karyawan.getIdKaryawan()}, data-nama-lengkap=${karyawan.namaLengkap}, data-nama-panggilan=${karyawan.namaPanggilan},
+                data-nip=${karyawan.nip}, data-id-divisi=${karyawan.idDivisi}, data-email-pus=${karyawan.emailPusilkom}, data-email-pr=${karyawan.emailPribadi}, data-list-divisi=${divisis}">Ubah Data Karyawan</button>
+
         <br/>
         <br/>
 
@@ -748,5 +752,69 @@
     </div>
 </div>
 
+<div class="modal fade" id="modal-ubah-karyawan" tabindex="-1" role="dialog" aria-labelledby="modal-ubah-karyawan-Label"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title montserrat-med-bold" id="modal-ubah-karyawan-Label">Ubah Data Karyawan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="/employee/ubah-data-karyawan" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="ubah-nama-lengkap" class="col-form-label montserrat-small">Nama Lengkap</label>
+                        <input id="ubah-nama-lengkap" class="form-control" name="namaLengkap" required/>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label for="ubah-nama-panggilan" class="col-form-label montserrat-small">Nama Panggilan</label>
+                                <input class="form-control" id="ubah-nama-panggilan" name="namaPanggilan" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label for="ubah-nip" class="col-form-label montserrat-small">NIP</label>
+                                <input class="form-control" id="ubah-nip" name="nip" required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ubah-nama-panggilan" class="col-form-label montserrat-small">Nama Panggilan</label>
+                        <select class="custom-select custom-select-md mb-3" name="divisi">
+                            <option value="0">Pilih Divisi</option>
+                            <div th:each="divisi,iterationStatus: ${divisis}">
+                                <div th:if="${divisi.id == karyawan.idDivisi}">
+                                    <option th:value="${divisi.id}" th:text="${divisi.nama}" selected></option>
+                                </div>
+                                <div th:unless="${divisi.id == karyawan.idDivisi}">
+                                    <option th:value="${divisi.id}" th:text="${divisi.nama}"></option>
+                                </div>
+                            </div>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label for="ubah-email-pus" class="col-form-label montserrat-small">Email Pusilkom</label>
+                                <input class="form-control" id="ubah-email-pus" name="emailPus" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label for="ubah-email-pr" class="col-form-label montserrat-small">Email Pribadi</label>
+                                <input class="form-control" id="ubah-email-pr" name="nip" required />
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="ubah-id-karyawan" name="idKaryawan">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded" data-dismiss="modal">Batal</button>
+                    <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Ubah</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 </html>
