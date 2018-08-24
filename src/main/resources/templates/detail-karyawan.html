@@ -142,48 +142,51 @@
                 <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
                 <!-- gunakan th:if="${isEmployeeSelected || isHR}" untuk menampilkan -->
 
-                <div class="row">
-                    <div class="col-5">
-                        <h2 class="montserrat-bold-big">Daftar Riwayat Pendidikan</h2>
-                    </div>
-                    <div class="col-4"></div>
-                    <div class="col">
-                        <button type="button"  class="pusil-btn btn btn-primary btn-rounded montserrat-small" data-toggle="modal" data-target="#modal-tambah-pendidikan">+ Tambah Pendidikan
-                        </button>
-                    </div>
-                </div>
                 <div th:unless="${!isEmployeeSelected && !isHR}">
-                    <table class="table table-hover mt-3">
-                        <thead style="background-color: #FFCF25;">
-                            <tr>
-                                <th class="montserrat-small-bold text-center" scope="col">No.</th>
-                                <th class="montserrat-small-bold text-center" scope="col">Gelar</th>
-                                <th class="montserrat-small-bold text-center" scope="col">Institusi</th>
-                                <th class="montserrat-small-bold text-center" scope="col">Perioda Mulai</th>
-                                <th class="montserrat-small-bold text-center" scope="col">Periode Selesai</th>
-                                <th class="montserrat-small-bold text-center" scope="col">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <div th:each="pendidikan,iterationStatus: ${pendidikan}">
+                    <div class="row">
+                        <div class="col-5">
+                            <h2 class="montserrat-bold-big">Daftar Riwayat Pendidikan</h2>
+                        </div>
+                        <div class="col-4"></div>
+                        <div class="col">
+                            <button type="button" class="pusil-btn btn btn-primary btn-rounded montserrat-small" data-toggle="modal" data-target="#modal-tambah-pendidikan">+ Tambah Pendidikan
+                            </button>
+                        </div>
+                    </div>
+                    <div th:unless="${!isEmployeeSelected && !isHR}">
+                        <table class="table table-hover mt-3">
+                            <thead style="background-color: #FFCF25;">
                                 <tr>
-                                    <td class="montserrat-small text-center" scope="row" th:text="${iterationStatus.count}"></td>
-                                    <td class="montserrat-small text-center" th:text="${pendidikan.gelar}"></td>
-                                    <td class="montserrat-small text-center" th:text="${pendidikan.institusi}"></td>
-                                    <td class="montserrat-small text-center" th:text="${pendidikan.periodeMulai}"></td>
-                                    <td class="montserrat-small text-center" th:text="${pendidikan.periodeSelesai}"></td>
-                                    <td class="text-center">
-                                        <a data-toggle="modal" data-target="#modal-ubah-pendidikan" data-title="Ubah Pendidiikan" th:attr="data-id=${pendidikan.id},data-idKaryawan=${pendidikan.idKaryawan},data-gelar=${pendidikan.gelar},data-institusi=${pendidikan.institusi}, data-periodemulai=${pendidikan.periodeMulai}, data-periodeselesai=${pendidikan.periodeSelesai}
-                                                    " th:title="Ubah" class="btn-ubah-pendidikan montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Ubah</a>
-                                        <a data-toggle="modal" data-target="#modal-hapus-pendidikan" th:attr="data-id=${pendidikan.id},data-idKaryawan=${pendidikan.idKaryawan}"
-                                            data-placement="bottom" th:title="Hapus" class="montserrat-small btn btn-dark text-white btn-rounded btn-hapus-pendidikan">Hapus</a>
-                                    </td>
+                                    <th class="montserrat-small-bold text-center" scope="col">No.</th>
+                                    <th class="montserrat-small-bold text-center" scope="col">Gelar</th>
+                                    <th class="montserrat-small-bold text-center" scope="col">Institusi</th>
+                                    <th class="montserrat-small-bold text-center" scope="col">Perioda Mulai</th>
+                                    <th class="montserrat-small-bold text-center" scope="col">Periode Selesai</th>
+                                    <th class="montserrat-small-bold text-center" scope="col">Aksi</th>
                                 </tr>
-                            </div>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <div th:each="pendidikan,iterationStatus: ${pendidikan}">
+                                    <tr>
+                                        <td class="montserrat-small text-center" scope="row" th:text="${iterationStatus.count}"></td>
+                                        <td class="montserrat-small text-center" th:text="${pendidikan.gelar}"></td>
+                                        <td class="montserrat-small text-center" th:text="${pendidikan.institusi}"></td>
+                                        <td class="montserrat-small text-center" th:text="${pendidikan.periodeMulai}"></td>
+                                        <td class="montserrat-small text-center" th:text="${pendidikan.periodeSelesai}"></td>
+                                        <td class="text-center">
+                                            <a data-toggle="modal" data-target="#modal-ubah-pendidikan" data-title="Ubah Pendidiikan" th:attr="data-id=${pendidikan.id},data-idKaryawan=${pendidikan.idKaryawan},data-gelar=${pendidikan.gelar},data-institusi=${pendidikan.institusi}, data-periodemulai=${pendidikan.periodeMulai}, data-periodeselesai=${pendidikan.periodeSelesai}
+                                                                " th:title="Ubah" class="btn-ubah-pendidikan montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Ubah</a>
+                                            <a data-toggle="modal" data-target="#modal-hapus-pendidikan" th:attr="data-id=${pendidikan.id},data-idKaryawan=${pendidikan.idKaryawan}"
+                                                data-placement="bottom" th:title="Hapus" class="montserrat-small btn btn-dark text-white btn-rounded btn-hapus-pendidikan">Hapus</a>
+                                        </td>
+                                    </tr>
+                                </div>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
+
             <div class="modal fade" id="modal-tambah-pendidikan">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -283,7 +286,7 @@
                         </div>
                         <div class="col-4"></div>
                         <div class="col">
-                            <button type="button"  class="pusil-btn btn btn-primary btn-rounded montserrat-small" data-toggle="modal"  data-target="#modal-tambah-keluarga">+ Tambah Anggota Keluarga
+                            <button type="button" class="pusil-btn btn btn-primary btn-rounded montserrat-small" data-toggle="modal" data-target="#modal-tambah-keluarga">+ Tambah Anggota Keluarga
                             </button>
                         </div>
                     </div>
@@ -471,7 +474,7 @@
                     </div>
                     <div class="col-4"></div>
                     <div class="col">
-                        <button type="button"  class="pusil-btn btn btn-primary btn-rounded montserrat-small" data-toggle="modal" data-target="#modal-tambah-kontrak">+ Tambah Kontrak
+                        <button type="button" class="pusil-btn btn btn-primary btn-rounded montserrat-small" data-toggle="modal" data-target="#modal-tambah-kontrak">+ Tambah Kontrak
                         </button>
 
                     </div>
@@ -479,29 +482,29 @@
 
                 <table class="table table-hover mt-3">
                     <thead style="background-color: #FFCF25;">
-                    <tr>
-                        <th class="montserrat-small-bold text-center" scope="col" >No.</th>
-                        <th class="montserrat-small-bold text-center" scope="col" >Tangal Kontrak</th>
-                        <th class="montserrat-small-bold text-center" scope="col" >Durasi (Bulan)</th>
-                        <th class="montserrat-small-bold text-center" scope="col" >Pihak Kontraktor</th>
-                        <th class="montserrat-small-bold text-center" scope="col">Aksi</th>
-                    </tr>
+                        <tr>
+                            <th class="montserrat-small-bold text-center" scope="col">No.</th>
+                            <th class="montserrat-small-bold text-center" scope="col">Tangal Kontrak</th>
+                            <th class="montserrat-small-bold text-center" scope="col">Durasi (Bulan)</th>
+                            <th class="montserrat-small-bold text-center" scope="col">Pihak Kontraktor</th>
+                            <th class="montserrat-small-bold text-center" scope="col">Aksi</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    <div th:each="kontrak, iterationStatus: ${kontrak}">
-                        <tr>
-                            <td class="montserrat-small text-center" th:text="${iterationStatus.count}" scope="row"></td>
-                            <td class="montserrat-small text-center" th:text="${kontrak.tanggalKontrak}"></td>
-                            <td class="montserrat-small text-center" th:text="${kontrak.durasi}"></td>
-                            <td class="montserrat-small text-center" th:text="${kontrak.pihakKontraktor}"></td>
-                            <td class="text-center">
-                                <a data-toggle="modal" data-target="#modal-ubah-kontrak" data-title="Ubah Kontrak"
-                                   th:attr="data-id=${kontrak.id},data-idKaryawan=${kontrak.idKaryawan},data-tanggalkontrak=${kontrak.tanggalKontrak},data-durasi=${kontrak.durasi}, data-pihakkontraktor=${kontrak.pihakKontraktor}
+                        <div th:each="kontrak, iterationStatus: ${kontrak}">
+                            <tr>
+                                <td class="montserrat-small text-center" th:text="${iterationStatus.count}" scope="row"></td>
+                                <td class="montserrat-small text-center" th:text="${kontrak.tanggalKontrak}"></td>
+                                <td class="montserrat-small text-center" th:text="${kontrak.durasi}"></td>
+                                <td class="montserrat-small text-center" th:text="${kontrak.pihakKontraktor}"></td>
+                                <td class="text-center">
+                                    <a data-toggle="modal" data-target="#modal-ubah-kontrak" data-title="Ubah Kontrak" th:attr="data-id=${kontrak.id},data-idKaryawan=${kontrak.idKaryawan},data-tanggalkontrak=${kontrak.tanggalKontrak},data-durasi=${kontrak.durasi}, data-pihakkontraktor=${kontrak.pihakKontraktor}
                                     " th:title="Ubah" class="btn-ubah-kontrak montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Ubah</a>
-                                <a data-toggle="modal" data-target="#modal-hapus-kontrak" th:attr="data-id=${kontrak.id},data-idKaryawan=${kontrak.idKaryawan}" data-placement="bottom" th:title="Hapus"  class="montserrat-small btn btn-dark text-white btn-rounded btn-hapus-kontrak">Hapus</a>
-                            </td>
-                        </tr>
-                    </div>
+                                    <a data-toggle="modal" data-target="#modal-hapus-kontrak" th:attr="data-id=${kontrak.id},data-idKaryawan=${kontrak.idKaryawan}"
+                                        data-placement="bottom" th:title="Hapus" class="montserrat-small btn btn-dark text-white btn-rounded btn-hapus-kontrak">Hapus</a>
+                                </td>
+                            </tr>
+                        </div>
                     </tbody>
                 </table>
             </div>
@@ -517,20 +520,20 @@
                         </div>
 
                         <!-- Modal body -->
-                        <form  th:action="'/employee/detail-karyawan/' + ${karyawan.getIdKaryawan()}  + '/insert-kontrak'"  method="POST">
+                        <form th:action="'/employee/detail-karyawan/' + ${karyawan.getIdKaryawan()}  + '/insert-kontrak'" method="POST">
                             <div class="form-body">
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label class="col-form-label">Tanggal Kontrak :</label>
-                                        <input type="date" class="form-control"  name="tanggalKontrak" required />
+                                        <input type="date" class="form-control" name="tanggalKontrak" required />
                                     </div>
                                     <div class="form-group">
-                                        <label  class="col-form-label">Durasi (Bulan) :</label>
-                                        <input type="text" class="form-control"  name="durasi"   required />
+                                        <label class="col-form-label">Durasi (Bulan) :</label>
+                                        <input type="text" class="form-control" name="durasi" required />
                                     </div>
                                     <div class="form-group">
-                                        <label  class="col-form-label">Pihak Kontraktor :</label>
-                                        <input type="text" class="form-control"  name="pihakKontraktor"  required />
+                                        <label class="col-form-label">Pihak Kontraktor :</label>
+                                        <input type="text" class="form-control" name="pihakKontraktor" required />
                                     </div>
                                 </div>
                             </div>
@@ -944,15 +947,15 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="tanggalkontrak" class="col-form-label">Tanggal Kontrak :</label>
-                            <input type="date" class="form-control" id="tanggalkontrak" name="tanggalKontrak"/>
+                            <input type="date" class="form-control" id="tanggalkontrak" name="tanggalKontrak" />
                         </div>
                         <div class="form-group">
                             <label for="durasi" class="col-form-label">Durasi (Bulan) :</label>
-                            <input type="text" class="form-control" id="durasi" name="durasi"/>
+                            <input type="text" class="form-control" id="durasi" name="durasi" />
                         </div>
                         <div class="form-group">
                             <label for="pihakkontraktor" class="col-form-label">Pihak Kontraktor :</label>
-                            <input type="text" class="form-control" id="pihakkontraktor" name="pihakKontraktor"/>
+                            <input type="text" class="form-control" id="pihakkontraktor" name="pihakKontraktor" />
                         </div>
                     </div>
                     <div class="modal-footer">
