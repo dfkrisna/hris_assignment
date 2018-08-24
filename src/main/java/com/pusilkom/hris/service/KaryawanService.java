@@ -112,6 +112,15 @@ public interface KaryawanService {
 
 	void deleteKontakDaruratById(Integer idKontak);
 
+
+	List<KontrakModel> selectKontrakAll(int idKaryawan);
+
+	void insertKontrak(KontrakModel kontrak);
+
+	void updateKontrak (KontrakModel kontrak);
+
+	void deleteKontrak (int id);
+
 	List<DokumenModel> getAllDokumenKaryawanById(int idKaryawan);
 
 	void insertDokumen(int idKaryawan, String fileName);
@@ -121,4 +130,5 @@ public interface KaryawanService {
 	void updateKaryawanBaru(KaryawanBaruModel karyawan);
 	
 	void deleteDokumen(int idDokumen);
+
 }

@@ -123,6 +123,7 @@ public class EmpIndexController {
         //     listBenefit = null;
         // }
         List<KontakDaruratModel> dataDarurat = karyawanService.getKontakDaruratKaryawan(idKaryawan);
+        List<KontrakModel> kontrak = karyawanService.selectKontrakAll(idKaryawan);
 
         List<DokumenModel> dokumens = karyawanService.getAllDokumenKaryawanById(idKaryawan);
         List<DivisibaruModel> divisis = divisiService.selectAllDivisiAktif();
@@ -138,7 +139,11 @@ public class EmpIndexController {
         model.addAttribute("listRiwayatGaji", listRiwayatGaji);
         model.addAttribute("dokumens", dokumens);
         model.addAttribute("darurats", dataDarurat);
+
+        model.addAttribute("kontrak", kontrak);
+
         model.addAttribute("divisis", divisis);
+
         return "detail-karyawan";
     }
 
@@ -319,4 +324,31 @@ public class EmpIndexController {
 
         return "redirect:/employee/detail-karyawan/"+idKaryawan;
     }
+
+    @PostMapping("/employee/detail-karyawan/{idKaryawan}/insert-kontrak")
+    public String insertKontrak(Model model,
+                                   @ModelAttribute("kontrak") KontrakModel kontrak,
+                                   @PathVariable("idKaryawan") int idKaryawan){
+
+        kontrak.setIdKaryawan(idKaryawan);
+        karyawanService.insertKontrak(kontrak);
+        return "redirect:/employee/detail-karyawan/"+idKaryawan;
+    }
+
+    @RequestMapping(value = "/employee/detail-karyawan/{idKaryawan}/update-kontrak/{id}" , method = RequestMethod.POST)
+    public String updateKontrak (@ModelAttribute KontrakModel kontrak, Model model, @PathVariable("idKaryawan") int idKaryawan, @PathVariable(value = "id") int id) {
+
+        karyawanService.updateKontrak(kontrak);
+
+        return "redirect:/employee/detail-karyawan/"+idKaryawan;
+    }
+
+    @RequestMapping("/employee/detail-karyawan/hapus-kontrak/{idKaryawan}/{id}")
+    public String deleteKontrak (Model model, @PathVariable("idKaryawan") int idKaryawan, @PathVariable(value = "id") int id)
+    {
+        karyawanService.deleteKontrak(id);
+
+        return "redirect:/employee/detail-karyawan/"+idKaryawan;
+    }
+
 }

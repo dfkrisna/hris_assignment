@@ -141,12 +141,18 @@
             <div class="tab-pane fade show" id="nav-data-pendidikan" role="tabpanel" aria-labelledby="nav-data-pendidikan">
                 <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
                 <!-- gunakan th:if="${isEmployeeSelected || isHR}" untuk menampilkan -->
-                <div th:unless="${!isEmployeeSelected && !isHR}">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah-pendidikan">
-                        <i class="fas fa-plus" style="font-size: 15px;"></i> Tambah Pendidikan
-                    </button>
 
-                    <h2 class="text-center montserrat-bold-big">List Riwayat Pendidikan</h2>
+                <div class="row">
+                    <div class="col-5">
+                        <h2 class="montserrat-bold-big">Daftar Riwayat Pendidikan</h2>
+                    </div>
+                    <div class="col-4"></div>
+                    <div class="col">
+                        <button type="button"  class="pusil-btn btn btn-primary btn-rounded montserrat-small" data-toggle="modal" data-target="#modal-tambah-pendidikan">+ Tambah Pendidikan
+                        </button>
+                    </div>
+                </div>
+                <div th:unless="${!isEmployeeSelected && !isHR}">
                     <table class="table table-hover mt-3">
                         <thead style="background-color: #FFCF25;">
                             <tr>
@@ -177,8 +183,6 @@
                         </tbody>
                     </table>
                 </div>
-
-
             </div>
             <div class="modal fade" id="modal-tambah-pendidikan">
                 <div class="modal-dialog">
@@ -273,12 +277,16 @@
                 <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
                 <!-- gunakan th:if="${isEmployeeSelected || isHR}" untuk menampilkan -->
                 <div th:unless="${!isEmployeeSelected && !isHR}">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah-keluarga">
-                        <i class="fas fa-plus" style="font-size: 15px;"></i> Tambah Anggota Keluarga
-                    </button>
-
-                    <h2 class="text-center montserrat-bold-big">List Anggota Keluarga</h2>
-
+                    <div class="row">
+                        <div class="col-4">
+                            <h2 class="montserrat-bold-big">Daftar Anggota Keluarga</h2>
+                        </div>
+                        <div class="col-4"></div>
+                        <div class="col">
+                            <button type="button"  class="pusil-btn btn btn-primary btn-rounded montserrat-small" data-toggle="modal"  data-target="#modal-tambah-keluarga">+ Tambah Anggota Keluarga
+                            </button>
+                        </div>
+                    </div>
                     <table class="table table-hover mt-3">
                         <thead style="background-color: #FFCF25; ">
                             <tr>
@@ -457,7 +465,82 @@
                 <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
                 <!-- gunakan th:if="${isEmployeeSelected || isHR}" untuk menampilkan -->
                 <!-- gunakan boolean isHR agar disabled -->
-                <input type="text" name="" id="" th:disabled="${!isHR}">
+                <div class="row">
+                    <div class="col-5">
+                        <h2 class="montserrat-bold-big">Daftar Riwayat Kontrak</h2>
+                    </div>
+                    <div class="col-4"></div>
+                    <div class="col">
+                        <button type="button"  class="pusil-btn btn btn-primary btn-rounded montserrat-small" data-toggle="modal" data-target="#modal-tambah-kontrak">+ Tambah Kontrak
+                        </button>
+
+                    </div>
+                </div>
+
+                <table class="table table-hover mt-3">
+                    <thead style="background-color: #FFCF25;">
+                    <tr>
+                        <th class="montserrat-small-bold text-center" scope="col" >No.</th>
+                        <th class="montserrat-small-bold text-center" scope="col" >Tangal Kontrak</th>
+                        <th class="montserrat-small-bold text-center" scope="col" >Durasi (Bulan)</th>
+                        <th class="montserrat-small-bold text-center" scope="col" >Pihak Kontraktor</th>
+                        <th class="montserrat-small-bold text-center" scope="col">Aksi</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <div th:each="kontrak, iterationStatus: ${kontrak}">
+                        <tr>
+                            <td class="montserrat-small text-center" th:text="${iterationStatus.count}" scope="row"></td>
+                            <td class="montserrat-small text-center" th:text="${kontrak.tanggalKontrak}"></td>
+                            <td class="montserrat-small text-center" th:text="${kontrak.durasi}"></td>
+                            <td class="montserrat-small text-center" th:text="${kontrak.pihakKontraktor}"></td>
+                            <td class="text-center">
+                                <a data-toggle="modal" data-target="#modal-ubah-kontrak" data-title="Ubah Kontrak"
+                                   th:attr="data-id=${kontrak.id},data-idKaryawan=${kontrak.idKaryawan},data-tanggalkontrak=${kontrak.tanggalKontrak},data-durasi=${kontrak.durasi}, data-pihakkontraktor=${kontrak.pihakKontraktor}
+                                    " th:title="Ubah" class="btn-ubah-kontrak montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Ubah</a>
+                                <a data-toggle="modal" data-target="#modal-hapus-kontrak" th:attr="data-id=${kontrak.id},data-idKaryawan=${kontrak.idKaryawan}" data-placement="bottom" th:title="Hapus"  class="montserrat-small btn btn-dark text-white btn-rounded btn-hapus-kontrak">Hapus</a>
+                            </td>
+                        </tr>
+                    </div>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="modal fade" id="modal-tambah-kontrak">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Tambah Kontrak</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <form  th:action="'/employee/detail-karyawan/' + ${karyawan.getIdKaryawan()}  + '/insert-kontrak'"  method="POST">
+                            <div class="form-body">
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Tanggal Kontrak :</label>
+                                        <input type="date" class="form-control"  name="tanggalKontrak" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label  class="col-form-label">Durasi (Bulan) :</label>
+                                        <input type="text" class="form-control"  name="durasi"   required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label  class="col-form-label">Pihak Kontraktor :</label>
+                                        <input type="text" class="form-control"  name="pihakKontraktor"  required />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Tambah Kontrak</button>
+                                <button type="button" class="montserrat-small btn btn-dark btn-rounded" data-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
             <div class="tab-pane fade show" id="nav-data-dokumen" role="tabpanel" aria-labelledby="nav-data-dokumen">
                 <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
@@ -774,7 +857,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Ubah</button>
+                        <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Ubah Anggota Keluarga</button>
                         <button type="button" class="montserrat-small btn btn-dark btn-rounded" data-dismiss="modal">Close</button>
                     </div>
                 </form>
@@ -846,6 +929,64 @@
             </div>
         </div>
     </div>
+
+
+    <div class="modal fade" id="modal-ubah-kontrak" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ubah Kontrak</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="form-ubah-kontrak" method="POST">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="tanggalkontrak" class="col-form-label">Tanggal Kontrak :</label>
+                            <input type="date" class="form-control" id="tanggalkontrak" name="tanggalKontrak"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="durasi" class="col-form-label">Durasi (Bulan) :</label>
+                            <input type="text" class="form-control" id="durasi" name="durasi"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="pihakkontraktor" class="col-form-label">Pihak Kontraktor :</label>
+                            <input type="text" class="form-control" id="pihakkontraktor" name="pihakKontraktor"/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Ubah Kontrak</button>
+                        <button type="button" class="montserrat-small btn btn-dark btn-rounded" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-hapus-kontrak">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Hapus Kontrak</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <h5>Apakah anda yakin ingin menghapus kontrak?</h5>
+                </div>
+                <div class="modal-footer">
+                    <a id="btn-konfirmasi-hapus-kontrak" class="montserrat-small pusil-btn-danger btn btn-dark text-white btn-rounded">Hapus Kontrak</a>
+                    <button type="button" class="montserrat-small btn btn-dark btn-rounded" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </body>
 
 <div class="modal fade" id="ubahKontakDaruratModal" tabindex="-1" role="dialog" aria-labelledby="ubahKontakDaruratModalLabel"
