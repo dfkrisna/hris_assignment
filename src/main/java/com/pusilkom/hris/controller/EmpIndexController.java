@@ -118,10 +118,10 @@ public class EmpIndexController {
         }
 
         //get benefit karyawan
-        List<BenefitKaryawanModel> listBenefit = karyawanService.getBenefitKaryawan(karyawan.getIdKaryawan());
-        if(listBenefit.size() == 0){
-            listBenefit = null;
-        }
+        List<BenefitKaryawanModel> listBenefit = karyawanService.getBenefitKaryawan(idKaryawan);
+        // if(listBenefit.size() == 0){
+        //     listBenefit = null;
+        // }
         List<KontakDaruratModel> dataDarurat = karyawanService.getKontakDaruratKaryawan(idKaryawan);
 
         List<DokumenModel> dokumens = karyawanService.getAllDokumenKaryawanById(idKaryawan);

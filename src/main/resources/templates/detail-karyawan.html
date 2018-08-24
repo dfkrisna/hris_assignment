@@ -422,7 +422,7 @@
                     <div th:if="${listBenefit == null}">
                         <h4 class="text-center" th:text="'Karyawan ' + ${karyawan.getNamaPanggilan()} + ' tidak mempunyai benefit'"></h4>
                     </div>
-                    <div th:if="${listBenefit!=null}">
+                    <div th:if="${true}">
                         <h2 class="text-center montserrat-bold-big">Benefit Karyawan</h2>
                         <table class="table-mpp table table-hover">
                             <thead>
@@ -450,35 +450,6 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
-
-                <div th:if="${listBenefit!=null}">
-                    <h2 class="text-center montserrat-bold-big">Benefit Karyawan</h2>
-                    <table class="table-mpp table table-hover">
-                        <thead>
-                            <tr>
-                                <th style="background-color: #FFCF26;" class="montserrat-small-bold text-center">Nama Benefit</th>
-                                <th style="background-color: #FFCF26;" class="montserrat-small-bold text-center">Keterangan</th>
-                                <div th:if="${!isHR}">
-                                    <th style="background-color: #FFCF26;" class="montserrat-small-bold text-center">Aksi</th>
-                                </div>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <div th:each="benefit,iterationStatus:${listBenefit}" class="list-group list-group-flush">
-                                <tr>
-                                    <td th:text="${benefit.getNamaBenefit()}" class="montserrat-small"></td>
-                                    <td th:text="${benefit.getKeteranganBenefit()}" class="montserrat-small text-center"></td>
-                                    <div th:if="${!isHR}">
-                                        <td class="montserrat-small text-center">
-                                            <button class="btn-edit-benefit montserrat-small pusil-btn btn btn-primary text-white btn-rounded" th:attr="data-idbenefit=${benefit.getId()}, data-idkaryawan=${karyawan.getIdKaryawan()}, data-benefit=${benefit.getNamaBenefit()}, data-keterangan=${benefit.getKeteranganBenefit()}">Edit</button>
-                                            <button class="btn-hapus-benefit montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded" th:attr="data-idbenefit=${benefit.getId()}, data-idkaryawan=${karyawan.getIdKaryawan()}">Hapus</button>
-                                        </td>
-                                    </div>
-                                </tr>
-                            </div>
-                        </tbody>
-                    </table>
                 </div>
             </div>
 
