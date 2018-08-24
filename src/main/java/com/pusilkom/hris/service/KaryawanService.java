@@ -1,7 +1,18 @@
 package com.pusilkom.hris.service;
 
 
+import com.pusilkom.hris.model.FeedbackRatingModel;
+import com.pusilkom.hris.model.KaryawanBaruModel;
+import com.pusilkom.hris.model.KaryawanModel;
+import com.pusilkom.hris.model.KaryawanProyekModel;
+import com.pusilkom.hris.model.RiwayatGajiModel;
+import com.pusilkom.hris.model.DataDiriModel;
+import com.pusilkom.hris.model.KeluargaModel;
+import com.pusilkom.hris.model.PendidikanModel;
+
+
 import com.pusilkom.hris.model.*;
+
 import org.apache.tomcat.jni.Local;
 
 import java.sql.Timestamp;
@@ -84,6 +95,14 @@ public interface KaryawanService {
 
 	void deleteGajiById(int idGaji);
 
+	List<PendidikanModel> selectPendidikanAll(int idKaryawan);
+
+	void insertPendidikan(PendidikanModel pendidikan);
+
+	void deletePendidikan (int id);
+
+	void updatePendidikan (PendidikanModel pendidikan);
+
 	void activateKaryawan(int idKaryawan);
 
 	void deActivateKaryawan(int idKaryawan);
@@ -101,4 +120,5 @@ public interface KaryawanService {
 	void insertDokumen(int idKaryawan, String fileName);
 
 	DokumenModel getDokumen(int idDokumen);
+    void updateKaryawanBaru(KaryawanBaruModel karyawan);
 }

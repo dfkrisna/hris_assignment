@@ -90,13 +90,17 @@ public class EmpIndexController {
 
         // get data diri
         DataDiriModel dataDiri = karyawanService.getDataDiriByIdKaryawan(karyawanBaru.getIdKaryawan());
+
+        //get data keluarga
         List<KeluargaModel> keluarga = karyawanService.selectAnggotaKeluargaAll(idKaryawan);
         if (dataDiri == null) {
             dataDiri = new DataDiriModel();
             dataDiri.setIdKaryawan(idKaryawan);
         }
+        //get data pendidikan
+        List<PendidikanModel> pendidikan = karyawanService.selectPendidikanAll(idKaryawan);
 
-        // get data gaji
+        //get data gaji
         List<RiwayatGajiModel> listRiwayatGaji = karyawanService.selectAllRiwayatGajiById(idKaryawan);
 
         // check if user can edit
@@ -116,15 +120,19 @@ public class EmpIndexController {
         List<KontakDaruratModel> dataDarurat = karyawanService.getKontakDaruratKaryawan(idKaryawan);
 
         List<DokumenModel> dokumens = karyawanService.getAllDokumenKaryawanById(idKaryawan);
+        List<DivisibaruModel> divisis = divisiService.selectAllDivisiAktif();
+
         model.addAttribute("isEmployeeSelected", isEmployeeSelected);
         model.addAttribute("isHR", isHR);
         model.addAttribute("karyawan", karyawanBaru);
         model.addAttribute("divisi", divisi);
         model.addAttribute("dataDiri", dataDiri);
+        model.addAttribute("pendidikan", pendidikan);
         model.addAttribute("keluarga", keluarga);
         model.addAttribute("listRiwayatGaji", listRiwayatGaji);
         model.addAttribute("dokumens", dokumens);
         model.addAttribute("darurats", dataDarurat);
+        model.addAttribute("divisis", divisis);
         return "detail-karyawan";
     }
 
@@ -200,9 +208,10 @@ public class EmpIndexController {
         return "redirect:/employee/detail-karyawan/" + idKaryawan;
     }
 
-    @RequestMapping("/employee/detail-karyawan/hapus/{idKaryawan}/{id}")
-    public String deleteAnggotaKeluarga(Model model, @PathVariable("idKaryawan") int idKaryawan,
-            @PathVariable(value = "id") int id) {
+
+    @RequestMapping("/employee/detail-karyawan/hapus-keluarga/{idKaryawan}/{id}")
+    public String deleteAnggotaKeluarga (Model model, @PathVariable("idKaryawan") int idKaryawan, @PathVariable(value = "id") int id)
+    {
         karyawanService.deleteAnggotaKeluarga(id);
 
         return "redirect:/employee/detail-karyawan/" + idKaryawan;
@@ -248,6 +257,31 @@ public class EmpIndexController {
 
             FileCopyUtils.copy(inputStream, response.getOutputStream());
         }
+    }
 
+    @PostMapping("/employee/detail-karyawan/{idKaryawan}/insert-pendidikan")
+    public String insertPendidikan(Model model,
+                                 @ModelAttribute("pendidikan") PendidikanModel pendidikan,
+                                 @PathVariable("idKaryawan") int idKaryawan){
+
+        pendidikan.setIdKaryawan(idKaryawan);
+        karyawanService.insertPendidikan(pendidikan);
+        return "redirect:/employee/detail-karyawan/"+idKaryawan;
+    }
+
+    @RequestMapping("/employee/detail-karyawan/hapus-pendidikan/{idKaryawan}/{id}")
+    public String deletePendidikan (Model model, @PathVariable("idKaryawan") int idKaryawan, @PathVariable(value = "id") int id)
+    {
+        karyawanService.deletePendidikan(id);
+
+        return "redirect:/employee/detail-karyawan/"+idKaryawan;
+    }
+
+    @RequestMapping(value = "/employee/detail-karyawan/{idKaryawan}/update-pendidikan/{id}" , method = RequestMethod.POST)
+    public String updatePendidikan (@ModelAttribute PendidikanModel pendidikan, Model model, @PathVariable("idKaryawan") int idKaryawan, @PathVariable(value = "id") int id) {
+
+        karyawanService.updatePendidikan(pendidikan);
+
+        return "redirect:/employee/detail-karyawan/"+idKaryawan;
     }
 }
