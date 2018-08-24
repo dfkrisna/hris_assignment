@@ -409,11 +409,11 @@
                 <button id="btn-tambah-benefit" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah-benefit">
                     Tambah Benefit +
                 </button>
-                <h2 class="text-center montserrat-bold-big">Benefit Karyawan</h2>
                 <div th:if="${listBenefit == null}">
                     <h4 class="text-center" th:text="'Karyawan ' + ${karyawan.getNamaPanggilan()} + ' tidak mempunyai benefit'"></h4>
                 </div>
                 <div th:if="${listBenefit!=null}">
+                    <h2 class="text-center montserrat-bold-big">Benefit Karyawan</h2>
                     <table class="table-mpp table table-hover">
                         <thead>
                             <tr>
