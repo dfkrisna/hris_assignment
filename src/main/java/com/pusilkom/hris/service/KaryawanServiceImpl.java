@@ -3,6 +3,7 @@ package com.pusilkom.hris.service;
 import com.pusilkom.hris.dao.KaryawanMapper;
 
 import com.pusilkom.hris.model.*;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -248,4 +249,74 @@ public class KaryawanServiceImpl implements KaryawanService{
 	@Override
 	public void deleteBenefitKaryawan(int idBenefit){karyawanMapper.deleteBenefitById(idBenefit);}
 
+  @Override
+	public List<PendidikanModel> selectPendidikanAll(int idKaryawan){return karyawanMapper.selectPendidikanAll(idKaryawan);}
+
+	@Override
+	public void insertPendidikan(PendidikanModel pendidikan){karyawanMapper.insertPendidikan(pendidikan);}
+
+	@Override
+	public void deletePendidikan (int id){karyawanMapper.deletePendidikan(id);}
+
+	@Override
+	public void updatePendidikan (PendidikanModel pendidikan){karyawanMapper.updatePendidikan(pendidikan);}
+  
+  @Override
+	public void activateKaryawan(int idKaryawan){
+		karyawanMapper.activateKaryawan(idKaryawan);
+	}
+
+	@Override
+	public void deActivateKaryawan(int idKaryawan){
+		karyawanMapper.deActivateKaryawan(idKaryawan);
+	}
+
+	@Override
+	public List<KontakDaruratModel> getKontakDaruratKaryawan(int idKaryawan) {
+		return karyawanMapper.selectKontakDaruratKaryawan(idKaryawan);
+	}
+
+	@Override
+	public void addKontakDarurat(KontakDaruratModel kontak) {
+		KaryawanBaruModel k = karyawanMapper.getKaryawanBaruById(kontak.getIdKaryawan());
+		if(k != null) {
+			karyawanMapper.insertKontakDarurat(kontak);
+		}
+	}
+
+	@Override
+	public void updateKontakDarurat(KontakDaruratModel kontak) {
+		karyawanMapper.updateKontakDarurat(kontak);
+	}
+
+	@Override
+	public void deleteKontakDaruratById(Integer idKontak) {
+		karyawanMapper.deleteKontakDaruratById(idKontak);
+	}
+
+  @Override
+	public List<DokumenModel> getAllDokumenKaryawanById(int idKaryawan){
+		return karyawanMapper.getAllDokumenKaryawanById(idKaryawan);
+	}
+
+	@Override
+	public void insertDokumen(int idKaryawan, String fileName){
+		karyawanMapper.insertDokumen(idKaryawan, fileName);
+	}
+
+	@Override
+	public DokumenModel getDokumen(int idDokumen){
+		return karyawanMapper.getDokumen(idDokumen);
+	}
+
+	@Override
+	public void updateKaryawanBaru(KaryawanBaruModel karyawan) {
+		karyawanMapper.updateKaryawanBaru(karyawan);
+	}
+
+	@Override
+	public void deleteDokumen(int idDokumen){
+		karyawanMapper.deleteDokumen(idDokumen);
+	}
 }
+

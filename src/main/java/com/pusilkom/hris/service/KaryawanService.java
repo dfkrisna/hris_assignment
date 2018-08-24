@@ -1,7 +1,7 @@
 package com.pusilkom.hris.service;
 
-
 import com.pusilkom.hris.model.*;
+
 import org.apache.tomcat.jni.Local;
 
 import java.sql.Timestamp;
@@ -91,4 +91,34 @@ public interface KaryawanService {
 	void deleteBenefitKaryawan(int idBenefi);
 
 	void addBenefitKaryawan(int idKaryawan, String namaBenefit, String keteranganBenefit);
+
+	List<PendidikanModel> selectPendidikanAll(int idKaryawan);
+
+	void insertPendidikan(PendidikanModel pendidikan);
+
+	void deletePendidikan (int id);
+
+	void updatePendidikan (PendidikanModel pendidikan);
+
+	void activateKaryawan(int idKaryawan);
+
+	void deActivateKaryawan(int idKaryawan);
+
+    List<KontakDaruratModel> getKontakDaruratKaryawan(int idKaryawan);
+
+	void addKontakDarurat(KontakDaruratModel kontak);
+
+	void updateKontakDarurat(KontakDaruratModel kontak);
+
+	void deleteKontakDaruratById(Integer idKontak);
+
+	List<DokumenModel> getAllDokumenKaryawanById(int idKaryawan);
+
+	void insertDokumen(int idKaryawan, String fileName);
+
+	DokumenModel getDokumen(int idDokumen);
+
+	void updateKaryawanBaru(KaryawanBaruModel karyawan);
+	
+	void deleteDokumen(int idDokumen);
 }

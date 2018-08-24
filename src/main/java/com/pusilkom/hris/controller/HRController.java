@@ -2,15 +2,19 @@ package com.pusilkom.hris.controller;
 
 import com.pusilkom.hris.model.AbsenModel;
 import com.pusilkom.hris.model.KaryawanBaruModel;
+import com.pusilkom.hris.model.KontakDaruratModel;
+import com.pusilkom.hris.model.UserWeb;
 import com.pusilkom.hris.service.AbsenService;
 import com.pusilkom.hris.service.KaryawanService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.List;
@@ -130,5 +134,72 @@ public class HRController {
                             @RequestParam("idKaryawan") String idKaryawan) {
         ra.addFlashAttribute("idKaryawan", idKaryawan);
         return "redirect:/employee/hr/rekap-absen";
+    }
+
+    @PostMapping("/employee/tambah-kontak")
+    public String tambahKontak(RedirectAttributes ra,
+                               @RequestParam(value = "idKar") Integer idKar,
+                               @RequestParam(value = "namaKontak") String namaKontak,
+                               @RequestParam(value = "hubungan") String hubungan,
+                               @RequestParam(value = "nomorTelepon") String nomorTelepon) {
+        KontakDaruratModel kontak = new KontakDaruratModel();
+        kontak.setIdKaryawan(idKar);
+        kontak.setNama(namaKontak);
+        kontak.setHubungan(hubungan);
+        kontak.setKontak(nomorTelepon);
+
+        karyawanService.addKontakDarurat(kontak);
+
+        return "redirect:/employee/detail-karyawan/" + idKar;
+    }
+
+    @PostMapping("/employee/ubah-kontak-darurat")
+    public String ubahKontak(RedirectAttributes ra,
+                             @RequestParam(value = "idKontak") Integer idKontak,
+                             @RequestParam(value = "idKaryawan") Integer idKar,
+                             @RequestParam(value = "namaKontak") String namaKontak,
+                             @RequestParam(value = "hubunganKontak") String hubungan,
+                             @RequestParam(value = "nomorTelepon") String nomorTelepon) {
+        KontakDaruratModel kontak = new KontakDaruratModel();
+        kontak.setId(idKontak);
+        kontak.setIdKaryawan(idKar);
+        kontak.setNama(namaKontak);
+        kontak.setHubungan(hubungan);
+        kontak.setKontak(nomorTelepon);
+
+        karyawanService.updateKontakDarurat(kontak);
+
+        return "redirect:/employee/detail-karyawan/" + idKar;
+    }
+
+    @PostMapping("/employee/hapus-kontak-darurat")
+    public String hapusKontak(RedirectAttributes ra,
+                              @RequestParam(value = "idKontak") Integer idKontak,
+                              @RequestParam(value = "idKaryawan") Integer idKaryawan) {
+        karyawanService.deleteKontakDaruratById(idKontak);
+        return "redirect:/employee/detail-karyawan/" + idKaryawan;
+    }
+
+    @PostMapping("/employee/ubah-data-karyawan")
+    public String ubahData(RedirectAttributes ra,
+                           @RequestParam(value = "namaLengkap") String namaLengkap,
+                           @RequestParam(value = "namaPanggilan") String namaPanggilan,
+                           @RequestParam(value = "nip") String nip,
+                           @RequestParam(value = "divisi") Integer idDivisi,
+                           @RequestParam(value = "emailPus") String emailPusilkom,
+                           @RequestParam(value = "emailPribadi") String emailPribadi,
+                           @RequestParam(value = "idKaryawan") Integer idKaryawan) {
+        KaryawanBaruModel karyawan = karyawanService.getKaryawanBaruById(idKaryawan);
+
+        karyawan.setNamaLengkap(namaLengkap);
+        karyawan.setNamaPanggilan(namaPanggilan);
+        karyawan.setNip(nip);
+        karyawan.setIdDivisi(idDivisi);
+        karyawan.setEmailPusilkom(emailPusilkom);
+        karyawan.setEmailPribadi(emailPribadi);
+
+        karyawanService.updateKaryawanBaru(karyawan);
+
+        return "redirect:/employee/detail-karyawan/" + idKaryawan;
     }
 }

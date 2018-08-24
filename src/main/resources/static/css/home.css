@@ -313,7 +313,7 @@ a:hover, a:visited, a:link, a:active
 }
 
 .nav-tabs > a:hover{
-	border: none;
-	color: #f4f4f4;
+	background-color: #fbfbfb;
+	color: #353535;
 }
 

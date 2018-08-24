@@ -291,8 +291,8 @@ public interface KaryawanMapper {
             @Result(property="hubungan", column="hubungan"),
             @Result(property="tanggalLahir", column="tanggal_lahir")
     })
-
     List<KeluargaModel> selectAnggotaKeluargaAll(int idKaryawan);
+
     @Insert("INSERT INTO employee.\"KELUARGA\" (id_karyawan, hubungan, nama, tanggal_lahir, nik) " +
             "VALUES (#{idKaryawan}, #{hubungan}, #{nama}, #{tanggalLahir}, #{nik})")
     void insertAnggotaKeluarga(KeluargaModel keluarga);
@@ -336,4 +336,81 @@ public interface KaryawanMapper {
     @Delete("DELETE FROM employee.\"BENEFIT\" WHERE id = #{idBenefit}")
     void deleteBenefitById(@Param("idBenefit") int idBenefit);
 
+
+    @Select("SELECT * FROM employee.\"PENDIDIKAN\" WHERE id_karyawan=#{idKaryawan}" )
+    @Results(value = {
+            @Result(property="id", column="id"),
+            @Result(property="idKaryawan", column="id_karyawan"),
+            @Result(property="institusi", column="institusi"),
+            @Result(property="gelar", column="gelar"),
+            @Result(property="periodeMulai", column="periode_mulai"),
+            @Result(property="periodeSelesai", column="periode_selesai")
+    })
+    List<PendidikanModel> selectPendidikanAll(int idKaryawan);
+
+    @Insert("INSERT INTO employee.\"PENDIDIKAN\" (id_karyawan, gelar, institusi, periode_mulai, periode_selesai) " +
+            "VALUES (#{idKaryawan}, #{gelar}, #{institusi}, #{periodeMulai}, #{periodeSelesai})")
+    void insertPendidikan(PendidikanModel pendidikan);
+
+    @Delete("DELETE FROM employee.\"PENDIDIKAN\" WHERE id = #{id}")
+    void deletePendidikan (int id);
+
+    @Update("UPDATE employee.\"PENDIDIKAN\"  SET gelar = #{gelar}, institusi = #{institusi}, periode_mulai = #{periodeMulai}, periode_selesai = #{periodeSelesai}" +
+            " WHERE id = #{id}")
+    void updatePendidikan (PendidikanModel pendidikan);
+
+    @Update("UPDATE employee.\"KARYAWAN\" set is_active = true")
+    void activateKaryawan(int idKaryawan);
+
+    @Update("UPDATE employee.\"KARYAWAN\" set is_active = false ")
+    void deActivateKaryawan(int idKaryawan);
+
+    @Select("select * from employee.\"DATA_DARURAT\" as D where D.id_karyawan=#{idKaryawan} ORDER BY id DESC")
+    @Results(value = {
+            @Result(property = "id", column = "id"),
+            @Result(property = "idKaryawan", column = "id_karyawan"),
+            @Result(property = "nama", column = "nama"),
+            @Result(property = "hubungan", column = "hubungan"),
+            @Result(property = "kontak", column = "nomor_telepon"),
+            @Result(property = "timestamp", column = "timestamp")
+    })
+    List<KontakDaruratModel> selectKontakDaruratKaryawan(int idKaryawan);
+
+    @Insert("INSERT INTO employee.\"DATA_DARURAT\" (id_karyawan, nama, hubungan, nomor_telepon, timestamp) \n"
+            + "VALUES (#{idKaryawan}, #{nama}, #{hubungan}, #{kontak}, now())")
+    void insertKontakDarurat(KontakDaruratModel kontak);
+
+    @Update("update employee.\"DATA_DARURAT\" set nama=#{nama}, hubungan=#{hubungan}, nomor_telepon=#{kontak} " +
+            "where id=#{id} and id_karyawan=#{idKaryawan}")
+    void updateKontakDarurat(KontakDaruratModel kontak);
+
+    @Delete("delete from employee.\"DATA_DARURAT\" where id=#{idKontak}")
+    void deleteKontakDaruratById(Integer idKontak);
+
+    @Select("SELECT * FROM employee.\"DOKUMEN_PENDUKUNG\" WHERE id_karyawan = #{idKaryawan}")
+    @Results(value = {
+            @Result(property = "id", column = "id"),
+            @Result(property = "idKaryawan", column = "id_karyawan"),
+            @Result(property = "fileName", column = "nama_dokumen")
+    })
+    List<DokumenModel> getAllDokumenKaryawanById(@Param("idKaryawan") int idKaryawan);
+
+    @Insert("INSERT INTO employee.\"DOKUMEN_PENDUKUNG\" (id_karyawan, nama_dokumen) VALUES (#{idKaryawan}, #{fileName})")
+    void insertDokumen(@Param("idKaryawan") int idKaryawan, @Param("fileName") String fileName);
+
+    @Select("SELECT * FROM employee.\"DOKUMEN_PENDUKUNG\" WHERE id = #{idDokumen}")
+    @Results(value = {
+            @Result(property = "id", column = "id"),
+            @Result(property = "idKaryawan", column = "id_karyawan"),
+            @Result(property = "fileName", column = "nama_dokumen")
+    })
+    DokumenModel getDokumen(@Param("idDokumen") int idDokumen);
+
+    @Update("update employee.\"KARYAWAN\" set nama_lengkap=#{namaLengkap}, nama_panggilan=#{namaPanggilan}, nip=#{nip}, " +
+            "email_pusilkom=#{emailPusilkom}, email_pribadi=#{emailPribadi}, id_divisi=#{idDivisi} " +
+            "where id=#{idKaryawan}")
+    void updateKaryawanBaru(KaryawanBaruModel karyawan);
+
+    @Delete("DELETE FROM employee.\"DOKUMEN_PENDUKUNG\" WHERE id = #{idDokumen}")
+    void deleteDokumen(@Param("idDokumen") int idDokumen);
 }
