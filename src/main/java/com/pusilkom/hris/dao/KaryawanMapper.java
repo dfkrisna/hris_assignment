@@ -363,4 +363,8 @@ public interface KaryawanMapper {
     @Delete("delete from employee.\"DATA_DARURAT\" where id=#{idKontak}")
     void deleteKontakDaruratById(Integer idKontak);
 
+    @Update("update employee.\"KARYAWAN\" set nama_lengkap=#{namaLengkap}, nama_panggilan=#{namaPanggilan}, nip=#{nip}, " +
+            "email_pusilkom=#{emailPusilkom}, email_pribadi=#{emailPribadi}, id_divisi=#{idDivisi} " +
+            "where id=#{idKaryawan}")
+    void updateKaryawanBaru(KaryawanBaruModel karyawan);
 }
