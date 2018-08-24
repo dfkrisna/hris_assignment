@@ -167,6 +167,21 @@ $(document).ready(function() {
         $("#modal-hapus-karyawan").modal();
     })
 
+    //Ketika tombol tambah benefit ditekan
+    $("#btn-tambah-benefit").on("click", function(){
+        event.preventDefault()
+        var action = "";
+        $("#modal-tambah-benefit").modal();
+    })
+
+    //Ketika tombol hapus pada benefit ditekan
+    $(".btn-hapus-benefit").on("click", function(){
+        event.preventDefault();
+        var action = "/employee/detail-karyawan/" + $(this).data('idkaryawan') + "/delete-benefit/" + $(this).data('idbenefit');
+        $("#btn-konfirmasi-hapus-benefit").attr('href', action);
+        $("#modal-hapus-benefit").modal();
+    })
+
     $(".btn-ubah-anggota-keluarga").on("click", function(){
         event.preventDefault();
 
@@ -214,6 +229,17 @@ $(document).ready(function() {
         $("#modal-delete-gaji").modal();
     });
 
+    $(".btn-edit-benefit").on("click",function(){
+        var id = $(this).data('idbenefit')
+        var namaBenefit = $(this).data("benefit")
+        var keteranganBenefit = $(this).data("keterangan")
+        var idKaryawan = $(this).data("idkaryawan")
+        var action = "/employee/detail-karyawan/" + idKaryawan + "/edit-benefit/" + id;
+        $("#form-edit-benefit").attr('action', action)
+        $("#namaBenefit").attr('value', namaBenefit)
+        $("#keteranganBenefit").attr('placeholder', keteranganBenefit)
+        $("#modal-edit-benefit").modal()
+    })
 
     $(".btn-hapus-keluarga").on("click", function(){
         event.preventDefault();
@@ -335,5 +361,4 @@ $(document).ready(function() {
         $("#ubah-email-pr").attr('value', emailPribadi);
         $("#modal-ubah-karyawan").modal();
     });
-
 } );

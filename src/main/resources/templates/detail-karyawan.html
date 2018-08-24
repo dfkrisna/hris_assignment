@@ -171,7 +171,6 @@
                     </tbody>
                 </table>
             </div>
-
             <div class="modal fade" id="modal-tambah-pendidikan">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -212,7 +211,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="tab-pane fade show" id="nav-data-darurat" role="tabpanel" aria-labelledby="nav-data-darurat">
                 <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
                 <!-- gunakan th:if="${isEmployeeSelected || isHR}" untuk menampilkan -->
@@ -408,7 +406,42 @@
                 <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
                 <!-- gunakan th:if="${isEmployeeSelected || isHR}" untuk menampilkan -->
                 <!-- gunakan boolean isHR agar disabled -->
-                <input type="text" name="" id="" th:disabled="${!isHR}">
+                <button id="btn-tambah-benefit" class="btn btn-primary" data-toggle="modal" data-target="#modal-tambah-benefit">
+                    Tambah Benefit +
+                </button>
+                <h2 class="text-center montserrat-bold-big">Benefit Karyawan</h2>
+                <div th:if="${listBenefit == null}">
+                    <h4 class="text-center" th:text="'Karyawan ' + ${karyawan.getNamaPanggilan()} + ' tidak mempunyai benefit'"></h4>
+                </div>
+                <div th:if="${listBenefit!=null}">
+                    <table class="table-mpp table table-hover">
+                        <thead>
+                            <tr>
+                                <th style="background-color: #FFCF26;" class="montserrat-small-bold text-center">Nama Benefit</th>
+                                <th style="background-color: #FFCF26;" class="montserrat-small-bold text-center">Keterangan</th>
+                                <div th:if="${!isHR}">
+                                    <th style="background-color: #FFCF26;" class="montserrat-small-bold text-center">Aksi</th>
+                                </div>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <div th:each="benefit,iterationStatus:${listBenefit}" class="list-group list-group-flush">
+                                <tr>
+                                    <td th:text="${benefit.getNamaBenefit()}" class="montserrat-small"></td>
+                                    <td th:text="${benefit.getKeteranganBenefit()}" class="montserrat-small text-center"></td>
+                                    <div th:if="${!isHR}">
+                                        <td class="montserrat-small text-center">
+                                            <button class="btn-edit-benefit montserrat-small pusil-btn btn btn-primary text-white btn-rounded"
+                                                th:attr="data-idbenefit=${benefit.getId()}, data-idkaryawan=${karyawan.getIdKaryawan()}, data-benefit=${benefit.getNamaBenefit()}, data-keterangan=${benefit.getKeteranganBenefit()}">Edit</button>
+                                            <button class="btn-hapus-benefit montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded"
+                                                th:attr="data-idbenefit=${benefit.getId()}, data-idkaryawan=${karyawan.getIdKaryawan()}">Hapus</button>
+                                        </td>
+                                    </div>
+                                </tr>
+                            </div>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div class="tab-pane fade show" id="nav-data-kontrak" role="tabpanel" aria-labelledby="nav-data-kontrak">
@@ -603,7 +636,37 @@
             </div>
         </div>
     </div>
+    <!--Modal untuk tambah benefit-->
+    <div class="modal fade" id="modal-tambah-benefit">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Tambah Benefit</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <form id="form-tambah-benefit" th:action="'/employee/detail-karyawan/' + ${karyawan.getIdKaryawan()} + '/tambah-benefit/'" method="POST">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="namaBenefitBaru" class="col-form-label">Nama Benefit :</label>
+                            <input type="text" class="form-control" id="namaBenefitBaru" name="namaBenefitBaru"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="keteranganBenefitBaru" class="col-form-label">Keterangan Benefit :</label>
+                            <textarea class="form-control" id="keteranganBenefitBaru" name="keteranganBenefitBaru"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Tambah Benefit</button>
+                        <button type="button" class="montserrat-small btn btn-dark btn-rounded" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="modal-ubah-pendidikan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -640,7 +703,37 @@
             </div>
         </div>
     </div>
+    <!--Modal untuk edit benefit-->
+    <div class="modal fade" id="modal-edit-benefit">
+        <div class="modal-dialog">
+            <div class="modal-content">
 
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Ubah Keterangan</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <form id="form-edit-benefit" method="POST">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="namaBenefit" class="col-form-label">Nama Benefit :</label>
+                            <input type="text" class="form-control" id="namaBenefit" name="namaBenefit" disabled/>
+                        </div>
+                        <div class="form-group">
+                            <label for="keteranganBenefit" class="col-form-label">Keterangan Benefit :</label>
+                            <textarea class="form-control" id="keteranganBenefit" name="keteranganBenefit"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Ubah Keterangan</button>
+                        <button type="button" class="montserrat-small btn btn-dark btn-rounded" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="modal-ubah-anggota-keluarga" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -677,8 +770,28 @@
             </div>
         </div>
     </div>
+    <!--Modal konfirmasi delete benefit-->
+    <div class="modal fade" id="modal-hapus-benefit">
+      <div class="modal-dialog">
+            <div class="modal-content">
 
+                <!-- Modal Header -->
+                <div class="modal-header">
+                  <h4 class="modal-title">Hapus Benefit</h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
 
+                <!-- Modal body -->
+                <div class="modal-body">
+                  <h5>Apakah anda yakin ingin menghapus benefit?</h5>
+                </div>
+                <div class="modal-footer">
+                    <a id="btn-konfirmasi-hapus-benefit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Hapus Benefit</a>
+                  <button type="button" class="montserrat-small btn btn-dark btn-rounded" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="modal-hapus-pendidikan">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -722,8 +835,6 @@
             </div>
         </div>
     </div>
-
-
 </body>
 
 <div class="modal fade" id="ubahKontakDaruratModal" tabindex="-1" role="dialog" aria-labelledby="ubahKontakDaruratModalLabel"

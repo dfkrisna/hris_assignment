@@ -1,16 +1,5 @@
 package com.pusilkom.hris.service;
 
-
-import com.pusilkom.hris.model.FeedbackRatingModel;
-import com.pusilkom.hris.model.KaryawanBaruModel;
-import com.pusilkom.hris.model.KaryawanModel;
-import com.pusilkom.hris.model.KaryawanProyekModel;
-import com.pusilkom.hris.model.RiwayatGajiModel;
-import com.pusilkom.hris.model.DataDiriModel;
-import com.pusilkom.hris.model.KeluargaModel;
-import com.pusilkom.hris.model.PendidikanModel;
-
-
 import com.pusilkom.hris.model.*;
 
 import org.apache.tomcat.jni.Local;
@@ -55,6 +44,8 @@ public interface KaryawanService {
 
 	List<Integer> getAllDivisi();
 
+	List<BenefitKaryawanModel> getBenefitKaryawan(int id);
+
 	void addFeedbackRekan(String feedback, int rating, int idRekan, int idPenilai,
 						  int idProyek, LocalDate periode, Timestamp tanggal);
 
@@ -94,6 +85,12 @@ public interface KaryawanService {
 	void updateGajiById(int idGaji, int gaji);
 
 	void deleteGajiById(int idGaji);
+
+	void updateBenefitKaryawan(int idBenefit, String keteranganBaru);
+
+	void deleteBenefitKaryawan(int idBenefi);
+
+	void addBenefitKaryawan(int idKaryawan, String namaBenefit, String keteranganBenefit);
 
 	List<PendidikanModel> selectPendidikanAll(int idKaryawan);
 
