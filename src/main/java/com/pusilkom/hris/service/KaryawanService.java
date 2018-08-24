@@ -120,5 +120,8 @@ public interface KaryawanService {
 	void insertDokumen(int idKaryawan, String fileName);
 
 	DokumenModel getDokumen(int idDokumen);
-    void updateKaryawanBaru(KaryawanBaruModel karyawan);
+
+	void updateKaryawanBaru(KaryawanBaruModel karyawan);
+	
+	void deleteDokumen(int idDokumen);
 }

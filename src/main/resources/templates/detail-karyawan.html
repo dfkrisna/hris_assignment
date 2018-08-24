@@ -420,12 +420,15 @@
             <div class="tab-pane fade show" id="nav-data-dokumen" role="tabpanel" aria-labelledby="nav-data-dokumen">
                 <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
                 <div th:unless="${!isEmployeeSelected && !isHR}">
+                    <h2>Tambah Dokumen</h2>
+                    <hr/>
                     <form method="POST" th:action="'/employee/detail-karyawan/' + ${karyawan.getIdKaryawan()} + '/upload'" enctype="multipart/form-data">
                         <input type="file" name="file">
                         <input type="submit" value="Submit">
                     </form>
-
+                    <hr/>
                     <h2>List Dokumen yang telah terupload</h2>
+                    <hr/>
 
                     
                     <table class="table table-hover mt-3">
@@ -442,7 +445,8 @@
                                     <td class="montserrat-small" scope="row" th:text="${iterationStatus.count}"></td>
                                     <td class="montserrat-small" th:text="${dokumen.getFileName()}"></td>
                                     <td >
-                                        <a class="btn pusil-btn btn-primary" th:href="'/employee/detail-karyawan/'+ ${dokumen.getIdKaryawan()} +'/download/'+${dokumen.getId()}">Download</a>
+                                        <a class="montserrat-small btn-dark text-white btn pusil-btn btn-primary btn-rounded" th:href="'/employee/detail-karyawan/'+ ${dokumen.getIdKaryawan()} +'/download/'+${dokumen.getId()}">Unduh</a>
+                                        <a class="montserrat-small btn btn-dark text-white btn-rounded" th:href="'/employee/detail-karyawan/'+ ${dokumen.getIdKaryawan()} +'/delete-dokumen/'+${dokumen.getId()}">Hapus Dokumen</a>
                                     </td>
                                 </tr>
                             </div>
