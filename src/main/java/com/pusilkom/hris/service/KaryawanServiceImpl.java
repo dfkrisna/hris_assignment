@@ -279,9 +279,28 @@ public class KaryawanServiceImpl implements KaryawanService{
 		karyawanMapper.deleteKontakDaruratById(idKontak);
 	}
 
+	public List<DokumenModel> getAllDokumenKaryawanById(int idKaryawan){
+		return karyawanMapper.getAllDokumenKaryawanById(idKaryawan);
+	}
+
+	@Override
+	public void insertDokumen(int idKaryawan, String fileName){
+		karyawanMapper.insertDokumen(idKaryawan, fileName);
+	}
+
+	@Override
+	public DokumenModel getDokumen(int idDokumen){
+		return karyawanMapper.getDokumen(idDokumen);
+	}
+
 	@Override
 	public void updateKaryawanBaru(KaryawanBaruModel karyawan) {
 		karyawanMapper.updateKaryawanBaru(karyawan);
+	}
+
+	@Override
+	public void deleteDokumen(int idDokumen){
+		karyawanMapper.deleteDokumen(idDokumen);
 	}
 }
 

@@ -4,13 +4,21 @@ import com.pusilkom.hris.model.*;
 import com.pusilkom.hris.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotNull;
 import javax.xml.crypto.Data;
@@ -22,6 +30,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URLConnection;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 
 @Slf4j
 @Controller
@@ -44,7 +63,9 @@ public class EmpIndexController {
     }
 
     /**
-     * method ini digunakan untuk menampilkan index manajer divisi yang berisi daftar anggota di divisinya empployee 
+     * method ini digunakan untuk menampilkan index manajer divisi yang berisi
+     * daftar anggota di divisinya empployee
+     * 
      * @param model
      * @param principal
      * @return
@@ -53,7 +74,7 @@ public class EmpIndexController {
     @PreAuthorize("hasAuthority('GET_MNGDIVISI')")
     public String indexManajerDivisiEmployee(Model model, Principal principal) {
         List<KaryawanCutiModel> listOfKaryawanCuti = karyawanCutiService.getAll(principal.getName());
-        
+
         model.addAttribute("listOfKaryawanCuti", listOfKaryawanCuti);
         return "index-manajerdivisi-employee";
     }
@@ -62,43 +83,43 @@ public class EmpIndexController {
      * Method ini untuk melihat detail karyawan
      */
     @GetMapping("/employee/detail-karyawan/{idKaryawan}")
-    public String detailKaryawan(Model model, @PathVariable("idKaryawan") int idKaryawan, @NotNull Authentication auth){
+    public String detailKaryawan(Model model, @PathVariable("idKaryawan") int idKaryawan,
+            @NotNull Authentication auth) {
         KaryawanBaruModel karyawanBaru = karyawanService.getKaryawanBaruById(idKaryawan);
         DivisibaruModel divisi = divisiService.selectDivisiBaruByID(karyawanBaru.getIdDivisi());
-        
-        //get data diri
+
+        // get data diri
         DataDiriModel dataDiri = karyawanService.getDataDiriByIdKaryawan(karyawanBaru.getIdKaryawan());
 
         //get data keluarga
         List<KeluargaModel> keluarga = karyawanService.selectAnggotaKeluargaAll(idKaryawan);
-        if(dataDiri == null){
+        if (dataDiri == null) {
             dataDiri = new DataDiriModel();
             dataDiri.setIdKaryawan(idKaryawan);
         }
-
-
         //get data pendidikan
         List<PendidikanModel> pendidikan = karyawanService.selectPendidikanAll(idKaryawan);
 
         //get data gaji
         List<RiwayatGajiModel> listRiwayatGaji = karyawanService.selectAllRiwayatGajiById(idKaryawan);
-        
+
         // check if user can edit
         UserWeb user = (UserWeb) auth.getPrincipal();
         boolean isEmployeeSelected = false;
         boolean isHR = false;
         KaryawanBaruModel karyawan = karyawanService.getKaryawanByUsername(user.getUsername());
-        if(karyawan != null && karyawan.getIdKaryawan() == idKaryawan){
+        if (karyawan != null && karyawan.getIdKaryawan() == idKaryawan) {
             isEmployeeSelected = true;
         }
         for (String role : user.getStrRoles()) {
-            if(role.equals("ROLE_HR") || role.equals("ROLE_MANAJERDIVISI")){
-                isHR = true;                
+            if (role.equals("ROLE_HR") || role.equals("ROLE_MANAJERDIVISI")) {
+                isHR = true;
             }
         }
 
         List<KontakDaruratModel> dataDarurat = karyawanService.getKontakDaruratKaryawan(idKaryawan);
 
+        List<DokumenModel> dokumens = karyawanService.getAllDokumenKaryawanById(idKaryawan);
         List<DivisibaruModel> divisis = divisiService.selectAllDivisiAktif();
 
         model.addAttribute("isEmployeeSelected", isEmployeeSelected);
@@ -108,86 +129,83 @@ public class EmpIndexController {
         model.addAttribute("dataDiri", dataDiri);
         model.addAttribute("pendidikan", pendidikan);
         model.addAttribute("keluarga", keluarga);
-
-        System.out.println(pendidikan);
-
         model.addAttribute("listRiwayatGaji", listRiwayatGaji);
-
+        model.addAttribute("dokumens", dokumens);
         model.addAttribute("darurats", dataDarurat);
         model.addAttribute("divisis", divisis);
         return "detail-karyawan";
     }
 
     @PostMapping("/employee/detail-karyawan/{idKaryawan}/insert-data-diri")
-    public String updateKaryawan(Model model, 
-                                @ModelAttribute("dataDiri") DataDiriModel dataDiri,
-                                @PathVariable("idKaryawan") int idKaryawan,
-                                @NotNull Authentication auth){
-        //check if user can edit
+    public String updateKaryawan(Model model, @ModelAttribute("dataDiri") DataDiriModel dataDiri,
+            @PathVariable("idKaryawan") int idKaryawan, @NotNull Authentication auth) {
+        // check if user can edit
         UserWeb user = (UserWeb) auth.getPrincipal();
         boolean canEdit = false;
         KaryawanBaruModel karyawan = karyawanService.getKaryawanByUsername(user.getUsername());
-        if(karyawan != null && karyawan.getIdKaryawan() == idKaryawan){
+        if (karyawan != null && karyawan.getIdKaryawan() == idKaryawan) {
             canEdit = true;
         }
         for (String role : user.getStrRoles()) {
-            if(role.equals("ROLE_HR") || role.equals("ROLE_MANAJERDIVISI")){
+            if (role.equals("ROLE_HR") || role.equals("ROLE_MANAJERDIVISI")) {
                 canEdit = true;
             }
         }
 
-        if(canEdit){
+        if (canEdit) {
             karyawanService.insertDataDiri(dataDiri);
         }
         System.out.println(canEdit);
-        return "redirect:/employee/detail-karyawan/"+idKaryawan;
+        return "redirect:/employee/detail-karyawan/" + idKaryawan;
     }
 
     @PostMapping("/employee/detail-karyawan/{idKaryawan}/insert-gaji")
-    public String insertGaji(Model model, @RequestParam("gaji") int gaji, @PathVariable("idKaryawan") int idKaryawan){
+    public String insertGaji(Model model, @RequestParam("gaji") int gaji, @PathVariable("idKaryawan") int idKaryawan) {
         karyawanService.insertGaji(idKaryawan, gaji);
-        return "redirect:/employee/detail-karyawan/"+idKaryawan;
+        return "redirect:/employee/detail-karyawan/" + idKaryawan;
     }
 
     @PostMapping("/employee/detail-karyawan/{idKaryawan}/update-gaji/{idGaji}")
-    public String updateGaji(@RequestParam("gaji") int gaji, @PathVariable("idKaryawan") int idKaryawan, @PathVariable("idGaji") int idGaji){
+    public String updateGaji(@RequestParam("gaji") int gaji, @PathVariable("idKaryawan") int idKaryawan,
+            @PathVariable("idGaji") int idGaji) {
         karyawanService.updateGajiById(idGaji, gaji);
-        return "redirect:/employee/detail-karyawan/"+idKaryawan; 
+        return "redirect:/employee/detail-karyawan/" + idKaryawan;
     }
 
     @GetMapping("/employee/detail-karyawan/{idKaryawan}/delete-gaji/{idGaji}")
-    public String deleteGaji(@PathVariable("idKaryawan") int idKaryawan, @PathVariable("idGaji") int idGaji){
+    public String deleteGaji(@PathVariable("idKaryawan") int idKaryawan, @PathVariable("idGaji") int idGaji) {
         karyawanService.deleteGajiById(idGaji);
-        return "redirect:/employee/detail-karyawan/"+idKaryawan;
+        return "redirect:/employee/detail-karyawan/" + idKaryawan;
     }
 
     @GetMapping("employee/detail-karyawan/{idKaryawan}/activate")
-    public String activateKaryawan(@PathVariable("idKaryawan") int idKaryawan){
+    public String activateKaryawan(@PathVariable("idKaryawan") int idKaryawan) {
         karyawanService.activateKaryawan(idKaryawan);
-        return "redirect:/employee/detail-karyawan/"+idKaryawan;
+        return "redirect:/employee/detail-karyawan/" + idKaryawan;
     }
 
     @GetMapping("employee/detail-karyawan/{idKaryawan}/deactivate")
-    public String deActivateKaryawan(@PathVariable("idKaryawan") int idKaryawan){
+    public String deActivateKaryawan(@PathVariable("idKaryawan") int idKaryawan) {
         karyawanService.deActivateKaryawan(idKaryawan);
-        return "redirect:/employee/detail-karyawan/"+idKaryawan;
+        return "redirect:/employee/detail-karyawan/" + idKaryawan;
     }
+
     @PostMapping("/employee/detail-karyawan/{idKaryawan}/insert-keluarga")
-    public String insertKeluarga(Model model,
-                                 @ModelAttribute("keluarga") KeluargaModel keluarga,
-                                 @PathVariable("idKaryawan") int idKaryawan){
+    public String insertKeluarga(Model model, @ModelAttribute("keluarga") KeluargaModel keluarga,
+            @PathVariable("idKaryawan") int idKaryawan) {
 
         keluarga.setIdKaryawan(idKaryawan);
         karyawanService.insertAnggotaKeluarga(keluarga);
-        return "redirect:/employee/detail-karyawan/"+idKaryawan;
+        return "redirect:/employee/detail-karyawan/" + idKaryawan;
     }
 
-    @RequestMapping(value = "/employee/detail-karyawan/{idKaryawan}/update-anggota-keluarga/{id}" , method = RequestMethod.POST)
-    public String updateAnggotaKeluarga (@ModelAttribute KeluargaModel keluarga, Model model, @PathVariable("idKaryawan") int idKaryawan, @PathVariable(value = "id") int id) {
+    @RequestMapping(value = "/employee/detail-karyawan/{idKaryawan}/update-anggota-keluarga/{id}", method = RequestMethod.POST)
+    public String updateAnggotaKeluarga(@ModelAttribute KeluargaModel keluarga, Model model,
+            @PathVariable("idKaryawan") int idKaryawan, @PathVariable(value = "id") int id) {
 
         karyawanService.updateAnggotaKeluarga(keluarga);
 
-        return "redirect:/employee/detail-karyawan/"+idKaryawan;
+        return "redirect:/employee/detail-karyawan/" + idKaryawan;
     }
 
 
@@ -196,7 +214,55 @@ public class EmpIndexController {
     {
         karyawanService.deleteAnggotaKeluarga(id);
 
-        return "redirect:/employee/detail-karyawan/"+idKaryawan;
+        return "redirect:/employee/detail-karyawan/" + idKaryawan;
+    }
+
+    @PostMapping("/employee/detail-karyawan/{idKaryawan}/upload")
+    public String uploadDokumen(@PathVariable("idKaryawan") int idKaryawan, @RequestParam("file") MultipartFile file,
+            RedirectAttributes ra) {
+        String dir = System.getProperty("user.dir") + "/uploads";
+        Path p = Paths.get(dir, "dokumen-" + idKaryawan + "-" + file.getOriginalFilename());
+        karyawanService.insertDokumen(idKaryawan, "dokumen-" + idKaryawan + "-" + file.getOriginalFilename());
+        try {
+            Files.write(p, file.getBytes());
+            ra.addFlashAttribute("test", dir);
+        } catch (Exception e) {
+            ra.addFlashAttribute("test", e.toString());
+            return "redirect:/employee/detail-karyawan/" + idKaryawan;
+        }
+
+        return "redirect:/employee/detail-karyawan/" + idKaryawan;
+    }
+
+    @GetMapping("/employee/detail-karyawan/{idKaryawan}/download/{idFile}")
+    public void downloadDokumen(HttpServletRequest request, HttpServletResponse response,
+            @PathVariable("idKaryawan") int idKaryawan, @PathVariable("idFile") int idFile) throws IOException {
+        String dir = System.getProperty("user.dir") + "/uploads";
+        DokumenModel dokumen = karyawanService.getDokumen(idFile);
+        File file = new File(dir + "/" + dokumen.getFileName());
+        if (file.exists()) {
+
+            String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+            if (mimeType == null) {
+                mimeType = "application/octet-stream";
+            }
+
+            response.setContentType(mimeType);
+
+            response.setHeader("Content-Disposition", String.format("inline; filename=\"" + file.getName() + "\""));
+
+            response.setContentLength((int) file.length());
+
+            InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+
+            FileCopyUtils.copy(inputStream, response.getOutputStream());
+        }
+    }
+
+    @GetMapping("/employee/detail-karyawan/{idKaryawan}/delete-dokumen/{idFile}")
+    public String deleteDokumen(@PathVariable("idKaryawan") int idKaryawan, @PathVariable("idFile") int idFile){
+        karyawanService.deleteDokumen(idFile);
+        return "redirect:/employee/detail-karyawan/" + idKaryawan;
     }
 
     @PostMapping("/employee/detail-karyawan/{idKaryawan}/insert-pendidikan")

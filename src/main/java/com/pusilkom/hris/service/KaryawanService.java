@@ -115,5 +115,13 @@ public interface KaryawanService {
 
 	void deleteKontakDaruratById(Integer idKontak);
 
-    void updateKaryawanBaru(KaryawanBaruModel karyawan);
+	List<DokumenModel> getAllDokumenKaryawanById(int idKaryawan);
+
+	void insertDokumen(int idKaryawan, String fileName);
+
+	DokumenModel getDokumen(int idDokumen);
+
+	void updateKaryawanBaru(KaryawanBaruModel karyawan);
+	
+	void deleteDokumen(int idDokumen);
 }
