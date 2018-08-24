@@ -48,7 +48,9 @@
                 </thead>
                 <tbody>
                 <tr th:each="karyawan,iterationStatus:${karyawanList}">
-                    <td th:text="${karyawan.getNamaLengkap()}"></td>
+                    <td>
+                        <a th:href="'/employee/detail-karyawan/' + ${karyawan.getIdKaryawan()}" th:text="${karyawan.getNamaLengkap()}"></a>
+                    </td>
                     <td class="text-center" th:text="${karyawan.getNamaPanggilan()}"></td>
                     <td th:text="${karyawan.getNip()}"></td>
                     <td class="text-center" th:text="${karyawan.getIdDivisi()}"></td>
