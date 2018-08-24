@@ -16,11 +16,19 @@
         </div>
         <h1 th:text="${karyawan.getNamaLengkap()} + ' (' + ${karyawan.getNamaPanggilan()} + ')'">Nama Lengkap Karyawan (Nama Penggilan)</h1>
         <h3 th:text="${karyawan.getNip()}">NIP</h3>
-        <button th:if="${karyawan.isActive()}" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded toogle-status-karyawan"
-            data-status="aktif" th:attr="data-idKaryawan=${karyawan.getIdKaryawan()}" th:disabled="${!isHR}">Aktif</button>
-        <button th:if="${!karyawan.isActive()}" class="montserrat-small btn btn-dark text-white btn-rounded toogle-status-karyawan"
-            data-status="nonaktif" th:attr="data-idKaryawan=${karyawan.getIdKaryawan()}" th:disabled="${!isHR}">Tidak Aktif</button>
-        <br/>
+        <div class="row">
+            <div class="col-md-auto">
+                <button th:if="${karyawan.isActive()}" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded toogle-status-karyawan"
+                        data-status="aktif" th:attr="data-idKaryawan=${karyawan.getIdKaryawan()}" th:disabled="${!isHR}">Aktif</button>
+                <button th:if="${!karyawan.isActive()}" class="montserrat-small btn btn-dark text-white btn-rounded toogle-status-karyawan"
+                        data-status="nonaktif" th:attr="data-idKaryawan=${karyawan.getIdKaryawan()}" th:disabled="${!isHR}">Tidak Aktif</button>
+            </div>
+            <div class="col-md-auto">
+                <button th:if="${isHR}" id="edit-karyawan-btn" class="montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded"
+                        th:attr="data-id-kar=${karyawan.getIdKaryawan()}, data-nama-lengkap=${karyawan.namaLengkap}, data-nama-panggilan=${karyawan.namaPanggilan},
+                data-nip=${karyawan.nip}, data-id-divisi=${karyawan.idDivisi}, data-email-pus=${karyawan.emailPusilkom}, data-email-pr=${karyawan.emailPribadi}, data-list-divisi=${divisis}">Ubah</button>
+            </div>
+        </div>
         <br/>
         <div class="row">
             <div class="col-6 row">
@@ -43,9 +51,6 @@
             <div class="col"></div>
         </div>
 
-        <button th:if="${isHR}" id="edit-karyawan-btn" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded"
-                th:attr="data-id-kar=${karyawan.getIdKaryawan()}, data-nama-lengkap=${karyawan.namaLengkap}, data-nama-panggilan=${karyawan.namaPanggilan},
-                data-nip=${karyawan.nip}, data-id-divisi=${karyawan.idDivisi}, data-email-pus=${karyawan.emailPusilkom}, data-email-pr=${karyawan.emailPribadi}, data-list-divisi=${divisis}">Ubah Data Karyawan</button>
 
         <br/>
         <br/>
