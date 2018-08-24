@@ -339,4 +339,24 @@ public interface KaryawanMapper {
 
     @Delete("delete from employee.\"DATA_DARURAT\" where id=#{idKontak}")
     void deleteKontakDaruratById(Integer idKontak);
+
+    @Select("SELECT * FROM employee.\"DOKUMEN_PENDUKUNG\" WHERE id_karyawan = #{idKaryawan}")
+    @Results(value = {
+            @Result(property = "id", column = "id"),
+            @Result(property = "idKaryawan", column = "id_karyawan"),
+            @Result(property = "fileName", column = "nama_dokumen")
+    })
+    List<DokumenModel> getAllDokumenKaryawanById(@Param("idKaryawan") int idKaryawan);
+
+    @Insert("INSERT INTO employee.\"DOKUMEN_PENDUKUNG\" (id_karyawan, nama_dokumen) VALUES (#{idKaryawan}, #{fileName})")
+    void insertDokumen(@Param("idKaryawan") int idKaryawan, @Param("fileName") String fileName);
+
+    @Select("SELECT * FROM employee.\"DOKUMEN_PENDUKUNG\" WHERE id = #{idDokumen}")
+    @Results(value = {
+            @Result(property = "id", column = "id"),
+            @Result(property = "idKaryawan", column = "id_karyawan"),
+            @Result(property = "fileName", column = "nama_dokumen")
+    })
+    DokumenModel getDokumen(@Param("idDokumen") int idDokumen);
+
 }

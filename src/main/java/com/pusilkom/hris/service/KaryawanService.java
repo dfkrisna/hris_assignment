@@ -95,4 +95,10 @@ public interface KaryawanService {
 	void updateKontakDarurat(KontakDaruratModel kontak);
 
 	void deleteKontakDaruratById(Integer idKontak);
+
+	List<DokumenModel> getAllDokumenKaryawanById(int idKaryawan);
+
+	void insertDokumen(int idKaryawan, String fileName);
+
+	DokumenModel getDokumen(int idDokumen);
 }

@@ -11,6 +11,7 @@
     <div th:replace="fragments/fragment :: absen-modals"></div>
 
     <main id="content-isi" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 pb-3">
+        <p th:if="${test != null}" th:text="${test}"></p>
         <div class="d-flex flex-row mb-5">
             <h2 class="ml-auto roboto" th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy')}"></h2>
         </div>
@@ -62,6 +63,8 @@
                     aria-controls="nav-data-benefit" aria-selected="false">Data Benefit</a>
                 <a class="nav-item nav-link montserrat-small-bold" id="nav-data-kontrak-tab" data-toggle="tab" href="#nav-data-kontrak" role="tab"
                     aria-controls="nav-data-kontrak" aria-selected="false">Data Kontrak</a>
+                <a class="nav-item nav-link montserrat-small-bold" id="nav-data-dokumen-tab" data-toggle="tab" href="#nav-data-dokumen" role="tab"
+                    aria-controls="nav-data-dokumen" aria-selected="false">Data Dokumen</a>
             </div>
         </nav>
 
@@ -335,6 +338,40 @@
                 <!-- gunakan th:if="${isEmployeeSelected || isHR}" untuk menampilkan -->
                 <!-- gunakan boolean isHR agar disabled -->
                 <input type="text" name="" id="" th:disabled="${!isHR}">
+            </div>
+            <div class="tab-pane fade show" id="nav-data-dokumen" role="tabpanel" aria-labelledby="nav-data-dokumen">
+                <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
+                <div th:unless="${!isEmployeeSelected && !isHR}">
+                    <form method="POST" th:action="'/employee/detail-karyawan/' + ${karyawan.getIdKaryawan()} + '/upload'" enctype="multipart/form-data">
+                        <input type="file" name="file">
+                        <input type="submit" value="Submit">
+                    </form>
+
+                    <h2>List Dokumen yang telah terupload</h2>
+
+                    
+                    <table class="table table-hover mt-3">
+                        <thead style="background-color: #FFCF25;">
+                            <tr>
+                                <th class="montserrat-small-bold" scope="col">No.</th>
+                                <th class="montserrat-small-bold" scope="col">Nama Dokumen</th>
+                                <th class="montserrat-small-bold" scope="col">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <div th:each="dokumen,iterationStatus: ${dokumens}">
+                                <tr>
+                                    <td class="montserrat-small" scope="row" th:text="${iterationStatus.count}"></td>
+                                    <td class="montserrat-small" th:text="${dokumen.getFileName()}"></td>
+                                    <td >
+                                        <a class="btn pusil-btn btn-primary" th:href="'/employee/detail-karyawan/'+ ${dokumen.getIdKaryawan()} +'/download/'+${dokumen.getId()}">Download</a>
+                                    </td>
+                                </tr>
+                            </div>
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
         </div>
 
