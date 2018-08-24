@@ -2,13 +2,7 @@ package com.pusilkom.hris.service;
 
 import com.pusilkom.hris.dao.KaryawanMapper;
 
-import com.pusilkom.hris.model.FeedbackRatingModel;
-import com.pusilkom.hris.model.KaryawanBaruModel;
-import com.pusilkom.hris.model.KaryawanModel;
-import com.pusilkom.hris.model.KaryawanProyekModel;
-import com.pusilkom.hris.model.DataDiriModel;
-import com.pusilkom.hris.model.RiwayatGajiModel;
-import com.pusilkom.hris.model.KeluargaModel;
+import com.pusilkom.hris.model.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -137,6 +131,12 @@ public class KaryawanServiceImpl implements KaryawanService{
 	}
 
 	@Override
+	public List<BenefitKaryawanModel> getBenefitKaryawan(int id){
+		List<BenefitKaryawanModel> listBenefitKaryawan = karyawanMapper.getBenefitKaryawan(id);
+		return listBenefitKaryawan;
+	}
+
+	@Override
 	public void addFeedbackRekan(String feedback, int rating, int idRekan, int idPenilai, int idProyek, LocalDate periode, Timestamp tanggal)
 	{
 		karyawanMapper.addFeedbackRekan(feedback, rating, idRekan, idPenilai, idProyek, periode, tanggal);
@@ -238,5 +238,14 @@ public class KaryawanServiceImpl implements KaryawanService{
 	public void deleteGajiById(int idGaji){
 		karyawanMapper.deleteGajiById(idGaji);
 	}
+
+	@Override
+	public void addBenefitKaryawan(int idKaryawan, String namaBenefit, String keteranganBenefit){ karyawanMapper.insertBenefit(idKaryawan, namaBenefit, keteranganBenefit);}
+
+	@Override
+	public void updateBenefitKaryawan(int idBenefit, String keteranganBaru){ karyawanMapper.updateBenefitKaryawanById(keteranganBaru, idBenefit);}
+
+	@Override
+	public void deleteBenefitKaryawan(int idBenefit){karyawanMapper.deleteBenefitById(idBenefit);}
 
 }

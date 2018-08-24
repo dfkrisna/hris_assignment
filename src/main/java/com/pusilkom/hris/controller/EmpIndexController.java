@@ -91,12 +91,18 @@ public class EmpIndexController {
             }
         }
 
+        //get benefit karyawan
+        List<BenefitKaryawanModel> listBenefit = karyawanService.getBenefitKaryawan(karyawan.getIdKaryawan());
+        if(listBenefit.size() == 0){
+            listBenefit = null;
+        }
+
         model.addAttribute("isEmployeeSelected", isEmployeeSelected);
         model.addAttribute("isHR", isHR);
         model.addAttribute("karyawan", karyawanBaru);
         model.addAttribute("divisi", divisi);
         model.addAttribute("dataDiri", dataDiri);
-
+        model.addAttribute("listBenefit",listBenefit);
         model.addAttribute("keluarga", keluarga);
 
         System.out.println(keluarga);
@@ -174,6 +180,29 @@ public class EmpIndexController {
         karyawanService.deleteAnggotaKeluarga(id);
 
         return "redirect:/employee/detail-karyawan/"+idKaryawan;
+    }
+
+    @PostMapping(value = "employee/detail-karyawan/{idKaryawan}/tambah-benefit/")
+    public String tambahBenefitKaryawan(@PathVariable("idKaryawan") int idKaryawan, @RequestParam(value = "namaBenefitBaru") String namaBenefitBaru,
+                                        @RequestParam(value = "keteranganBenefitBaru") String keteranganBenefitBaru){
+        System.out.println("masuk sini");
+        karyawanService.addBenefitKaryawan(idKaryawan, namaBenefitBaru, keteranganBenefitBaru);
+        System.out.println("masuk sana");
+        return "redirect:/employee/detail-karyawan/" + idKaryawan;
+    }
+
+    @PostMapping("/employee/detail-karyawan/{idKaryawan}/edit-benefit/{idBenefit}")
+    public String editBenefitKaryawan(@RequestParam(value = "keteranganBenefit") String keteranganBenefit, @PathVariable("idKaryawan") int idKaryawan, @PathVariable(value = "idBenefit") int idBenefit){
+
+        karyawanService.updateBenefitKaryawan(idBenefit, keteranganBenefit);
+        return "redirect:/employee/detail-karyawan/" + idKaryawan;
+    }
+
+    @GetMapping("/employee/detail-karyawan/{idKaryawan}/delete-benefit/{idBenefit}")
+    public String deleteBenefitKaryawan(@PathVariable("idKaryawan") int idKaryawan, @PathVariable(value = "idBenefit") int idBenefit){
+
+        karyawanService.deleteBenefitKaryawan(idBenefit);
+        return "redirect:/employee/detail-karyawan/" + idKaryawan;
     }
 
 
