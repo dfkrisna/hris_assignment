@@ -311,5 +311,29 @@ $(document).ready(function() {
         $("#konfirmHapusDaruratModal").modal();
     });
 
+    $("#edit-karyawan-btn").on("click",function () {
+        event.preventDefault();
+
+        // get data from item penilaian mandiri
+        var idKaryawan = $(this).data('id-kar');
+        var namaLengkap = $(this).data('nama-lengkap');
+        var namaPanggilan = $(this).data('nama-panggilan');
+        var nip = $(this).data('nip');
+        var idDivisi = $(this).data('id-divisi');
+        var emailPus = $(this).data('email-pus');
+        var emailPribadi = $(this).data('email-pr');
+        var allDivisi = $(this).data('list-divisi');
+
+        // fill form value and action
+        $("#ubah-id-karyawan").attr('value', idKaryawan);
+        $("#ubah-nama-lengkap").attr('value', namaLengkap);
+        $("#ubah-nama-panggilan").attr('value', namaPanggilan);
+        $("#ubah-nip").attr('value', nip);
+        $("#divisi-awal").attr('value', idDivisi);
+        $("#list-divisi").attr('value', allDivisi);
+        $("#ubah-email-pus").attr('value', emailPus);
+        $("#ubah-email-pr").attr('value', emailPribadi);
+        $("#modal-ubah-karyawan").modal();
+    });
 
 } );

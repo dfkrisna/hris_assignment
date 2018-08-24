@@ -115,4 +115,5 @@ public interface KaryawanService {
 
 	void deleteKontakDaruratById(Integer idKontak);
 
+    void updateKaryawanBaru(KaryawanBaruModel karyawan);
 }

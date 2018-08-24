@@ -278,5 +278,10 @@ public class KaryawanServiceImpl implements KaryawanService{
 	public void deleteKontakDaruratById(Integer idKontak) {
 		karyawanMapper.deleteKontakDaruratById(idKontak);
 	}
+
+	@Override
+	public void updateKaryawanBaru(KaryawanBaruModel karyawan) {
+		karyawanMapper.updateKaryawanBaru(karyawan);
+	}
 }
 
