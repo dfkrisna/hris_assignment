@@ -259,6 +259,12 @@ public class EmpIndexController {
         }
     }
 
+    @GetMapping("/employee/detail-karyawan/{idKaryawan}/delete-dokumen/{idFile}")
+    public String deleteDokumen(@PathVariable("idKaryawan") int idKaryawan, @PathVariable("idFile") int idFile){
+        karyawanService.deleteDokumen(idFile);
+        return "redirect:/employee/detail-karyawan/" + idKaryawan;
+    }
+
     @PostMapping("/employee/detail-karyawan/{idKaryawan}/insert-pendidikan")
     public String insertPendidikan(Model model,
                                  @ModelAttribute("pendidikan") PendidikanModel pendidikan,
