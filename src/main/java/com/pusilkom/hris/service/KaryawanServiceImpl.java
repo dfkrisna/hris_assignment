@@ -278,5 +278,17 @@ public class KaryawanServiceImpl implements KaryawanService{
 	public void deleteKontakDaruratById(Integer idKontak) {
 		karyawanMapper.deleteKontakDaruratById(idKontak);
 	}
+
+	@Override
+	public List<KontrakModel> selectKontrakAll(int idKaryawan){return karyawanMapper.selectKontrakAll(idKaryawan);}
+
+	@Override
+	public void insertKontrak(KontrakModel kontrak){karyawanMapper.insertKontrak(kontrak);}
+
+	@Override
+	public void updateKontrak (KontrakModel kontrak){karyawanMapper.updateKontrak(kontrak);}
+
+	@Override
+	public void deleteKontrak (int id){karyawanMapper.deleteKontrak(id);}
 }
 

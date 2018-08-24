@@ -272,7 +272,7 @@ public interface KaryawanMapper {
 
 
 
-    @Select("SELECT * FROM employee.\"KELUARGA\" WHERE id_karyawan=#{idKaryawan}" )
+    @Select("SELECT * FROM employee.\"KELUARGA\" WHERE id_karyawan=#{idKaryawan} ORDER BY id DESC" )
     @Results(value = {
             @Result(property="id", column="id"),
             @Result(property="idKaryawan", column="id_karyawan"),
@@ -313,7 +313,7 @@ public interface KaryawanMapper {
     void deleteGajiById(@Param("idGaji") int idGaji);
 
 
-    @Select("SELECT * FROM employee.\"PENDIDIKAN\" WHERE id_karyawan=#{idKaryawan}" )
+    @Select("SELECT * FROM employee.\"PENDIDIKAN\" WHERE id_karyawan=#{idKaryawan} ORDER BY id DESC" )
     @Results(value = {
             @Result(property="id", column="id"),
             @Result(property="idKaryawan", column="id_karyawan"),
@@ -363,4 +363,25 @@ public interface KaryawanMapper {
     @Delete("delete from employee.\"DATA_DARURAT\" where id=#{idKontak}")
     void deleteKontakDaruratById(Integer idKontak);
 
+
+    @Select("SELECT * FROM employee.\"DATA_KONTRAK\" WHERE id_karyawan=#{idKaryawan} ORDER BY id DESC" )
+    @Results(value = {
+            @Result(property="id", column="id"),
+            @Result(property="idKaryawan", column="id_karyawan"),
+            @Result(property="tanggalKontrak", column="tanggal_kontrak"),
+            @Result(property="durasi", column="durasi"),
+            @Result(property="pihakKontraktor", column="pihak_kontraktor")
+    })
+    List<KontrakModel> selectKontrakAll(int idKaryawan);
+
+    @Insert("INSERT INTO employee.\"DATA_KONTRAK\" (id_karyawan, tanggal_kontrak, durasi, pihak_kontraktor) \n"
+            + "VALUES (#{idKaryawan}, #{tanggalKontrak}, #{durasi}, #{pihakKontraktor})")
+    void insertKontrak(KontrakModel kontrak);
+
+    @Update("UPDATE employee.\"DATA_KONTRAK\"  SET tanggal_kontrak = #{tanggalKontrak}, durasi = #{durasi}, pihak_kontraktor = #{pihakKontraktor}" +
+            " WHERE id = #{id}")
+    void updateKontrak (KontrakModel kontrak);
+
+    @Delete("DELETE FROM employee.\"DATA_KONTRAK\" WHERE id = #{id}")
+    void deleteKontrak (int id);
 }

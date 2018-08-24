@@ -115,4 +115,11 @@ public interface KaryawanService {
 
 	void deleteKontakDaruratById(Integer idKontak);
 
+	List<KontrakModel> selectKontrakAll(int idKaryawan);
+
+	void insertKontrak(KontrakModel kontrak);
+
+	void updateKontrak (KontrakModel kontrak);
+
+	void deleteKontrak (int id);
 }

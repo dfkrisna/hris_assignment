@@ -311,5 +311,35 @@ $(document).ready(function() {
         $("#konfirmHapusDaruratModal").modal();
     });
 
+    $(".btn-ubah-kontrak").on("click", function(){
+        event.preventDefault();
+
+
+        var id = $(this).data('id');
+        var idKaryawan = $(this).data('idkaryawan');
+        var tanggalKontrak = $(this).data('tanggalkontrak');
+        var durasi = $(this).data('durasi');
+        var pihakKontraktor = $(this).data('pihakkontraktor');
+        var action = "/employee/detail-karyawan/" +idKaryawan +"/update-kontrak/" + id;
+
+        // fill form value and action
+        $("#id").attr('value', id);
+        $("#idKaryawan").attr('value', idKaryawan);
+        $("#tanggalkontrak").attr('value',tanggalKontrak);
+        $("#durasi").attr('value', durasi);
+        $("#pihakkontraktor").attr('value', pihakKontraktor);
+        $("#form-ubah-kontrak").attr('action', action);
+
+        // pop-up modal
+        $("modal-ubah-kontrak").modal();
+    })
+
+    $(".btn-hapus-kontrak").on("click", function(){
+        event.preventDefault();
+        var action = "/employee/detail-karyawan/hapus-kontrak/"  + $(this).data('idkaryawan') + "/" + $(this).data('id');
+
+        $("#btn-konfirmasi-hapus-kontrak").attr('href', action);
+        $("#modal-hapus-kontrak").modal();
+    })
 
 } );
