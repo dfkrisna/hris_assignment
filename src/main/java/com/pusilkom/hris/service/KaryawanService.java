@@ -1,16 +1,5 @@
 package com.pusilkom.hris.service;
 
-
-import com.pusilkom.hris.model.FeedbackRatingModel;
-import com.pusilkom.hris.model.KaryawanBaruModel;
-import com.pusilkom.hris.model.KaryawanModel;
-import com.pusilkom.hris.model.KaryawanProyekModel;
-import com.pusilkom.hris.model.RiwayatGajiModel;
-import com.pusilkom.hris.model.DataDiriModel;
-import com.pusilkom.hris.model.KeluargaModel;
-import com.pusilkom.hris.model.PendidikanModel;
-
-
 import com.pusilkom.hris.model.*;
 
 import org.apache.tomcat.jni.Local;
@@ -55,6 +44,8 @@ public interface KaryawanService {
 
 	List<Integer> getAllDivisi();
 
+	List<BenefitKaryawanModel> getBenefitKaryawan(int id);
+
 	void addFeedbackRekan(String feedback, int rating, int idRekan, int idPenilai,
 						  int idProyek, LocalDate periode, Timestamp tanggal);
 
@@ -95,6 +86,12 @@ public interface KaryawanService {
 
 	void deleteGajiById(int idGaji);
 
+	void updateBenefitKaryawan(int idBenefit, String keteranganBaru);
+
+	void deleteBenefitKaryawan(int idBenefi);
+
+	void addBenefitKaryawan(int idKaryawan, String namaBenefit, String keteranganBenefit);
+
 	List<PendidikanModel> selectPendidikanAll(int idKaryawan);
 
 	void insertPendidikan(PendidikanModel pendidikan);
@@ -115,6 +112,7 @@ public interface KaryawanService {
 
 	void deleteKontakDaruratById(Integer idKontak);
 
+
 	List<KontrakModel> selectKontrakAll(int idKaryawan);
 
 	void insertKontrak(KontrakModel kontrak);
@@ -122,4 +120,15 @@ public interface KaryawanService {
 	void updateKontrak (KontrakModel kontrak);
 
 	void deleteKontrak (int id);
+
+	List<DokumenModel> getAllDokumenKaryawanById(int idKaryawan);
+
+	void insertDokumen(int idKaryawan, String fileName);
+
+	DokumenModel getDokumen(int idDokumen);
+
+	void updateKaryawanBaru(KaryawanBaruModel karyawan);
+	
+	void deleteDokumen(int idDokumen);
+
 }

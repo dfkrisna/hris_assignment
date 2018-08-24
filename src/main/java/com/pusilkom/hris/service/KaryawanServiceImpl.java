@@ -2,7 +2,6 @@ package com.pusilkom.hris.service;
 
 import com.pusilkom.hris.dao.KaryawanMapper;
 
-
 import com.pusilkom.hris.model.*;
 
 import lombok.extern.slf4j.Slf4j;
@@ -133,6 +132,12 @@ public class KaryawanServiceImpl implements KaryawanService{
 	}
 
 	@Override
+	public List<BenefitKaryawanModel> getBenefitKaryawan(int id){
+		List<BenefitKaryawanModel> listBenefitKaryawan = karyawanMapper.getBenefitKaryawan(id);
+		return listBenefitKaryawan;
+	}
+
+	@Override
 	public void addFeedbackRekan(String feedback, int rating, int idRekan, int idPenilai, int idProyek, LocalDate periode, Timestamp tanggal)
 	{
 		karyawanMapper.addFeedbackRekan(feedback, rating, idRekan, idPenilai, idProyek, periode, tanggal);
@@ -236,6 +241,15 @@ public class KaryawanServiceImpl implements KaryawanService{
 	}
 
 	@Override
+	public void addBenefitKaryawan(int idKaryawan, String namaBenefit, String keteranganBenefit){ karyawanMapper.insertBenefit(idKaryawan, namaBenefit, keteranganBenefit);}
+
+	@Override
+	public void updateBenefitKaryawan(int idBenefit, String keteranganBaru){ karyawanMapper.updateBenefitKaryawanById(keteranganBaru, idBenefit);}
+
+	@Override
+	public void deleteBenefitKaryawan(int idBenefit){karyawanMapper.deleteBenefitById(idBenefit);}
+
+  @Override
 	public List<PendidikanModel> selectPendidikanAll(int idKaryawan){return karyawanMapper.selectPendidikanAll(idKaryawan);}
 
 	@Override
@@ -246,7 +260,8 @@ public class KaryawanServiceImpl implements KaryawanService{
 
 	@Override
 	public void updatePendidikan (PendidikanModel pendidikan){karyawanMapper.updatePendidikan(pendidikan);}
-
+  
+  @Override
 	public void activateKaryawan(int idKaryawan){
 		karyawanMapper.activateKaryawan(idKaryawan);
 	}
@@ -290,5 +305,31 @@ public class KaryawanServiceImpl implements KaryawanService{
 
 	@Override
 	public void deleteKontrak (int id){karyawanMapper.deleteKontrak(id);}
+
+  @Override
+	public List<DokumenModel> getAllDokumenKaryawanById(int idKaryawan){
+		return karyawanMapper.getAllDokumenKaryawanById(idKaryawan);
+	}
+
+	@Override
+	public void insertDokumen(int idKaryawan, String fileName){
+		karyawanMapper.insertDokumen(idKaryawan, fileName);
+	}
+
+	@Override
+	public DokumenModel getDokumen(int idDokumen){
+		return karyawanMapper.getDokumen(idDokumen);
+	}
+
+	@Override
+	public void updateKaryawanBaru(KaryawanBaruModel karyawan) {
+		karyawanMapper.updateKaryawanBaru(karyawan);
+	}
+
+	@Override
+	public void deleteDokumen(int idDokumen){
+		karyawanMapper.deleteDokumen(idDokumen);
+	}
+
 }
 

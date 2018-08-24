@@ -33,7 +33,7 @@ public class AbsenController {
     public boolean isCheckedIn(Model model,
                                @NotNull Authentication auth) {
         UserWeb user = (UserWeb) auth.getPrincipal();
-        KaryawanBaruModel karyawan = karyawanService.getKaryawanByUsername("tatangsutarna@pusilkom.ui.ac.id");
+        KaryawanBaruModel karyawan = karyawanService.getKaryawanByUsername(user.getUsername());
         boolean isCheckedIn = absenService.isCheckedIn(karyawan);
         if(isCheckedIn) {
             AbsenModel absen = absenService.getKaryawanLatestCheckIn(karyawan);

@@ -237,7 +237,17 @@ public interface KaryawanMapper {
             "FROM employee.\"DIVISI\" as D " +
             "WHERE D.id_manager=#{idKaryawan}")
     String cekKaryawanIsManager(@Param("idKaryawan") int idKaryawan);
-    
+
+    @Select("SELECT b.id, b.id_karyawan, b.nama_benefit, b.keterangan " +
+            "FROM employee.\"BENEFIT\" as b " +
+            "WHERE b.id_karyawan=#{idKaryawan}")
+    @Results(value = {
+            @Result(property = "namaBenefit", column = "nama_benefit"),
+            @Result(property = "keteranganBenefit", column = "keterangan"),
+            @Result(property = "id", column = "id")
+    })
+    List<BenefitKaryawanModel> getBenefitKaryawan(int idKaryawan);
+
     @Select("select id, nama_lengkap, nama_panggilan, nip, email_pusilkom, email_pribadi, is_active, id_divisi " +
             "from employee.\"KARYAWAN\" where email_pusilkom=#{email}")
     @Results(value = {
@@ -309,8 +319,22 @@ public interface KaryawanMapper {
     @Update("UPDATE employee.\"GAJI\" set nilai_gaji=#{gaji} where id=#{idGaji}")
     void updateGajiById(@Param("idGaji") int idGaji, @Param("gaji") int gaji);
 
+    @Insert("INSERT INTO employee.\"BENEFIT\"(\n" +
+            "\tid_karyawan, nama_benefit, keterangan)\n" +
+            "\tVALUES (#{idKaryawan}, #{namaBenefit}, #{keteranganBenefit});")
+    void insertBenefit(@Param("idKaryawan") int idKaryawan, @Param("namaBenefit") String namaBenefit, @Param("keteranganBenefit") String keteranganBenefit);
+
+
+    @Update("UPDATE employee.\"BENEFIT\"\n" +
+            "\tSET keterangan=#{keteranganBaru}" +
+            "\tWHERE id=#{idBenefit}")
+    void updateBenefitKaryawanById(@Param("keteranganBaru") String keteranganBaru, @Param("idBenefit") int idBenefit);
+
     @Delete("DELETE FROM employee.\"GAJI\" WHERE id = #{idGaji}")
     void deleteGajiById(@Param("idGaji") int idGaji);
+
+    @Delete("DELETE FROM employee.\"BENEFIT\" WHERE id = #{idBenefit}")
+    void deleteBenefitById(@Param("idBenefit") int idBenefit);
 
 
     @Select("SELECT * FROM employee.\"PENDIDIKAN\" WHERE id_karyawan=#{idKaryawan} ORDER BY id DESC" )
@@ -384,4 +408,32 @@ public interface KaryawanMapper {
 
     @Delete("DELETE FROM employee.\"DATA_KONTRAK\" WHERE id = #{id}")
     void deleteKontrak (int id);
+
+    @Select("SELECT * FROM employee.\"DOKUMEN_PENDUKUNG\" WHERE id_karyawan = #{idKaryawan}")
+    @Results(value = {
+            @Result(property = "id", column = "id"),
+            @Result(property = "idKaryawan", column = "id_karyawan"),
+            @Result(property = "fileName", column = "nama_dokumen")
+    })
+    List<DokumenModel> getAllDokumenKaryawanById(@Param("idKaryawan") int idKaryawan);
+
+    @Insert("INSERT INTO employee.\"DOKUMEN_PENDUKUNG\" (id_karyawan, nama_dokumen) VALUES (#{idKaryawan}, #{fileName})")
+    void insertDokumen(@Param("idKaryawan") int idKaryawan, @Param("fileName") String fileName);
+
+    @Select("SELECT * FROM employee.\"DOKUMEN_PENDUKUNG\" WHERE id = #{idDokumen}")
+    @Results(value = {
+            @Result(property = "id", column = "id"),
+            @Result(property = "idKaryawan", column = "id_karyawan"),
+            @Result(property = "fileName", column = "nama_dokumen")
+    })
+    DokumenModel getDokumen(@Param("idDokumen") int idDokumen);
+
+    @Update("update employee.\"KARYAWAN\" set nama_lengkap=#{namaLengkap}, nama_panggilan=#{namaPanggilan}, nip=#{nip}, " +
+            "email_pusilkom=#{emailPusilkom}, email_pribadi=#{emailPribadi}, id_divisi=#{idDivisi} " +
+            "where id=#{idKaryawan}")
+    void updateKaryawanBaru(KaryawanBaruModel karyawan);
+
+    @Delete("DELETE FROM employee.\"DOKUMEN_PENDUKUNG\" WHERE id = #{idDokumen}")
+    void deleteDokumen(@Param("idDokumen") int idDokumen);
+
 }

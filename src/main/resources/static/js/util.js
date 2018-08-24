@@ -167,6 +167,21 @@ $(document).ready(function() {
         $("#modal-hapus-karyawan").modal();
     })
 
+    //Ketika tombol tambah benefit ditekan
+    $("#btn-tambah-benefit").on("click", function(){
+        event.preventDefault()
+        var action = "";
+        $("#modal-tambah-benefit").modal();
+    })
+
+    //Ketika tombol hapus pada benefit ditekan
+    $(".btn-hapus-benefit").on("click", function(){
+        event.preventDefault();
+        var action = "/employee/detail-karyawan/" + $(this).data('idkaryawan') + "/delete-benefit/" + $(this).data('idbenefit');
+        $("#btn-konfirmasi-hapus-benefit").attr('href', action);
+        $("#modal-hapus-benefit").modal();
+    })
+
     $(".btn-ubah-anggota-keluarga").on("click", function(){
         event.preventDefault();
 
@@ -214,6 +229,17 @@ $(document).ready(function() {
         $("#modal-delete-gaji").modal();
     });
 
+    $(".btn-edit-benefit").on("click",function(){
+        var id = $(this).data('idbenefit')
+        var namaBenefit = $(this).data("benefit")
+        var keteranganBenefit = $(this).data("keterangan")
+        var idKaryawan = $(this).data("idkaryawan")
+        var action = "/employee/detail-karyawan/" + idKaryawan + "/edit-benefit/" + id;
+        $("#form-edit-benefit").attr('action', action)
+        $("#namaBenefit").attr('value', namaBenefit)
+        $("#keteranganBenefit").attr('placeholder', keteranganBenefit)
+        $("#modal-edit-benefit").modal()
+    })
 
     $(".btn-hapus-keluarga").on("click", function(){
         event.preventDefault();
@@ -311,6 +337,7 @@ $(document).ready(function() {
         $("#konfirmHapusDaruratModal").modal();
     });
 
+
     $(".btn-ubah-kontrak").on("click", function(){
         event.preventDefault();
 
@@ -342,4 +369,29 @@ $(document).ready(function() {
         $("#modal-hapus-kontrak").modal();
     })
 
+    $("#edit-karyawan-btn").on("click",function () {
+        event.preventDefault();
+
+        // get data from item penilaian mandiri
+        var idKaryawan = $(this).data('id-kar');
+        var namaLengkap = $(this).data('nama-lengkap');
+        var namaPanggilan = $(this).data('nama-panggilan');
+        var nip = $(this).data('nip');
+        var idDivisi = $(this).data('id-divisi');
+        var emailPus = $(this).data('email-pus');
+        var emailPribadi = $(this).data('email-pr');
+        var allDivisi = $(this).data('list-divisi');
+
+
+        // fill form value and action
+        $("#ubah-id-karyawan").attr('value', idKaryawan);
+        $("#ubah-nama-lengkap").attr('value', namaLengkap);
+        $("#ubah-nama-panggilan").attr('value', namaPanggilan);
+        $("#ubah-nip").attr('value', nip);
+        $("#divisi-awal").attr('value', idDivisi);
+        $("#list-divisi").attr('value', allDivisi);
+        $("#ubah-email-pus").attr('value', emailPus);
+        $("#ubah-email-pr").attr('value', emailPribadi);
+        $("#modal-ubah-karyawan").modal();
+    });
 } );
