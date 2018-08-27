@@ -41,9 +41,9 @@ public class CutiSubmissionController {
         KaryawanBaruModel karyawan = karyawanService.getKaryawanByUsername(user.getUsername());
         List<KaryawanCutiModel> cutis = karyawanCutiService.getHistoryByKaryawanId(karyawan.getIdKaryawan());
 
-        LocalDate now = LocalDate.now();
+        LocalDate deadline = LocalDate.now().plusDays(1);
 
-        model.addAttribute("now", now);
+        model.addAttribute("now", LocalDate.now());
         model.addAttribute("cutis",cutis);
         model.addAttribute("submitSuccessNotif",submitSuccessNotif);
         model.addAttribute("updSuccessNotif",updSuccessNotif);
@@ -55,7 +55,8 @@ public class CutiSubmissionController {
                              @NotNull Authentication auth,
                              @RequestParam(value = "jumlahHari", required = false) Integer jumlahHari,
                              @RequestParam(value = "tanggalMulai", required = false) String tanggalMulai,
-                             @RequestParam(value = "tanggalSelesai", required = false) String tanggalSelesai) throws ParseException {
+                             @RequestParam(value = "tanggalSelesai", required = false) String tanggalSelesai,
+                             @RequestParam(value = "detail", required = false) String detail) throws ParseException {
         UserWeb user = (UserWeb) auth.getPrincipal();
         KaryawanBaruModel karyawan = karyawanService.getKaryawanByUsername(user.getUsername());
 
@@ -69,6 +70,7 @@ public class CutiSubmissionController {
         cuti.setEndPeriode(selesaiDate);
         cuti.setJumlahHari(jumlahHari);
         cuti.setIdKaryawan(karyawan.getIdKaryawan());
+        cuti.setDetail(detail);
 
         karyawanCutiService.submitCutiKaryawan(cuti);
 
@@ -86,7 +88,8 @@ public class CutiSubmissionController {
                            @RequestParam(value = "tanggalMulai", required = false) String tanggalMulai,
                            @RequestParam(value = "tanggalSelesai", required = false) String tanggalSelesai,
                            @RequestParam(value = "idKaryawan") Integer idKaryawan,
-                           @RequestParam(value = "idCuti") Integer id) throws ParseException {
+                           @RequestParam(value = "idCuti") Integer id,
+                           @RequestParam(value = "detail") String detail) throws ParseException {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         LocalDate mulaiDate = LocalDate.parse(tanggalMulai, dtf);
@@ -100,6 +103,7 @@ public class CutiSubmissionController {
         cutiBaru.setEndPeriode(selesaiDate);
         cutiBaru.setDisetujui(false);
         cutiBaru.setTolak(false);
+        cutiBaru.setDetail(detail);
 
         karyawanCutiService.updateCuti(cutiBaru);
 
