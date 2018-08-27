@@ -15,8 +15,9 @@
         <div class="d-flex flex-row mb-5">
             <h2 class="ml-auto roboto" th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy')}"></h2>
         </div>
-        <h1 th:text="${karyawan.getNamaLengkap()} + ' (' + ${karyawan.getNamaPanggilan()} + ')'">Nama Lengkap Karyawan (Nama Penggilan)</h1>
-        <h3 th:text="${karyawan.getNip()}">NIP</h3>
+        <h1 th:if="${karyawan.getNamaLengkap() != null && karyawan.getNamaPanggilan() != null}" th:text="${karyawan.getNamaLengkap()} + ' (' + ${karyawan.getNamaPanggilan()} + ')'">Nama Lengkap Karyawan (Nama Penggilan)</h1>
+        <h1 th:if="${karyawan.getNamaLengkap() != null && karyawan.getNamaPanggilan() == null}" th:text="${karyawan.getNamaLengkap()}">Nama Lengkap Karyawan (Nama Penggilan)</h1>
+        <h3 th:if="${karyawan.getNip() != null}" th:text="${karyawan.getNip()}">NIP</h3>
         <div class="row">
             <div class="col-md-auto">
                 <button th:if="${karyawan.isActive()}" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded toogle-status-karyawan"
@@ -35,18 +36,21 @@
             <div class="col-6 row">
                 <h6 class="col-md-4">E-Mail Pusilkom</h6>
                 <h6 class="col-md-0">:</h6>
-                <h6 class="col-md" th:text="${karyawan.getEmailPusilkom()}"> EMAIL PUSILKOM</h6>
+                <h6 th:if="${karyawan.getEmailPusilkom() != null}" class="col-md" th:text="${karyawan.getEmailPusilkom()}"> EMAIL PUSILKOM</h6>
+                <h6 th:unless="${karyawan.getEmailPusilkom() != null}" class="col-md" > -</h6>
             </div>
             <div class="col"></div>
             <div class="col">
-                <h5 th:text="'DIVISI : ' + ${divisi.getNama()}">Divisi</h5>
+                <h5 th:if="${divisi!=null}" th:text="'DIVISI : ' + ${divisi.getNama()}">Divisi</h5>
+                <h5 th:unless="${divisi!=null}" >DIVISI : -</h5>
             </div>
         </div>
         <div class="row">
             <div class="col-6 row">
                 <h6 class="col-md-4">E-Mail Pribadi</h6>
                 <h6 class="col-md-0">:</h6>
-                <h6 class="col-md" th:text="${karyawan.getEmailPribadi()}"> EMAIL PRIBADI</h6>
+                <h6 th:if="${karyawan.getEmailPribadi() != null}" class="col-md" th:text="${karyawan.getEmailPribadi()}"> EMAIL PRIBADI</h6>
+                <h6 th:unless="${karyawan.getEmailPribadi() != null}" class="col-md"> -</h6>
             </div>
             <div class="col"></div>
             <div class="col"></div>
@@ -468,19 +472,19 @@
                 <h1 th:if="${!isEmployeeSelected && !isHR}" class="alert alert-danger"> You Cannot View This Content</h1>
                 <!-- gunakan th:if="${isEmployeeSelected || isHR}" untuk menampilkan -->
                 <!-- gunakan boolean isHR agar disabled -->
-                <div class="row">
+                <div th:unless="${!isEmployeeSelected && !isHR}" class="row">
                     <div class="col-5">
                         <h2 class="montserrat-bold-big">Daftar Riwayat Kontrak</h2>
                     </div>
                     <div class="col-4"></div>
                     <div class="col">
-                        <button type="button" class="pusil-btn btn btn-primary btn-rounded montserrat-small" data-toggle="modal" data-target="#modal-tambah-kontrak">+ Tambah Kontrak
+                        <button th:if="${isHR}" type="button" class="pusil-btn btn btn-primary btn-rounded montserrat-small" data-toggle="modal" data-target="#modal-tambah-kontrak">+ Tambah Kontrak
                         </button>
 
                     </div>
                 </div>
 
-                <table class="table table-hover mt-3">
+                <table th:unless="${!isEmployeeSelected && !isHR}" class="table table-hover mt-3">
                     <thead style="background-color: #FFCF25;">
                         <tr>
                             <th class="montserrat-small-bold text-center" scope="col">No.</th>
