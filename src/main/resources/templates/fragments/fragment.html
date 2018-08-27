@@ -187,11 +187,11 @@
             </li>
         </ul>
         <div class="navbar-form navbar-rightcol-md-5">
-            <div th:if="${!statusCheckIn}" class="text-center">
+            <div th:if="${!statusCheckIn && currentKaryawanLogged != null}" class="text-center">
                 <button type="button" data-toggle="modal" data-target="#checkinModal"
                         class="pusil-btn btn btn-primary btn-rounded montserrat-small">Check-in</button>
             </div>
-            <div th:unless="${!statusCheckIn}">
+            <div th:unless="${!statusCheckIn || currentKaryawanLogged == null}">
                 <button type="button" data-toggle="modal" data-target="#checkoutModal" data-title="Check-out"
                         th:attr="data-waktu-checkin=${absen.getCheckInTime()}" class="modal-button montserrat-small pusil-btn btn btn-dark text-center text-white btn-rounded">Check-out</button>
 
@@ -372,9 +372,15 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/employee">
-                                <img class="icon-sidebar mr-2 mb-1" src="/img/yellow-home.png">Beranda
+                        <li th:if="${currentKaryawanLogged != null}" class="nav-item">
+                            <a class="side-text roboto nav-link active text-light mb-2 effect-underline" th:href="'/employee/detail-karyawan/'+ ${currentKaryawanLogged.idKaryawan}">
+                                <img class="icon-sidebar mr-2 mb-1" src="/img/yellow-home.png">Profile
+                            </a>
+                        </li>
+
+                        <li th:if="${#lists.contains(currentUser.strRoles,'ROLE_HR')}" class="nav-item">
+                            <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/employee/hr">
+                                <img class="icon-sidebar mr-2 mb-1" src="/img/yellow-home.png">Beranda HR
                             </a>
                         </li>
 
@@ -384,19 +390,19 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
+                        <li th:if="${currentKaryawanLogged != null}" class="nav-item">
                             <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/employee/riwayat-absen">
                                 <img class="icon-sidebar mr-2 mb-1" src="/img/clock.png">Riwayat Absen
                             </a>
                         </li>
 
-                        <li class="nav-item">
+                        <li th:if="${currentKaryawanLogged != null}" class="nav-item">
                             <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/employee/pengajuan-cuti">
                                 <img class="icon-sidebar mr-2 mb-1" src="/img/pengajuan-cuti.png">Pengajuan Cuti
                             </a>
                         </li>
 
-                        <li class="nav-item">
+                        <li th:if="${#lists.contains(currentUser.strRoles,'ROLE_MANAJERDIVISI')}" class="nav-item">
                             <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/employee/cuti">
                                 <img class="icon-sidebar mr-2 mb-1" src="/img/airplane-ticket.png">Riwayat Cuti
 
