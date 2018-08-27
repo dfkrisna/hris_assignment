@@ -17,6 +17,7 @@ public class KaryawanCutiModel {
     private int jumlahHari;
     private boolean isDisetujui;
     private boolean isTolak;
+    private String detail;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startPeriode;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
