@@ -143,7 +143,9 @@ public class AbsenServiceImpl implements AbsenService{
         List<AbsenModel> absens = absenMapper.selectAbsenByPeriode(tanggalAwal, tanggalAkhir);
         for(AbsenModel absen: absens) {
             absen.setCheckInTime(modifyTime(absen.getCheckInTime()));
-            absen.setCheckOutTime(modifyTime(absen.getCheckOutTime()));
+            if(absen.getCheckOutTime() != null) {
+                absen.setCheckOutTime(modifyTime(absen.getCheckOutTime()));
+            }
         }
         return absens;
     }
