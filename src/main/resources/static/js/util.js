@@ -45,6 +45,7 @@ $(document).ready(function() {
         var tanggalSelesai = $(this).data('tanggalselesai');
         var idKaryawan = $(this).data('idkar');
         var idCuti = $(this).data('id');
+        var detailCuti = $(this).data('detailcuti');
 
         // fill form value and action
         $("#jmlHari").attr('value', jmlHari);
@@ -52,6 +53,7 @@ $(document).ready(function() {
         $("#tgl-selesai").attr('value', tanggalSelesai);
         $("#idKaryawan").attr('value', idKaryawan);
         $("#idCuti").attr('value', idCuti);
+        $("#detail-cuti").val(detailCuti);
 
         // pop-up modal
         $("#editCutiModal").modal();

@@ -68,6 +68,10 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="detail" class="col-form-label montserrat-small">Detail</label>
+                            <textarea type="text" class="form-control" id="detail" name="detail" required></textarea>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded"
@@ -107,12 +111,13 @@
                         <td class="text-center montserrat-small text-muted">Belum Disetujui</td>
                     </div>
                 </div>
-                <td th:if="${cuti.getStartPeriode().compareTo(now) > 0}" class="text-center montserrat-small text-muted">
+                <td th:if="${cuti.getStartPeriode().compareTo(now) >= 0}" class="text-center montserrat-small text-muted">
                     <button type="button" data-toggle="modal" data-target="#editCutiModal"
-                            th:attr="data-haricuti=${cuti.getJumlahHari()}, data-tanggalmulai=${cuti.getStartPeriode()}, data-tanggalselesai=${cuti.getEndPeriode()}, data-idkar=${cuti.getIdKaryawan()}, data-id=${cuti.getId()}"
+                            th:attr="data-haricuti=${cuti.getJumlahHari()}, data-tanggalmulai=${cuti.getStartPeriode()}, data-detailcuti=${cuti.getDetail()},
+                            data-tanggalselesai=${cuti.getEndPeriode()}, data-idkar=${cuti.getIdKaryawan()}, data-id=${cuti.getId()}"
                             class="edit-cuti-btn pusil-btn btn btn-primary btn-rounded montserrat-small">Ubah</button>
                 </td>
-                <td th:unless="${cuti.getStartPeriode().compareTo(now) > 0}" class="text-center montserrat-small text-muted">
+                <td th:unless="${cuti.getStartPeriode().compareTo(now) >= 0}" class="text-center montserrat-small text-muted">
                     <button type="button" class="montserrat-small btn btn-secondary text-white btn-rounded disabled">Ubah</button>
                 </td>
             </tr>
@@ -158,6 +163,10 @@
                                     <input type="date" th:min="${now}" class="form-control" id="tgl-selesai" name="tanggalSelesai" required />
                                 </div>
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="detail-cuti" class="col-form-label montserrat-small">Detail</label>
+                            <textarea type="text" class="form-control" id="detail-cuti" name="detail" required></textarea>
                         </div>
                         <input type="hidden" id="idKaryawan" name="idKaryawan">
                         <input type="hidden" id="idCuti" name="idCuti">
