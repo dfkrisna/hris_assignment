@@ -35,8 +35,8 @@ $(document).ready(function() {
     } );
 
     $('.notifModal').modal('show');
-
-    $(".edit-cuti-btn").on("click", function(){
+    
+    $("#riwayat-cuti").on("click", ".edit-cuti-btn",function(){
         event.preventDefault();
 
         // get data from item penilaian mandiri
@@ -305,7 +305,7 @@ $(document).ready(function() {
         $("#modal-update-status").modal();
     });
 
-    $(".ubah-kontak-darurat").on("click",function () {
+    $("#list-darurat").on("click", ".ubah-kontak-darurat", function () {
         event.preventDefault();
 
         // get data from item penilaian mandiri
@@ -326,7 +326,7 @@ $(document).ready(function() {
         $("#ubahKontakDaruratModal").modal();
     });
 
-    $(".hapus-kontak-darurat").on("click",function () {
+    $("#list-darurat").on("click", ".hapus-kontak-darurat", function () {
         event.preventDefault();
 
         // get data from item penilaian mandiri
@@ -397,7 +397,7 @@ $(document).ready(function() {
         $("#modal-ubah-karyawan").modal();
     });
 
-    $(".ubah-detail-btn").on("click",function () {
+    $('#rekap-absen').on('click', '.ubah-detail-btn', function () {
         event.preventDefault();
 
         // get data from item penilaian mandiri
