@@ -396,4 +396,20 @@ $(document).ready(function() {
         $("#ubah-email-pr").attr('value', emailPribadi);
         $("#modal-ubah-karyawan").modal();
     });
+
+    $(".ubah-detail-btn").on("click",function () {
+        event.preventDefault();
+
+        // get data from item penilaian mandiri
+        var idAbsen = $(this).data('id-absen');
+        var waktuCheckin = $(this).data('waktu-checkin');
+        var waktuCheckout = $(this).data('waktu-checkout');
+
+
+        // fill form value and action
+        $("#id-absen").attr('value', idAbsen);
+        $("#wkt-checkin").attr('value', waktuCheckin);
+        $("#wkt-checkout").attr('value', waktuCheckout);
+        $("#ubahDetailModal").modal();
+    });
 } );

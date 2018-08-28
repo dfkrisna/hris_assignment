@@ -33,4 +33,6 @@ public interface AbsenService {
     Map mapAbsenKaryawan(List<AbsenModel> absens);
 
     List<AbsenModel> getAbsenKaryawanByPeriode(KaryawanBaruModel karyawan, LocalDate periode);
+
+    AbsenModel getAbsenById(Integer idAbsen);
 }

@@ -176,4 +176,11 @@ public class AbsenServiceImpl implements AbsenService{
         }
         return absens;
     }
+
+    @Override
+    public AbsenModel getAbsenById(Integer idAbsen) {
+        AbsenModel absen = absenMapper.selectAbsenById(idAbsen);
+        absen.setCheckInTime(modifyTime(absen.getCheckInTime()));
+        return absen;
+    }
 }
