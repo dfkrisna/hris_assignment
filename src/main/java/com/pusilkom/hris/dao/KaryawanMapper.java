@@ -436,4 +436,7 @@ public interface KaryawanMapper {
     @Delete("DELETE FROM employee.\"DOKUMEN_PENDUKUNG\" WHERE id = #{idDokumen}")
     void deleteDokumen(@Param("idDokumen") int idDokumen);
 
+    @Update("update employee.\"KARYAWAN\" set id_divisi=#{idDivisi} " +
+            "where id=#{idKaryawan}")
+    void updateKaryawanDivisi(@Param("idKaryawan")int idKaryawan, @Param("idDivisi")int idDivisi);
 }

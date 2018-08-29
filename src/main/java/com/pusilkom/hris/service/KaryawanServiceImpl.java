@@ -210,6 +210,9 @@ public class KaryawanServiceImpl implements KaryawanService{
 	}
 
 	@Override
+	public void updateKaryawanDivisi(int idKaryawan, int idDivisi){karyawanMapper.updateKaryawanDivisi(idKaryawan, idDivisi);}
+
+	@Override
 	public List<KeluargaModel> selectAnggotaKeluargaAll(int idKaryawan){return karyawanMapper.selectAnggotaKeluargaAll(idKaryawan);}
 
 	@Override
