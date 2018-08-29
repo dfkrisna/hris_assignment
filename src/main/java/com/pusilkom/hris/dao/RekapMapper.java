@@ -48,7 +48,7 @@ public interface RekapMapper {
 
     @Select("SELECT RB.id, K.id as id_karyawan, KP.id as id_karyawan_proyek, KP.id_proyek, RB.penilaian_mandiri, " +
             "RB.tanggal_penilaian, RB.is_approved, RB.periode, RB.persentase_kontribusi\n" +
-            "FROM mpp.\"KARYAWAN\" as K, mpp.\"KARYAWAN_PROYEK\" as KP, mpp.\"REKAPITULASI_BULANAN\" as RB\n" +
+            "FROM employee.\"KARYAWAN\" as K, mpp.\"KARYAWAN_PROYEK\" as KP, mpp.\"REKAPITULASI_BULANAN\" as RB\n" +
             "WHERE K.id = ${idKaryawan}\n" +
             "      AND K.id = KP.id_karyawan\n" +
             "      AND KP.id_karyawan = RB.id_karyawan_proyek")
@@ -116,7 +116,7 @@ public interface RekapMapper {
 
     @Select("SELECT RP.id, RP.penilaian_mandiri, RP.id_karyawan_proyek, RP.tanggal_penilaian, RP.persentase_kontribusi, RP.periode, RP.is_approved, RP.id_proyek\n" +
             "      FROM mpp.\"REKAPITULASI_BULANAN\" AS RP JOIN mpp.\"KARYAWAN_PROYEK\" AS KP ON KP.id=RP.id_karyawan_proyek\n" +
-            "\t  JOIN mpp.\"KARYAWAN\" AS K ON K.id=KP.id_karyawan\n" +
+            "\t  JOIN employee.\"KARYAWAN\" AS K ON K.id=KP.id_karyawan\n" +
             "      WHERE K.id = #{idKaryawan} AND RP.periode = '${periode}';")
     @Results(value = {
             @Result(property="id", column="id"),
