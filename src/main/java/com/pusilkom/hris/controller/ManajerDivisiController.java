@@ -77,7 +77,7 @@ public class ManajerDivisiController {
             return "redirect:/assignment/mngdivisi/rekap/" + idKaryawan;
         }
 
-        KaryawanModel karyawan = karyawanService.getKaryawanById(idKaryawan);
+        KaryawanBaruModel karyawan = karyawanService.getKaryawanById(idKaryawan);
 
         DivisiModel divisi = divisiService.getDivisiByID(karyawan.getIdDivisi());
 
@@ -107,8 +107,8 @@ public class ManajerDivisiController {
             isNow = true;
         }
 
-        int persentaseKontribusi = (int) (rekapService.getKaryawanKontribusi(karyawan.getId(), LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1)) * 100);
-        int ratingKaryawan = ratingFeedbackService.getAvgRatingKaryawan(karyawan.getId());
+        int persentaseKontribusi = (int) (rekapService.getKaryawanKontribusi(karyawan.getIdKaryawan(), LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1)) * 100);
+        int ratingKaryawan = ratingFeedbackService.getAvgRatingKaryawan(karyawan.getIdKaryawan());
 
         model.addAttribute("isNow", isNow);
 
