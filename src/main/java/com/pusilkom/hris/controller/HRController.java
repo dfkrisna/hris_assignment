@@ -183,20 +183,24 @@ public class HRController {
     @PostMapping("/employee/ubah-data-karyawan")
     public String ubahData(RedirectAttributes ra,
                            @RequestParam(value = "namaLengkap") String namaLengkap,
-                           @RequestParam(value = "namaPanggilan") String namaPanggilan,
+                           @RequestParam(value = "namaPanggilan", required = false) String namaPanggilan,
                            @RequestParam(value = "nip") String nip,
                            @RequestParam(value = "divisi") Integer idDivisi,
                            @RequestParam(value = "emailPus") String emailPusilkom,
-                           @RequestParam(value = "emailPribadi") String emailPribadi,
+                           @RequestParam(value = "emailPribadi", required = false) String emailPribadi,
                            @RequestParam(value = "idKaryawan") Integer idKaryawan) {
         KaryawanBaruModel karyawan = karyawanService.getKaryawanBaruById(idKaryawan);
 
         karyawan.setNamaLengkap(namaLengkap);
-        karyawan.setNamaPanggilan(namaPanggilan);
+        if(namaPanggilan != null && namaPanggilan != "") {
+            karyawan.setNamaPanggilan(namaPanggilan);
+        }
         karyawan.setNip(nip);
         karyawan.setIdDivisi(idDivisi);
         karyawan.setEmailPusilkom(emailPusilkom);
-        karyawan.setEmailPribadi(emailPribadi);
+        if(emailPribadi != null && emailPribadi != "") {
+            karyawan.setEmailPribadi(emailPribadi);
+        }
 
         karyawanService.updateKaryawanBaru(karyawan);
 

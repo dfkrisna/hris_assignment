@@ -437,7 +437,7 @@ $(document).ready(function() {
                     .appendTo( this.wrapper )
                     .val( value )
                     .attr( "title", "" )
-                    .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
+                    .addClass( "form-control d-inline custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
                     .autocomplete({
                         delay: 0,
                         minLength: 0,
@@ -470,7 +470,7 @@ $(document).ready(function() {
                         text: false
                     })
                     .removeClass( "ui-corner-all" )
-                    .addClass( "custom-combobox-toggle ui-corner-right" )
+                    .addClass( "custom-combobox-toggle ui-corner-right d-inline" )
                     .on( "mousedown", function() {
                         wasOpen = input.autocomplete( "widget" ).is( ":visible" );
                     })
@@ -542,5 +542,9 @@ $(document).ready(function() {
         });
 
         $( ".combobox" ).combobox();
+        $element.data("autocomplete")._resizeMenu = function () {
+            var ul = this.menu.element;
+            ul.outerWidth(this.element.outerWidth());
+        }
     } );
 } );
