@@ -1076,31 +1076,35 @@
             <form action="/employee/ubah-data-karyawan" method="post">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="ubah-nama-lengkap" class="col-form-label montserrat-small">Nama Lengkap</label>
-                        <input id="ubah-nama-lengkap" class="form-control" name="namaLengkap" required/>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label for="ubah-nama-lengkap" class="col-form-label montserrat-small">Nama Lengkap</label>
+                                <input id="ubah-nama-lengkap" class="form-control" name="namaLengkap" required/>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="ubah-nama-panggilan" class="col-form-label montserrat-small">Nama Panggilan</label>
+                                <input class="form-control" id="ubah-nama-panggilan" name="namaPanggilan" />
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col-md-6">
-                                <label for="ubah-nama-panggilan" class="col-form-label montserrat-small">Nama Panggilan</label>
-                                <input class="form-control" id="ubah-nama-panggilan" name="namaPanggilan" required />
-                            </div>
-                            <div class="col-md-6">
                                 <label for="ubah-nip" class="col-form-label montserrat-small">NIP</label>
                                 <input class="form-control" id="ubah-nip" name="nip" required />
                             </div>
-                        </div>
-                    </div>
-                    <div class="form-group ui-widget ui-front">
-                        <label for="ubah-nama-panggilan" class="col-form-label montserrat-small">Divisi</label>
-                        <br>
-                        <select name="divisi" class="montserrat-small combobox custom-select custom-select-md mb-3">
-                            <option value="">Pilih Divisi</option>
-                            <div th:each="divisi,iterationStatus: ${divisis}">
-                                <option th:if="${divisi.id == karyawan.idDivisi}" th:value="${divisi.id}" th:text="${divisi.nama}" selected></option>
-                                <option th:unless="${divisi.id == karyawan.idDivisi}" th:value="${divisi.id}" th:text="${divisi.nama}"></option>
+                            <div class="col-md-5 ui-widget ui-front">
+                                <label for="ubah-divisi" class="col-form-label montserrat-small">Divisi</label>
+                                <br>
+                                <select id="ubah-divisi" name="divisi" class="montserrat-small combobox custom-select custom-select-md mb-3">
+                                    <option value="">Pilih Divisi</option>
+                                    <div th:each="divisi,iterationStatus: ${divisis}">
+                                        <option th:if="${divisi.id == karyawan.idDivisi}" th:value="${divisi.id}" th:text="${divisi.nama}" selected></option>
+                                        <option th:unless="${divisi.id == karyawan.idDivisi}" th:value="${divisi.id}" th:text="${divisi.nama}"></option>
+                                    </div>
+                                </select>
                             </div>
-                        </select>
+                        </div>
                     </div>
                     <div class="form-group">
                         <div class="form-row">
@@ -1110,7 +1114,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="ubah-email-pr" class="col-form-label montserrat-small">Email Pribadi</label>
-                                <input class="form-control" id="ubah-email-pr" name="emailPribadi" required />
+                                <input class="form-control" id="ubah-email-pr" name="emailPribadi" />
                             </div>
                         </div>
                     </div>
