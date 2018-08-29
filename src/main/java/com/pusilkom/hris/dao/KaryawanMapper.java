@@ -73,7 +73,7 @@ public interface KaryawanMapper {
                         + "from mpp.\"ROLE_PROYEK\" as rp, mpp.\"PROYEK\" as pr, employee.\"KARYAWAN\" as k, mpp.\"KARYAWAN_PROYEK\" as kr "
                         + "where kr.id_karyawan != #{idKaryawan}\n"
                         + "and kr.id_proyek = #{idProyek} and kr.id_karyawan = k.id "
-                        + "and and kr.id_role = rp.id and kr.id_proyek = pr.id "
+                        + "and kr.id_role = rp.id and kr.id_proyek = pr.id "
                         + "and kr.start_periode <= #{periodeNow} and (not kr.end_periode < #{periodeNow} or kr.end_periode is null) "
                         + "and not exists"
                         + "(select * from mpp.\"RATING_FEEDBACK\" as rt where kr.id = rt.id_karyawan_dinilai "
