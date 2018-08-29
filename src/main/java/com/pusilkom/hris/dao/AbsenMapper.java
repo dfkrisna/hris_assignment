@@ -37,7 +37,7 @@ public interface AbsenMapper {
     @Select("select id, id_karyawan, time_check_in, time_check_out, detail from " +
             "employee.\"ABSEN\" " +
             "where id_karyawan = #{idKaryawan} " +
-            "ORDER by time_check_in DESC")
+            "ORDER by id DESC")
     @Results(value = {
             @Result(property = "id", column = "id"),
             @Result(property = "idKaryawan", column = "id_karyawan"),

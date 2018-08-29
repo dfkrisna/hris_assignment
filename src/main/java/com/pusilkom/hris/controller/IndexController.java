@@ -310,8 +310,4 @@ public class IndexController
         return "index-manajerdivisi";
     }
 
-    @GetMapping("/autocomplete")
-    public String autocompleteTest() {
-        return "tes-autocomplete";
-    }
 }
