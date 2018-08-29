@@ -53,11 +53,8 @@ public class AbsenController {
 
         List<AbsenModel> absens = absenService.getAbsenKaryawan(karyawan);
 
-        Map mapDurasi = absenService.mapDurasiAbsen(absens);
-
         model.addAttribute("notifTambahDetail", notifTambahDetail);
         model.addAttribute("absens", absens);
-        model.addAttribute("mapDurasi", mapDurasi);
 
         return "riwayat-absen";
     }

@@ -33,7 +33,7 @@
                 <tr>
                     <th class="montserrat-small-bold text-center">Waktu Check-in</th>
                     <th class="montserrat-small-bold text-center">Waktu Check-out</th>
-                    <th class="montserrat-small-bold text-center">Durasi (dalam jam)</th>
+                    <th class="montserrat-small-bold text-center">Durasi</th>
                     <th class="montserrat-small-bold text-center">Detail</th>
                 </tr>
                 </thead>
@@ -42,10 +42,10 @@
                     <td class="text-center montserrat-small" th:text="${absen.getCheckInTime()}"></td>
                     <td th:if="${absen.getCheckOutTime() != null}" class="text-center montserrat-small" th:text="${absen.getCheckOutTime()}"></td>
                     <td th:unless="${absen.getCheckOutTime() != null}" class="text-center text-muted montserrat-small">Belum Check-out</td>
-                    <td class="text-center montserrat-small" th:text="${mapDurasi.get(absen.id)}"></td>
-                    <td th:if="${absen.getDetail() != null && absen.getDetail() != ''}" class="text-center montserrat-small" th:text="${absen.getDetail()}"></td>
-                    <td th:unless="${absen.getDetail() != null && absen.getDetail() != ''}" class="text-center montserrat-small">
-                        <button type="button" data-toggle="modal" data-target="#tambahDetailModal" data-title="UbahDetail"
+                    <td class="text-center montserrat-small" th:text="${absen.getAbsenInterval()}"></td>
+                    <td th:if="${absen.getDetail() != null && absen.getDetail() != '' && absen.getCheckOutTime() != null}" class="text-center montserrat-small" th:text="${absen.getDetail()}"></td>
+                    <td th:unless="${absen.getDetail() != null && absen.getDetail() != ''  && absen.getCheckOutTime() != null}" class="text-center montserrat-small">
+                        <button th:if="${absen.getCheckOutTime() != null}" type="button" data-toggle="modal" data-target="#tambahDetailModal" data-title="UbahDetail"
                                 th:attr="data-waktu-checkin=${absen.getCheckInTime()}, data-waktu-checkout=${absen.checkOutTime},
                                 data-id-absen=${absen.id}" class="ubah-detail-btn modal-button montserrat-small pusil-btn btn btn-dark text-center text-white btn-rounded">+ Detail</button>
                     </td>

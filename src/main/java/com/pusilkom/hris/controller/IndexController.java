@@ -309,5 +309,5 @@ public class IndexController
         model.addAttribute("divisi", divisi);
         return "index-manajerdivisi";
     }
-    
+
 }
