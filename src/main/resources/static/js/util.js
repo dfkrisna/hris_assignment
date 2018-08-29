@@ -442,12 +442,7 @@ $(document).ready(function() {
                         delay: 0,
                         minLength: 0,
                         source: $.proxy( this, "_source" )
-                    })
-                // .tooltip({
-                //     classes: {
-                //         "ui-tooltip": "ui-state-highlight"
-                //     }
-                // });
+                    });
 
                 this._on( this.input, {
                     autocompleteselect: function( event, ui ) {
@@ -467,8 +462,6 @@ $(document).ready(function() {
 
                 $( "<a>" )
                     .attr( "tabIndex", -1 )
-                    // .attr( "title", "Show All Items" )
-                    // .tooltip()
                     .appendTo( this.wrapper )
                     .uibutton({
                         icons: {
@@ -549,8 +542,5 @@ $(document).ready(function() {
         });
 
         $( "#combobox" ).combobox();
-        // $( "#toggle" ).on( "click", function() {
-        //     $( "#combobox" ).toggle();
-        // });
     } );
 } );

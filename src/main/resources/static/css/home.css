@@ -320,6 +320,7 @@ a:hover, a:visited, a:link, a:active
 .custom-combobox {
 	position: relative;
 	display: inline-block;
+	width: max-content;
 }
 .custom-combobox-toggle {
 	position: absolute;
