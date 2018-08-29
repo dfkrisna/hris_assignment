@@ -384,6 +384,12 @@
                             </a>
                         </li>
 
+                        <li th:if="${#lists.contains(currentUser.strRoles,'ROLE_HR')}" class="nav-item">
+                            <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/employee/hr/rekap-absen">
+                                <img class="icon-sidebar mr-2 mb-1" src="/img/icon.png">Rekap Absen Karyawan
+                            </a>
+                        </li>
+
                         <li th:if="${#lists.contains(currentUser.strRoles,'ROLE_SYSTEMADMIN')}" class="nav-item">
                             <a class="side-text roboto nav-link active text-light mb-2 effect-underline" href="/employee/admin/keloladivisi">
                                 <img class="icon-sidebar mr-2 mb-1" src="/img/yellow-building.png">Kelola Divisi

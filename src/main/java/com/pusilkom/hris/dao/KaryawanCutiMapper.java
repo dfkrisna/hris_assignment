@@ -11,7 +11,7 @@ public interface KaryawanCutiMapper {
 
     @Select("SELECT CK.id, CK.id_karyawan, CK.nama_lengkap, CK.jumlah_hari, CK.periode_mulai, CK.periode_selesai, CK.is_disetujui, CK.is_tolak, CK.detail\n" +
             "FROM \n" +
-                "(SELECT DISTINCT K.id_divisi, C.id_karyawan, K.nama_lengkap, C.jumlah_hari, C.periode_mulai, C.periode_selesai, C.is_disetujui, C.is_tolak, C.id FROM employee.\"CUTI\" as C INNER JOIN employee.\"KARYAWAN\" as K on C.id_karyawan = K.id\n" +
+                "(SELECT DISTINCT K.id_divisi, C.id_karyawan, K.nama_lengkap, C.jumlah_hari, C.periode_mulai, C.periode_selesai, C.is_disetujui, C.is_tolak, C.id, C.detail FROM employee.\"CUTI\" as C INNER JOIN employee.\"KARYAWAN\" as K on C.id_karyawan = K.id\n" +
                 "WHERE C.id IN (SELECT MAX(id) FROM employee.\"CUTI\" GROUP BY id_karyawan) \n" +
                 ") as CK \n" +
             "INNER JOIN employee.\"DIVISI\" as D on D.id = CK.id_divisi \n"+

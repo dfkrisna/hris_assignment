@@ -15,7 +15,7 @@ public interface AbsenMapper {
             "VALUES (#{idKaryawan}, now() )")
     void insertAbsen(KaryawanBaruModel karyawan);
 
-    @Select("select distinct id, id_karyawan, time_check_in, time_check_out, detail from " +
+    @Select("select id, id_karyawan, time_check_in, time_check_out, detail from " +
             "employee.\"ABSEN\" " +
             "where id_karyawan = #{idKaryawan} " +
             "ORDER by time_check_in DESC LIMIT 1")
@@ -34,7 +34,7 @@ public interface AbsenMapper {
             "where id = #{id}")
     void updateAbsen(AbsenModel absen);
 
-    @Select("select distinct id, id_karyawan, time_check_in, time_check_out, detail from " +
+    @Select("select id, id_karyawan, time_check_in, time_check_out, detail from " +
             "employee.\"ABSEN\" " +
             "where id_karyawan = #{idKaryawan} " +
             "ORDER by time_check_in DESC")
@@ -85,4 +85,15 @@ public interface AbsenMapper {
             @Result(property = "detail", column = "detail")
     })
     List<AbsenModel> selectAbsenKaryawanByPeriode(@Param("idKaryawan") int idKaryawan, @Param("tanggalAwal") Timestamp tanggalAwal, @Param("tanggalAkhir") Timestamp tanggalAkhir);
+
+    @Select("select id, id_karyawan, time_check_in, time_check_out, detail from " +
+            "employee.\"ABSEN\" where id = ${idAbsen}")
+    @Results(value = {
+            @Result(property = "id", column = "id"),
+            @Result(property = "idKaryawan", column = "id_karyawan"),
+            @Result(property = "checkInTime", column = "time_check_in"),
+            @Result(property = "checkOutTime", column = "time_check_out"),
+            @Result(property = "detail", column = "detail")
+    })
+    AbsenModel selectAbsenById(@Param("idAbsen") Integer idAbsen);
 }

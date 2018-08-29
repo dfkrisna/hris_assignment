@@ -35,8 +35,8 @@ $(document).ready(function() {
     } );
 
     $('.notifModal').modal('show');
-
-    $(".edit-cuti-btn").on("click", function(){
+    
+    $("#riwayat-cuti").on("click", ".edit-cuti-btn",function(){
         event.preventDefault();
 
         // get data from item penilaian mandiri
@@ -162,7 +162,7 @@ $(document).ready(function() {
         $("#modal-hapus-divisi").modal();
     })
 
-    $(".btn-hapus-karyawan").on("click", function(){
+    $("#list-karyawan").on("click",'.btn-hapus-karyawan',function(){
         event.preventDefault();
         var action = "/employee/hr/hapus/" + $(this).data('idkaryawan');
         $("#btn-konfirmasi-hapus-karyawan").attr('href', action);
@@ -177,7 +177,7 @@ $(document).ready(function() {
     })
 
     //Ketika tombol hapus pada benefit ditekan
-    $(".btn-hapus-benefit").on("click", function(){
+    $("#tabel-benefit").on("click",'.btn-hapus-benefit',function(){
         event.preventDefault();
         var action = "/employee/detail-karyawan/" + $(this).data('idkaryawan') + "/delete-benefit/" + $(this).data('idbenefit');
         $("#btn-konfirmasi-hapus-benefit").attr('href', action);
@@ -231,7 +231,7 @@ $(document).ready(function() {
         $("#modal-delete-gaji").modal();
     });
 
-    $(".btn-edit-benefit").on("click",function(){
+    $("#tabel-benefit").on("click",'.btn-edit-benefit',function(){
         var id = $(this).data('idbenefit')
         var namaBenefit = $(this).data("benefit")
         var keteranganBenefit = $(this).data("keterangan")
@@ -305,7 +305,7 @@ $(document).ready(function() {
         $("#modal-update-status").modal();
     });
 
-    $(".ubah-kontak-darurat").on("click",function () {
+    $("#list-darurat").on("click", ".ubah-kontak-darurat", function () {
         event.preventDefault();
 
         // get data from item penilaian mandiri
@@ -326,7 +326,7 @@ $(document).ready(function() {
         $("#ubahKontakDaruratModal").modal();
     });
 
-    $(".hapus-kontak-darurat").on("click",function () {
+    $("#list-darurat").on("click", ".hapus-kontak-darurat", function () {
         event.preventDefault();
 
         // get data from item penilaian mandiri
@@ -395,5 +395,21 @@ $(document).ready(function() {
         $("#ubah-email-pus").attr('value', emailPus);
         $("#ubah-email-pr").attr('value', emailPribadi);
         $("#modal-ubah-karyawan").modal();
+    });
+
+    $('#rekap-absen').on('click', '.ubah-detail-btn', function () {
+        event.preventDefault();
+
+        // get data from item penilaian mandiri
+        var idAbsen = $(this).data('id-absen');
+        var waktuCheckin = $(this).data('waktu-checkin');
+        var waktuCheckout = $(this).data('waktu-checkout');
+
+
+        // fill form value and action
+        $("#id-absen").attr('value', idAbsen);
+        $("#wkt-checkin").attr('value', waktuCheckin);
+        $("#wkt-checkout").attr('value', waktuCheckout);
+        $("#ubahDetailModal").modal();
     });
 } );

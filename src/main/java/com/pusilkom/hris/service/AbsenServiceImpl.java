@@ -143,7 +143,9 @@ public class AbsenServiceImpl implements AbsenService{
         List<AbsenModel> absens = absenMapper.selectAbsenByPeriode(tanggalAwal, tanggalAkhir);
         for(AbsenModel absen: absens) {
             absen.setCheckInTime(modifyTime(absen.getCheckInTime()));
-            absen.setCheckOutTime(modifyTime(absen.getCheckOutTime()));
+            if(absen.getCheckOutTime() != null) {
+                absen.setCheckOutTime(modifyTime(absen.getCheckOutTime()));
+            }
         }
         return absens;
     }
@@ -173,5 +175,12 @@ public class AbsenServiceImpl implements AbsenService{
             absen.setCheckOutTime(modifyTime(absen.getCheckOutTime()));
         }
         return absens;
+    }
+
+    @Override
+    public AbsenModel getAbsenById(Integer idAbsen) {
+        AbsenModel absen = absenMapper.selectAbsenById(idAbsen);
+        absen.setCheckInTime(modifyTime(absen.getCheckInTime()));
+        return absen;
     }
 }

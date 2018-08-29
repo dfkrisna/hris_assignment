@@ -44,14 +44,18 @@ public class AbsenController {
 
     @GetMapping("/employee/riwayat-absen")
     public String absenKaryawan(Model model,
+                               @ModelAttribute("tambahDetail") String notifTambahDetail,
                                @NotNull Authentication auth) {
         UserWeb user = (UserWeb) auth.getPrincipal();
         KaryawanBaruModel karyawan = karyawanService.getKaryawanByUsername(user.getUsername());
+
+        log.info("id karyawan " + karyawan.getIdKaryawan());
 
         List<AbsenModel> absens = absenService.getAbsenKaryawan(karyawan);
 
         Map mapDurasi = absenService.mapDurasiAbsen(absens);
 
+        model.addAttribute("notifTambahDetail", notifTambahDetail);
         model.addAttribute("absens", absens);
         model.addAttribute("mapDurasi", mapDurasi);
 
@@ -95,5 +99,20 @@ public class AbsenController {
         ra.addFlashAttribute("checkOutNotif", notification);
         String referer = request.getHeader("Referer");
         return "redirect:"+ referer;
+    }
+
+    @PostMapping("/employee/absen/tambah-detail")
+    public String tambahDetail(RedirectAttributes ra,
+                               @RequestParam(value = "detail") String detail,
+                               @RequestParam(value = "idAbsen") Integer idAbsen) {
+        AbsenModel absen = absenService.getAbsenById(idAbsen);
+        absen.setDetail(detail);
+
+        absenService.updateAbsen(absen);
+
+        String notification = "Detail absen pada rentang waktu " + absen.getCheckInTime() + " hingga " + absen.getCheckOutTime() + " berhasil ditambahkan";
+        ra.addFlashAttribute("tambahDetail", notification);
+
+        return "redirect:/employee/riwayat-absen";
     }
 }
