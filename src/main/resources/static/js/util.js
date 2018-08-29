@@ -35,8 +35,8 @@ $(document).ready(function() {
     } );
 
     $('.notifModal').modal('show');
-
-    $(".edit-cuti-btn").on("click", function(){
+    
+    $("#riwayat-cuti").on("click", ".edit-cuti-btn",function(){
         event.preventDefault();
 
         // get data from item penilaian mandiri
@@ -45,6 +45,7 @@ $(document).ready(function() {
         var tanggalSelesai = $(this).data('tanggalselesai');
         var idKaryawan = $(this).data('idkar');
         var idCuti = $(this).data('id');
+        var detailCuti = $(this).data('detailcuti');
 
         // fill form value and action
         $("#jmlHari").attr('value', jmlHari);
@@ -52,6 +53,7 @@ $(document).ready(function() {
         $("#tgl-selesai").attr('value', tanggalSelesai);
         $("#idKaryawan").attr('value', idKaryawan);
         $("#idCuti").attr('value', idCuti);
+        $("#detail-cuti").val(detailCuti);
 
         // pop-up modal
         $("#editCutiModal").modal();
@@ -160,7 +162,7 @@ $(document).ready(function() {
         $("#modal-hapus-divisi").modal();
     })
 
-    $(".btn-hapus-karyawan").on("click", function(){
+    $("#list-karyawan").on("click",'.btn-hapus-karyawan',function(){
         event.preventDefault();
         var action = "/employee/hr/hapus/" + $(this).data('idkaryawan');
         $("#btn-konfirmasi-hapus-karyawan").attr('href', action);
@@ -175,7 +177,7 @@ $(document).ready(function() {
     })
 
     //Ketika tombol hapus pada benefit ditekan
-    $(".btn-hapus-benefit").on("click", function(){
+    $("#tabel-benefit").on("click",'.btn-hapus-benefit',function(){
         event.preventDefault();
         var action = "/employee/detail-karyawan/" + $(this).data('idkaryawan') + "/delete-benefit/" + $(this).data('idbenefit');
         $("#btn-konfirmasi-hapus-benefit").attr('href', action);
@@ -229,7 +231,7 @@ $(document).ready(function() {
         $("#modal-delete-gaji").modal();
     });
 
-    $(".btn-edit-benefit").on("click",function(){
+    $("#tabel-benefit").on("click",'.btn-edit-benefit',function(){
         var id = $(this).data('idbenefit')
         var namaBenefit = $(this).data("benefit")
         var keteranganBenefit = $(this).data("keterangan")
@@ -303,7 +305,7 @@ $(document).ready(function() {
         $("#modal-update-status").modal();
     });
 
-    $(".ubah-kontak-darurat").on("click",function () {
+    $("#list-darurat").on("click", ".ubah-kontak-darurat", function () {
         event.preventDefault();
 
         // get data from item penilaian mandiri
@@ -324,7 +326,7 @@ $(document).ready(function() {
         $("#ubahKontakDaruratModal").modal();
     });
 
-    $(".hapus-kontak-darurat").on("click",function () {
+    $("#list-darurat").on("click", ".hapus-kontak-darurat", function () {
         event.preventDefault();
 
         // get data from item penilaian mandiri
@@ -377,10 +379,10 @@ $(document).ready(function() {
         var namaLengkap = $(this).data('nama-lengkap');
         var namaPanggilan = $(this).data('nama-panggilan');
         var nip = $(this).data('nip');
-        var idDivisi = $(this).data('id-divisi');
+        // var idDivisi = $(this).data('id-divisi');
         var emailPus = $(this).data('email-pus');
         var emailPribadi = $(this).data('email-pr');
-        var allDivisi = $(this).data('list-divisi');
+        // var allDivisi = $(this).data('list-divisi');
 
 
         // fill form value and action
@@ -388,10 +390,157 @@ $(document).ready(function() {
         $("#ubah-nama-lengkap").attr('value', namaLengkap);
         $("#ubah-nama-panggilan").attr('value', namaPanggilan);
         $("#ubah-nip").attr('value', nip);
-        $("#divisi-awal").attr('value', idDivisi);
-        $("#list-divisi").attr('value', allDivisi);
+        // $("#divisi-awal").attr('value', idDivisi);
+        // $("#list-divisi").attr('value', allDivisi);
         $("#ubah-email-pus").attr('value', emailPus);
         $("#ubah-email-pr").attr('value', emailPribadi);
+
         $("#modal-ubah-karyawan").modal();
+
+
     });
+
+    $('#rekap-absen').on('click', '.ubah-detail-btn', function () {
+        event.preventDefault();
+
+        // get data from item penilaian mandiri
+        var idAbsen = $(this).data('id-absen');
+        var waktuCheckin = $(this).data('waktu-checkin');
+        var waktuCheckout = $(this).data('waktu-checkout');
+
+
+        // fill form value and action
+        $("#id-absen").attr('value', idAbsen);
+        $("#wkt-checkin").attr('value', waktuCheckin);
+        $("#wkt-checkout").attr('value', waktuCheckout);
+        $("#ubahDetailModal").modal();
+    });
+
+
+    $( function() {
+        $.widget( "custom.combobox", {
+            _create: function() {
+                this.wrapper = $( "<span>" )
+                    .addClass( "custom-combobox" )
+                    .insertAfter( this.element );
+
+                this.element.hide();
+                this._createAutocomplete();
+                this._createShowAllButton();
+            },
+
+            _createAutocomplete: function() {
+                var selected = this.element.children( ":selected" ),
+                    value = selected.val() ? selected.text() : "";
+
+                this.input = $( "<input>" )
+                    .appendTo( this.wrapper )
+                    .val( value )
+                    .attr( "title", "" )
+                    .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
+                    .autocomplete({
+                        delay: 0,
+                        minLength: 0,
+                        source: $.proxy( this, "_source" )
+                    });
+
+                this._on( this.input, {
+                    autocompleteselect: function( event, ui ) {
+                        ui.item.option.selected = true;
+                        this._trigger( "select", event, {
+                            item: ui.item.option
+                        });
+                    },
+
+                    autocompletechange: "_removeIfInvalid"
+                });
+            },
+
+            _createShowAllButton: function() {
+                var input = this.input,
+                    wasOpen = false;
+
+                $( "<a>" )
+                    .attr( "tabIndex", -1 )
+                    .appendTo( this.wrapper )
+                    .uibutton({
+                        icons: {
+                            primary: "ui-icon-triangle-1-s"
+                        },
+                        text: false
+                    })
+                    .removeClass( "ui-corner-all" )
+                    .addClass( "custom-combobox-toggle ui-corner-right" )
+                    .on( "mousedown", function() {
+                        wasOpen = input.autocomplete( "widget" ).is( ":visible" );
+                    })
+                    .on( "click", function() {
+                        input.trigger( "focus" );
+
+                        // Close if already visible
+                        if ( wasOpen ) {
+                            return;
+                        }
+
+                        // Pass empty string as value to search for, displaying all results
+                        input.autocomplete( "search", "" );
+                    });
+            },
+
+            _source: function( request, response ) {
+                var matcher = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
+                response( this.element.children( "option" ).map(function() {
+                    var text = $( this ).text();
+                    if ( this.value && ( !request.term || matcher.test(text) ) )
+                        return {
+                            label: text,
+                            value: text,
+                            option: this
+                        };
+                }) );
+            },
+
+            _removeIfInvalid: function( event, ui ) {
+
+                // Selected an item, nothing to do
+                if ( ui.item ) {
+                    return;
+                }
+
+                // Search for a match (case-insensitive)
+                var value = this.input.val(),
+                    valueLowerCase = value.toLowerCase(),
+                    valid = false;
+                this.element.children( "option" ).each(function() {
+                    if ( $( this ).text().toLowerCase() === valueLowerCase ) {
+                        this.selected = valid = true;
+                        return false;
+                    }
+                });
+
+                // Found a match, nothing to do
+                if ( valid ) {
+                    return;
+                }
+
+                // Remove invalid value
+                this.input
+                    .val( "" )
+                // .attr( "title", value + " didn't match any item" )
+                // .tooltip( "open" );
+                this.element.val( "" );
+                // this._delay(function() {
+                //     this.input.tooltip( "close" ).attr( "title", "" );
+                // }, 2500 );
+                this.input.autocomplete( "instance" ).term = "";
+            },
+
+            _destroy: function() {
+                this.wrapper.remove();
+                this.element.show();
+            }
+        });
+
+        $( "#combobox" ).combobox();
+    } );
 } );

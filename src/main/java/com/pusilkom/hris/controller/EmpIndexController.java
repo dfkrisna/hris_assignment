@@ -58,8 +58,20 @@ public class EmpIndexController {
     @GetMapping("/employee")
     public String indexMoka(Model model, @NotNull Authentication auth) {
         UserWeb user = (UserWeb) auth.getPrincipal();
+        KaryawanBaruModel currentKaryawan = karyawanService.getKaryawanByUsername(user.getUsername());
+        model.addAttribute("currentKaryawan", currentKaryawan);
         model.addAttribute("currentUser", user);
         return "emp-index";
+    }
+
+    @ModelAttribute("currentKaryawanLogged")
+    public KaryawanBaruModel getLoggedKaryawan(Model model, @NotNull Authentication auth){
+        UserWeb user = (UserWeb) auth.getPrincipal();
+        KaryawanBaruModel currentKaryawan = karyawanService.getKaryawanByUsername(user.getUsername());
+        boolean isHr = false;
+        boolean isKaryawan = false;
+        boolean isDivManager = false;
+        return currentKaryawan;
     }
 
     /**
@@ -107,21 +119,21 @@ public class EmpIndexController {
         UserWeb user = (UserWeb) auth.getPrincipal();
         boolean isEmployeeSelected = false;
         boolean isHR = false;
-        KaryawanBaruModel karyawan = karyawanService.getKaryawanByUsername(user.getUsername());
-        if (karyawan != null && karyawan.getIdKaryawan() == idKaryawan) {
+        KaryawanBaruModel karyawanLogged = karyawanService.getKaryawanByUsername(user.getUsername());
+        if (karyawanLogged != null && karyawanLogged.getIdKaryawan() == idKaryawan) {
             isEmployeeSelected = true;
         }
         for (String role : user.getStrRoles()) {
-            if (role.equals("ROLE_HR") || role.equals("ROLE_MANAJERDIVISI")) {
+            if (role.equals("ROLE_HR")) {
                 isHR = true;
             }
         }
 
         //get benefit karyawan
-        List<BenefitKaryawanModel> listBenefit = karyawanService.getBenefitKaryawan(karyawan.getIdKaryawan());
-        if(listBenefit.size() == 0){
-            listBenefit = null;
-        }
+        List<BenefitKaryawanModel> listBenefit = karyawanService.getBenefitKaryawan(idKaryawan);
+        // if(listBenefit.size() == 0){
+        //     listBenefit = null;
+        // }
         List<KontakDaruratModel> dataDarurat = karyawanService.getKontakDaruratKaryawan(idKaryawan);
         List<KontrakModel> kontrak = karyawanService.selectKontrakAll(idKaryawan);
 
@@ -153,8 +165,8 @@ public class EmpIndexController {
         // check if user can edit
         UserWeb user = (UserWeb) auth.getPrincipal();
         boolean canEdit = false;
-        KaryawanBaruModel karyawan = karyawanService.getKaryawanByUsername(user.getUsername());
-        if (karyawan != null && karyawan.getIdKaryawan() == idKaryawan) {
+        KaryawanBaruModel karyawanLogged = karyawanService.getKaryawanByUsername(user.getUsername());
+        if (karyawanLogged != null && karyawanLogged.getIdKaryawan() == idKaryawan) {
             canEdit = true;
         }
         for (String role : user.getStrRoles()) {
