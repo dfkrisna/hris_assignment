@@ -309,9 +309,5 @@ public class IndexController
         model.addAttribute("divisi", divisi);
         return "index-manajerdivisi";
     }
-
-    @GetMapping("/autocomplete")
-    public String autocompleteTest() {
-        return "tes-autocomplete";
-    }
+    
 }
