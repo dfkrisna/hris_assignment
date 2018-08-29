@@ -37,18 +37,14 @@ public class KaryawanServiceImpl implements KaryawanService{
 	@Autowired
     KaryawanMapper karyawanMapper;
 
-	public List<KaryawanModel> getKaryawanAll() {
-		return karyawanMapper.selectKaryawanAll();
+	public List<KaryawanBaruModel> getKaryawanAll() {
+		return karyawanMapper.selectKaryawanBaruAll();
 	}
 
 	public List<KaryawanBaruModel> getKaryawanBaruAll(){ return karyawanMapper.selectKaryawanBaruAll();}
 
-	public KaryawanModel getKaryawanById(int idKaryawan) {
-		return karyawanMapper.selectKaryawanById(idKaryawan);
-	}
-
-	public KaryawanModel getKaryawanByIdPengguna(int idPengguna) {
-		return karyawanMapper.selectKaryawanByIdPengguna(idPengguna);
+	public KaryawanBaruModel getKaryawanById(int idKaryawan) {
+		return karyawanMapper.getKaryawanBaruById(idKaryawan);
 	}
 
 	@Override
@@ -64,35 +60,30 @@ public class KaryawanServiceImpl implements KaryawanService{
 		return hasil;
 	}
 
-	public List<KaryawanModel> getKaryawanByKaryawanProyek(List<KaryawanProyekModel> karyawanProyekList) {
-		List<KaryawanModel> karyawanList = new ArrayList<KaryawanModel>();
+	public List<KaryawanBaruModel> getKaryawanByKaryawanProyek(List<KaryawanProyekModel> karyawanProyekList) {
+		List<KaryawanBaruModel> karyawanList = new ArrayList<KaryawanBaruModel>();
 
 		for(KaryawanProyekModel karyawanProyek : karyawanProyekList) {
-			KaryawanModel karyawan = getKaryawanById(karyawanProyek.getIdKaryawan());
+			KaryawanBaruModel karyawan = getKaryawanBaruById(karyawanProyek.getIdKaryawan());
 			if(!karyawanList.contains(karyawan)) {
-				karyawanList.add(karyawanMapper.selectKaryawanById(karyawanProyek.getIdKaryawan()));
+				karyawanList.add(karyawanMapper.getKaryawanBaruById(karyawanProyek.getIdKaryawan()));
 			}
 		}
 
 		return karyawanList;
 	}
 
-	public List<KaryawanModel> getKaryawanByPeriode(LocalDate periode) {
+	public List<KaryawanBaruModel> getKaryawanByPeriode(LocalDate periode) {
 		return karyawanMapper.selectKaryawanByPeriode(periode);
 	}
 
-	public KaryawanModel selectKaryawanByEmail(String email){
-		return karyawanMapper.selectKaryawanByEmail(email);
+	public KaryawanBaruModel selectKaryawanByEmail(String email){
+		return karyawanMapper.selectKaryawanByUsername(email);
 	}
 
 	@Override
-	public List<KaryawanModel> getKaryawanByDivisi(int idDivisi) {
+	public List<KaryawanBaruModel> getKaryawanByDivisi(int idDivisi) {
 		return karyawanMapper.selectKaryawanByDivisi(idDivisi);
-	}
-
-	@Override
-	public int getKaryawanIdByUsername(String username) {
-		return karyawanMapper.getKaryawanIdByUsername(username);
 	}
 
 	@Override
@@ -167,7 +158,7 @@ public class KaryawanServiceImpl implements KaryawanService{
 	}
 
 	@Override
-	public List<KaryawanModel> selectNamaEmployeeAll(){
+	public List<KaryawanBaruModel> selectNamaEmployeeAll(){
 		return karyawanMapper.selectNamaEmployeeAll();
 	}
 

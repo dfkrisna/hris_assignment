@@ -29,10 +29,10 @@ public class RekapMappingServiceImpl implements RekapMappingService {
     @Autowired
     KaryawanProyekService karyawanProyekService;
 
-    public List<KaryawanRekapModel> mapRekap(List<KaryawanModel> karyawanList, List<ProyekModel> proyekList, List<KaryawanProyekModel> karyawanProyekList, List<RekapModel> rekapList) {
+    public List<KaryawanRekapModel> mapRekap(List<KaryawanBaruModel> karyawanList, List<ProyekModel> proyekList, List<KaryawanProyekModel> karyawanProyekList, List<RekapModel> rekapList) {
         List<KaryawanRekapModel> mapping = new ArrayList<KaryawanRekapModel>();
 
-        for (KaryawanModel karyawan : karyawanList) {
+        for (KaryawanBaruModel karyawan : karyawanList) {
             KaryawanRekapModel karyawanMapping = new KaryawanRekapModel();
             List<RekapModel> karyawanRekap = new ArrayList<RekapModel>();
 
@@ -41,7 +41,7 @@ public class RekapMappingServiceImpl implements RekapMappingService {
                 int idKaryawanProyek = 0;
 
                 for(KaryawanProyekModel karyawanProyek : karyawanProyekList) {
-                    if(karyawanProyek.getIdKaryawan() == karyawan.getId() && karyawanProyek.getIdProyek() == proyek.getId()) {
+                    if(karyawanProyek.getIdKaryawan() == karyawan.getIdKaryawan() && karyawanProyek.getIdProyek() == proyek.getId()) {
                         idKaryawanProyek = karyawanProyek.getId();
                         break;
                     }
@@ -54,7 +54,7 @@ public class RekapMappingServiceImpl implements RekapMappingService {
                     }
                 }
                 RekapModel rekapEmpty = new RekapModel();
-                rekapEmpty.setIdKaryawan(karyawan.getId());
+                rekapEmpty.setIdKaryawan(karyawan.getIdKaryawan());
                 rekapEmpty.setIdProyek(proyek.getId());
                 if(size == karyawanRekap.size()) {
                     karyawanRekap.add(rekapEmpty);
@@ -117,11 +117,11 @@ public class RekapMappingServiceImpl implements RekapMappingService {
     }
 
 
-    public List<KaryawanRekapModel> mapRekapAssignment(List<KaryawanModel> karyawanList, List<ProyekModel> proyekList, List<KaryawanProyekModel> karyawanProyekList, List<RekapModel> rekapList, int idProyek) {
+    public List<KaryawanRekapModel> mapRekapAssignment(List<KaryawanBaruModel> karyawanList, List<ProyekModel> proyekList, List<KaryawanProyekModel> karyawanProyekList, List<RekapModel> rekapList, int idProyek) {
         List<KaryawanRekapModel> mapping = new ArrayList<KaryawanRekapModel>();
         boolean isAssigned;
 
-        for (KaryawanModel karyawan : karyawanList) {
+        for (KaryawanBaruModel karyawan : karyawanList) {
             isAssigned = false;
             KaryawanRekapModel karyawanMapping = new KaryawanRekapModel();
             List<RekapModel> karyawanRekap = new ArrayList<RekapModel>();
@@ -132,7 +132,7 @@ public class RekapMappingServiceImpl implements RekapMappingService {
 
                 for(KaryawanProyekModel karyawanProyek : karyawanProyekList) {
 
-                    if(karyawanProyek.getIdKaryawan() == karyawan.getId() && karyawanProyek.getIdProyek() == proyek.getId()) {
+                    if(karyawanProyek.getIdKaryawan() == karyawan.getIdKaryawan() && karyawanProyek.getIdProyek() == proyek.getId()) {
                         idKaryawanProyek = karyawanProyek.getId();
                         isAssigned = true;
                         break;
@@ -152,7 +152,7 @@ public class RekapMappingServiceImpl implements RekapMappingService {
                 }
 
                 RekapModel rekapEmpty = new RekapModel();
-                rekapEmpty.setIdKaryawan(karyawan.getId());
+                rekapEmpty.setIdKaryawan(karyawan.getIdKaryawan());
                 rekapEmpty.setIdProyek(proyek.getId());
                 if(size == karyawanRekap.size()) {
                     karyawanRekap.add(rekapEmpty);
@@ -160,7 +160,7 @@ public class RekapMappingServiceImpl implements RekapMappingService {
             }
 
             if(!isAssigned) {
-                karyawan.setRatingKaryawan(penugasanService.getAverageRating(penugasanService.getPenugasanList(karyawan.getId())));
+                karyawan.setRatingKaryawan(penugasanService.getAverageRating(penugasanService.getPenugasanList(karyawan.getIdKaryawan())));
 
                 karyawanMapping.setKaryawan(karyawan);
                 karyawanMapping.setRekapList(karyawanRekap);
@@ -175,7 +175,7 @@ public class RekapMappingServiceImpl implements RekapMappingService {
     public KaryawanRekapModel getRekapBulananKaryawan(LocalDate periodeDate, int idKaryawan) {
         KaryawanRekapModel karyawanMapping = new KaryawanRekapModel();
 
-        KaryawanModel karyawan = karyawanService.getKaryawanById(idKaryawan);
+        KaryawanBaruModel karyawan = karyawanService.getKaryawanBaruById(idKaryawan);
 
         List<RekapModel> rekap = rekapService.getRekapBulananKaryawan(periodeDate, idKaryawan);
 
@@ -189,7 +189,7 @@ public class RekapMappingServiceImpl implements RekapMappingService {
     public KaryawanRekapModel getRekapBulananKaryawanProyek(int idKaryawan, int idProyek) {
         KaryawanRekapModel karyawanMapping = new KaryawanRekapModel();
 
-        KaryawanModel karyawan = karyawanService.getKaryawanById(idKaryawan);
+        KaryawanBaruModel karyawan = karyawanService.getKaryawanBaruById(idKaryawan);
 
         KaryawanProyekModel karyawanProyek = karyawanProyekService.getKaryawanProyekByKaryawanandProyek(idKaryawan, idProyek);
 

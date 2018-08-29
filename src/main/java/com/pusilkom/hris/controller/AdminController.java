@@ -1,7 +1,7 @@
 package com.pusilkom.hris.controller;
 
 import com.pusilkom.hris.model.PegawaiModel;
-import com.pusilkom.hris.model.KaryawanModel;
+import com.pusilkom.hris.model.KaryawanBaruModel;
 import com.pusilkom.hris.model.PenggunaModel;
 import com.pusilkom.hris.model.Roles;
 import com.pusilkom.hris.model.DivisibaruModel;
@@ -317,7 +317,7 @@ public class AdminController
     {
        List<DivisibaruModel> divisis = divisiDAO.selectAllDivisiAktif();
        List<DivisibaruModel> divisiNonAktif = divisiDAO.selectAllDivisiNonAktif();
-       List<KaryawanModel> namaKaryawan = karyawanServiceDAO.selectNamaEmployeeAll();
+       List<KaryawanBaruModel> namaKaryawan = karyawanServiceDAO.selectNamaEmployeeAll();
 
        DivisibaruModel divisi = new DivisibaruModel();
 
@@ -350,7 +350,7 @@ public class AdminController
     public String updateDivisi (Model model, @PathVariable(value = "id") int id)
     {
         DivisibaruModel divisi = divisiDAO.selectDivisiBaruByID(id);
-        List<KaryawanModel> namaKaryawan = karyawanServiceDAO.selectNamaEmployeeAll();
+        List<KaryawanBaruModel> namaKaryawan = karyawanServiceDAO.selectNamaEmployeeAll();
 
         model.addAttribute ("divisi", divisi);
         model.addAttribute("namaKaryawans", namaKaryawan);
@@ -365,7 +365,7 @@ public class AdminController
 
         List<DivisibaruModel> divisis = divisiDAO.selectAllDivisiAktif();
         List<DivisibaruModel> divisiNonAktif = divisiDAO.selectAllDivisiNonAktif();
-        List<KaryawanModel> namaKaryawan = karyawanServiceDAO.selectNamaEmployeeAll();
+        List<KaryawanBaruModel> namaKaryawan = karyawanServiceDAO.selectNamaEmployeeAll();
 
         DivisibaruModel divisi = new DivisibaruModel();
 

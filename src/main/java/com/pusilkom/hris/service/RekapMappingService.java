@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface RekapMappingService {
 
-    List<KaryawanRekapModel> mapRekap(List<KaryawanModel> karyawanList, List<ProyekModel> proyekList, List<KaryawanProyekModel> karyawanProyekList, List<RekapModel> rekapList);
+    List<KaryawanRekapModel> mapRekap(List<KaryawanBaruModel> karyawanList, List<ProyekModel> proyekList, List<KaryawanProyekModel> karyawanProyekList, List<RekapModel> rekapList);
 
     int[] chartValue(List<KaryawanRekapModel> mapping);
 
@@ -16,7 +16,7 @@ public interface RekapMappingService {
 
     String getCurrentDate();
 
-    List<KaryawanRekapModel> mapRekapAssignment(List<KaryawanModel> karyawanList, List<ProyekModel> proyekList, List<KaryawanProyekModel> karyawanProyekList, List<RekapModel> rekapList, int idProyek);
+    List<KaryawanRekapModel> mapRekapAssignment(List<KaryawanBaruModel> karyawanList, List<ProyekModel> proyekList, List<KaryawanProyekModel> karyawanProyekList, List<RekapModel> rekapList, int idProyek);
 
     KaryawanRekapModel getRekapBulananKaryawan(LocalDate periodeDate, int idKaryawan);
 
