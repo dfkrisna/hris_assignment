@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 public class DivisibaruModel {
-    private int id;
+    private Integer id;
     private String kodeDivisi;
     private String nama;
     private String keterangan;

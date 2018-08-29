@@ -57,7 +57,7 @@ public interface DivisiMapper {
 
     @Select("SELECT D.id, D.kode_divisi, D.nama, D.keterangan, K.nama_lengkap,D.id_manager\n" +
             "\tFROM employee.\"DIVISI\" as D INNER JOIN employee.\"KARYAWAN\" as K on D.id_manager = K.id\n" +
-            "\tWHERE D.id=#{id};")
+            "\tWHERE D.id=#{id} ORDER BY id DESC;")
 
     @Results(value = {
             @Result(property="id", column="id"),
@@ -75,7 +75,7 @@ public interface DivisiMapper {
 
     @Select("SELECT D.id, D.kode_divisi, D.nama, D.keterangan, K.nama_lengkap,D.id_manager\n" +
             "\tFROM employee.\"DIVISI\" as D INNER JOIN employee.\"KARYAWAN\" as K on D.id_manager = K.id\n" +
-            "\tWHERE D.is_aktif=false;")
+            "\tWHERE D.is_aktif=false ORDER BY id DESC;")
     @Results(value = {
             @Result(property="id", column="id"),
             @Result(property="kodeDivisi", column="kode_divisi"),
