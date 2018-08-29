@@ -541,6 +541,6 @@ $(document).ready(function() {
             }
         });
 
-        $( "#combobox" ).combobox();
+        $( ".combobox" ).combobox();
     } );
 } );

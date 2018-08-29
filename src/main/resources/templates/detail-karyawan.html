@@ -1094,7 +1094,7 @@
                     <div class="form-group ui-widget ui-front">
                         <label for="ubah-nama-panggilan" class="col-form-label montserrat-small">Divisi</label>
                         <br>
-                        <select id="combobox" name="divisi" class="montserrat-small custom-select custom-select-md mb-3">
+                        <select name="divisi" class="montserrat-small combobox custom-select custom-select-md mb-3">
                             <option value="">Pilih Divisi</option>
                             <div th:each="divisi,iterationStatus: ${divisis}">
                                 <option th:if="${divisi.id == karyawan.idDivisi}" th:value="${divisi.id}" th:text="${divisi.nama}" selected></option>
