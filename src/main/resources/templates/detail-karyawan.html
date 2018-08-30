@@ -437,7 +437,7 @@
                     <div th:if="${listBenefit == null}">
                         <h4 class="text-center" th:text="'Karyawan ' + ${karyawan.getNamaPanggilan()} + ' tidak mempunyai benefit'"></h4>
                     </div>
-                    <div th:if="${true}">
+                    <div th:if="${listBenefit != null}">
                         <h2 class="text-center montserrat-bold-big">Benefit Karyawan</h2>
                         <table id="tabel-benefit" class="table-mpp table table-hover">
                             <thead>
