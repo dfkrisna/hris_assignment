@@ -2,7 +2,7 @@ package com.pusilkom.hris.controller;
 
 import com.pusilkom.hris.model.*;
 import com.pusilkom.hris.model.FeedbackRatingModel;
-import com.pusilkom.hris.model.KaryawanModel;
+import com.pusilkom.hris.model.KaryawanBaruModel;
 import com.pusilkom.hris.model.PenugasanModel;
 import com.pusilkom.hris.model.RekapModel;
 import com.pusilkom.hris.service.*;
@@ -70,16 +70,16 @@ public class KaryawanController {
     @GetMapping("/assignment/karyawan")
     @PreAuthorize("hasAuthority('GET_KARYAWAN')")
     public String indexKaryawan(Model model, Principal principal) {
-        KaryawanModel karyawan = karyawanService.selectKaryawanByEmail(principal.getName());
-        KaryawanModel karyawanLogin = karyawanService.getKaryawanById(karyawan.getId());
+        KaryawanBaruModel karyawan = karyawanService.selectKaryawanByEmail(principal.getName());
+        KaryawanBaruModel karyawanLogin = karyawanService.getKaryawanById(karyawan.getIdKaryawan());
         //get periode saat ini dan mengecek penugasan pada periode tersebut
         LocalDate periode = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1);
-        List<PenugasanModel> penugasanPeriodeIni = penugasanService.getPenugasanAktifPeriodeIni(karyawan.getId(), periode);
+        List<PenugasanModel> penugasanPeriodeIni = penugasanService.getPenugasanAktifPeriodeIni(karyawan.getIdKaryawan(), periode);
       
-        List<PenugasanModel> penugasanList = penugasanService.getPenugasanList(karyawan.getId());
+        List<PenugasanModel> penugasanList = penugasanService.getPenugasanList(karyawan.getIdKaryawan());
 
-        int ratingKaryawan = ratingFeedbackService.getAvgRatingKaryawan(karyawan.getId());
-        int persentaseKontribusi = (int) (rekapService.getKaryawanKontribusi(karyawan.getId(), LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1)) * 100);
+        int ratingKaryawan = ratingFeedbackService.getAvgRatingKaryawan(karyawan.getIdKaryawan());
+        int persentaseKontribusi = (int) (rekapService.getKaryawanKontribusi(karyawan.getIdKaryawan(), LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1)) * 100);
 
 
         int bebanKerjaSaatini = 0;
@@ -88,7 +88,15 @@ public class KaryawanController {
             bebanKerjaSaatini+= penugasanPeriodeIni.get(i).getPersentase();
         }
 
-        int rataRataBeban = bebanKerjaSaatini/penugasanPeriodeIni.size();
+        int rataRataBeban;
+        
+        if(penugasanPeriodeIni.size() == 0){
+            rataRataBeban = 0;
+        }else{
+            rataRataBeban = bebanKerjaSaatini/penugasanPeriodeIni.size();
+        }
+        
+        
 
         model.addAttribute("rataRataBeban", rataRataBeban);
         model.addAttribute("ratingKaryawan", ratingKaryawan);
@@ -111,9 +119,9 @@ public class KaryawanController {
             model.addAttribute("notification", notification);
         }
 
-        log.info(" " + karyawanLogin.getNama());
-        log.info(" " + karyawan.getId());
-        log.info(" " + karyawanLogin.getId());
+        log.info(" " + karyawanLogin.getNamaLengkap());
+        log.info(" " + karyawan.getIdKaryawan());
+        log.info(" " + karyawanLogin.getIdKaryawan());
         model.addAttribute("karyawanLogin", karyawanLogin);
         return "index-karyawan";
     }
@@ -127,10 +135,10 @@ public class KaryawanController {
     @GetMapping("/assignment/karyawan/penugasan")
     @PreAuthorize("hasAuthority('GET_KARYAWAN')")
     public String penugasanKaryawan(Model model, Principal principal) {
-        KaryawanModel karyawan = karyawanService.selectKaryawanByEmail(principal.getName());
+        KaryawanBaruModel karyawan = karyawanService.selectKaryawanByEmail(principal.getName());
 
         //select seluruh penugasan karyawan pada seluruh periode
-        List<PenugasanModel> penugasanKaryawan = penugasanService.assignLatestStatus(penugasanService.getRiwayatPenugasanKaryawan(karyawan.getId()));
+        List<PenugasanModel> penugasanKaryawan = penugasanService.assignLatestStatus(penugasanService.getRiwayatPenugasanKaryawan(karyawan.getIdKaryawan()));
 
         if(penugasanKaryawan != null){
             //pass penugasan ke view
@@ -162,8 +170,8 @@ public class KaryawanController {
     public String detailpenugasanKaryawan(Model model, HttpSession session, @PathVariable Integer idProyek,
                                           Principal principal, @RequestParam(value = "periode", required = false) String periode) {
         //select karyawan, lalu cek detail penugasan dan rekap evaluasi diri
-        KaryawanModel karyawan = karyawanService.selectKaryawanByEmail(principal.getName());
-        PenugasanModel detailPenugasan = penugasanService.getDetailPenugasanById(idProyek, karyawan.getId());
+        KaryawanBaruModel karyawan = karyawanService.selectKaryawanByEmail(principal.getName());
+        PenugasanModel detailPenugasan = penugasanService.getDetailPenugasanById(idProyek, karyawan.getIdKaryawan());
         List<RekapModel> rekapPenilaianMandiri = rekapService.selectRekapByIdKaryawanProyek(detailPenugasan.getIdKaryawanProyek());
 
         //pass object ke view
@@ -199,7 +207,7 @@ public class KaryawanController {
             session.setAttribute("periodeSelected", periodeNow);
         }
 
-        int userId = karyawan.getId();
+        int userId = karyawan.getIdKaryawan();
 
         String penugasan = karyawanService.cekPenugasanKaryawanById(userId);
 
@@ -324,7 +332,7 @@ public class KaryawanController {
                                       @RequestParam(value = "periode", required = false) String periode)
     {
         LocalDate periodeNow = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1);
-        KaryawanModel karyawan = karyawanService.selectKaryawanByEmail(principal.getName());
+        KaryawanBaruModel karyawan = karyawanService.selectKaryawanByEmail(principal.getName());
         //Melakukan handling periode yang akan ditampilkan pada halaman rekan seproyek
         if(periode != null) {
             String[] split = periode.split(" ");
@@ -349,7 +357,7 @@ public class KaryawanController {
             session.setAttribute("periodeSelected", periodeNow);
         }
 
-        int userId = karyawan.getId();
+        int userId = karyawan.getIdKaryawan();
 
         String penugasan = karyawanService.cekPenugasanKaryawanById(userId);
 
@@ -414,8 +422,8 @@ public class KaryawanController {
                                       @RequestParam(value = "ratingRekan", required = false) int ratingRekan) throws ParseException {
 
         //Mempersiapkan variabel yang akan digunakan untuk mengambil rekan dari database
-        KaryawanModel karyawan = karyawanService.selectKaryawanByEmail(principal.getName());
-        int userId = karyawan.getId();
+        KaryawanBaruModel karyawan = karyawanService.selectKaryawanByEmail(principal.getName());
+        int userId = karyawan.getIdKaryawan();
         LocalDate periodeSelected = (LocalDate) session.getAttribute("periodeSelected");
         ProyekModel proyek = proyekService.getProyekByKode(kodeProyek);
         int idProyek = proyek.getId();

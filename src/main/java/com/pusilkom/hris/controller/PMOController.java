@@ -305,7 +305,7 @@ public class PMOController {
         //menampilkan projectlead
         if (proyek.getIdProjectLead() != null && proyek.getIdProjectLead() != 0) {
             KaryawanProyekModel karprolead = karyawanProyekDAO.getKaryawanProyekById(proyek.getIdProjectLead());
-            KaryawanModel projlead = karyawanDAO.getKaryawanById(karprolead.getIdKaryawan());
+            KaryawanBaruModel projlead = karyawanDAO.getKaryawanById(karprolead.getIdKaryawan());
             model.addAttribute("projlead", projlead);
         }
 
@@ -375,7 +375,7 @@ public class PMOController {
         if (proyek.getIdProjectLead() != null && proyek.getIdProjectLead() != 0) {
 
             KaryawanProyekModel karprolead = karyawanProyekDAO.getKaryawanProyekById(proyek.getIdProjectLead());
-            KaryawanModel projlead = karyawanDAO.getKaryawanById(karprolead.getIdKaryawan());
+            KaryawanBaruModel projlead = karyawanDAO.getKaryawanById(karprolead.getIdKaryawan());
             model.addAttribute("projlead", projlead);
         }
 
@@ -404,11 +404,10 @@ public class PMOController {
         model.addAttribute("date_today", dateToday);
 
         //mengambil user yang sedang login
-        PenggunaModel pengguna = penggunaDAO.getPenggunaLama(principal.getName());
-        KaryawanModel projlead = karyawanDAO.getKaryawanByIdPengguna(pengguna.getId());
+        KaryawanBaruModel projlead = karyawanDAO.getKaryawanByUsername(principal.getName());
 
         //mengambil proyek yang dipimpin projectlead yang login
-        List<PenugasanModel> listpenugasan = proyekDAO.selectProyekDipimpin(projlead.getId());
+        List<PenugasanModel> listpenugasan = proyekDAO.selectProyekDipimpin(projlead.getIdKaryawan());
         model.addAttribute("listpenugasan", listpenugasan);
         model.addAttribute("isempty", listpenugasan.isEmpty());
         //menampilkan list proyek
@@ -439,9 +438,8 @@ public class PMOController {
         model.addAttribute("date_today", dateToday);
 
         //mengambil penugasan
-        PenggunaModel pengguna = penggunaDAO.getPenggunaLama(principal.getName());
-        KaryawanModel projlead = karyawanDAO.getKaryawanByIdPengguna(pengguna.getId());
-        PenugasanModel penugasan = penugasanDAO.getDetailPenugasanById(id, projlead.getId());
+        KaryawanBaruModel projlead = karyawanDAO.getKaryawanByUsername(principal.getName());
+        PenugasanModel penugasan = penugasanDAO.getDetailPenugasanById(id, projlead.getIdKaryawan());
         model.addAttribute("penugasan", penugasan);
 
         //mengambil data proyek
@@ -457,7 +455,7 @@ public class PMOController {
         List<PenugasanModel> anggotaList = penugasanDAO.getListPenugasan(id);
 
         //menghapus dirinya sendiri pada tabel anggota
-        Predicate<PenugasanModel> projleadPredicate = p -> p.getIdKaryawan() == projlead.getId();
+        Predicate<PenugasanModel> projleadPredicate = p -> p.getIdKaryawan() == projlead.getIdKaryawan();
         anggotaList.removeIf(projleadPredicate);
 
         model.addAttribute("anggotaList", anggotaList);
@@ -501,7 +499,7 @@ public class PMOController {
 
         //mengambil rekap, proyek dan karyawan
         ProyekModel proyek = proyekDAO.getProyekById(idProyek);
-        KaryawanModel karyawan = karyawanDAO.getKaryawanById(idKaryawan);
+        KaryawanBaruModel karyawan = karyawanDAO.getKaryawanById(idKaryawan);
         KaryawanRekapModel karyawanRekap = rekapMappingDAO.getRekapBulananKaryawanProyek(idKaryawan, idProyek);
 
         if (notification != null) {
@@ -586,9 +584,9 @@ public class PMOController {
             periodeDate = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1);
         }
 
-        KaryawanModel karyawan = karyawanDAO.getKaryawanById(idKaryawan);
+        KaryawanBaruModel karyawan = karyawanDAO.getKaryawanById(idKaryawan);
 
-        DivisiModel divisi = divisiDAO.getDivisiByID(karyawan.getIdDivisi());
+        DivisibaruModel divisi = divisiDAO.selectDivisiBaruByID(karyawan.getIdDivisi());
 
         KaryawanRekapModel karyawanRekap = rekapMappingDAO.getRekapBulananKaryawan(periodeDate, idKaryawan);
 

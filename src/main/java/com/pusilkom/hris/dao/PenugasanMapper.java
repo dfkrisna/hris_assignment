@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 public interface PenugasanMapper {
     @Select("SELECT K.id AS id_karyawan, KP.id AS id_karyawan_proyek, P.id AS id_proyek, P.kode AS kode_proyek, P.nama_proyek, R.nama AS role, AVG(persentase_kontribusi) AS kontribusi, P.start_periode, P.end_periode\n" +
-            "FROM mpp.\"PROYEK\" AS P, mpp.\"KARYAWAN_PROYEK\" AS KP, mpp.\"KARYAWAN\" AS K, mpp.\"REKAPITULASI_BULANAN\" AS RP, mpp.\"RATING_FEEDBACK\" AS RF, mpp.\"ROLE_PROYEK\" AS R\n" +
+            "FROM mpp.\"PROYEK\" AS P, mpp.\"KARYAWAN_PROYEK\" AS KP, employee.\"KARYAWAN\" AS K, mpp.\"REKAPITULASI_BULANAN\" AS RP, mpp.\"RATING_FEEDBACK\" AS RF, mpp.\"ROLE_PROYEK\" AS R\n" +
             "WHERE K.id = ${idKaryawan}\n" +
             "\tAND P.id = KP.id_proyek\n" +
             "\tAND KP.id_karyawan = K.id\n" +
@@ -34,7 +34,7 @@ public interface PenugasanMapper {
 
     //mapper lihat penugasan
     @Select("SELECT DISTINCT K.id AS id_karyawan, KP.id AS id_karyawan_proyek, P.id as id_proyek, P.nama_proyek, RP.nama as nama_role, RB.persentase_kontribusi, KP.start_periode, KP.end_periode, KP.id\n" +
-            "FROM mpp.\"PROYEK\" as P, mpp.\"REKAPITULASI_BULANAN\" as RB, mpp.\"ROLE_PROYEK\" as RP, mpp.\"KARYAWAN_PROYEK\" as KP, mpp.\"KARYAWAN\" as K\n" +
+            "FROM mpp.\"PROYEK\" as P, mpp.\"REKAPITULASI_BULANAN\" as RB, mpp.\"ROLE_PROYEK\" as RP, mpp.\"KARYAWAN_PROYEK\" as KP, employee.\"KARYAWAN\" as K\n" +
             "WHERE KP.id_karyawan = ${idKaryawan} AND KP.id_karyawan = K.id AND KP.id_proyek = P.id AND KP.id_role = RP.id\n" +
             "      AND KP.id = RB.id_karyawan_proyek\n" +
             "ORDER BY KP.id DESC")
@@ -51,12 +51,12 @@ public interface PenugasanMapper {
     List<PenugasanModel> getRiwayatPenugasanKaryawan(@Param("idKaryawan") int idKaryawan);
 
     @Select("SELECT DISTINCT K.id AS id_karyawan, P.kode AS kode_proyek, KP.id AS id_karyawan_proyek, P.id as id_proyek, P.nama_proyek, C.name as nama_klien, RP.nama as nama_role, SP.nama as status_proyek, RB.persentase_kontribusi, \n" +
-            "      PENGGUNA.nama as team_lead, KP.start_periode, KP.end_periode, SPR.id_status\n" +
+            "      K.nama_lengkap as team_lead, KP.start_periode, KP.end_periode, SPR.id_status\n" +
             "FROM mpp.\"PROYEK\" as P, mpp.\"KARYAWAN_PROYEK\" as KP, mpp.\"ROLE_PROYEK\" as RP, mpp.\"STATUS_PENGERJAAN_PROYEK\" as SPR, \n" +
-            "      mpp.\"STATUS_PROYEK\" as SP, mpp.\"REKAPITULASI_BULANAN\" as RB, mpp.\"KARYAWAN\" as K, mpp.\"PENGGUNA\" as PENGGUNA, a07_client as C\n" +
+            "      mpp.\"STATUS_PROYEK\" as SP, mpp.\"REKAPITULASI_BULANAN\" as RB, employee.\"KARYAWAN\" as K, a07_client as C\n" +
             "WHERE KP.id_proyek = #{idProyek} AND KP.id_proyek = P.id AND KP.id_karyawan = #{idKaryawan} AND KP.id_role = RP.id AND\n" +
             "      RB.id_karyawan_proyek = KP.id AND KP.id_karyawan = K.id AND P.id = SPR.id_proyek AND SPR.id_status = SP.id \n" +
-            "      AND K.id_pengguna = PENGGUNA.id AND C.id = P.id_klien\n" +
+            "      AND C.id = P.id_klien\n" +
             "ORDER BY SPR.id_status DESC LIMIT 1;")
     @Results(value={
             @Result(property="idProyek", column="id_proyek"),
@@ -80,7 +80,7 @@ public interface PenugasanMapper {
             "WHERE SPP.id_proyek = P.id\n" +
             "\tAND SPP.id_status = SP.id\n" +
             "ORDER BY SPP.id DESC LIMIT 1) AS status_proyek\n" +
-            "FROM mpp.\"PROYEK\" as P, mpp.\"REKAPITULASI_BULANAN\" as RB, mpp.\"ROLE_PROYEK\" as RP, mpp.\"KARYAWAN_PROYEK\" as KP, mpp.\"KARYAWAN\" as K, public.\"a07_client\" AS C \n" +
+            "FROM mpp.\"PROYEK\" as P, mpp.\"REKAPITULASI_BULANAN\" as RB, mpp.\"ROLE_PROYEK\" as RP, mpp.\"KARYAWAN_PROYEK\" as KP, employee.\"KARYAWAN\" as K, public.\"a07_client\" AS C \n" +
             "WHERE K.id = ${idKaryawan} \n" +
             "AND KP.id_karyawan = K.id\n" +
             "AND KP.is_active = TRUE\n" +
@@ -109,7 +109,7 @@ public interface PenugasanMapper {
     List<PenugasanModel> getPenugasanPeriodeIni(@Param("idKaryawan") int idKaryawan, @Param("periode") LocalDate periode);
 
     @Select("SELECT K.id AS id_karyawan, KP.id AS id_karyawan_proyek, P.id AS id_proyek, P.kode AS kode_proyek, P.nama_proyek, R.nama AS role, AVG(rating) AS rating, AVG(persentase_kontribusi) AS kontribusi, P.start_periode, P.end_periode\n" +
-            "FROM mpp.\"PROYEK\" AS P, mpp.\"KARYAWAN_PROYEK\" AS KP, mpp.\"KARYAWAN\" AS K, mpp.\"REKAPITULASI_BULANAN\" AS RP, mpp.\"RATING_FEEDBACK\" AS RF, mpp.\"ROLE_PROYEK\" AS R\n" +
+            "FROM mpp.\"PROYEK\" AS P, mpp.\"KARYAWAN_PROYEK\" AS KP, employee.\"KARYAWAN\" AS K, mpp.\"REKAPITULASI_BULANAN\" AS RP, mpp.\"RATING_FEEDBACK\" AS RF, mpp.\"ROLE_PROYEK\" AS R\n" +
             "WHERE K.id = ${idKaryawan}\n" +
             "\tAND P.id = KP.id_proyek\n" +
             "\tAND KP.id_karyawan = K.id\n" +
@@ -129,19 +129,18 @@ public interface PenugasanMapper {
     })
     List<PenugasanModel> selectPenugasanByProyek(@Param("idProyek") int idProyek);
 
-    @Select("SELECT DISTINCT K.id AS id_karyawan, KP.id AS id_karyawan_proyek, P.id AS id_proyek, PG.nama AS nama, R.nama AS role,  \n" +
+    @Select("SELECT DISTINCT K.id AS id_karyawan, KP.id AS id_karyawan_proyek, P.id AS id_proyek, K.nama_lengkap AS nama, R.nama AS role,  \n" +
             "            (SELECT persentase_kontribusi \n" +
             "            FROM mpp.\"REKAPITULASI_BULANAN\" AS RB \n" +
             "            WHERE RB.id_karyawan_proyek = KP.id \n" +
             "            ORDER BY RB.periode\n" +
             "            LIMIT 1) AS kontribusi \n" +
-            "            FROM mpp.\"KARYAWAN\" AS K, mpp.\"KARYAWAN_PROYEK\" AS KP, mpp.\"PROYEK\" AS P, mpp.\"ROLE_PROYEK\" AS R, mpp.\"PENGGUNA\" AS PG, mpp.\"REKAPITULASI_BULANAN\" AS RB , mpp.\"RATING_FEEDBACK\" AS RF \n" +
+            "            FROM employee.\"KARYAWAN\" AS K, mpp.\"KARYAWAN_PROYEK\" AS KP, mpp.\"PROYEK\" AS P, mpp.\"ROLE_PROYEK\" AS R, mpp.\"REKAPITULASI_BULANAN\" AS RB , mpp.\"RATING_FEEDBACK\" AS RF \n" +
             "            WHERE P.id = ${idProyek}\n" +
-            "            AND K.id_pengguna = PG.id \n" +
             "            AND P.id = KP.id_proyek \n" +
             "            AND K.id = KP.id_karyawan \n" +
             "            AND R.id = KP.id_role \n" +
-            "            GROUP BY K.id, PG.nama, R.nama, RB.persentase_kontribusi, KP.id, P.id \n" +
+            "            GROUP BY K.id, K.nama_lengkap, R.nama, RB.persentase_kontribusi, KP.id, P.id \n" +
             "            ORDER BY kontribusi DESC;")
     @Results(value = {
             @Result(property="idProyek", column="id_proyek"),
@@ -179,14 +178,13 @@ public interface PenugasanMapper {
     )
     String selectLatestStatus(@Param("idProyek") int idProyek);
 
-    @Select("SELECT P.id AS id_proyek, KP.start_periode, KP.end_periode, K.id AS id_kar, " +
+    @Select("SELECT P.id AS id_proyek, KP.start_periode, KP.end_periode, K.id AS id_kar, K.nama_lengkap AS nama_karyawan, " +
             "(SELECT (AVG(RB.persentase_kontribusi)) FROM mpp.\"REKAPITULASI_BULANAN\" AS RB " +
             "   WHERE RB.id_karyawan_proyek = KP.id) AS kontribusi, " +
             "(SELECT ROUND(AVG(RF.rating)) FROM mpp.\"RATING_FEEDBACK\" " +
             "   AS RF WHERE RF.id_karyawan_dinilai = KP.id AND RF.id_proyek = ${idProyek} ) AS rating, " +
-            "(SELECT P.nama FROM mpp.\"PENGGUNA\" AS P WHERE K.id_pengguna = P.id) AS nama_karyawan, " +
             "(SELECT RP.nama FROM mpp.\"ROLE_PROYEK\" AS RP WHERE RP.id = KP.id_role) AS role " +
-            "FROM mpp.\"PROYEK\" AS P, mpp.\"KARYAWAN_PROYEK\" AS KP, mpp.\"KARYAWAN\" AS K " +
+            "FROM mpp.\"PROYEK\" AS P, mpp.\"KARYAWAN_PROYEK\" AS KP, employee.\"KARYAWAN\" AS K " +
             "WHERE P.id = KP.id_proyek AND K.id = KP.id_karyawan AND P.id = ${idProyek};\n")
     @Results(value = {
             @Result(property="idProyek", column="id_proyek"),

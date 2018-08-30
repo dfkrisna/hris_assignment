@@ -23,5 +23,6 @@ public class KaryawanBaruModel {
     String alamatTinggal;
     String noKTP;
     String npwp;
+    private int ratingKaryawan;
 }
 

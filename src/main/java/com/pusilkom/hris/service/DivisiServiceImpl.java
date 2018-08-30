@@ -18,13 +18,8 @@ public class DivisiServiceImpl implements DivisiService {
     DivisiMapper divisiMapper;
 
     @Override
-    public DivisiModel getDivisiByManajer(int idManajer) {
+    public DivisibaruModel selectDivisiByManajer(int idManajer) {
         return divisiMapper.selectDivisiByManajer(idManajer);
-    }
-
-    @Override
-    public DivisiModel getDivisiByID(int idDivisi) {
-        return divisiMapper.selectDivisiByID(idDivisi);
     }
 
     @Override

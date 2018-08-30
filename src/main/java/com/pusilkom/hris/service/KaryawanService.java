@@ -14,27 +14,23 @@ public interface KaryawanService {
 
 	String cekPenugasanKaryawanById(int idKaryawan);
 
-	int getKaryawanIdByUsername(String username);
-
 	int getKaryawanIdPenilai(int idKaryawan, int idProyek);
 
-	KaryawanModel getKaryawanById(int idKaryawan);
-
-	KaryawanModel getKaryawanByIdPengguna(int idPengguna);
+	KaryawanBaruModel getKaryawanById(int idKaryawan);
 
 	String verifyFeedbackRekan(int idRekan, int idPenilai, int idProyek, LocalDate periode);
 
-	List<KaryawanModel> getKaryawanAll();
+	List<KaryawanBaruModel> getKaryawanAll();
 
 	List<KaryawanBaruModel> getKaryawanBaruAll();
 
-	List<KaryawanModel> getKaryawanByKaryawanProyek(List<KaryawanProyekModel> karyawanProyekList);
+	List<KaryawanBaruModel> getKaryawanByKaryawanProyek(List<KaryawanProyekModel> karyawanProyekList);
 
-	List<KaryawanModel> getKaryawanByPeriode(LocalDate periode);
+	List<KaryawanBaruModel> getKaryawanByPeriode(LocalDate periode);
 
-	KaryawanModel selectKaryawanByEmail(String email);
+	KaryawanBaruModel selectKaryawanByEmail(String email);
 
-	List<KaryawanModel> getKaryawanByDivisi(int idDivisi);
+	List<KaryawanBaruModel> getKaryawanByDivisi(int idDivisi);
 
 	List<Integer> getUserProyek(int idKaryawan);
 
@@ -53,7 +49,7 @@ public interface KaryawanService {
 							 int idProyek, LocalDate periode, Timestamp tanggal);
 
 
-	List<KaryawanModel> selectNamaEmployeeAll();
+	List<KaryawanBaruModel> selectNamaEmployeeAll();
 
 	void addKaryawan(String namaLengkap, String namaPanggilan, String nip, int idDivisi,
 					 String emailPusilkom, String emailPribadi);
