@@ -19,7 +19,7 @@
                     <a href="/mngdivisi">Beranda</a>
                 </li>
                 <li class="roboto breadcrumb-item active" aria-current="page">
-                    <a th:href="'/assignment/mngdivisi/rekap/' + ${karyawanRekap.karyawan.id}">Detail Karyawan</a>
+                    <a th:href="'/assignment/mngdivisi/rekap/' + ${karyawanRekap.karyawan.idKaryawan}">Detail Karyawan</a>
                 </li>
             </ol>
         </nav>
@@ -67,13 +67,13 @@
     <div class="row">
         <div class="col text-left">
             <div th:if="${previous != null}">
-                <a class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" th:href="'/assignment/mngdivisi/rekap/' + ${karyawanRekap.karyawan.id} + '?periode=' + ${previous.month + ' ' + previous.year}" th:text="${previous.month + ' ' + previous.year}"></a>
+                <a class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" th:href="'/assignment/mngdivisi/rekap/' + ${karyawanRekap.karyawan.idKaryawan} + '?periode=' + ${previous.month + ' ' + previous.year}" th:text="${previous.month + ' ' + previous.year}"></a>
             </div>
         </div>
         <div class="col text-center">
             <div th:if="${current != null}">
                 <h3 th:text="${current.month + ' ' + current.year}" class="montserrat-med-bold">Current Periode</h3>
-                <form action="#" th:action="'/assignment/mngdivisi/rekap/' + ${karyawanRekap.karyawan.id}" method="get">
+                <form action="#" th:action="'/assignment/mngdivisi/rekap/' + ${karyawanRekap.karyawan.idKaryawan}" method="get">
                     <input name="periode" id="periode" class="date-picker form-rounded form-control" readonly="readonly" style="background-color: transparent;"/>
                     <br/>
                     <input type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" value="Pilih Periode" />
@@ -86,7 +86,7 @@
                     <a class="montserrat-small btn btn-secondary text-white btn-rounded disabled" th:text="${next.month + ' ' + next.year}"></a>
                 </div>
                 <div th:unless="${isNow}">
-                    <a class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" th:href="'/assignment/mngdivisi/rekap/' + ${karyawanRekap.karyawan.id} + '?periode=' + ${next.month + ' ' + next.year}" th:text="${next.month + ' ' + next.year}"></a>
+                    <a class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" th:href="'/assignment/mngdivisi/rekap/' + ${karyawanRekap.karyawan.idKaryawan} + '?periode=' + ${next.month + ' ' + next.year}" th:text="${next.month + ' ' + next.year}"></a>
                 </div>
             </div>
         </div>
