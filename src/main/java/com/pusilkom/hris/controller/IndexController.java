@@ -287,14 +287,13 @@ public class IndexController
         KaryawanBaruModel pengguna = karyawanService.getKaryawanByUsername(principal.getName());
 
         DivisibaruModel divisi = divisiService.selectDivisiByManajer(pengguna.getIdKaryawan());
-        log.info(divisi.getNama());
-
         LocalDate periodeDate = LocalDate.now();
 
         List<KaryawanBaruModel> karyawanList;
         if(divisi == null){
             karyawanList = new ArrayList<KaryawanBaruModel>();
         }else{
+            model.addAttribute("divisi", divisi);
             karyawanList = karyawanService.getKaryawanByDivisi(divisi.getId());
         }
         
