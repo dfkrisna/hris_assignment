@@ -62,6 +62,8 @@ public interface KaryawanService {
 	
 	KaryawanBaruModel getKaryawanByUsername(String username);
 
+	void updateKaryawanDivisi(int idKaryawan, int idDivisi);
+
 	DataDiriModel getDataDiriByIdKaryawan(int idKaryawan);
 
 	void insertDataDiri(DataDiriModel dataDiri);

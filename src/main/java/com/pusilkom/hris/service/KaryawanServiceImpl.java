@@ -159,7 +159,7 @@ public class KaryawanServiceImpl implements KaryawanService{
 
 	@Override
 	public List<KaryawanBaruModel> selectNamaEmployeeAll(){
-		return karyawanMapper.selectNamaEmployeeAll();
+		return karyawanMapper.selectKaryawanBaruAll();
 	}
 
 	public List<Integer> getAllDivisi(){
@@ -199,6 +199,9 @@ public class KaryawanServiceImpl implements KaryawanService{
 	public void insertDataDiri(DataDiriModel dataDiri){
 		karyawanMapper.insertDataDiri(dataDiri);
 	}
+
+	@Override
+	public void updateKaryawanDivisi(int idKaryawan, int idDivisi){karyawanMapper.updateKaryawanDivisi(idKaryawan, idDivisi);}
 
 	@Override
 	public List<KeluargaModel> selectAnggotaKeluargaAll(int idKaryawan){return karyawanMapper.selectAnggotaKeluargaAll(idKaryawan);}

@@ -16,7 +16,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="roboto breadcrumb-item active" aria-current="page">
-                    <a href="/karyawan">Beranda</a>
+                    <a href="/assignment/karyawan">Beranda</a>
                 </li>
                 <li class="roboto breadcrumb-item active" aria-current="page">
                     <a th:href="'/assignment/karyawan/projectlead/detail/' + ${proyek.id} + '/' + ${karyawan.idKaryawan}">Detail Karyawan</a>
@@ -88,7 +88,7 @@
                             <td class="montserrat-small" th:if="${rekap.isApproved()}" style="color: green;">Telah Difinalisasi</td>
                             <div th:unless="${rekap.isApproved()}">
                                 <td th:if="${rekap.penilaianMandiri != null}">
-                                    <form action="/karyawan/projectlead/detail/finalisasi" method="post">
+                                    <form action="/assignment/karyawan/projectlead/detail/finalisasi" method="post">
                                         <input type="hidden" name="periode" id="periode" th:value="${rekap.periode}"/>
                                         <input type="hidden" name="idKarProy" id="idKarProy" th:value="${rekap.idKaryawanProyek}"/>
                                         <!--<input class="btn pusil-btn btn-primary" type="submit" value="Finalisasi" />-->

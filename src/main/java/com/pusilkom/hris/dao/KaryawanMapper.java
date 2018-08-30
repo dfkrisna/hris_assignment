@@ -81,7 +81,6 @@ public interface KaryawanMapper {
         List<FeedbackRatingModel> getRekanSeproyek(@Param("idProyek") int idProyek, @Param("idKaryawan") int idKaryawan,
                         @Param("periodeNow") LocalDate periodeNow);
 
-        // sampai sini
 
         @Select("select rating as ratingRekan, feedback as feedback\n" 
                         + "from mpp.\"RATING_FEEDBACK\"\n"
@@ -311,4 +310,8 @@ public interface KaryawanMapper {
 
         @Select("SELECT d.id " + "FROM employee.\"DIVISI\" as d")
         List<Integer> getAllDivisi();
+
+        @Update("update employee.\"KARYAWAN\" set id_divisi=#{idDivisi} " +
+            "where id=#{idKaryawan}")
+        void updateKaryawanDivisi(@Param("idKaryawan")int idKaryawan, @Param("idDivisi")int idDivisi);
 }

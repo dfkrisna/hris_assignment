@@ -359,13 +359,18 @@ public class AdminController
     }
 
     @RequestMapping(value = "/employee/admin/keloladivisi/ubah/{id}" , method = RequestMethod.POST)
-    public String updateDivisi (@ModelAttribute DivisibaruModel divisiUpdate, Model model) {
+    public String updateDivisi (@ModelAttribute DivisibaruModel divisiUpdate, Model model, @RequestParam(value="pindahDivisi", required=false) String divisiBaru) {
 
         divisiDAO.updateDivisi(divisiUpdate);
 
         List<DivisibaruModel> divisis = divisiDAO.selectAllDivisiAktif();
         List<DivisibaruModel> divisiNonAktif = divisiDAO.selectAllDivisiNonAktif();
         List<KaryawanBaruModel> namaKaryawan = karyawanServiceDAO.selectNamaEmployeeAll();
+
+
+        if(divisiBaru!=null){
+            karyawanServiceDAO.updateKaryawanDivisi(divisiUpdate.getIdManager(), divisiUpdate.getId());
+        }
 
         DivisibaruModel divisi = new DivisibaruModel();
 

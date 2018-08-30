@@ -90,19 +90,22 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="nama-lengkap" class="col-form-label">Nama Lengkap :</label>
-                                <input type="text" class="form-control" id="nama-lengkap" name="nama-lengkap"/>
+                                <input required type="text" class="form-control" id="nama-lengkap" name="nama-lengkap"
+                                       pattern="[A-Za-z\s]{4,20}" title="Alphabet character less than 20"/>
                             </div>
                             <div class="form-group">
                                 <label for="nama-panggilan" class="col-form-label">Nama Panggilan :</label>
-                                <input type="text" class="form-control" id="nama-panggilan" name="nama-panggilan"/>
+                                <input type="text" class="form-control" id="nama-panggilan" name="nama-panggilan"
+                                       pattern="[A-Za-z]{4,10}" title="Alphabet character less than 10"/>
                             </div>
                             <div class="form-group">
                                 <label for="nip" class="col-form-label">NIP :</label>
-                                <input type="text" class="form-control" id="nip" name="nip"></input>
+                                <input required type="text" class="form-control" id="nip" name="nip"
+                                       pattern="[0-9]{18}" title="NIP: 18 digit"></input>
                             </div>
                             <div class="form-group">
                                 <label for="id-divisi" class="col-form-label">ID Divisi :</label>
-                                <select class="form-control" id="id-divisi" name="id-divisi">
+                                <select required="true" class="form-control" id="id-divisi" name="id-divisi">
                                     <option selected="selected" disabled="disabled">Pilih Divisi</option>
                                     <div th:each="idDivisi, IterationStatus:${listDivisi}">
                                         <option th:text="${idDivisi}"></option>
@@ -111,7 +114,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="email-pusilkom" class="col-form-label">Email Pusilkom :</label>
-                                <input type="email" class="form-control" id="email-pusilkom" name="email-pusilkom"></input>
+                                <input required type="text" class="form-control" id="email-pusilkom" name="email-pusilkom"
+                                       pattern="[a-z0-9._%+-]+@pusilkom\.[a-z.]{2,8}$" title="Insert a valid PUSILKOM email"></input>
                             </div>
                             <div class="form-group">
                                 <label for="email-pribadi" class="col-form-label">Email Pribadi :</label>

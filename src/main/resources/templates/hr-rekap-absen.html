@@ -80,7 +80,7 @@
                 <th th:if="${karyawan == null}" class="montserrat-small-bold text-center">Nama</th>
                 <th class="montserrat-small-bold text-center">Waktu Check-in</th>
                 <th class="montserrat-small-bold text-center">Waktu Check-out</th>
-                <th class="montserrat-small-bold text-center">Durasi (dalam jam)</th>
+                <th class="montserrat-small-bold text-center">Durasi</th>
                 <th class="montserrat-small-bold text-center">Detail</th>
             </tr>
             </thead>
@@ -90,7 +90,7 @@
                 <td class="text-center montserrat-small" th:text="${absen.getCheckInTime()}"></td>
                 <td th:if="${absen.getCheckOutTime() != null}" class="text-center montserrat-small" th:text="${absen.getCheckOutTime()}"></td>
                 <td th:unless="${absen.getCheckOutTime() != null}" class="text-center text-muted montserrat-small">Belum Check-out</td>
-                <td class="text-center montserrat-small" th:text="${mapDurasi.get(absen.id)}"></td>
+                <td class="text-center montserrat-small" th:text="${absen.getAbsenInterval()}"></td>
                 <td class="text-center montserrat-small" th:text="${absen.getDetail()}"></td>
             </tr>
             </tbody>

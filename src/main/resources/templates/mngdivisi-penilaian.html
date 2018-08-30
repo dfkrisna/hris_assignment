@@ -16,7 +16,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="roboto breadcrumb-item active" aria-current="page">
-                    <a href="/mngdivisi">Beranda</a>
+                    <a href="/assignment/mngdivisi">Beranda</a>
                 </li>
                 <li class="roboto breadcrumb-item active" aria-current="page">
                     <a th:href="'/assignment/mngdivisi/rekap/' + ${karyawanRekap.karyawan.idKaryawan}">Detail Karyawan</a>
@@ -134,7 +134,7 @@
                             <div th:unless="${rekap.isApproved()}">
                                 <td th:if="${rekap.penilaianMandiri != null}">
                                     <div th:if="${rekap.idKaryawanProyek==mapRekapProyek.get(rekap.id).idProjectLead}">
-                                        <form action="/mngdivisi/rekap/finalisasi" method="post">
+                                        <form action="/assignment/mngdivisi/rekap/finalisasi" method="post">
                                             <input type="hidden" name="periode" id="periode" th:value="${current}"/>
                                             <input type="hidden" name="idKarProy" id="idKarProy" th:value="${rekap.idKaryawanProyek}"/>
                                             <button type="button" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" data-toggle="modal" data-target="#final-confirm">Finalisasi</button>
