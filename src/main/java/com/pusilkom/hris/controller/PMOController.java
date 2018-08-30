@@ -586,7 +586,7 @@ public class PMOController {
 
         KaryawanBaruModel karyawan = karyawanDAO.getKaryawanById(idKaryawan);
 
-        DivisiModel divisi = divisiDAO.getDivisiByID(karyawan.getIdDivisi());
+        DivisibaruModel divisi = divisiDAO.selectDivisiBaruByID(karyawan.getIdDivisi());
 
         KaryawanRekapModel karyawanRekap = rekapMappingDAO.getRekapBulananKaryawan(periodeDate, idKaryawan);
 

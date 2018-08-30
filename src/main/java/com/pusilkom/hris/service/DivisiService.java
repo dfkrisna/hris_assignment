@@ -6,9 +6,7 @@ import com.pusilkom.hris.model.DivisibaruModel;
 import java.util.List;
 
 public interface DivisiService {
-    DivisiModel getDivisiByManajer(int idManajer);
-
-    DivisiModel getDivisiByID(int idDivisi);
+    DivisibaruModel selectDivisiByManajer(int idManajer);
 
     List<DivisibaruModel> selectAllDivisiAktif();
 
