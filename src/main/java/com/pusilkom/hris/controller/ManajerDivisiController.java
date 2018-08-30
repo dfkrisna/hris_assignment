@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
@@ -17,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@Slf4j
 public class ManajerDivisiController {
 
     @Autowired
@@ -79,8 +82,7 @@ public class ManajerDivisiController {
 
         KaryawanBaruModel karyawan = karyawanService.getKaryawanById(idKaryawan);
 
-        DivisiModel divisi = divisiService.getDivisiByID(karyawan.getIdDivisi());
-
+        DivisibaruModel divisi = divisiService.selectDivisiBaruByID(karyawan.getIdDivisi());
         KaryawanRekapModel karyawanRekap = rekapMappingService.getRekapBulananKaryawan(periodeDate, idKaryawan);
 
         Map mapRekapProyek = new HashMap();

@@ -286,8 +286,9 @@ public class IndexController
     public String indexManajerDivisi(Model model, Principal principal) {
         KaryawanBaruModel pengguna = karyawanService.getKaryawanByUsername(principal.getName());
 
-        DivisiModel divisi = divisiService.getDivisiByManajer(pengguna.getIdKaryawan());
-        
+        DivisibaruModel divisi = divisiService.selectDivisiByManajer(pengguna.getIdKaryawan());
+        log.info(divisi.getNama());
+
         LocalDate periodeDate = LocalDate.now();
 
         List<KaryawanBaruModel> karyawanList;
