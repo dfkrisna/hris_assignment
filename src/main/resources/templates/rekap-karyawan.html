@@ -25,7 +25,7 @@
             <div>
                 <div class="row karyawan-rekap-div" style="margin-top:0;">
                     <div class="col-sm-3">
-                        <h3 th:text="${karyawan.nama}">Nama Karyawan</h3>
+                        <h3 th:text="${karyawan.namaLengkap}">Nama Karyawan</h3>
                     </div>
                     <div class="col-sm-3 text-right">
                         <div class="row">
@@ -58,7 +58,7 @@
                     <a class="nav-link active"><h4 class="montserrat-med-bold">Riwayat Proyek</h4></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="${'/assignment/rekap/karyawan/feedback/' + karyawan.id}"><h4 class="montserrat-med-bold">Rekap Feedback</h4></a>
+                    <a class="nav-link" th:href="${'/assignment/rekap/karyawan/feedback/' + karyawan.idKaryawan}"><h4 class="montserrat-med-bold">Rekap Feedback</h4></a>
                 </li>
             </ul>
 

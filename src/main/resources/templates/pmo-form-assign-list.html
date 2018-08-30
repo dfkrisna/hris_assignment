@@ -26,7 +26,7 @@
 
     <div class="d-flex flex-row mb-2 " th:each="karyawan : ${karyawanList}" >
         <form  th:object="${karyawan}" method="post" th:action="'/assignment/pmo/proyek/tambah/assign/' + ${karyawan.id} + '/' + ${proyek.id} + '/'" class="form-horizontal" style="width: 70%">
-            <h3 class="montserrat-med" th:text="${karyawan.nama}"></h3>
+            <h3 class="montserrat-med" th:text="${karyawan.namaLengkap}"></h3>
             <input type="hidden" name="selectedKaryawan" th:value="${karyawan.id}"/>
             <input type="hidden" name="listKaryawanID" th:value="${karyawanIDList}"/>
             <div class="form-row mb-3">
