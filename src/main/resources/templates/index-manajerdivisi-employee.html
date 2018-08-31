@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/fragment :: header-title-employee">
+</head>
+
+<body>
+    <div th:replace="fragments/fragment :: navbar-employee"></div>
+    <div th:replace="fragments/fragment :: absen-modals"></div>
+    <div th:replace="fragments/fragment :: sidebar-employee"></div>
+    
+    <main id="content-isi" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 pb-3 pl-3 pr-3">
+        <div class="d-flex flex-row mb-2">
+            <table id="tabel-anggota-divisi" class="table table-hover">
+                <thead class="tabel-header">
+                    <tr>
+                        <th class="montserrat-small-bold text-center" scope="col">No</th>
+                        <th class="montserrat-small-bold text-center" scope="col">Nama Anggota</th>
+                        <th class="montserrat-small-bold text-center" scope="col">Jumlah Hari</th>
+                        <th class="montserrat-small-bold text-center" scope="col">Periode Mulai</th>
+                        <th class="montserrat-small-bold text-center" scope="col">Periode Selesai</th>
+                        <th class="montserrat-small-bold text-center" scope="col">Status Permohonan Cuti terakhir</th>
+                    </tr>
+                </thead>
+                <div th:each="karyawanCuti, iterationStatus: ${listOfKaryawanCuti}">
+                    <tr>
+                        <td class="text-center">
+                            <a class="montserrat-small" th:text="${iterationStatus.count}"></a>
+                        </td>
+                        <td>
+                            <a class="montserrat-small" th:text="${karyawanCuti.getNamaLengkap()}" th:href="'/employee/cuti/' + ${karyawanCuti.getIdKaryawan()}"></a>
+                        </td>
+                        <td class="text-center">
+                            <p class="d-inline montserrat-small text-muted" th:text="${karyawanCuti.getJumlahHari()}"></p>
+                        </td>
+                        <td class="text-center">
+                            <p class="d-inline montserrat-small text-muted" th:text="${karyawanCuti.getStartPeriode()}"></p>
+                        </td>
+                        <td class="text-center">
+                                <p class="d-inline montserrat-small text-muted" th:text="${karyawanCuti.getEndPeriode()}"></p>
+                            </td>
+                        <td class="text-center">
+                            <div th:if="${karyawanCuti.isDisetujui()}">
+                                <p class="d-inline montserrat-small text-muted">Sudah Disetujui</p>
+                            </div>
+                            <div th:if="${!karyawanCuti.isDisetujui()}">
+                                <p class="d-inline montserrat-small text-muted">Belum Disetujui</p>
+                            </div>
+                        </td>
+                    </tr>
+                </div>
+            </table>
+        </div>
+    </main>
+</body>
+
+</html>

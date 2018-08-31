@@ -59,7 +59,7 @@ public class AssignmentController {
                                        @PathVariable(value = "bulan", required = true) Integer bulan,
                                        @PathVariable("idKaryawan") Integer idKaryawan,
                                        @PathVariable("idProyek") Integer idProyek) {
-        KaryawanModel karyawan = karyawanService.getKaryawanById(idKaryawan);
+        KaryawanBaruModel karyawan = karyawanService.getKaryawanBaruById(idKaryawan);
         ProyekModel proyek = proyekService.getProyekById(idProyek);
         List<RoleProyekModel> roles = roleProyekService.getAllRoleProyek();
         KaryawanProyekModel karyawanProyek = new KaryawanProyekModel();
@@ -108,7 +108,7 @@ public class AssignmentController {
                                           @RequestParam(value = "role") int idRole,
                                           @RequestParam(value = "periodeMulai") String periodeMulai,
                                           @RequestParam(value = "periodeSelesai") String periodeSelesai) {
-        KaryawanModel karyawan = karyawanService.getKaryawanById(idKaryawan);
+        KaryawanBaruModel karyawan = karyawanService.getKaryawanBaruById(idKaryawan);
         KaryawanProyekModel karyawanProyek = karyawanProyekService.getKaryawanProyekByKaryawanandProyek(idKaryawan, idProyek);
 
         if(karyawanProyek == null) {
@@ -175,7 +175,7 @@ public class AssignmentController {
                                          @PathVariable(value = "bulan", required = true) Integer bulan,
                                          @PathVariable("idKaryawanProyek") Integer idKaryawanProyek) {
         KaryawanProyekModel karyawanProyek = karyawanProyekService.getKaryawanProyekById(idKaryawanProyek);
-        KaryawanModel karyawan = karyawanService.getKaryawanById(karyawanProyek.getIdKaryawan());
+        KaryawanBaruModel karyawan = karyawanService.getKaryawanBaruById(karyawanProyek.getIdKaryawan());
         ProyekModel proyek = proyekService.getProyekById(karyawanProyek.getIdProyek());
         List<RoleProyekModel> roles = roleProyekService.getAllRoleProyek();
 
@@ -297,7 +297,7 @@ public class AssignmentController {
 
         List<KaryawanProyekModel> karyawanProyekList = karyawanProyekService.getKaryawanProyekByPeriode(periode);
         List<ProyekModel> proyekList = proyekService.getProyekByPeriode(periode);
-        List<KaryawanModel> karyawanList = karyawanService.getKaryawanAll();
+        List<KaryawanBaruModel> karyawanList = karyawanService.getKaryawanBaruAll();
         List<RekapModel> rekapList = rekapService.getRekapByPeriode(periode);
         List<KaryawanRekapModel> mapping = rekapMappingService.mapRekap(karyawanList, proyekList, karyawanProyekList, rekapList);
 
@@ -319,9 +319,9 @@ public class AssignmentController {
     @PreAuthorize("hasAuthority('POST_PMO_PROYEK_TAMBAH_ASSIGN_IDPROYEK')")
     public String assignKaryawan(Model model, @PathVariable(value = "idProyek") int idProyek,
                                  @RequestParam(value = "selectedKaryawan") List<Integer> karyawanIDList) {
-        List<KaryawanModel> karyawanList = new ArrayList<KaryawanModel>();
+        List<KaryawanBaruModel> karyawanList = new ArrayList<KaryawanBaruModel>();
         for(int karyawanID : karyawanIDList) {
-            KaryawanModel karyawan = karyawanService.getKaryawanById(karyawanID);
+            KaryawanBaruModel karyawan = karyawanService.getKaryawanById(karyawanID);
             karyawanList.add(karyawan);
         }
 
@@ -375,7 +375,7 @@ public class AssignmentController {
             }
         }
 
-        KaryawanModel karyawan = karyawanService.getKaryawanById(idKaryawan);
+        KaryawanBaruModel karyawan = karyawanService.getKaryawanById(idKaryawan);
         ProyekModel proyek = proyekService.getProyekById(idProyek);
 
         KaryawanProyekModel karyawanProyek = karyawanProyekService.getKaryawanProyekByKaryawanandProyek(idKaryawan, idProyek);
@@ -425,9 +425,9 @@ public class AssignmentController {
         if(karyawanIDList.size() != 0) {
             List<RoleProyekModel> roles = roleProyekService.getAllRoleProyek();
 
-            List<KaryawanModel> karyawanList = new ArrayList<KaryawanModel>();
+            List<KaryawanBaruModel> karyawanList = new ArrayList<KaryawanBaruModel>();
             for(int karyawanID : karyawanIDList) {
-                KaryawanModel k1 = karyawanService.getKaryawanById(karyawanID);
+                KaryawanBaruModel k1 = karyawanService.getKaryawanById(karyawanID);
                 karyawanList.add(k1);
             }
 

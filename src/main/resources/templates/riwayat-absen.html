@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/fragment :: header-title">
+</head>
+<body>
+<div th:replace="fragments/fragment :: navbar-employee"></div>
+<div th:replace="fragments/fragment :: sidebar-employee"></div>
+<div th:replace="fragments/fragment :: absen-modals"></div>
+
+<main id="content-isi" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 pb-3">
+    <div class="d-flex flex-row mb-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="roboto breadcrumb-item active" aria-current="page">
+                    <a th:href="'/employee/beranda'">Beranda</a>
+                </li>
+                <li class="roboto breadcrumb-item active" aria-current="page">Riwayat Absen</li>
+            </ol>
+        </nav>
+        <h2 class="ml-auto roboto" th:text="${#dates.format(#dates.createNow(), 'dd MMM yyyy')}"></h2>
+    </div>
+
+    <div th:if="${notifTambahDetail != ''}" class="d-flex flex-row mb-5 alert alert-success" role="alert">
+        <h3 class="montserrat-small" th:text="${notifTambahDetail}"></h3>
+    </div>
+
+    <h2 class="montserrat-bold-big">Riwayat Absen</h2><hr/>
+
+    <div th:if="${absens != null && !absens.isEmpty()}">
+
+        <table id="rekap-absen" class="table-mpp table table-hover">
+                <thead class="tabel-header">
+                <tr>
+                    <th class="montserrat-small-bold text-center">Waktu Check-in</th>
+                    <th class="montserrat-small-bold text-center">Waktu Check-out</th>
+                    <th class="montserrat-small-bold text-center">Durasi</th>
+                    <th class="montserrat-small-bold text-center">Detail</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="absen,iterationStatus: ${absens}">
+                    <td class="text-center montserrat-small" th:text="${absen.getCheckInTime()}"></td>
+                    <td th:if="${absen.getCheckOutTime() != null}" class="text-center montserrat-small" th:text="${absen.getCheckOutTime()}"></td>
+                    <td th:unless="${absen.getCheckOutTime() != null}" class="text-center text-muted montserrat-small">Belum Check-out</td>
+                    <td class="text-center montserrat-small" th:text="${absen.getAbsenInterval()}"></td>
+                    <td th:if="${absen.getDetail() != null && absen.getDetail() != '' && absen.getCheckOutTime() != null}" class="text-center montserrat-small" th:text="${absen.getDetail()}"></td>
+                    <td th:unless="${absen.getDetail() != null && absen.getDetail() != ''  && absen.getCheckOutTime() != null}" class="text-center montserrat-small">
+                        <button th:if="${absen.getCheckOutTime() != null}" type="button" data-toggle="modal" data-target="#tambahDetailModal" data-title="UbahDetail"
+                                th:attr="data-waktu-checkin=${absen.getCheckInTime()}, data-waktu-checkout=${absen.checkOutTime},
+                                data-id-absen=${absen.id}" class="ubah-detail-btn modal-button montserrat-small pusil-btn btn btn-dark text-center text-white btn-rounded">+ Detail</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <br/>
+    </div>
+    <div th:unless="${absens != null && !absens.isEmpty()}" class="row">
+        <br/><br/>
+        <div class="col-2"></div>
+        <div class="col-8 text-center">
+            <h3 class="d-inline text-sub text-center mr-2 montserrat">Karyawan belum pernah</h3>
+            <h3 class="d-inline text-value text-center montserrat">melakukan check-in</h3>
+            <h3 class="d-inline text-sub text-center ml-2 montserrat">pada sistem</h3>
+        </div>
+        <div class="col-2"></div>
+        <br/><br/><br/>
+    </div>
+
+</main >
+
+<div class="modal fade" id="ubahDetailModal" tabindex="-1" role="dialog" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title montserrat-med-bold" id="checkoutModalLabel">Tambah Detail Absen</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label for="wkt-checkin" class="col-form-label montserrat-small">Waktu Checkin</label>
+                            <input id="wkt-checkin" class="form-control" readonly="true"/>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="wkt-checkout" class="col-form-label montserrat-small">Waktu Checkout</label>
+                            <input id="wkt-checkout" class="form-control" readonly="true"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form action="/employee/absen/tambah-detail" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="detail" class="col-form-label montserrat-small">Detail</label>
+                        <textarea type="text" class="form-control" id="detail" name="detail" required></textarea>
+                    </div>
+                </div>
+                <input type="hidden" name="idAbsen" id="id-absen">
+                <div class="modal-footer">
+                    <button type="button" class="montserrat-small pusil-btn-danger btn btn-danger text-white btn-rounded"
+                            data-dismiss="modal">Batal</button>
+                    <button type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded">
+                        Tambah Detail</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/fragment :: footer"></div>
+
+</body>
+</html>

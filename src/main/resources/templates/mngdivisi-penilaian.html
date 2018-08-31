@@ -16,10 +16,10 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="roboto breadcrumb-item active" aria-current="page">
-                    <a href="/mngdivisi">Beranda</a>
+                    <a href="/assignment/mngdivisi">Beranda</a>
                 </li>
                 <li class="roboto breadcrumb-item active" aria-current="page">
-                    <a th:href="'/assignment/mngdivisi/rekap/' + ${karyawanRekap.karyawan.id}">Detail Karyawan</a>
+                    <a th:href="'/assignment/mngdivisi/rekap/' + ${karyawanRekap.karyawan.idKaryawan}">Detail Karyawan</a>
                 </li>
             </ol>
         </nav>
@@ -37,7 +37,7 @@
     <hr/>
     <div class="row">
         <div class="col-sm-3">
-            <h5 class="montserrat-big-bold" th:text="${karyawanRekap.karyawan.nama}">Nama Karyawan:</h5>
+            <h5 class="montserrat-big-bold" th:text="${karyawanRekap.karyawan.namaLengkap}">Nama Karyawan:</h5>
             <!--<p class="montserrat-small" ></p>-->
         </div>
         <div class="col-sm-3">
@@ -67,13 +67,13 @@
     <div class="row">
         <div class="col text-left">
             <div th:if="${previous != null}">
-                <a class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" th:href="'/assignment/mngdivisi/rekap/' + ${karyawanRekap.karyawan.id} + '?periode=' + ${previous.month + ' ' + previous.year}" th:text="${previous.month + ' ' + previous.year}"></a>
+                <a class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" th:href="'/assignment/mngdivisi/rekap/' + ${karyawanRekap.karyawan.idKaryawan} + '?periode=' + ${previous.month + ' ' + previous.year}" th:text="${previous.month + ' ' + previous.year}"></a>
             </div>
         </div>
         <div class="col text-center">
             <div th:if="${current != null}">
                 <h3 th:text="${current.month + ' ' + current.year}" class="montserrat-med-bold">Current Periode</h3>
-                <form action="#" th:action="'/assignment/mngdivisi/rekap/' + ${karyawanRekap.karyawan.id}" method="get">
+                <form action="#" th:action="'/assignment/mngdivisi/rekap/' + ${karyawanRekap.karyawan.idKaryawan}" method="get">
                     <input name="periode" id="periode" class="date-picker form-rounded form-control" readonly="readonly" style="background-color: transparent;"/>
                     <br/>
                     <input type="submit" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" value="Pilih Periode" />
@@ -86,7 +86,7 @@
                     <a class="montserrat-small btn btn-secondary text-white btn-rounded disabled" th:text="${next.month + ' ' + next.year}"></a>
                 </div>
                 <div th:unless="${isNow}">
-                    <a class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" th:href="'/assignment/mngdivisi/rekap/' + ${karyawanRekap.karyawan.id} + '?periode=' + ${next.month + ' ' + next.year}" th:text="${next.month + ' ' + next.year}"></a>
+                    <a class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" th:href="'/assignment/mngdivisi/rekap/' + ${karyawanRekap.karyawan.idKaryawan} + '?periode=' + ${next.month + ' ' + next.year}" th:text="${next.month + ' ' + next.year}"></a>
                 </div>
             </div>
         </div>
@@ -134,7 +134,7 @@
                             <div th:unless="${rekap.isApproved()}">
                                 <td th:if="${rekap.penilaianMandiri != null}">
                                     <div th:if="${rekap.idKaryawanProyek==mapRekapProyek.get(rekap.id).idProjectLead}">
-                                        <form action="/mngdivisi/rekap/finalisasi" method="post">
+                                        <form action="/assignment/mngdivisi/rekap/finalisasi" method="post">
                                             <input type="hidden" name="periode" id="periode" th:value="${current}"/>
                                             <input type="hidden" name="idKarProy" id="idKarProy" th:value="${rekap.idKaryawanProyek}"/>
                                             <button type="button" class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" data-toggle="modal" data-target="#final-confirm">Finalisasi</button>

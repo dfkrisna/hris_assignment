@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
@@ -17,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@Slf4j
 public class ManajerDivisiController {
 
     @Autowired
@@ -42,6 +45,9 @@ public class ManajerDivisiController {
 
     @Autowired
     RoleProyekService roleProyekService;
+
+    @Autowired
+    KaryawanCutiService karyawanCutiService;
 
     /**
      * method ini digunakan untuk menampilkan detail karyawan yang merupakan bawahan manajer divisi
@@ -74,10 +80,9 @@ public class ManajerDivisiController {
             return "redirect:/assignment/mngdivisi/rekap/" + idKaryawan;
         }
 
-        KaryawanModel karyawan = karyawanService.getKaryawanById(idKaryawan);
+        KaryawanBaruModel karyawan = karyawanService.getKaryawanById(idKaryawan);
 
-        DivisiModel divisi = divisiService.getDivisiByID(karyawan.getIdDivisi());
-
+        DivisibaruModel divisi = divisiService.selectDivisiBaruByID(karyawan.getIdDivisi());
         KaryawanRekapModel karyawanRekap = rekapMappingService.getRekapBulananKaryawan(periodeDate, idKaryawan);
 
         Map mapRekapProyek = new HashMap();
@@ -104,8 +109,8 @@ public class ManajerDivisiController {
             isNow = true;
         }
 
-        int persentaseKontribusi = (int) (rekapService.getKaryawanKontribusi(karyawan.getId(), LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1)) * 100);
-        int ratingKaryawan = ratingFeedbackService.getAvgRatingKaryawan(karyawan.getId());
+        int persentaseKontribusi = (int) (rekapService.getKaryawanKontribusi(karyawan.getIdKaryawan(), LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1)) * 100);
+        int ratingKaryawan = ratingFeedbackService.getAvgRatingKaryawan(karyawan.getIdKaryawan());
 
         model.addAttribute("isNow", isNow);
 
@@ -173,4 +178,63 @@ public class ManajerDivisiController {
 
         return "redirect:/assignment/mngdivisi/rekap/" + karyawanProyek.getIdKaryawan();
     }
+
+    @GetMapping(value= "/employee/cuti/{idKaryawan}")
+    @PreAuthorize("hasAuthority('GET_MNGDIVISI')")
+    public String showCutiKaryawan(Model model, 
+                                   @PathVariable(value = "idKaryawan") int idKaryawan){
+        List<KaryawanCutiModel> listOfRiwayatCuti = karyawanCutiService.getHistoryByKaryawanId(idKaryawan);
+        KaryawanBaruModel karyawanBaru = karyawanService.getKaryawanBaruById(idKaryawan);
+        model.addAttribute("listOfKaryawanCuti", listOfRiwayatCuti);
+        model.addAttribute("namaLengkap", karyawanBaru.getNamaLengkap());
+        return "detail-cuti";
+    }
+
+    @GetMapping(value= "/employee/cuti/{idKaryawan}/approve/{idKaryawanCuti}")
+    public String approveCutiKaryawan(RedirectAttributes ra,
+                                    @PathVariable(value = "idKaryawan") int idKaryawan, 
+                                    @PathVariable(value = "idKaryawanCuti") int idKaryawanCuti){
+        KaryawanBaruModel karyawanBaru = karyawanService.getKaryawanBaruById(idKaryawan);
+        if(karyawanCutiService.approve(idKaryawanCuti)){
+            ra.addFlashAttribute("notification", "Berhasil menyetujui permohonan cuti " + karyawanBaru.getNamaLengkap());    
+        }else{
+            ra.addFlashAttribute("notificationGagal", "Tidak berhasil, karena sudah ditolak ");    
+        }
+
+        return "redirect:/employee/cuti/" + idKaryawan;
+    }
+
+    @GetMapping(value= "/employee/cuti/{idKaryawan}/cancel/{idKaryawanCuti}")
+    public String cancelCutiKaryawan(RedirectAttributes ra,
+                                    @PathVariable(value = "idKaryawan") int idKaryawan, 
+                                    @PathVariable(value = "idKaryawanCuti") int idKaryawanCuti){
+        KaryawanBaruModel karyawanBaru = karyawanService.getKaryawanBaruById(idKaryawan);
+        karyawanCutiService.cancel(idKaryawanCuti);
+
+        ra.addFlashAttribute("notification", "Berhasil membatalkan permohonan cuti " + karyawanBaru.getNamaLengkap());
+        return "redirect:/employee/cuti/" + idKaryawan;
+    }
+
+    @GetMapping(value= "/employee/cuti/{idKaryawan}/tolak/{idKaryawanCuti}")
+    public String tolak(RedirectAttributes ra,
+                                    @PathVariable(value = "idKaryawan") int idKaryawan, 
+                                    @PathVariable(value = "idKaryawanCuti") int idKaryawanCuti){
+        KaryawanBaruModel karyawanBaru = karyawanService.getKaryawanBaruById(idKaryawan);
+        karyawanCutiService.tolak(idKaryawanCuti);
+
+        ra.addFlashAttribute("notification", "Berhasil menolak permohonan cuti " + karyawanBaru.getNamaLengkap());
+        return "redirect:/employee/cuti/" + idKaryawan;
+    }
+
+    @GetMapping(value= "/employee/cuti/{idKaryawan}/cancel-tolak/{idKaryawanCuti}")
+    public String cancelTolak(RedirectAttributes ra,
+                                    @PathVariable(value = "idKaryawan") int idKaryawan, 
+                                    @PathVariable(value = "idKaryawanCuti") int idKaryawanCuti){
+        KaryawanBaruModel karyawanBaru = karyawanService.getKaryawanBaruById(idKaryawan);
+        karyawanCutiService.cancelTolak(idKaryawanCuti);
+
+        ra.addFlashAttribute("notification", "Berhasil membatalkan penolakan cuti " + karyawanBaru.getNamaLengkap());
+        return "redirect:/employee/cuti/" + idKaryawan;
+    }
+
 }

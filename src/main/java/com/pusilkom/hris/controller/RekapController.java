@@ -45,15 +45,15 @@ public class RekapController {
     public String rekapKaryawanRiwayat(Model model, @PathVariable Integer idKaryawan) {
         LocalDate  periodeDate = LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1);
 
-        KaryawanModel karyawan = karyawanService.getKaryawanById(idKaryawan);
+        KaryawanBaruModel karyawan = karyawanService.getKaryawanById(idKaryawan);
 
-        System.out.println(karyawan.getNama());
+        System.out.println(karyawan.getNamaLengkap());
 
 
         if(karyawan != null) {
             List<PenugasanModel> penugasanList = penugasanService.getPenugasanList(idKaryawan);
-            int ratingKaryawan = ratingFeedbackService.getAvgRatingKaryawan(karyawan.getId());
-            int persentaseKontribusi = (int) (rekapService.getKaryawanKontribusi(karyawan.getId(), LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1)) * 100);
+            int ratingKaryawan = ratingFeedbackService.getAvgRatingKaryawan(karyawan.getIdKaryawan());
+            int persentaseKontribusi = (int) (rekapService.getKaryawanKontribusi(karyawan.getIdKaryawan(), LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1)) * 100);
 
 
             model.addAttribute("karyawan", karyawan);
@@ -89,14 +89,14 @@ public class RekapController {
         model.addAttribute("current", periodeDate);
         model.addAttribute("previous", periodeDate.minusMonths(1));
 
-        KaryawanModel karyawan = karyawanService.getKaryawanById(idKaryawan);
+        KaryawanBaruModel karyawan = karyawanService.getKaryawanById(idKaryawan);
         model.addAttribute("karyawan", karyawan);
 
         if(karyawan != null) {
             List<PenugasanModel> penugasanList = penugasanService.getPenugasanList(idKaryawan);
-            List<RatingFeedbackModel> feedbackList = ratingFeedbackService.getPenilaianKaryawan(karyawan.getId(), periodeDate);
-            int ratingKaryawan = ratingFeedbackService.getAvgRatingKaryawan(karyawan.getId());
-            int persentaseKontribusi = (int) (rekapService.getKaryawanKontribusi(karyawan.getId(), LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1)) * 100);
+            List<RatingFeedbackModel> feedbackList = ratingFeedbackService.getPenilaianKaryawan(karyawan.getIdKaryawan(), periodeDate);
+            int ratingKaryawan = ratingFeedbackService.getAvgRatingKaryawan(karyawan.getIdKaryawan());
+            int persentaseKontribusi = (int) (rekapService.getKaryawanKontribusi(karyawan.getIdKaryawan(), LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1)) * 100);
 
             model.addAttribute("penugasanList", penugasanList);
             model.addAttribute("karyawan", karyawan);
@@ -128,8 +128,8 @@ public class RekapController {
 
             if (proyek.getIdProjectLead() != null && proyek.getIdProjectLead() != 0) {
                 KaryawanProyekModel karprolead = karyawanProyekService.getKaryawanProyekById(proyek.getIdProjectLead());
-                KaryawanModel projlead = karyawanService.getKaryawanById(karprolead.getIdKaryawan());
-                System.out.println("ini projelad " + projlead.getNama());
+                KaryawanBaruModel projlead = karyawanService.getKaryawanById(karprolead.getIdKaryawan());
+                System.out.println("ini projelad " + projlead.getNamaLengkap());
                 model.addAttribute("projlead", projlead);
             }
 

@@ -9,10 +9,9 @@ import java.util.List;
 
 @Mapper
 public interface RatingFeedbackMapper {
-    @Select("SELECT RF.id, P.id AS id_penilai, P.nama AS nama_penilai, PR.kode, RP.nama AS role_penilai, RF.feedback, RF.rating, RF.tanggal AS \"tanggal_penilaian\"\n" +
+    @Select("SELECT RF.id, K.id AS id_penilai, K.nama_lengkap AS nama_penilai, PR.kode, RP.nama AS role_penilai, RF.feedback, RF.rating, RF.tanggal AS \"tanggal_penilaian\"\n" +
             "FROM mpp.\"RATING_FEEDBACK\" AS RF\n" +
-            "\tJOIN mpp.\"KARYAWAN\" AS K ON K.id = RF.id_penilai\n" +
-            "\tJOIN mpp.\"PENGGUNA\" AS P ON P.id = K.id_pengguna\n" +
+            "\tJOIN employee.\"KARYAWAN\" AS K ON K.id = RF.id_penilai\n" +
             "\tJOIN mpp.\"PROYEK\" AS PR ON PR.id = RF.id_proyek \n" +
             "\tLEFT JOIN mpp.\"KARYAWAN_PROYEK\" AS KP ON KP.id_karyawan = K.id AND KP.id_proyek = PR.id\n" +
             "\tLEFT JOIN mpp.\"ROLE_PROYEK\" AS RP ON RP.id = KP.id_role\n" +
@@ -48,11 +47,11 @@ public interface RatingFeedbackMapper {
 
 
 //punya jihan
-    @Select("SELECT RF.periode, RF.id, PA.nama AS namaPenilai, RF.feedback, RF.rating, RF.tanggal, " +
+    @Select("SELECT RF.periode, RF.id, K.nama_lengkap AS namaPenilai, RF.feedback, RF.rating, RF.tanggal, " +
             " RP.nama AS rolePenilai, P.nama_proyek FROM mpp.\"RATING_FEEDBACK\" AS RF, mpp.\"KARYAWAN_PROYEK\" AS KPA, " +
-            " mpp.\"KARYAWAN_PROYEK\" AS KPB, mpp.\"KARYAWAN\" AS KA, mpp.\"PENGGUNA\" AS PA, mpp.\"ROLE_PROYEK\" AS RP, " +
+            " mpp.\"KARYAWAN_PROYEK\" AS KPB, employee.\"KARYAWAN\" AS KA, mpp.\"ROLE_PROYEK\" AS RP, " +
             " mpp.\"PROYEK\" AS P WHERE RF.id_karyawan_dinilai = ${idKaryawanProyek} AND RF.id_karyawan_dinilai = KPB.id AND " +
-            " KPA.id = RF.id_penilai AND KPA.id_karyawan = KA.id AND KA.id_pengguna = PA.id AND KPA.id_role = RP.id AND " +
+            " KPA.id = RF.id_penilai AND KPA.id_karyawan = KA.id AND KPA.id_role = RP.id AND " +
             " P.id = RF.id_proyek;")
     @Results(value = {
             @Result(property="id", column="id"),
@@ -66,11 +65,11 @@ public interface RatingFeedbackMapper {
     })
     List<RatingFeedbackModel> selectRatingFeedbackKP(@Param("idKaryawanProyek") Integer idKaryawanProyek);
 
-    @Select("SELECT RF.periode, RF.id, PA.nama AS namaPenilai, RF.feedback, RF.rating, RF.tanggal, " +
+    @Select("SELECT RF.periode, RF.id, KA.nama_lengkap AS namaPenilai, RF.feedback, RF.rating, RF.tanggal, " +
             " RP.nama AS rolePenilai, P.nama_proyek FROM mpp.\"RATING_FEEDBACK\" AS RF, mpp.\"KARYAWAN_PROYEK\" AS KPA, " +
-            " mpp.\"KARYAWAN_PROYEK\" AS KPB, mpp.\"KARYAWAN\" AS KA, mpp.\"PENGGUNA\" AS PA, mpp.\"ROLE_PROYEK\" AS RP, " +
+            " mpp.\"KARYAWAN_PROYEK\" AS KPB, employee.\"KARYAWAN\" AS KA, mpp.\"ROLE_PROYEK\" AS RP, " +
             " mpp.\"PROYEK\" AS P WHERE RF.id_karyawan_dinilai = ${idKaryawanProyek} AND RF.id_karyawan_dinilai = KPB.id AND " +
-            " KPA.id = RF.id_penilai AND KPA.id_karyawan = KA.id AND KA.id_pengguna = PA.id AND KPA.id_role = RP.id AND " +
+            " KPA.id = RF.id_penilai AND KPA.id_karyawan = KA.id AND KPA.id_role = RP.id AND " +
             " P.id = RF.id_proyek AND RF.periode = '${periode}' ORDER BY RF.tanggal DESC;")
     @Results(value = {
             @Result(property="id", column="id"),

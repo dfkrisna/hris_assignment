@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class KaryawanRekapModel implements Comparable<KaryawanRekapModel> {
-    private KaryawanModel karyawan;
+    private KaryawanBaruModel karyawan;
     private List<RekapModel> rekapList;
     int red;
     int green;

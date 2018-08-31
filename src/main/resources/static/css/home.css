@@ -186,6 +186,23 @@ a.effect-underline:hover:after {
 	border-color: #f26245;
 }
 
+.pusil-btn-nonactive {
+	background-color: #F2994A;
+	border-color: #f26245;
+}
+
+
+.pusil-btn-delete {
+	background-color: #f26245;
+	border-color: #F2994A;
+}
+
+.pusil-btn-active {
+	background-color: #80ff00;
+	border-color: #F2994A;
+}
+
+
 .form-rounded {
 	padding: 0.5em 3em 0.5em 1em;
 	border-radius: 1rem; !important;
@@ -283,5 +300,36 @@ a.portal-yellow{
 a:hover, a:visited, a:link, a:active
 {
 	text-decoration: none;
+}
+
+.nav-tabs{
+	background: #353535;
+	border-radius: 5pt;
+}
+
+.nav-tabs > a{
+	border: none;
+	color: #FFCF26;
+}
+
+.nav-tabs > a:hover{
+	background-color: #fbfbfb;
+	color: #353535;
+}
+
+.custom-combobox {
+	position: relative;
+	display: inline-block;
+}
+.custom-combobox-toggle {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	margin-left: -1px;
+	padding: 0;
+}
+.custom-combobox-input {
+	margin: 0;
+	padding: 5px 10px;
 }
 

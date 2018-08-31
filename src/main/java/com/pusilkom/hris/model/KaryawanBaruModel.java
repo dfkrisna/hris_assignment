@@ -9,11 +9,11 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class KaryawanBaruModel {
-    String idKaryawan;
+    int idKaryawan;
     String namaLengkap;
     String namaPanggilan;
     String nip;
-    String idDivisi;
+    int idDivisi;
     String emailPusilkom;
     String emailPribadi;
     boolean isActive;
@@ -23,5 +23,6 @@ public class KaryawanBaruModel {
     String alamatTinggal;
     String noKTP;
     String npwp;
+    private int ratingKaryawan;
 }
 

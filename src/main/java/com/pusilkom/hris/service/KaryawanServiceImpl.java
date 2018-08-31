@@ -1,10 +1,9 @@
 package com.pusilkom.hris.service;
 
 import com.pusilkom.hris.dao.KaryawanMapper;
-import com.pusilkom.hris.model.FeedbackRatingModel;
-import com.pusilkom.hris.model.KaryawanBaruModel;
-import com.pusilkom.hris.model.KaryawanModel;
-import com.pusilkom.hris.model.KaryawanProyekModel;
+
+import com.pusilkom.hris.model.*;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -14,6 +13,8 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.crypto.Data;
 
 @Slf4j
 @Service
@@ -36,18 +37,14 @@ public class KaryawanServiceImpl implements KaryawanService{
 	@Autowired
     KaryawanMapper karyawanMapper;
 
-	public List<KaryawanModel> getKaryawanAll() {
-		return karyawanMapper.selectKaryawanAll();
+	public List<KaryawanBaruModel> getKaryawanAll() {
+		return karyawanMapper.selectKaryawanBaruAll();
 	}
 
 	public List<KaryawanBaruModel> getKaryawanBaruAll(){ return karyawanMapper.selectKaryawanBaruAll();}
 
-	public KaryawanModel getKaryawanById(int idKaryawan) {
-		return karyawanMapper.selectKaryawanById(idKaryawan);
-	}
-
-	public KaryawanModel getKaryawanByIdPengguna(int idPengguna) {
-		return karyawanMapper.selectKaryawanByIdPengguna(idPengguna);
+	public KaryawanBaruModel getKaryawanById(int idKaryawan) {
+		return karyawanMapper.getKaryawanBaruById(idKaryawan);
 	}
 
 	@Override
@@ -63,35 +60,30 @@ public class KaryawanServiceImpl implements KaryawanService{
 		return hasil;
 	}
 
-	public List<KaryawanModel> getKaryawanByKaryawanProyek(List<KaryawanProyekModel> karyawanProyekList) {
-		List<KaryawanModel> karyawanList = new ArrayList<KaryawanModel>();
+	public List<KaryawanBaruModel> getKaryawanByKaryawanProyek(List<KaryawanProyekModel> karyawanProyekList) {
+		List<KaryawanBaruModel> karyawanList = new ArrayList<KaryawanBaruModel>();
 
 		for(KaryawanProyekModel karyawanProyek : karyawanProyekList) {
-			KaryawanModel karyawan = getKaryawanById(karyawanProyek.getIdKaryawan());
+			KaryawanBaruModel karyawan = getKaryawanBaruById(karyawanProyek.getIdKaryawan());
 			if(!karyawanList.contains(karyawan)) {
-				karyawanList.add(karyawanMapper.selectKaryawanById(karyawanProyek.getIdKaryawan()));
+				karyawanList.add(karyawanMapper.getKaryawanBaruById(karyawanProyek.getIdKaryawan()));
 			}
 		}
 
 		return karyawanList;
 	}
 
-	public List<KaryawanModel> getKaryawanByPeriode(LocalDate periode) {
+	public List<KaryawanBaruModel> getKaryawanByPeriode(LocalDate periode) {
 		return karyawanMapper.selectKaryawanByPeriode(periode);
 	}
 
-	public KaryawanModel selectKaryawanByEmail(String email){
-		return karyawanMapper.selectKaryawanByEmail(email);
+	public KaryawanBaruModel selectKaryawanByEmail(String email){
+		return karyawanMapper.selectKaryawanByUsername(email);
 	}
 
 	@Override
-	public List<KaryawanModel> getKaryawanByDivisi(int idDivisi) {
+	public List<KaryawanBaruModel> getKaryawanByDivisi(int idDivisi) {
 		return karyawanMapper.selectKaryawanByDivisi(idDivisi);
-	}
-
-	@Override
-	public int getKaryawanIdByUsername(String username) {
-		return karyawanMapper.getKaryawanIdByUsername(username);
 	}
 
 	@Override
@@ -131,6 +123,12 @@ public class KaryawanServiceImpl implements KaryawanService{
 	}
 
 	@Override
+	public List<BenefitKaryawanModel> getBenefitKaryawan(int id){
+		List<BenefitKaryawanModel> listBenefitKaryawan = karyawanMapper.getBenefitKaryawan(id);
+		return listBenefitKaryawan;
+	}
+
+	@Override
 	public void addFeedbackRekan(String feedback, int rating, int idRekan, int idPenilai, int idProyek, LocalDate periode, Timestamp tanggal)
 	{
 		karyawanMapper.addFeedbackRekan(feedback, rating, idRekan, idPenilai, idProyek, periode, tanggal);
@@ -140,6 +138,12 @@ public class KaryawanServiceImpl implements KaryawanService{
 	public void updateFeedbackRekan(String feedback, int rating, int idRekan, int idPenilai, int idProyek, LocalDate periode, Timestamp tanggal)
 	{
 		karyawanMapper.updateFeedbackRekan(feedback, rating, idRekan, idPenilai, idProyek, periode, tanggal);
+	}
+
+	@Override
+	public KaryawanBaruModel getKaryawanByUsername(String username) {
+		KaryawanBaruModel karyawan = karyawanMapper.selectKaryawanByUsername(username);
+		return karyawan;
 	}
 
 	@Override
@@ -154,6 +158,10 @@ public class KaryawanServiceImpl implements KaryawanService{
 	}
 
 	@Override
+	public List<KaryawanBaruModel> selectNamaEmployeeAll(){
+		return karyawanMapper.selectKaryawanBaruAll();
+	}
+
 	public List<Integer> getAllDivisi(){
 		List<Integer> listDivisi = karyawanMapper.getAllDivisi();
 		return listDivisi;
@@ -164,5 +172,158 @@ public class KaryawanServiceImpl implements KaryawanService{
 					 String emailPusilkom, String emailPribadi){
 		karyawanMapper.addKaryawan(namaLengkap, namaPanggilan, nip, emailPusilkom, emailPribadi, idDivisi, true);
 	}
+	@Override
+	public KaryawanBaruModel getKaryawanBaruById(int idKaryawan){
+		return karyawanMapper.getKaryawanBaruById(idKaryawan);
+	}
+
+	@Override
+	public void deleteKaryawan(int idKaryawan){
+		karyawanMapper.deleteKaryawanBaru(idKaryawan);
+	}
+
+	@Override
+	public String cekKaryawanIsManager(int idKaryawan){
+		return karyawanMapper.cekKaryawanIsManager(idKaryawan);
+	}
+
+	@Override
+	public DataDiriModel getDataDiriByIdKaryawan(int idKaryawan){
+		if(karyawanMapper.getDataDiriByIdKaryawan(idKaryawan) == null){
+			System.out.println("masuk sini");
+		}
+		return karyawanMapper.getDataDiriByIdKaryawan(idKaryawan);
+	}
+
+	@Override
+	public void insertDataDiri(DataDiriModel dataDiri){
+		karyawanMapper.insertDataDiri(dataDiri);
+	}
+
+	@Override
+	public void updateKaryawanDivisi(int idKaryawan, int idDivisi){karyawanMapper.updateKaryawanDivisi(idKaryawan, idDivisi);}
+
+	@Override
+	public List<KeluargaModel> selectAnggotaKeluargaAll(int idKaryawan){return karyawanMapper.selectAnggotaKeluargaAll(idKaryawan);}
+
+	@Override
+	public void insertAnggotaKeluarga(KeluargaModel keluarga){karyawanMapper.insertAnggotaKeluarga(keluarga);}
+
+	@Override
+	public void updateAnggotaKeluarga (KeluargaModel keluarga){karyawanMapper.updateAnggotaKeluarga(keluarga);}
+
+	@Override
+	public void deleteAnggotaKeluarga (int id){karyawanMapper.deleteAnggotaKeluarga(id);}
+
+	public List<RiwayatGajiModel> selectAllRiwayatGajiById(int idKaryawan){
+		return karyawanMapper.selectAllRiwayatGajiById(idKaryawan);
+	}
+
+	@Override
+	public void insertGaji(int idKaryawan, int gaji){
+		karyawanMapper.insertGaji(idKaryawan, gaji);
+	}
+
+	@Override
+	public void updateGajiById(int idGaji, int gaji){
+		karyawanMapper.updateGajiById(idGaji, gaji);
+	}
+
+	@Override
+	public void deleteGajiById(int idGaji){
+		karyawanMapper.deleteGajiById(idGaji);
+	}
+
+	@Override
+	public void addBenefitKaryawan(int idKaryawan, String namaBenefit, String keteranganBenefit){ karyawanMapper.insertBenefit(idKaryawan, namaBenefit, keteranganBenefit);}
+
+	@Override
+	public void updateBenefitKaryawan(int idBenefit, String keteranganBaru){ karyawanMapper.updateBenefitKaryawanById(keteranganBaru, idBenefit);}
+
+	@Override
+	public void deleteBenefitKaryawan(int idBenefit){karyawanMapper.deleteBenefitById(idBenefit);}
+
+  @Override
+	public List<PendidikanModel> selectPendidikanAll(int idKaryawan){return karyawanMapper.selectPendidikanAll(idKaryawan);}
+
+	@Override
+	public void insertPendidikan(PendidikanModel pendidikan){karyawanMapper.insertPendidikan(pendidikan);}
+
+	@Override
+	public void deletePendidikan (int id){karyawanMapper.deletePendidikan(id);}
+
+	@Override
+	public void updatePendidikan (PendidikanModel pendidikan){karyawanMapper.updatePendidikan(pendidikan);}
+  
+  @Override
+	public void activateKaryawan(int idKaryawan){
+		karyawanMapper.activateKaryawan(idKaryawan);
+	}
+
+	@Override
+	public void deActivateKaryawan(int idKaryawan){
+		karyawanMapper.deActivateKaryawan(idKaryawan);
+	}
+
+	@Override
+	public List<KontakDaruratModel> getKontakDaruratKaryawan(int idKaryawan) {
+		return karyawanMapper.selectKontakDaruratKaryawan(idKaryawan);
+	}
+
+	@Override
+	public void addKontakDarurat(KontakDaruratModel kontak) {
+		KaryawanBaruModel k = karyawanMapper.getKaryawanBaruById(kontak.getIdKaryawan());
+		if(k != null) {
+			karyawanMapper.insertKontakDarurat(kontak);
+		}
+	}
+
+	@Override
+	public void updateKontakDarurat(KontakDaruratModel kontak) {
+		karyawanMapper.updateKontakDarurat(kontak);
+	}
+
+	@Override
+	public void deleteKontakDaruratById(Integer idKontak) {
+		karyawanMapper.deleteKontakDaruratById(idKontak);
+	}
+
+	@Override
+	public List<KontrakModel> selectKontrakAll(int idKaryawan){return karyawanMapper.selectKontrakAll(idKaryawan);}
+
+	@Override
+	public void insertKontrak(KontrakModel kontrak){karyawanMapper.insertKontrak(kontrak);}
+
+	@Override
+	public void updateKontrak (KontrakModel kontrak){karyawanMapper.updateKontrak(kontrak);}
+
+	@Override
+	public void deleteKontrak (int id){karyawanMapper.deleteKontrak(id);}
+
+  @Override
+	public List<DokumenModel> getAllDokumenKaryawanById(int idKaryawan){
+		return karyawanMapper.getAllDokumenKaryawanById(idKaryawan);
+	}
+
+	@Override
+	public void insertDokumen(int idKaryawan, String fileName){
+		karyawanMapper.insertDokumen(idKaryawan, fileName);
+	}
+
+	@Override
+	public DokumenModel getDokumen(int idDokumen){
+		return karyawanMapper.getDokumen(idDokumen);
+	}
+
+	@Override
+	public void updateKaryawanBaru(KaryawanBaruModel karyawan) {
+		karyawanMapper.updateKaryawanBaru(karyawan);
+	}
+
+	@Override
+	public void deleteDokumen(int idDokumen){
+		karyawanMapper.deleteDokumen(idDokumen);
+	}
 
 }
+
