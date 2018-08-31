@@ -49,7 +49,7 @@
                 <div class="form-group col ui-widget ui-front">
                     <select class="montserrat-small combobox custom-select custom-select-md mb-3 form-rounded" name="idManager" th:field="*{idManager}">
                         <option value="">Pilih Manajer Divisi</option>
-                        <option th:each="namaK : ${namaKaryawans}" th:value="${namaK.id}" th:text="${namaK.nama}"></option>
+                        <option th:each="namaK : ${namaKaryawans}" th:value="${namaK.idKaryawan}" th:text="${namaK.namaLengkap}"></option>
                     </select>
                     <div>
                         <div class="form-check form-check-inline">
