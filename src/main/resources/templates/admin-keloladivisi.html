@@ -52,24 +52,23 @@
                             <label class="roboto">Nama Divisi</label>
                             <input type="text" class="form-control form-rounded" name="namaDivisi" th:field="*{nama}" required/>
                         </div>
-                    </div>
-
-                    <div class="form-row mb-3">
                         <div class="form-group col mr-2">
                             <label class="roboto">Kode Divisi</label>
                             <input type="text" class="form-control form-rounded" name="kode" th:field="*{kodeDivisi}" required />
                         </div>
-                        <div class="form-group col">
+                    </div>
 
-                            <label class="roboto">Manajer Divisi</label>
-                            <select class="form-control form-rounded" th:field="*{idManager}">
-                                <option value="">Pilih Manajer Divisi</option>
+                    <label class="roboto">Manajer Divisi</label>
+                    <div class="form-row mb-1">
+                        <div class="form-group col mr-2 ui-widget ui-front">
+                            <select class="montserrat-small combobox custom-select custom-select-md mb-3 form-rounded" th:field="*{idManager}">
+                                <option value="Pilih Manajer Divisi">Pilih Manajer Divisi</option>
                                 <option th:each="namaK : ${namaKaryawans}" th:value="${namaK.id}" th:text="${namaK.nama}"></option>
                             </select>
                         </div>
                     </div>
-                    <div class="form-row mb-1">
 
+                    <div class="form-row mb-1">
                         <div class="form-group col mr-2">
                             <label class="roboto">Keterangan</label>
                             <textarea class="form-control form-rounded" name="keterangan" rows="5" th:field="*{keterangan}"></textarea>
