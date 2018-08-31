@@ -11,7 +11,7 @@
     <div class="d-flex flex-row mb-3">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="roboto breadcrumb-item active" aria-current="page"><a href="/pmo" >Beranda</a></li>
+                <li class="roboto breadcrumb-item active" aria-current="page"><a href="/assignment/pmo" >Beranda</a></li>
                 <li class="roboto breadcrumb-item active" aria-current="page">Detail Proyek</li>
             </ol>
         </nav>
@@ -106,7 +106,7 @@
             </div>
             <div class="col-sm-3">
                 <h6 class="montserrat-big-bold">Project Lead:</h6>
-                <a class="montserrat-small" th:if="${projlead != null}" th:text="${projlead.nama}" th:href="${'/assignment/pmo/detail-karyawan/' + projlead.id}"></a>
+                <a class="montserrat-small" th:if="${projlead != null}" th:text="${projlead.namaLengkap}" th:href="${'/assignment/pmo/detail-karyawan/' + projlead.id}"></a>
                 <p th:unless="${projlead != null}" th:text="kosong" class="montserrat-small text-muted"></p>
             </div>
             <div class="col-sm-3">
@@ -156,7 +156,7 @@
             </thead>
             <tbody>
             <tr th:each="anggota,iterationStatus: ${anggotaList}">
-                <td><a th:text="${anggota.nama}" th:href="${'/assignment/pmo/detail-karyawan/' + anggota.idKaryawan}">Nama Karyawan</a></td>
+                <td><a th:text="${anggota.namaLengkap}" th:href="${'/assignment/pmo/detail-karyawan/' + anggota.idKaryawan}">Nama Karyawan</a></td>
                 <td class="montserrat-small text-center text-value" th:text="${anggota.role}">Role</td>
                 <td class="montserrat-small text-center text-value" th:text="${anggota.persentase + '%'}"></td>
 

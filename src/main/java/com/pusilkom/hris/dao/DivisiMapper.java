@@ -9,33 +9,33 @@ import java.util.List;
 @Mapper
 public interface DivisiMapper {
 
-    @Select("SELECT id, kode, nama_divisi, id_manager, id_divisi_induk\n" +
-            "\tFROM mpp.\"DIVISI\"\n" +
-            "\tWHERE id_manager=#{id_manajer};")
+    @Select("SELECT *\n" +
+            "\tFROM employee.\"DIVISI\"\n" +
+            "\tWHERE id_manager=#{idManager};")
     @Results(value = {
             @Result(property="id", column="id"),
-            @Result(property="kode", column="kode"),
-            @Result(property="namaDivisi", column="nama_divisi"),
-            @Result(property="idManajer", column="id_manager"),
-            @Result(property="idDivisiInduk", column="id_divisi_induk")
+            @Result(property="kodeDivisi", column="kode_divisi"),
+            @Result(property="nama", column="nama"),
+            @Result(property="idManager", column="id_manager"),
+            @Result(property="keterangan", column="keterangann")
     })
-    DivisiModel selectDivisiByManajer(@Param("id_manajer") int idManajer);
+    DivisibaruModel selectDivisiByManajer(@Param("idManager") int idManager);
 
 
-    @Select("SELECT id, kode, nama_divisi, id_manager, id_divisi_induk\n" +
-            "\tFROM mpp.\"DIVISI\"\n" +
-            "\tWHERE id=#{id_divisi};")
-    @Results(value = {
-            @Result(property="id", column="id"),
-            @Result(property="kode", column="kode"),
-            @Result(property="namaDivisi", column="nama_divisi"),
-            @Result(property="idManajer", column="id_manager"),
-            @Result(property="idDivisiInduk", column="id_divisi_induk")
-    })
-    DivisiModel selectDivisiByID(@Param("id_divisi") int idDivisi);
+//     @Select("SELECT id, kode, nama_divisi, id_manager, id_divisi_induk\n" +
+//             "\tFROM mpp.\"DIVISI\"\n" +
+//             "\tWHERE id=#{id_divisi};")
+//     @Results(value = {
+//             @Result(property="id", column="id"),
+//             @Result(property="kode", column="kode"),
+//             @Result(property="namaDivisi", column="nama_divisi"),
+//             @Result(property="idManajer", column="id_manager"),
+//             @Result(property="idDivisiInduk", column="id_divisi_induk")
+//     })
+//     DivisiModel selectDivisiByID(@Param("id_divisi") int idDivisi);
 
-    @Delete("delete from mpp.\"DIVISI\" where id_manager = #{idManager}")
-    void deleteManajerDivisi(@Param("idManager") int idManager);
+//     @Delete("delete from mpp.\"DIVISI\" where id_manager = #{idManager}")
+//     void deleteManajerDivisi(@Param("idManager") int idManager);
 
     @Select("SELECT D.id, D.kode_divisi, D.nama, D.keterangan, K.nama_lengkap,D.id_manager\n" +
             "\tFROM employee.\"DIVISI\" as D INNER JOIN employee.\"KARYAWAN\" as K on D.id_manager = K.id\n" +

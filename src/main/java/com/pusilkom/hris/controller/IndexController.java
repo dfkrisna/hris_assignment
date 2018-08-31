@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
 @Slf4j
@@ -130,7 +131,7 @@ public class IndexController
         model.addAttribute("previous", periodeDate.minusMonths(1));
 
         if(proyekList.size() > 0) {
-            List<KaryawanModel> karyawanList = karyawanService.getKaryawanAll();
+            List<KaryawanBaruModel> karyawanList = karyawanService.getKaryawanBaruAll();
             List<KaryawanProyekModel> karyawanProyekList = karyawanProyekService.getKaryawanProyekByPeriode(periodeDate);
             List<RekapModel> rekapList = rekapService.getRekapByPeriode(periodeDate);
             List<KaryawanRekapModel> mapping = rekapMappingService.mapRekap(karyawanList, proyekList, karyawanProyekList, rekapList);
@@ -228,7 +229,7 @@ public class IndexController
 
         List<KaryawanProyekModel> karyawanProyekList = karyawanProyekService.getKaryawanProyekByPeriode(periodeDate);
         List<ProyekModel> proyekList = proyekService.getProyekByPeriode(periodeDate);
-        List<KaryawanModel> karyawanList = karyawanService.getKaryawanAll();
+        List<KaryawanBaruModel> karyawanList = karyawanService.getKaryawanAll();
         List<RekapModel> rekapList = rekapService.getRekapByPeriode(periodeDate);
         List<KaryawanRekapModel> mapping = rekapMappingService.mapRekap(karyawanList, proyekList, karyawanProyekList, rekapList);
         int totalPerc = rekapMappingService.totalPercentage(mapping);
@@ -283,21 +284,26 @@ public class IndexController
     @GetMapping("/assignment/mngdivisi")
     @PreAuthorize("hasAuthority('GET_MNGDIVISI')")
     public String indexManajerDivisi(Model model, Principal principal) {
-        PenggunaModel pengguna = penggunaDAO.getPenggunaLama(principal.getName());
+        KaryawanBaruModel pengguna = karyawanService.getKaryawanByUsername(principal.getName());
 
-        DivisiModel divisi = divisiService.getDivisiByManajer(pengguna.getId());
-
+        DivisibaruModel divisi = divisiService.selectDivisiByManajer(pengguna.getIdKaryawan());
         LocalDate periodeDate = LocalDate.now();
 
-        List<KaryawanModel> karyawanList = karyawanService.getKaryawanByDivisi(divisi.getId());
-
+        List<KaryawanBaruModel> karyawanList;
+        if(divisi == null){
+            karyawanList = new ArrayList<KaryawanBaruModel>();
+        }else{
+            model.addAttribute("divisi", divisi);
+            karyawanList = karyawanService.getKaryawanByDivisi(divisi.getId());
+        }
+        
         Map mapKaryawanRating = new HashMap();
 
-        for(KaryawanModel karyawan:karyawanList) {
-            List<PenugasanModel> penugasanList = penugasanService.getPenugasanList(karyawan.getId());
-            int ratingKaryawan = ratingFeedbackService.getAvgRatingKaryawan(karyawan.getId());
+        for(KaryawanBaruModel karyawan:karyawanList) {
+            List<PenugasanModel> penugasanList = penugasanService.getPenugasanList(karyawan.getIdKaryawan());
+            int ratingKaryawan = ratingFeedbackService.getAvgRatingKaryawan(karyawan.getIdKaryawan());
 //            int ratingKaryawan = penugasanService.getAverageRating(penugasanList);
-            mapKaryawanRating.put(karyawan.getId(), ratingKaryawan);
+            mapKaryawanRating.put(karyawan.getIdKaryawan(), ratingKaryawan);
             System.out.println("size penugasan = " + penugasanList.size() + "rating karyawan = " + ratingKaryawan);
         }
 
@@ -306,12 +312,7 @@ public class IndexController
         model.addAttribute("date_today", dateToday);
         model.addAttribute("listKaryawan", karyawanList);
         model.addAttribute("mapping", mapKaryawanRating);
-        model.addAttribute("divisi", divisi);
         return "index-manajerdivisi";
     }
 
-    @GetMapping("/autocomplete")
-    public String autocompleteTest() {
-        return "tes-autocomplete";
-    }
 }

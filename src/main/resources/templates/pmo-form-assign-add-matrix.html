@@ -23,10 +23,10 @@
     <h2 class="montserrat-bold-big">Kelola Penugasan Anggota</h2>
     <hr/>
     <h3 class="montserrat-med" th:text="${proyek.kode} + ' (' + ${proyek.namaProyek} + ')'"></h3>
-    <h3 class="montserrat-med" th:text="${karyawan.nama}"></h3>
+    <h3 class="montserrat-med" th:text="${karyawan.namaLengkap}"></h3>
 
     <div class="d-flex flex-row mb-2 ">
-        <form th:object="${karyawanProyek}" method="post" th:action="'/assignment/pmo/assign/' + ${karyawan.id} + '/' + ${proyek.id}" class="form-horizontal" style="width: 70%">
+        <form th:object="${karyawanProyek}" method="post" th:action="'/assignment/pmo/assign/' + ${karyawan.idKaryawan} + '/' + ${proyek.id}" class="form-horizontal" style="width: 70%">
             <div class="form-row mb-3">
                 <div class="form-group col mr-2">
                     <label for="role" class="form-control-static montserrat-small-bold">Role dalam Proyek</label>

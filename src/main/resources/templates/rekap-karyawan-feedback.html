@@ -25,7 +25,7 @@
             <div>
                 <div class="row karyawan-rekap-div" style="margin-top:0;">
                     <div class="col-sm-3">
-                        <h3 th:text="${karyawan.nama}">Nama Karyawan</h3>
+                        <h3 th:text="${karyawan.namaLengkap}">Nama Karyawan</h3>
                     </div>
                     <div class="col-sm-3 text-right">
                         <div class="row">
@@ -55,7 +55,7 @@
             <br/><br/><br/>
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link" th:href="${'/assignment/rekap/karyawan/riwayat/' + karyawan.id}"><h4 class="montserrat-med-bold">Riwayat Proyek</h4></a>
+                    <a class="nav-link" th:href="${'/assignment/rekap/karyawan/riwayat/' + karyawan.idKaryawan}"><h4 class="montserrat-med-bold">Riwayat Proyek</h4></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active"><h4 class="montserrat-med-bold">Rekap Feedback</h4></a>
@@ -67,13 +67,13 @@
             <div class="row">
                 <div class="col text-left">
                     <div th:if="${previous != null}">
-                        <a class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" th:href="@{'/assignment/rekap/karyawan/feedback/' + ${karyawan.id}(periode=${previous.month + ' ' + previous.year})}" style="height:40px; width:160px;"><p th:text="${previous.month + ' ' + previous.year}"></p></a>
+                        <a class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" th:href="@{'/assignment/rekap/karyawan/feedback/' + ${karyawan.idKaryawan}(periode=${previous.month + ' ' + previous.year})}" style="height:40px; width:160px;"><p th:text="${previous.month + ' ' + previous.year}"></p></a>
                     </div>
                 </div>
                 <div class="col text-center">
                     <div th:if="${current != null}">
                         <h3 th:text="${current.month + ' ' + current.year}">Current Periode</h3>
-                        <form action="#" th:action="@{'/assignment/rekap/karyawan/feedback/' + ${karyawan.id}}" method="get">
+                        <form action="#" th:action="@{'/assignment/rekap/karyawan/feedback/' + ${karyawan.idKaryawan}}" method="get">
                             <input name="periode" id="periode" class="date-picker form-rounded form-control" readonly="readonly" />
                             <input class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" type="submit" value="Pilih Periode" />
                         </form>
@@ -81,7 +81,7 @@
                 </div>
                 <div class="col text-right">
                     <div th:if="${next != null}">
-                        <a class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" th:href="@{'/assignment/rekap/karyawan/feedback/' + ${karyawan.id}(periode=${next.month + ' ' + next.year})}" style="height:40px; width:160px;"><p th:text="${next.month + ' ' + next.year}"></p></a>
+                        <a class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded" th:href="@{'/assignment/rekap/karyawan/feedback/' + ${karyawan.idKaryawan}(periode=${next.month + ' ' + next.year})}" style="height:40px; width:160px;"><p th:text="${next.month + ' ' + next.year}"></p></a>
                     </div>
                 </div>
             </div>
