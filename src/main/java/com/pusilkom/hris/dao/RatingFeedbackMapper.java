@@ -47,7 +47,7 @@ public interface RatingFeedbackMapper {
 
 
 //punya jihan
-    @Select("SELECT RF.periode, RF.id, K.nama_lengkap AS namaPenilai, RF.feedback, RF.rating, RF.tanggal, " +
+    @Select("SELECT RF.periode, RF.id, KA.nama_lengkap AS namaPenilai, RF.feedback, RF.rating, RF.tanggal, " +
             " RP.nama AS rolePenilai, P.nama_proyek FROM mpp.\"RATING_FEEDBACK\" AS RF, mpp.\"KARYAWAN_PROYEK\" AS KPA, " +
             " mpp.\"KARYAWAN_PROYEK\" AS KPB, employee.\"KARYAWAN\" AS KA, mpp.\"ROLE_PROYEK\" AS RP, " +
             " mpp.\"PROYEK\" AS P WHERE RF.id_karyawan_dinilai = ${idKaryawanProyek} AND RF.id_karyawan_dinilai = KPB.id AND " +

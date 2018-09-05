@@ -139,11 +139,11 @@
                         </div>
                     </div>
                 </div>
-
                 <div>
-                    <table id="rekan-seproyek" class="table table-hover mt-3">
+                    <table id="rekan-seproyek" class="table table-mpp table-hover mt-3">
                         <thead id="tabel-header-rekap">
                         <tr>
+                                <th class="montserrat-small-bold" scope="col">No.</th>
                             <th class="montserrat-small-bold" scope="col">Nama</th>
                             <th class="montserrat-small-bold" scope="col">Kode Proyek</th>
                             <th class="montserrat-small-bold" scope="col">Role di Proyek</th>
@@ -156,6 +156,7 @@
                         <div th:each="rekan,iterationStatus: ${rekans}">
                             <div th:if="${rekan.kodeProyek.equals(detailPenugasan.kodeProyek)}">
                                 <tr>
+                                    <td class="montserrat-small" th:text="${iterationStatus.count}"></td>
                                     <td class="montserrat-small" th:text="${rekan.namaRekan}"></td>
                                     <td class="montserrat-small" th:text="${rekan.kodeProyek}"></td>
                                     <td class="montserrat-small" th:text="${rekan.roleRekan}"></td>
@@ -197,9 +198,9 @@
                                                         class="montserrat-small btn btn-secondary text-white btn-rounded disabled">Tambah</button>
                                             </div>
                                             <div th:if="${periodeOut == null}">
-                                                <button type="button" data-toggle="modal" data-target="#feedbackModal" data-title="Masukan Feedback dan Nilai Rekan"
+                                                <button type="button" data-title="Masukan Feedback dan Nilai Rekan"
                                                         th:attr="data-feedback=${rekan.feedback},data-rating=${rekan.ratingRekan}, data-namaRekan=${rekan.namaRekan}, data-idRekan=${rekan.idRekan}
-                                    ,data-kodeProyek=${rekan.kodeProyek}" class="modal-button montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Tambah</button>
+                                    ,data-kodeProyek=${rekan.kodeProyek}" class="a modal-button montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Tambah out</button>
                                             </div>
                                         </div>
                                     </td>

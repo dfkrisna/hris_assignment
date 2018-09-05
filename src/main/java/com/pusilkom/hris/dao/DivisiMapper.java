@@ -38,7 +38,7 @@ public interface DivisiMapper {
 //     void deleteManajerDivisi(@Param("idManager") int idManager);
 
     @Select("SELECT D.id, D.kode_divisi, D.nama, D.keterangan, K.nama_lengkap,D.id_manager\n" +
-            "\tFROM employee.\"DIVISI\" as D INNER JOIN employee.\"KARYAWAN\" as K on D.id_manager = K.id\n" +
+            "\tFROM employee.\"DIVISI\" as D FULL OUTER JOIN employee.\"KARYAWAN\" as K on D.id_manager = K.id\n" +
             "\tWHERE D.is_aktif=true;")
     @Results(value = {
             @Result(property="id", column="id"),

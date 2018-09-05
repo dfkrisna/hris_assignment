@@ -61,7 +61,7 @@
                     <label class="roboto">Manajer Divisi</label>
                     <div class="form-row mb-1">
                         <div class="form-group col mr-2 ui-widget ui-front">
-                            <select class="montserrat-small combobox custom-select custom-select-md mb-3 form-rounded" th:field="*{idManager}">
+                            <select class="montserrat-small combobox custom-select custom-select-md mb-3 form-rounded" th:field="*{idManager}" required=false>
                                 <option value="Pilih Manajer Divisi">Pilih Manajer Divisi</option>
                                 <option th:each="namaK : ${namaKaryawans}" th:value="${namaK.idKaryawan}" th:text="${namaK.namaLengkap}"></option>
                             </select>

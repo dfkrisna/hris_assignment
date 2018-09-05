@@ -106,7 +106,7 @@
             </div>
             <div class="col-sm-3">
                 <h6 class="montserrat-big-bold">Project Lead:</h6>
-                <a class="montserrat-small" th:if="${projlead != null}" th:text="${projlead.namaLengkap}" th:href="${'/assignment/pmo/detail-karyawan/' + projlead.id}"></a>
+                <a class="montserrat-small" th:if="${projlead != null}" th:text="${projlead.namaLengkap}" th:href="${'/assignment/pmo/detail-karyawan/' + projlead.idKaryawan}"></a>
                 <p th:unless="${projlead != null}" th:text="kosong" class="montserrat-small text-muted"></p>
             </div>
             <div class="col-sm-3">

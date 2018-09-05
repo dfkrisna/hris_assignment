@@ -90,10 +90,16 @@ public class KaryawanServiceImpl implements KaryawanService{
 	public List<FeedbackRatingModel> getRekanSeproyekFeedback(List<Integer> idProyek, int idKaryawan, LocalDate periodeNow) {
 		ArrayList<FeedbackRatingModel> hasil = new ArrayList<>();
 		int idPenilai = 0;
+		List<FeedbackRatingModel> rekan;
 
 		for (int i = 0; i < idProyek.size(); i++){
-			idPenilai = karyawanMapper.getKaryawanIdPenilai(idKaryawan, idProyek.get(i));
-			List<FeedbackRatingModel> rekan = karyawanMapper.getRekanSeproyekFeedback(idProyek.get(i), idKaryawan, periodeNow, idPenilai);
+			String temp = karyawanMapper.getKaryawanIdPenilai(idKaryawan, idProyek.get(i));
+			if(temp != null){
+				idPenilai = Integer.parseInt(temp);
+				rekan = karyawanMapper.getRekanSeproyekFeedback(idProyek.get(i), idKaryawan, periodeNow, idPenilai);
+			}else{
+				rekan = new ArrayList();
+			}
 
 			if(rekan.size() >= 1) {
 				for(int j = 0; j < rekan.size(); j++) {
@@ -148,7 +154,13 @@ public class KaryawanServiceImpl implements KaryawanService{
 
 	@Override
 	public int getKaryawanIdPenilai(int idKaryawan, int idProyek) {
-		return karyawanMapper.getKaryawanIdPenilai(idKaryawan, idProyek);
+		String idPenilai = karyawanMapper.getKaryawanIdPenilai(idKaryawan, idProyek);
+		if(idPenilai == null){
+			return 0;
+		}
+		else{
+			return Integer.parseInt(idPenilai);
+		}
 	}
 
 	@Override

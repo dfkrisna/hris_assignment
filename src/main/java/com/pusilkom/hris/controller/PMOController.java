@@ -544,7 +544,6 @@ public class PMOController {
      * @return
      */
     @PostMapping(value = "/assignment/karyawan/projectlead/detail/finalisasi")
-    @PreAuthorize("hasAuthority('POST_KARYAWAN_PROJECTLEADA_DETAIL_FINALISASI')")
     public String finalisasi(Model model,
                              RedirectAttributes ra,
                              @RequestParam(value = "periode") String periode,
