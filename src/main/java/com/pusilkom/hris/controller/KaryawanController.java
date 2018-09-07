@@ -427,10 +427,12 @@ public class KaryawanController {
         LocalDate periodeSelected = (LocalDate) session.getAttribute("periodeSelected");
         ProyekModel proyek = proyekService.getProyekByKode(kodeProyek);
         int idProyek = proyek.getId();
-        int idPenilai = karyawanService.getKaryawanIdPenilai(userId, idProyek);
+
+        KaryawanBaruModel karyawanPenilai = karyawanService.selectKaryawanByEmail(principal.getName());
+        int idPenilai = karyawanPenilai.getIdKaryawan();
 
         KaryawanProyekModel karyawanProyek = karyawanProyekService.getKaryawanProyekByKaryawanandProyek(idRekan, idProyek);
-        int idKaryawanProyek = karyawanProyek.getId();
+        int idKaryawanProyek = karyawanProyek.getIdKaryawan();
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
         Date now = new Date();

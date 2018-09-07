@@ -89,42 +89,36 @@ $(document).ready(function() {
 
     // });
 
-    // $(".btn-feedback").on('click', function () {
-    //     event.preventDefault();
-    //     console.log("test")
-    //     var button = $(this); // Button that triggered the modal
-    //     var header = button.data('title'); // Extract info from data-* attributes
-    //     var feedback = button.data('feedback');
-    //     var rating = button.data('rating');
-    //     var namaRekan = button.data('namarekan');
-    //     var kodeProyek = button.data('kodeproyek');
-    //     var idRekan = button.data('idrekan');
+    $(".btn-feedback").on('click', function () {
+        event.preventDefault();
+        var button = $(this); // Button that triggered the modal
+        var header = button.data('title'); // Extract info from data-* attributes
+        var feedback = button.data('feedback');
+        var rating = button.data('rating');
+        var namaRekan = button.data('namarekan');
+        var kodeProyek = button.data('kodeproyek');
+        var idRekan = button.data('idrekan');
 
-    //     var modal = $("#feedbackModal");
-    //     if(feedback != 'Belum memberikan Feedback'){
-    //         modal.find('.modal-body textarea').val(feedback);
-    //     }else{
-    //         modal.find('.modal-body textarea').val("");
-    //     }
+        var modal = $("#feedbackModal");
+        if(feedback != 'Belum memberikan Feedback'){
+            modal.find('.modal-body textarea').val(feedback);
+        }else{
+            modal.find('.modal-body textarea').val("");
+        }
 
-    //     if(feedback != 0){
-    //         modal.find('.modal-body #rating').val(rating);
-    //     }else {
-    //         modal.find('.modal-body #rating').val(0);
-    //     }
+        if(feedback != 0){
+            modal.find('.modal-body #rating').val(rating);
+        }else {
+            modal.find('.modal-body #rating').val(0);
+        }
 
-    //     console.log("test")
+        modal.find('.modal-body #namaRekan').val(namaRekan);
+        modal.find('.modal-body #idRekan').val(idRekan);
+        modal.find('.modal-body #kodeProyek').val(kodeProyek);
+        modal.modal();
 
-    //     modal.find('.modal-body #namaRekan').val(namaRekan);
-    //     modal.find('.modal-body #idRekan').val(idRekan);
-    //     modal.find('.modal-body #kodeProyek').val(kodeProyek);
-    //     modal.modal();
+    });
 
-    // });
-
-    $(".a").on("click", function(){
-        console.log("test");
-    })
 
     $('#checkoutModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget); // Button that triggered the modal

@@ -200,7 +200,7 @@
                                             <div th:if="${periodeOut == null}">
                                                 <button type="button" data-title="Masukan Feedback dan Nilai Rekan"
                                                         th:attr="data-feedback=${rekan.feedback},data-rating=${rekan.ratingRekan}, data-namaRekan=${rekan.namaRekan}, data-idRekan=${rekan.idRekan}
-                                    ,data-kodeProyek=${rekan.kodeProyek}" class="a modal-button montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Tambah out</button>
+                                    ,data-kodeProyek=${rekan.kodeProyek}" class="btn-feedback modal-button montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Tambah out</button>
                                             </div>
                                         </div>
                                     </td>
@@ -210,6 +210,7 @@
                         <div th:if="${rekansNoFeedback != null}" th:each="rekanNo,iterationStatus: ${rekansNoFeedback}">
                             <div th:if="${rekanNo.kodeProyek.equals(detailPenugasan.kodeProyek)}">
                                 <tr>
+                                    <td class="montserrat-small" th:text="${iterationStatus.count}"></td>
                                     <td class="montserrat-small" th:text="${rekanNo.namaRekan}"></td>
                                     <td class="montserrat-small" th:text="${rekanNo.kodeProyek}"></td>
                                     <td class="montserrat-small" th:text="${rekanNo.roleRekan}"></td>

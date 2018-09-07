@@ -47,9 +47,9 @@ public interface KaryawanMapper {
                         @Result(property = "isActive", column = "is_active") })
         List<KaryawanBaruModel> selectKaryawanByDivisi(@Param("idDivisi") int idDivisi);
 
-        @Select("select distinct kp.id from mpp.\"RATING_FEEDBACK\" as rt, mpp.\"KARYAWAN_PROYEK\" as kp "
+        @Select("select distinct kp.id_karyawan from mpp.\"RATING_FEEDBACK\" as rt, mpp.\"KARYAWAN_PROYEK\" as kp "
                         + "where kp.id_karyawan = #{idKaryawan} and kp.id_proyek = #{idProyek}"
-                        + "ORDER by kp.id DESC LIMIT 1")
+                        + "ORDER by kp.id_karyawan DESC LIMIT 1")
         String getKaryawanIdPenilai(@Param("idKaryawan") int idKaryawan, @Param("idProyek") int idProyek);
 
         @Select("select id_proyek from mpp.\"KARYAWAN_PROYEK\" where id_karyawan = #{idKaryawan}")
@@ -62,7 +62,7 @@ public interface KaryawanMapper {
                         + "where kr.id_karyawan != #{idKaryawan} and kr.id_proyek = #{idProyek} and kr.id_karyawan = k.id "
                         + "and kr.id_role = rp.id and kr.id_proyek = pr.id "
                         + "and kr.start_periode <= #{periodeNow} and (not kr.end_periode < #{periodeNow} or kr.end_periode is null) "
-                        + "and kr.id = rt.id_karyawan_dinilai "
+                        + "and kr.id_karyawan = rt.id_karyawan_dinilai "
                         + "and rt.id_penilai = #{idPenilai} and rt.periode = #{periodeNow}")
         List<FeedbackRatingModel> getRekanSeproyekFeedback(@Param("idProyek") int idProyek,
                         @Param("idKaryawan") int idKaryawan, @Param("periodeNow") LocalDate periodeNow,
