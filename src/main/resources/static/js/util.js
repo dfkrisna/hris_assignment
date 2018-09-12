@@ -98,6 +98,7 @@ $(document).ready(function() {
         var namaRekan = button.data('namarekan');
         var kodeProyek = button.data('kodeproyek');
         var idRekan = button.data('idrekan');
+        console.log("test");
 
         var modal = $("#feedbackModal");
         if(feedback != 'Belum memberikan Feedback'){

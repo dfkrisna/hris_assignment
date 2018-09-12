@@ -182,26 +182,20 @@
                                     <td class="montserrat-small text-muted" th:text="${rekan.feedback}"></td>
                                     <td>
                                         <div th:if="${noFeedback == null}">
-                                            <div th:if="${periodeOut != null}">
+                                            <div th:if="${perioh != null}">
                                                 <button type="button" data-toggle="modal"
                                                         class="montserrat-small btn btn-secondary text-white btn-rounded disabled">Ubah</button>
                                             </div>
                                             <div th:if="${periodeOut == null}">
-                                                <button type="button" data-toggle="modal" data-target="#feedbackModal" data-title="Masukan Feedback dan Nilai Rekan"
+                                                <button type="button" data-title="Masukan Feedback dan Nilai Rekan"
                                                         th:attr="data-feedback=${rekan.feedback},data-rating=${rekan.ratingRekan}, data-namaRekan=${rekan.namaRekan}, data-idRekan=${rekan.idRekan}
-                                    ,data-kodeProyek=${rekan.kodeProyek}" class="modal-button montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Ubah</button>
+                                    ,data-kodeProyek=${rekan.kodeProyek}" class="btn-feedback modal-button montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Ubah</button>
                                             </div>
                                         </div>
                                         <div th:if="${noFeedback != null}">
-                                            <div th:if="${periodeOut != null}">
-                                                <button type="button" data-toggle="modal"
-                                                        class="montserrat-small btn btn-secondary text-white btn-rounded disabled">Tambah</button>
-                                            </div>
-                                            <div th:if="${periodeOut == null}">
-                                                <button type="button" data-title="Masukan Feedback dan Nilai Rekan"
+                                            <button type="button" data-title="Masukan Feedback dan Nilai Rekan"
                                                         th:attr="data-feedback=${rekan.feedback},data-rating=${rekan.ratingRekan}, data-namaRekan=${rekan.namaRekan}, data-idRekan=${rekan.idRekan}
-                                    ,data-kodeProyek=${rekan.kodeProyek}" class="btn-feedback modal-button montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Tambah out</button>
-                                            </div>
+                                    ,data-kodeProyek=${rekan.kodeProyek}" class="btn-feedback modal-button montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Tambah</button>
                                         </div>
                                     </td>
                                 </tr>
@@ -221,9 +215,9 @@
                                     <td class="montserrat-small text-muted">Belum Memberikan Feedback</td>
                                     <td>
                                         <div th:if="${periodeOut == null}">
-                                            <button type="button" data-toggle="modal" data-target="#feedbackModal" data-title="Masukan Feedback dan Nilai Rekan"
+                                            <button type="button" data-title="Masukan Feedback dan Nilai Rekan"
                                                     th:attr="data-feedback=${rekanNo.feedback},data-rating=${rekanNo.ratingRekan}, data-namaRekan=${rekanNo.namaRekan}, data-idRekan=${rekanNo.idRekan}
-                                        ,data-kodeProyek=${rekanNo.kodeProyek}" class="modal-button montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Tambah</button>
+                                        ,data-kodeProyek=${rekanNo.kodeProyek}" class="btn-feedback modal-button montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Tambah</button>
                                         </div>
                                         <div th:if="${periodeOut != null}">
                                             <button type="button" data-toggle="modal"

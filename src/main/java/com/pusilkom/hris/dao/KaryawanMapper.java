@@ -76,7 +76,7 @@ public interface KaryawanMapper {
                         + "and kr.id_role = rp.id and kr.id_proyek = pr.id "
                         + "and kr.start_periode <= #{periodeNow} and (not kr.end_periode < #{periodeNow} or kr.end_periode is null) "
                         + "and not exists"
-                        + "(select * from mpp.\"RATING_FEEDBACK\" as rt where kr.id = rt.id_karyawan_dinilai "
+                        + "(select * from mpp.\"RATING_FEEDBACK\" as rt where kr.id_karyawan = rt.id_karyawan_dinilai "
                         + "and rt.periode = #{periodeNow})")
         List<FeedbackRatingModel> getRekanSeproyek(@Param("idProyek") int idProyek, @Param("idKaryawan") int idKaryawan,
                         @Param("periodeNow") LocalDate periodeNow);
