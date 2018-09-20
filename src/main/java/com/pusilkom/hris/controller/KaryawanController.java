@@ -259,7 +259,7 @@ public class KaryawanController {
             model.addAttribute("noPenugasan", "noPenugasan");
             model.addAttribute("date_today", dateToday);
         }
-
+        model.addAttribute("idProyek", idProyek);
         return "detail-proyek";
     }
 

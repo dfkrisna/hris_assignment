@@ -112,13 +112,13 @@
                 <div class="d-flex flex-row mb-5">
                     <div class="col text-left">
                         <a class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded"
-                           th:href="@{'/assignment/karyawan/rekanseproyek'(periode=${prevPeriode.month + ' ' + prevPeriode.year})}"
+                           th:href="${'/assignment/karyawan/penugasan/detail/' + idProyek + '?periode=' + prevPeriode.month + ' ' + prevPeriode.year}"
                            th:text="${prevPeriode.month + ' ' + prevPeriode.year}" href="">
                         </a>
                     </div>
                     <div class="col text-center">
                         <div class="row">
-                            <form action="#" th:action="@{/assignment/karyawan/rekanseproyek}" method="get">
+                            <form action="#" th:href="${'/assignment/karyawan/penugasan/detail/' + idProyek}" method="get">
                                 <input name="periode" id="periode" class="date-picker" readonly="true" required/>
                                 <input class="montserrat-small btn pusil-btn btn-dark text-white btn-rounded" type="submit" value="Pilih Periode" />
                             </form>
@@ -127,13 +127,13 @@
                     <div class="col text-right">
                         <div th:if="${offPeriode != null}">
                             <a class="montserrat-small btn btn-secondary text-white btn-rounded disabled"
-                               th:href="@{'/assignment/karyawan/rekanseproyek'(periode=${nextPeriode.month + ' ' + nextPeriode.year})}"
+                               th:href="${'/assignment/karyawan/penugasan/detail/' + idProyek + '?periode=' + nextPeriode.month + ' ' + nextPeriode.year}"
                                th:text="${nextPeriode.month + ' ' + nextPeriode.year}" href="">
                             </a>
                         </div>
                         <div th:if="${offPeriode == null}">
                             <a class="montserrat-small pusil-btn btn btn-dark text-white btn-rounded"
-                               th:href="@{'/assignment/karyawan/rekanseproyek'(periode=${nextPeriode.month + ' ' + nextPeriode.year})}"
+                               th:href="${'/assignment/karyawan/penugasan/detail/' + idProyek + '?periode=' + nextPeriode.month + ' ' + nextPeriode.year}"
                                th:text="${nextPeriode.month + ' ' + nextPeriode.year}" href="">
                             </a>
                         </div>
@@ -182,7 +182,7 @@
                                     <td class="montserrat-small text-muted" th:text="${rekan.feedback}"></td>
                                     <td>
                                         <div th:if="${noFeedback == null}">
-                                            <div th:if="${perioh != null}">
+                                            <div th:if="${periodeOut != null}">
                                                 <button type="button" data-toggle="modal"
                                                         class="montserrat-small btn btn-secondary text-white btn-rounded disabled">Ubah</button>
                                             </div>
@@ -312,5 +312,22 @@
         </div>
     </div>
 </div>
-
+<script type="text/javascript">
+    $(function() {
+        $('.date-picker').datepicker( {
+            changeMonth: true,
+            changeYear: true,
+            showButtonPanel: true,
+            dateFormat: 'MM yy',
+            onClose: function(dateText, inst) {
+                $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+            }
+        });
+    });
+</script>
+<style>
+    .ui-datepicker-calendar {
+        display: none;
+    }
+</style>
 </html>
