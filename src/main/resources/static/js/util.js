@@ -1,24 +1,24 @@
 $(document).ready(function() {
-    $('#tabel-pengguna').DataTable();
-    $('#tabel-penugasan-periode-ini').DataTable();
-    $('#tabel-riwayat-penugasan').DataTable();
-    $('#tabel-penilaian-mandiri').DataTable();
-    $('#list-karyawan').DataTable();
-    // $('#matrix-pmo').DataTable();
-    $('#sub-proyek').DataTable();
-    $('#table-rekomendasi').DataTable();
-    $('#tabel-anggota-divisi').DataTable();
-    $('#tabel-finalisasi').DataTable();
-    $('#tabel-rf').DataTable();
-    $('#tabel-detailkar').DataTable();
-    $('#tabel-listproyek').DataTable();
-    $('#rekan-seproyek').DataTable();
-    $('#divisi-nonaktif').DataTable();
-    $('#rekap-proyek').DataTable();
-    $('#pmo-proyek').DataTable();
-    $('#rekap-riwayat').DataTable( {
-        "order": [[ 4, "desc" ]]
-    });
+    // $('#tabel-pengguna').DataTable();
+    // $('#tabel-penugasan-periode-ini').DataTable();
+    // $('#tabel-riwayat-penugasan').DataTable();
+    // $('#tabel-penilaian-mandiri').DataTable();
+    // $('#list-karyawan').DataTable();
+    // // $('#matrix-pmo').DataTable();
+    // $('#sub-proyek').DataTable();
+    // $('#table-rekomendasi').DataTable();
+    // $('#tabel-anggota-divisi').DataTable();
+    // $('#tabel-finalisasi').DataTable();
+    // $('#tabel-rf').DataTable();
+    // $('#tabel-detailkar').DataTable();
+    // $('#tabel-listproyek').DataTable();
+    // $('#rekan-seproyek').DataTable();
+    // $('#divisi-nonaktif').DataTable();
+    // $('#rekap-proyek').DataTable();
+    // $('#pmo-proyek').DataTable();
+    // $('#rekap-riwayat').DataTable( {
+    //     "order": [[ 4, "desc" ]]
+    // });
 
     $('.table-mpp').DataTable();
 

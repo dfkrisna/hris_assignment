@@ -222,6 +222,9 @@ public class KaryawanController {
             List<FeedbackRatingModel> rekanNoFeedback =
                     karyawanService.getRekanSeproyek(proyekSekarang, userId, periodeNow);
 
+            model.addAttribute("rekanWithFeedBack", rekanWithFeedback);
+            model.addAttribute("rekanWithNoFeedBack", rekanNoFeedback);
+
             if(rekanWithFeedback.isEmpty() && rekanNoFeedback.isEmpty()) {
                 model.addAttribute("notification","Tidak ada rekan seproyek di periode ini");
             }else if(rekanWithFeedback.isEmpty()) {
@@ -234,6 +237,7 @@ public class KaryawanController {
                 model.addAttribute("rekansNoFeedback", rekanNoFeedback);
             }
 
+            System.out.println();
             for(FeedbackRatingModel rekan:rekanNoFeedback){
                 System.out.println("nama rekan: " + rekan.getNamaRekan());
                 System.out.println("nama project: " + rekan.getKodeProyek());

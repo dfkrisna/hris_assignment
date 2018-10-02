@@ -57,13 +57,13 @@ public interface KaryawanMapper {
 
         @Select("select kr.id_karyawan as idRekan, k.nama_lengkap as namaRekan, rp.nama as roleRekan, "
                         + "pr.kode as kodeProyek, rt.rating as ratingRekan, rt.feedback as feedback " + "from "
-                        + "mpp.\"ROLE_PROYEK\" as rp, " + "mpp.\"PROYEK\" as pr, mpp.\"RATING_FEEDBACK\" as rt, "
+                        + "mpp.\"ROLE_PROYEK\" as rp, mpp.\"PROYEK\" as pr, mpp.\"RATING_FEEDBACK\" as rt, "
                         + "employee.\"KARYAWAN\" as k, mpp.\"KARYAWAN_PROYEK\" as kr "
                         + "where kr.id_karyawan != #{idKaryawan} and kr.id_proyek = #{idProyek} and kr.id_karyawan = k.id "
                         + "and kr.id_role = rp.id and kr.id_proyek = pr.id "
                         + "and kr.start_periode <= #{periodeNow} and (not kr.end_periode < #{periodeNow} or kr.end_periode is null) "
                         + "and kr.id_karyawan = rt.id_karyawan_dinilai "
-                        + "and rt.id_penilai = #{idPenilai} and rt.periode = #{periodeNow}")
+                        + "and rt.id_penilai = #{idPenilai} and rt.periode = #{periodeNow} and pr.id = rt.id_proyek")
         List<FeedbackRatingModel> getRekanSeproyekFeedback(@Param("idProyek") int idProyek,
                         @Param("idKaryawan") int idKaryawan, @Param("periodeNow") LocalDate periodeNow,
                         @Param("idPenilai") int idPenilai);
@@ -74,10 +74,8 @@ public interface KaryawanMapper {
                         + "where kr.id_karyawan != #{idKaryawan}\n"
                         + "and kr.id_proyek = #{idProyek} and kr.id_karyawan = k.id "
                         + "and kr.id_role = rp.id and kr.id_proyek = pr.id "
-                        + "and kr.start_periode <= #{periodeNow} and (not kr.end_periode < #{periodeNow} or kr.end_periode is null) "
-                        + "and not exists"
-                        + "(select * from mpp.\"RATING_FEEDBACK\" as rt where kr.id_karyawan = rt.id_karyawan_dinilai "
-                        + "and rt.periode = #{periodeNow})")
+                        + "and kr.start_periode <= #{periodeNow} and (not kr.end_periode < #{periodeNow} or kr.end_periode is null) and "
+                        + " not exists ( select * from mpp.\"RATING_FEEDBACK\" as rt where kr.id_karyawan = rt.id_karyawan_dinilai and rt.periode = #{periodeNow} and rt.id_proyek = pr.id)")
         List<FeedbackRatingModel> getRekanSeproyek(@Param("idProyek") int idProyek, @Param("idKaryawan") int idKaryawan,
                         @Param("periodeNow") LocalDate periodeNow);
 
