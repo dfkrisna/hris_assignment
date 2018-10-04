@@ -73,6 +73,7 @@ public class RatingFeedbackServiceImpl implements RatingFeedbackService {
         return ratingFeedbackMapper.selectRatingFeedbackKP(idKaryawanProyek);
     }
     public List<RatingFeedbackModel> selectRatingFeedbackPer(Integer idKaryawanProyek, LocalDate periode){
+        log.info("hai");
         return ratingFeedbackMapper.selectRatingFeedbackPer(idKaryawanProyek,periode);
     }
 

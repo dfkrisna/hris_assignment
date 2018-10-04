@@ -65,11 +65,11 @@ public interface RatingFeedbackMapper {
     })
     List<RatingFeedbackModel> selectRatingFeedbackKP(@Param("idKaryawanProyek") Integer idKaryawanProyek);
 
-    @Select("SELECT RF.periode, RF.id, KA.nama_lengkap AS namaPenilai, RF.feedback, RF.rating, RF.tanggal, " +
+    @Select("SELECT DISTINCT RF.periode, RF.id, KA.nama_lengkap AS namaPenilai, RF.feedback, RF.rating, RF.tanggal, " +
             " RP.nama AS rolePenilai, P.nama_proyek FROM mpp.\"RATING_FEEDBACK\" AS RF, mpp.\"KARYAWAN_PROYEK\" AS KPA, " +
             " mpp.\"KARYAWAN_PROYEK\" AS KPB, employee.\"KARYAWAN\" AS KA, mpp.\"ROLE_PROYEK\" AS RP, " +
-            " mpp.\"PROYEK\" AS P WHERE RF.id_karyawan_dinilai = ${idKaryawanProyek} AND RF.id_karyawan_dinilai = KPB.id AND " +
-            " KPA.id = RF.id_penilai AND KPA.id_karyawan = KA.id AND KPA.id_role = RP.id AND " +
+            " mpp.\"PROYEK\" AS P WHERE RF.id_karyawan_dinilai = ${idKaryawanProyek} AND RF.id_karyawan_dinilai = KPB.id_karyawan AND " +
+            " KPA.id_karyawan = RF.id_penilai AND KPA.id_karyawan = KA.id AND KPA.id_role = RP.id AND " +
             " P.id = RF.id_proyek AND RF.periode = '${periode}' ORDER BY RF.tanggal DESC;")
     @Results(value = {
             @Result(property="id", column="id"),

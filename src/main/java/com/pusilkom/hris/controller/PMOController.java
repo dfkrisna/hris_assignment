@@ -17,6 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -614,19 +615,20 @@ public class PMOController {
         model.addAttribute("previous", periodeDate.minusMonths(1));
 
         List<KaryawanProyekModel> dicari = karyawanProyekDAO.selectKaryawanProyekByKaryawanPeriode(idKaryawan,periodeDate);
+        
         boolean isEmptyRF = false;
         if(dicari.isEmpty()) {
             isEmptyRF = true;
             return "pmo-detailkaryawan";
         } else {
 
-            List<RatingFeedbackModel> listRF=null;
+            List<RatingFeedbackModel> listRF= new ArrayList<RatingFeedbackModel>();
 
             for(KaryawanProyekModel karpro : dicari) {
-                listRF = ratingFeedbackDAO.selectRatingFeedbackPer(karpro.getId(), periodeDate);
+                listRF = ratingFeedbackDAO.selectRatingFeedbackPer(karpro.getIdKaryawan(), periodeDate);
             }
 
-            if (listRF.isEmpty() || listRF==null) {
+            if (listRF==null || listRF.isEmpty()) {
                 isEmptyRF = true;
             }
             model.addAttribute("isEmptyRF", isEmptyRF);

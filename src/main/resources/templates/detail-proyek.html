@@ -154,7 +154,7 @@
                     </div>
                 </div>
                 <div>
-                    <table id="rekan-seproyek" class="table table-mpp table-hover mt-3">
+                    <table id="rekan-seproyek" class="table table-hover mt-3">
                         <thead id="tabel-header-rekap">
                             <tr>
                                 <th class="montserrat-small-bold" scope="col">Nama</th>
@@ -205,7 +205,7 @@
                                             </div>
                                             <div th:if="${noFeedback != null}">
                                                 <button type="button" data-title="Masukan Feedback dan Nilai Rekan" th:attr="data-feedback=${rekan.feedback},data-rating=${rekan.ratingRekan}, data-namaRekan=${rekan.namaRekan}, data-idRekan=${rekan.idRekan}
-                                        ,data-kodeProyek=${rekan.kodeProyek}" class="btn-feedback montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Tambah test</button>
+                                        ,data-kodeProyek=${rekan.kodeProyek}" class="btn-feedback montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Tambah</button>
                                             </div>
                                         </td>
                                     </tr>
@@ -215,7 +215,6 @@
                                 <div th:if="${rekanNo.kodeProyek.equals(detailPenugasan.kodeProyek)}">
 
                                     <tr>
-                                        <td class="montserrat-small" th:text="${iterationStatus.count}"></td>
                                         <td class="montserrat-small" th:text="${rekanNo.namaRekan}"></td>
                                         <td class="montserrat-small" th:text="${rekanNo.kodeProyek}"></td>
                                         <td class="montserrat-small" th:text="${rekanNo.roleRekan}"></td>
@@ -223,10 +222,10 @@
                                             <img class="d-inline icon-sidebar mr-2" src="/img/black-star.png">
                                             <p class="d-inline montserrat-small text-muted">0</p>
                                         </td>
-                                        <td class="montserrat-small text-muted">Belum Memberikan Feedback hehe</td>
+                                        <td class="montserrat-small text-muted">Belum Memberikan Feedback</td>
                                         <td>
                                             <button data-title="Masukan Feedback dan Nilai Rekan" th:attr="data-feedback=${rekanNo.feedback},data-rating=${rekanNo.ratingRekan}, data-namaRekan=${rekanNo.namaRekan}, data-idRekan=${rekanNo.idRekan}
-                                            ,data-kodeProyek=${rekanNo.kodeProyek}" class="btn-feedback">Tambah test</button>
+                                            ,data-kodeProyek=${rekanNo.kodeProyek}" class="btn-feedback montserrat-small pusil-btn btn btn-dark text-white btn-rounded">Tambah</button>
                                         </td>
                                     </tr>
                                 </div>
